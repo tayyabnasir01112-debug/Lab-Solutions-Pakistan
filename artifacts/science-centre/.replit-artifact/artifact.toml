@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Science Centre Pakistan"
+version = "1.0.0"
+id = "artifacts/science-centre"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23422
+
+[services.development]
+run = "pnpm --filter @workspace/science-centre run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/science-centre", "run", "build" ]
+publicDir = "artifacts/science-centre/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23422"
+BASE_PATH = "/"
