@@ -418,7 +418,7 @@ function Solutions() {
         </div>
 
         {/* ngenebio-style horizontal expanding panels */}
-        <div className="flex h-[520px] md:h-[600px] w-full overflow-hidden">
+        <div className="flex h-[540px] md:h-[620px] w-full overflow-hidden rounded-sm">
           {solutions.map((s, i) => {
             const isActive = active === i;
             return (
@@ -426,41 +426,55 @@ function Solutions() {
                 key={i}
                 onMouseEnter={() => setActive(i)}
                 onMouseLeave={() => setActive(null)}
-                animate={{ flex: isActive ? 3.5 : 1 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                animate={{ flex: isActive ? 4 : 1 }}
+                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
                 className="relative overflow-hidden cursor-pointer"
                 style={{ minWidth: 0 }}
               >
-                {/* Background image */}
-                <img
-                  src={img(s.image)}
-                  alt={s.title}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700"
-                  style={{ transform: isActive ? "scale(1.05)" : "scale(1)" }}
+                {/* Unique gradient background per solution */}
+                <div
+                  className="absolute inset-0 transition-all duration-700"
+                  style={{
+                    background: isActive
+                      ? `linear-gradient(160deg, ${s.accent} 0%, ${s.accent}99 60%, #0a0a0a 100%)`
+                      : `linear-gradient(160deg, #1a1a2e 0%, #0f0f1a 100%)`,
+                  }}
                 />
 
-                {/* Dark base overlay always visible */}
-                <div className="absolute inset-0 bg-black/50" />
-
-                {/* Colored overlay - slides in on hover */}
-                <motion.div
-                  className="absolute inset-0"
-                  animate={{ opacity: isActive ? 1 : 0 }}
-                  transition={{ duration: 0.4, ease: "easeInOut" }}
-                  style={{ backgroundColor: s.accent + "dd" }}
+                {/* Subtle pattern overlay */}
+                <div
+                  className="absolute inset-0 opacity-[0.04]"
+                  style={{
+                    backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
+                    backgroundSize: "24px 24px",
+                  }}
                 />
 
-                {/* Title always visible at bottom when collapsed */}
+                {/* Accent glow top corner */}
+                <div
+                  className="absolute -top-20 -right-20 w-48 h-48 rounded-full blur-3xl transition-opacity duration-500"
+                  style={{ background: s.accent, opacity: isActive ? 0.35 : 0.08 }}
+                />
+
+                {/* Collapsed state — icon + horizontal title at bottom */}
                 <motion.div
-                  className="absolute inset-0 flex items-end"
+                  className="absolute inset-0 flex flex-col justify-between p-5 md:p-6"
                   animate={{ opacity: isActive ? 0 : 1 }}
-                  transition={{ duration: 0.25 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  <div className="p-5 md:p-6">
-                    <h4
-                      className="text-white font-[var(--app-font-heading)] font-bold leading-tight"
-                      style={{ writingMode: "vertical-rl", textOrientation: "mixed", transform: "rotate(180deg)" }}
+                  {/* Number top */}
+                  <div className="text-white/20 text-xs font-bold tracking-[0.2em]">
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
+                  {/* Icon + title bottom */}
+                  <div className="flex flex-col gap-3">
+                    <div
+                      className="w-9 h-9 flex items-center justify-center rounded-sm text-white"
+                      style={{ backgroundColor: s.accent + "33", border: `1px solid ${s.accent}55` }}
                     >
+                      {s.icon}
+                    </div>
+                    <h4 className="text-white font-[var(--app-font-heading)] font-bold text-sm leading-snug">
                       {s.title}
                     </h4>
                   </div>
@@ -468,28 +482,47 @@ function Solutions() {
 
                 {/* Expanded content */}
                 <motion.div
-                  className="absolute inset-0 flex flex-col justify-end p-8 md:p-10"
-                  animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: isActive ? 0.15 : 0 }}
+                  className="absolute inset-0 flex flex-col justify-between p-8 md:p-10"
+                  animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 24 }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: isActive ? 0.18 : 0 }}
                 >
-                  <div className="text-white/70 text-xs font-bold tracking-[0.18em] uppercase mb-3">
-                    Focus Area · {String(i + 1).padStart(2, "0")}
+                  {/* Top: number + icon */}
+                  <div className="flex items-center justify-between">
+                    <div className="text-white/40 text-xs font-bold tracking-[0.22em] uppercase">
+                      Focus Area · {String(i + 1).padStart(2, "0")}
+                    </div>
+                    <div
+                      className="w-10 h-10 flex items-center justify-center rounded-sm text-white"
+                      style={{ backgroundColor: "rgba(255,255,255,0.15)" }}
+                    >
+                      {s.icon}
+                    </div>
                   </div>
-                  <h4 className="font-[var(--app-font-heading)] text-2xl md:text-3xl font-bold text-white leading-tight tracking-tight mb-4">
-                    {s.title}
-                  </h4>
-                  <p className="text-white/80 text-sm md:text-base font-light leading-relaxed mb-8 max-w-sm">
-                    {s.desc}
-                  </p>
-                  {/* Arrow button */}
-                  <div className="w-14 h-14 rounded-full border-2 border-dashed border-white/60 flex items-center justify-center text-white hover:border-white hover:bg-white/10 transition-all duration-300">
-                    <ArrowRight className="h-5 w-5" />
+
+                  {/* Bottom: title + desc + arrow */}
+                  <div>
+                    <h4 className="font-[var(--app-font-heading)] text-2xl md:text-3xl font-bold text-white leading-tight tracking-tight mb-4">
+                      {s.title}
+                    </h4>
+                    <p className="text-white/70 text-sm md:text-[15px] font-light leading-relaxed mb-8 max-w-xs">
+                      {s.desc}
+                    </p>
+                    <div className="flex items-center gap-4">
+                      <div
+                        className="w-13 h-13 w-12 h-12 rounded-full border border-dashed border-white/50 flex items-center justify-center text-white hover:bg-white/10 transition-all duration-300"
+                      >
+                        <ArrowRight className="h-4 w-4" />
+                      </div>
+                      <span className="text-white/50 text-xs font-bold tracking-[0.15em] uppercase">
+                        Learn more
+                      </span>
+                    </div>
                   </div>
                 </motion.div>
 
-                {/* Vertical divider line between panels */}
+                {/* Thin divider between panels */}
                 {i < solutions.length - 1 && (
-                  <div className="absolute right-0 top-0 bottom-0 w-px bg-white/10 z-10" />
+                  <div className="absolute right-0 top-8 bottom-8 w-px bg-white/8 z-10" />
                 )}
               </motion.div>
             );
