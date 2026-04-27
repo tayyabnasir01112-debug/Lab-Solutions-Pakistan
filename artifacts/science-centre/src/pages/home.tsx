@@ -436,24 +436,34 @@ function Solutions() {
                   className="absolute inset-0 transition-all duration-700"
                   style={{
                     background: isActive
-                      ? `linear-gradient(160deg, ${s.accent} 0%, ${s.accent}99 60%, #0a0a0a 100%)`
-                      : `linear-gradient(160deg, #1a1a2e 0%, #0f0f1a 100%)`,
+                      ? `linear-gradient(160deg, ${s.accent} 0%, ${s.accent}bb 50%, ${s.accent}66 100%)`
+                      : `linear-gradient(160deg, ${s.accent}55 0%, ${s.accent}22 50%, #080810 100%)`,
                   }}
                 />
 
-                {/* Subtle pattern overlay */}
+                {/* Subtle dot pattern overlay */}
                 <div
-                  className="absolute inset-0 opacity-[0.04]"
+                  className="absolute inset-0 opacity-[0.06]"
                   style={{
                     backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
-                    backgroundSize: "24px 24px",
+                    backgroundSize: "20px 20px",
                   }}
                 />
 
-                {/* Accent glow top corner */}
+                {/* Strong accent glow top */}
                 <div
-                  className="absolute -top-20 -right-20 w-48 h-48 rounded-full blur-3xl transition-opacity duration-500"
-                  style={{ background: s.accent, opacity: isActive ? 0.35 : 0.08 }}
+                  className="absolute -top-10 -left-10 w-40 h-40 rounded-full blur-2xl transition-all duration-700"
+                  style={{ background: s.accent, opacity: isActive ? 0.5 : 0.25 }}
+                />
+
+                {/* Bottom fade */}
+                <div
+                  className="absolute inset-x-0 bottom-0 h-1/2"
+                  style={{
+                    background: isActive
+                      ? "linear-gradient(to top, rgba(0,0,0,0.4), transparent)"
+                      : "linear-gradient(to top, rgba(0,0,0,0.6), transparent)",
+                  }}
                 />
 
                 {/* Collapsed state — icon + horizontal title at bottom */}
@@ -463,20 +473,21 @@ function Solutions() {
                   transition={{ duration: 0.2 }}
                 >
                   {/* Number top */}
-                  <div className="text-white/20 text-xs font-bold tracking-[0.2em]">
+                  <div className="text-white/40 text-xs font-bold tracking-[0.2em]">
                     {String(i + 1).padStart(2, "0")}
                   </div>
                   {/* Icon + title bottom */}
                   <div className="flex flex-col gap-3">
                     <div
-                      className="w-9 h-9 flex items-center justify-center rounded-sm text-white"
-                      style={{ backgroundColor: s.accent + "33", border: `1px solid ${s.accent}55` }}
+                      className="w-10 h-10 flex items-center justify-center rounded-sm text-white"
+                      style={{ backgroundColor: s.accent + "66", border: `1px solid ${s.accent}99` }}
                     >
                       {s.icon}
                     </div>
-                    <h4 className="text-white font-[var(--app-font-heading)] font-bold text-sm leading-snug">
+                    <h4 className="text-white font-[var(--app-font-heading)] font-bold text-sm leading-snug drop-shadow-lg">
                       {s.title}
                     </h4>
+                    <div className="w-6 h-0.5 rounded-full" style={{ backgroundColor: s.accent }} />
                   </div>
                 </motion.div>
 
