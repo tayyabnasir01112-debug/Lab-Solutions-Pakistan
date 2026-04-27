@@ -156,122 +156,223 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
 /* ─── Navbar ──────────────────────────────────────────────────── */
 
 /* ─── Hero ────────────────────────────────────────────────────── */
+const heroSpecialties = [
+  "Life Sciences",
+  "Transplant Diagnostics",
+  "Molecular Biology",
+  "Immunology",
+  "Cell Biology",
+  "Pharmaceuticals",
+];
+
+const heroStats = [
+  { value: "30+", label: "Years of Excellence", sub: "Serving Pakistan since 1985" },
+  { value: "8+", label: "Global Brands", sub: "Luminex, Merck & more" },
+  { value: "500+", label: "Clients Served", sub: "Hospitals, labs & universities" },
+  { value: "6", label: "Specialisations", sub: "End-to-end lab solutions" },
+];
+
 function Hero({ visible }: { visible: boolean }) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "15%"]);
+  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+
+  const [specIndex, setSpecIndex] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => setSpecIndex(i => (i + 1) % heroSpecialties.length), 2400);
+    return () => clearInterval(t);
+  }, []);
 
   return (
     <section ref={ref} className="relative min-h-[100dvh] flex items-center pt-24 pb-12 overflow-hidden bg-background">
-      {/* Parallax bg image */}
+
+      {/* ── Animated background layers ── */}
+      {/* Parallax image */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/95 to-background/20 z-10" />
+        <motion.div
+          className="absolute inset-0 z-10"
+          style={{
+            background: "linear-gradient(100deg, hsl(var(--background)) 42%, hsl(var(--background)/0.92) 62%, hsl(var(--background)/0.35) 100%)",
+          }}
+        />
         <motion.img
           src={img("/images/sc-hero.png")}
-          alt="Advanced Multiplex Analyzer"
+          alt="Science Centre Laboratory"
           style={{ y: imgY }}
-          className="w-full h-[115%] object-cover object-right absolute top-0 left-0"
+          className="w-full h-[115%] object-cover object-right absolute top-0 left-0 opacity-40"
         />
       </div>
 
-      <div className="container mx-auto px-6 md:px-12 relative z-20">
-        <div className="max-w-3xl">
-          {/* Badge */}
-          <motion.div
-            className="inline-flex items-center gap-2 px-3 py-1 border border-primary/30 bg-primary/10 text-primary text-xs font-semibold tracking-wider uppercase mb-6 rounded-none"
-            variants={fadeUp}
-            custom={0.05}
-            initial="hidden"
-            animate={visible ? "visible" : "hidden"}
-          >
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            Flagship Product: LABScan3D™
-          </motion.div>
+      {/* Animated dot grid */}
+      <div className="absolute inset-0 z-0 opacity-[0.035]"
+        style={{ backgroundImage: "radial-gradient(circle, hsl(var(--foreground)) 1px, transparent 1px)", backgroundSize: "36px 36px" }} />
 
-          {/* H1 line 1 */}
-          <div className="overflow-hidden">
-            <motion.h1
-              className="text-5xl md:text-7xl font-[var(--app-font-heading)] font-bold text-foreground leading-[1.1] tracking-tight"
-              variants={fadeUp}
-              custom={0.15}
-              initial="hidden"
-              animate={visible ? "visible" : "hidden"}
-            >
-              The Most Advanced
-            </motion.h1>
-          </div>
+      {/* Glowing primary orb — top left */}
+      <div className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full z-0 pointer-events-none"
+        style={{ background: "radial-gradient(circle, hsl(var(--primary)/0.12) 0%, transparent 70%)" }} />
 
-          {/* H1 line 2 gradient */}
-          <div className="overflow-hidden mb-6">
+      {/* ── Content ── */}
+      <motion.div style={{ opacity }} className="container mx-auto px-6 md:px-12 relative z-20 w-full">
+        <div className="grid lg:grid-cols-12 gap-12 lg:gap-6 items-center">
+
+          {/* LEFT: Main intro */}
+          <div className="lg:col-span-7">
+
+            {/* Eyebrow */}
             <motion.div
-              className="text-5xl md:text-7xl font-[var(--app-font-heading)] font-bold leading-[1.1] tracking-tight"
-              variants={fadeUp}
-              custom={0.25}
-              initial="hidden"
-              animate={visible ? "visible" : "hidden"}
+              className="inline-flex items-center gap-2.5 mb-7"
+              variants={fadeUp} custom={0.0} initial="hidden" animate={visible ? "visible" : "hidden"}
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent">
-                Multiplex Analyzer.
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              <span className="text-xs font-bold tracking-[0.22em] text-primary uppercase">
+                Pakistan's Leading Scientific Distributor
               </span>
+            </motion.div>
+
+            {/* Headline */}
+            <div className="overflow-hidden mb-2">
+              <motion.h1
+                className="text-5xl md:text-[4.25rem] lg:text-[4.75rem] font-[var(--app-font-heading)] font-black text-foreground leading-[1.0] tracking-tight"
+                variants={fadeUp} custom={0.1} initial="hidden" animate={visible ? "visible" : "hidden"}
+              >
+                Your Partner in
+              </motion.h1>
+            </div>
+
+            {/* Animated cycling specialty */}
+            <div className="overflow-hidden mb-6 h-[1.15em]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={specIndex}
+                  className="text-5xl md:text-[4.25rem] lg:text-[4.75rem] font-[var(--app-font-heading)] font-black leading-[1.0] tracking-tight text-transparent bg-clip-text"
+                  style={{ backgroundImage: "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)))" }}
+                  initial={{ y: 60, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -60, opacity: 0 }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  {heroSpecialties[specIndex]}
+                </motion.div>
+              </AnimatePresence>
+            </div>
+
+            {/* Body copy */}
+            <motion.p
+              className="text-base md:text-lg text-muted-foreground font-light leading-relaxed max-w-xl mb-10"
+              variants={fadeUp} custom={0.3} initial="hidden" animate={visible ? "visible" : "hidden"}
+            >
+              Science Centre has been Pakistan's trusted bridge between world-class diagnostic technology and the laboratories, hospitals, research institutes, and universities that depend on it — for over three decades.
+            </motion.p>
+
+            {/* CTAs */}
+            <motion.div
+              className="flex flex-wrap gap-3"
+              variants={fadeUp} custom={0.4} initial="hidden" animate={visible ? "visible" : "hidden"}
+            >
+              <Button asChild size="lg"
+                className="rounded-none bg-primary text-primary-foreground hover:bg-primary/90 h-13 px-8 text-sm font-bold tracking-wide group">
+                <a href="#solutions">
+                  Explore Our Solutions
+                  <motion.span className="inline-flex ml-2"
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}>
+                    <ArrowRight className="h-4 w-4" />
+                  </motion.span>
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="outline"
+                className="rounded-none h-13 px-8 text-sm font-bold tracking-wide border-border hover:bg-muted">
+                <a href="#contact">Talk to a Specialist</a>
+              </Button>
+            </motion.div>
+
+            {/* Specialty pill strip */}
+            <motion.div
+              className="flex flex-wrap gap-2 mt-8"
+              variants={fadeUp} custom={0.5} initial="hidden" animate={visible ? "visible" : "hidden"}
+            >
+              {heroSpecialties.map((s, i) => (
+                <span
+                  key={i}
+                  onClick={() => setSpecIndex(i)}
+                  className="text-[11px] font-semibold tracking-wide px-3 py-1.5 border cursor-pointer transition-all duration-300"
+                  style={{
+                    borderColor: i === specIndex ? "hsl(var(--primary))" : "hsl(var(--border))",
+                    color: i === specIndex ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))",
+                    background: i === specIndex ? "hsl(var(--primary)/0.08)" : "transparent",
+                  }}
+                >
+                  {s}
+                </span>
+              ))}
             </motion.div>
           </div>
 
-          {/* Subtext */}
-          <motion.p
-            className="text-xl text-muted-foreground font-light mb-8 max-w-2xl leading-relaxed"
-            variants={fadeUp}
-            custom={0.35}
-            initial="hidden"
-            animate={visible ? "visible" : "hidden"}
-          >
-            500 Unique Bead Regions. Built for Breakthrough Science.
-            <br />
-            Pakistan&apos;s premier B2B distributor of advanced laboratory equipment, analytical
-            instruments, and molecular biology tools.
-          </motion.p>
+          {/* RIGHT: Floating stats cards */}
+          <div className="lg:col-span-5 grid grid-cols-2 gap-3">
+            {heroStats.map((stat, i) => (
+              <motion.div
+                key={i}
+                className="border border-border p-5 md:p-6 relative overflow-hidden group cursor-default"
+                variants={fadeUp} custom={0.2 + i * 0.1} initial="hidden" animate={visible ? "visible" : "hidden"}
+                whileHover={{ y: -4, borderColor: "hsl(var(--primary)/0.5)" }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {/* Subtle hover glow */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ background: "radial-gradient(circle at 50% 50%, hsl(var(--primary)/0.06), transparent 70%)" }} />
 
-          {/* CTAs */}
-          <motion.div
-            className="flex flex-wrap gap-4"
-            variants={fadeUp}
-            custom={0.45}
-            initial="hidden"
-            animate={visible ? "visible" : "hidden"}
-          >
-            <Button
-              asChild
-              size="lg"
-              className="rounded-none bg-primary text-primary-foreground hover:bg-primary/90 h-14 px-8 text-base group"
+                <div className="text-3xl md:text-4xl font-[var(--app-font-heading)] font-black text-foreground mb-1 leading-none">
+                  <motion.span
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={visible ? { opacity: 1, scale: 1 } : {}}
+                    transition={{ duration: 0.5, delay: 0.5 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    {stat.value}
+                  </motion.span>
+                </div>
+                <div className="text-sm font-bold text-foreground mb-1">{stat.label}</div>
+                <div className="text-xs text-muted-foreground font-light">{stat.sub}</div>
+
+                {/* Bottom accent line on hover */}
+                <motion.div
+                  className="absolute bottom-0 left-0 h-0.5 bg-primary"
+                  initial={{ width: 0 }}
+                  whileHover={{ width: "100%" }}
+                  transition={{ duration: 0.4 }}
+                />
+              </motion.div>
+            ))}
+
+            {/* Trust badge card */}
+            <motion.div
+              className="col-span-2 border border-border p-5 flex items-center gap-4 bg-muted/30"
+              variants={fadeUp} custom={0.65} initial="hidden" animate={visible ? "visible" : "hidden"}
             >
-              <a href="#products">
-                Explore LABScan3D™
-                <motion.span
-                  className="inline-flex ml-2"
-                  animate={{ x: [0, 4, 0] }}
-                  transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-                >
-                  <ArrowRight className="h-5 w-5" />
-                </motion.span>
-              </a>
-            </Button>
-            <Button
-              asChild
-              size="lg"
-              variant="outline"
-              className="rounded-none h-14 px-8 text-base border-border hover:bg-muted"
-            >
-              <a href="#solutions">View All Solutions</a>
-            </Button>
-          </motion.div>
+              <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-primary/10 border border-primary/20">
+                <span className="text-lg">🏥</span>
+              </div>
+              <div>
+                <div className="text-sm font-bold text-foreground leading-snug">
+                  Trusted by Leading Hospitals, Research Institutes & Universities across Pakistan
+                </div>
+                <div className="text-xs text-muted-foreground mt-0.5 font-light">
+                  Including government institutes, clinical labs & pharmaceutical companies
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted-foreground z-20"
         initial={{ opacity: 0, y: 10 }}
         animate={visible ? { opacity: 1, y: 0 } : {}}
-        transition={{ delay: 1.2, duration: 0.6 }}
+        transition={{ delay: 1.4, duration: 0.6 }}
       >
         <span className="text-[10px] tracking-widest uppercase">Scroll</span>
         <motion.div
