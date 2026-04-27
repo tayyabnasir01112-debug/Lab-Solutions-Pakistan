@@ -364,117 +364,126 @@ const partnerBrands = [
 function Partners() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px 0px" });
-  const [hovered, setHovered] = useState<number | null>(null);
+  const [paused, setPaused] = useState(false);
+
+  // Two rows — row 2 is a different order for visual variety
+  const row1 = partnerBrands;
+  const row2 = [...partnerBrands.slice(4), ...partnerBrands.slice(0, 4)];
+
+  const BrandPill = ({ brand }: { brand: typeof partnerBrands[0] }) => (
+    <div
+      className="flex-shrink-0 flex items-center gap-3 px-5 py-3 border mx-2 group cursor-default transition-all duration-300 hover:scale-105"
+      style={{
+        borderColor: brand.color + "30",
+        background: brand.color + "08",
+      }}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div
+        className="text-[11px] font-black tracking-[0.14em] px-2 py-0.5"
+        style={{ color: brand.color, background: brand.color + "18" }}
+      >
+        {brand.initial}
+      </div>
+      <div>
+        <div className="text-sm font-[var(--app-font-heading)] font-bold text-foreground leading-none mb-0.5 whitespace-nowrap">
+          {brand.name}
+        </div>
+        <div className="text-[10px] text-muted-foreground font-medium tracking-wide whitespace-nowrap">
+          {brand.sub}
+        </div>
+      </div>
+    </div>
+  );
 
   return (
-    <section ref={ref} id="partners" className="py-20 md:py-28 border-y border-border overflow-hidden">
-      <div className="container mx-auto px-6 md:px-12">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
-          <div>
-            <motion.div
-              className="text-xs font-bold tracking-[0.18em] text-primary uppercase mb-3"
-              initial={{ opacity: 0, y: 12 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5 }}
-            >
-              Trusted Partnerships
-            </motion.div>
-            <motion.h3
-              className="text-3xl md:text-4xl font-[var(--app-font-heading)] font-bold text-foreground tracking-tight"
-              initial={{ opacity: 0, y: 16 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.55, delay: 0.05 }}
-            >
-              Official Partner of Globally<br className="hidden md:block" /> Recognized Brands
-            </motion.h3>
-          </div>
-          <motion.p
-            className="text-muted-foreground text-sm md:text-base font-light max-w-xs md:text-right"
-            initial={{ opacity: 0, y: 12 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
+    <section ref={ref} id="partners" className="py-16 border-y border-border overflow-hidden">
+      {/* Header — compact, inline */}
+      <div className="container mx-auto px-6 md:px-12 mb-10">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          <motion.div
+            initial={{ opacity: 0, x: -16 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.5 }}
+            className="flex items-center gap-4"
           >
-            Representing world-class manufacturers across diagnostics, life sciences, and laboratory instrumentation.
+            <div className="w-6 h-px bg-primary" />
+            <span className="text-xs font-bold tracking-[0.2em] text-primary uppercase">
+              Trusted Partnerships
+            </span>
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0, x: 16 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="text-muted-foreground text-xs font-medium tracking-wide"
+          >
+            Official distributor of 8+ globally recognized scientific brands across Pakistan
           </motion.p>
         </div>
+      </div>
 
-        {/* Brand Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-          {partnerBrands.map((brand, i) => {
-            const isHovered = hovered === i;
-            return (
-              <motion.div
-                key={i}
-                onMouseEnter={() => setHovered(i)}
-                onMouseLeave={() => setHovered(null)}
-                initial={{ opacity: 0, y: 24 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.55, delay: 0.08 * i, ease: [0.16, 1, 0.3, 1] }}
-                className={`relative group cursor-pointer border rounded-sm p-6 md:p-8 flex flex-col justify-between gap-6 transition-all duration-400 overflow-hidden ${brand.border}`}
-                style={{
-                  background: isHovered
-                    ? `linear-gradient(135deg, ${brand.color}18 0%, ${brand.color}08 100%)`
-                    : "transparent",
-                }}
-              >
-                {/* Top: initial badge */}
-                <div className="flex items-center justify-between">
-                  <div
-                    className="text-xs md:text-sm tracking-[0.12em] font-bold px-2.5 py-1 rounded-sm"
-                    style={{
-                      color: brand.color,
-                      backgroundColor: brand.color + "18",
-                      border: `1px solid ${brand.color}30`,
-                    }}
-                  >
-                    {brand.initial}
-                  </div>
-                  {/* Arrow icon - appears on hover */}
-                  <motion.div
-                    animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -6 }}
-                    transition={{ duration: 0.25 }}
-                    style={{ color: brand.color }}
-                  >
-                    <ArrowRight className="h-4 w-4" />
-                  </motion.div>
-                </div>
+      {/* Marquee rows */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        className="space-y-3"
+      >
+        {/* Row 1 — scrolls left */}
+        <div className="relative flex overflow-hidden">
+          {/* Edge fade masks */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+            style={{ background: "linear-gradient(to right, var(--background), transparent)" }} />
+          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+            style={{ background: "linear-gradient(to left, var(--background), transparent)" }} />
 
-                {/* Bottom: name + sub */}
-                <div>
-                  <div
-                    className={`text-lg md:text-xl ${brand.weight} font-[var(--app-font-heading)] leading-tight mb-1 transition-colors duration-300`}
-                    style={{ color: isHovered ? brand.color : "var(--foreground)" }}
-                  >
-                    {brand.name}
-                  </div>
-                  <div className="text-muted-foreground text-xs font-medium tracking-wide">
-                    {brand.sub}
-                  </div>
-                </div>
-
-                {/* Bottom accent line */}
-                <motion.div
-                  className="absolute bottom-0 left-0 h-0.5 rounded-full"
-                  animate={{ width: isHovered ? "100%" : "0%" }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                  style={{ backgroundColor: brand.color }}
-                />
-              </motion.div>
-            );
-          })}
+          <div
+            className="flex"
+            style={{
+              animation: paused ? "none" : "marquee-left 28s linear infinite",
+              willChange: "transform",
+            }}
+          >
+            {[...row1, ...row1, ...row1].map((brand, i) => (
+              <BrandPill key={i} brand={brand} />
+            ))}
+          </div>
         </div>
 
-        {/* Bottom note */}
-        <motion.p
-          className="text-center text-muted-foreground text-xs font-medium tracking-widest uppercase mt-10"
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.6 }}
-        >
-          Authorized distributor across Pakistan
-        </motion.p>
-      </div>
+        {/* Row 2 — scrolls right */}
+        <div className="relative flex overflow-hidden">
+          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+            style={{ background: "linear-gradient(to right, var(--background), transparent)" }} />
+          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+            style={{ background: "linear-gradient(to left, var(--background), transparent)" }} />
+
+          <div
+            className="flex"
+            style={{
+              animation: paused ? "none" : "marquee-right 34s linear infinite",
+              willChange: "transform",
+            }}
+          >
+            {[...row2, ...row2, ...row2].map((brand, i) => (
+              <BrandPill key={i} brand={brand} />
+            ))}
+          </div>
+        </div>
+      </motion.div>
+
+      {/* CSS keyframes injected inline */}
+      <style>{`
+        @keyframes marquee-left {
+          0%   { transform: translateX(0); }
+          100% { transform: translateX(-33.333%); }
+        }
+        @keyframes marquee-right {
+          0%   { transform: translateX(-33.333%); }
+          100% { transform: translateX(0); }
+        }
+      `}</style>
     </section>
   );
 }
