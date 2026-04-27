@@ -212,8 +212,8 @@ function Hero({ visible }: { visible: boolean }) {
     <section ref={ref} className="relative min-h-[100dvh] flex items-center pt-24 pb-12 bg-background">
 
       {/* ── Animated background layers ── */}
-      {/* Parallax image */}
-      <div className="absolute inset-0 z-0">
+      {/* Parallax image - contained within section */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.div
           className="absolute inset-0 z-10"
           style={{
@@ -232,12 +232,12 @@ function Hero({ visible }: { visible: boolean }) {
       <div className="absolute inset-0 z-0 opacity-[0.035]"
         style={{ backgroundImage: "radial-gradient(circle, hsl(var(--foreground)) 1px, transparent 1px)", backgroundSize: "36px 36px" }} />
 
-      {/* Glowing primary orb — top left */}
-      <div className="absolute -top-32 -left-32 w-[500px] h-[500px] rounded-full z-0 pointer-events-none"
-        style={{ background: "radial-gradient(circle, hsl(var(--primary)/0.12) 0%, transparent 70%)" }} />
+      {/* Glowing primary orb — contained */}
+      <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full z-0 pointer-events-none"
+        style={{ background: "radial-gradient(circle, hsl(var(--primary)/0.10) 0%, transparent 70%)" }} />
 
       {/* ── Content ── */}
-      <motion.div style={{ opacity }} className="container mx-auto px-6 md:px-12 relative z-20 w-full">
+      <div className="container mx-auto px-6 md:px-12 relative z-20 w-full">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-6 items-center">
 
           {/* LEFT: Main intro */}
@@ -394,7 +394,7 @@ function Hero({ visible }: { visible: boolean }) {
             </motion.div>
           </div>
         </div>
-      </motion.div>
+      </div>
 
       {/* Scroll indicator */}
       <motion.div
