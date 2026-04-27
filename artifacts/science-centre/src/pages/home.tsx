@@ -389,8 +389,7 @@ const solutions = [
 ];
 
 function Solutions() {
-  const [active, setActive] = useState(0);
-  const sol = solutions[active];
+  const [active, setActive] = useState<number | null>(null);
 
   return (
     <section id="solutions" className="py-24 md:py-32 bg-background overflow-hidden">
@@ -418,169 +417,85 @@ function Solutions() {
           </div>
         </div>
 
-        {/* Dual-pane interactive showcase */}
-        <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-stretch">
-          {/* LEFT: vertical list */}
-          <div className="lg:col-span-5">
-            <ul className="border-t border-border">
-              {solutions.map((s, i) => {
-                const isActive = i === active;
-                return (
-                  <li
-                    key={i}
-                    onMouseEnter={() => setActive(i)}
-                    onClick={() => setActive(i)}
-                    className="border-b border-border cursor-pointer group"
-                    data-testid={`solution-tab-${i}`}
-                  >
-                    <div className="flex items-center gap-4 py-5 md:py-6 transition-colors">
-                      {/* icon disc */}
-                      <div
-                        className={`relative w-11 h-11 flex-shrink-0 flex items-center justify-center border transition-all duration-500 ${
-                          isActive
-                            ? "border-transparent text-white"
-                            : "border-border text-muted-foreground group-hover:text-foreground group-hover:border-foreground/40"
-                        }`}
-                        style={isActive ? { background: s.accent } : undefined}
-                      >
-                        {s.icon}
-                      </div>
-                      {/* label */}
-                      <div className="flex-1 min-w-0">
-                        <div
-                          className={`font-[var(--app-font-heading)] text-lg md:text-xl font-bold transition-colors ${
-                            isActive ? "text-foreground" : "text-foreground/70 group-hover:text-foreground"
-                          }`}
-                        >
-                          {s.title}
-                        </div>
-                        <div
-                          className={`text-xs md:text-sm uppercase tracking-[0.12em] mt-1 transition-colors ${
-                            isActive ? "text-primary" : "text-muted-foreground"
-                          }`}
-                        >
-                          {s.short}
-                        </div>
-                      </div>
-                      {/* arrow */}
-                      <div
-                        className={`relative w-10 h-10 flex-shrink-0 hidden md:flex items-center justify-center rounded-full border border-dashed transition-all duration-500 ${
-                          isActive
-                            ? "border-primary text-primary opacity-100 translate-x-0"
-                            : "border-border text-muted-foreground opacity-50 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0"
-                        }`}
-                      >
-                        <ArrowRight className="h-4 w-4" />
-                      </div>
-                    </div>
-                    {/* animated active progress line */}
-                    {isActive && (
-                      <motion.div
-                        layoutId="solution-progress"
-                        className="h-px"
-                        style={{ background: s.accent }}
-                        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                      />
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+        {/* ngenebio-style horizontal expanding panels */}
+        <div className="flex h-[520px] md:h-[600px] w-full overflow-hidden">
+          {solutions.map((s, i) => {
+            const isActive = active === i;
+            return (
+              <motion.div
+                key={i}
+                onMouseEnter={() => setActive(i)}
+                onMouseLeave={() => setActive(null)}
+                animate={{ flex: isActive ? 3.5 : 1 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="relative overflow-hidden cursor-pointer"
+                style={{ minWidth: 0 }}
+              >
+                {/* Background image */}
+                <img
+                  src={img(s.image)}
+                  alt={s.title}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700"
+                  style={{ transform: isActive ? "scale(1.05)" : "scale(1)" }}
+                />
 
-          {/* RIGHT: image showcase */}
-          <div className="lg:col-span-7">
-            <div className="relative aspect-[4/3] md:aspect-[5/4] lg:aspect-[4/3] w-full overflow-hidden bg-muted">
-              <AnimatePresence mode="sync">
+                {/* Dark base overlay always visible */}
+                <div className="absolute inset-0 bg-black/50" />
+
+                {/* Colored overlay - slides in on hover */}
                 <motion.div
-                  key={sol.image + "-" + active}
-                  initial={{ opacity: 0, scale: 1.05 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1 }}
-                  transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                   className="absolute inset-0"
+                  animate={{ opacity: isActive ? 1 : 0 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
+                  style={{ backgroundColor: s.accent + "dd" }}
+                />
+
+                {/* Title always visible at bottom when collapsed */}
+                <motion.div
+                  className="absolute inset-0 flex items-end"
+                  animate={{ opacity: isActive ? 0 : 1 }}
+                  transition={{ duration: 0.25 }}
                 >
-                  <img
-                    src={img(sol.image)}
-                    alt={sol.title}
-                    className="absolute inset-0 w-full h-full object-cover"
-                  />
-                  {/* accent tint */}
-                  <div
-                    className="absolute inset-0 mix-blend-multiply opacity-40"
-                    style={{
-                      background: `linear-gradient(135deg, ${sol.accent} 0%, transparent 60%)`,
-                    }}
-                  />
-                  {/* subtle grid */}
-                  <div
-                    className="absolute inset-0 opacity-[0.08]"
-                    style={{
-                      backgroundImage:
-                        "linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px)",
-                      backgroundSize: "48px 48px",
-                    }}
-                  />
-                  {/* darken bottom for legibility */}
-                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-foreground/40 to-transparent" />
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Index counter top-right */}
-              <div className="absolute top-5 right-5 z-10 flex items-center gap-3 text-background mix-blend-difference text-xs font-bold tracking-[0.18em] uppercase">
-                <span className="tabular-nums">{String(active + 1).padStart(2, "0")}</span>
-                <span className="w-8 h-px bg-background/60" />
-                <span className="tabular-nums text-background/70">
-                  {String(solutions.length).padStart(2, "0")}
-                </span>
-              </div>
-
-              {/* Floating overlay card */}
-              <div className="absolute left-0 bottom-0 right-0 md:right-auto md:max-w-[85%] z-10">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={"card-" + active}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
-                    className="bg-background/95 backdrop-blur-md p-6 md:p-10 md:pr-24 relative"
-                  >
-                    <div
-                      className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.2em] mb-2"
-                      style={{ color: sol.accent }}
+                  <div className="p-5 md:p-6">
+                    <h4
+                      className="text-white font-[var(--app-font-heading)] font-bold leading-tight"
+                      style={{ writingMode: "vertical-rl", textOrientation: "mixed", transform: "rotate(180deg)" }}
                     >
-                      Focus Area · {String(active + 1).padStart(2, "0")}
-                    </div>
-                    <h4 className="font-[var(--app-font-heading)] text-2xl md:text-4xl font-bold text-foreground leading-tight tracking-tight">
-                      {sol.title}
+                      {s.title}
                     </h4>
-                    <p className="text-muted-foreground text-sm md:text-base font-light leading-relaxed mt-3 max-w-lg">
-                      {sol.desc}
-                    </p>
-                    <a
-                      href="#contact"
-                      className="mt-6 inline-flex items-center gap-2 text-xs md:text-sm font-bold uppercase tracking-[0.16em] text-foreground hover:text-primary transition-colors"
-                    >
-                      Talk to a specialist
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </a>
+                  </div>
+                </motion.div>
 
-                    {/* Dashed circle arrow button — bottom-right */}
-                    <a
-                      href="#contact"
-                      aria-label={`Learn more about ${sol.title}`}
-                      className="hidden md:flex absolute right-6 bottom-6 w-14 h-14 items-center justify-center rounded-full border border-dashed transition-all duration-300 hover:scale-110 hover:rotate-[-12deg]"
-                      style={{ borderColor: sol.accent, color: sol.accent }}
-                    >
-                      <ArrowRight className="h-5 w-5" />
-                    </a>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </div>
-          </div>
+                {/* Expanded content */}
+                <motion.div
+                  className="absolute inset-0 flex flex-col justify-end p-8 md:p-10"
+                  animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: isActive ? 0.15 : 0 }}
+                >
+                  <div className="text-white/70 text-xs font-bold tracking-[0.18em] uppercase mb-3">
+                    Focus Area · {String(i + 1).padStart(2, "0")}
+                  </div>
+                  <h4 className="font-[var(--app-font-heading)] text-2xl md:text-3xl font-bold text-white leading-tight tracking-tight mb-4">
+                    {s.title}
+                  </h4>
+                  <p className="text-white/80 text-sm md:text-base font-light leading-relaxed mb-8 max-w-sm">
+                    {s.desc}
+                  </p>
+                  {/* Arrow button */}
+                  <div className="w-14 h-14 rounded-full border-2 border-dashed border-white/60 flex items-center justify-center text-white hover:border-white hover:bg-white/10 transition-all duration-300">
+                    <ArrowRight className="h-5 w-5" />
+                  </div>
+                </motion.div>
+
+                {/* Vertical divider line between panels */}
+                {i < solutions.length - 1 && (
+                  <div className="absolute right-0 top-0 bottom-0 w-px bg-white/10 z-10" />
+                )}
+              </motion.div>
+            );
+          })}
         </div>
+
       </div>
     </section>
   );
