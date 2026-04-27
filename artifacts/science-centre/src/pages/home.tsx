@@ -645,89 +645,322 @@ function Solutions() {
 
 /* ─── Products ────────────────────────────────────────────────── */
 const products = [
-  { name: "LABScan3D™", brand: "Luminex", desc: "The world's most advanced multiplex analyzer with 500 unique bead regions." },
-  { name: "Guava® easyCyte™", brand: "Merck", desc: "Benchtop flow cytometers providing powerful cellular analysis." },
-  { name: "Guava® Muse®", brand: "Merck", desc: "Compact cell analyzer for highly accurate and precise cell counts." },
-  { name: "Amnis® ImageStream® X Mk II", brand: "Merck", desc: "Combines the speed of flow cytometry with the resolution of microscopy." },
-  { name: "Amnis® CellStream®", brand: "Merck", desc: "Compact flow cytometer with unprecedented sensitivity." },
+  {
+    name: "LABScan3D™",
+    brand: "Luminex",
+    category: "Multiplex Analysis",
+    accent: "#0077C8",
+    desc: "The world's most advanced multiplex analyzer with 500 unique bead regions — delivering up to 500 analytes per sample simultaneously.",
+    specs: ["500 bead regions", "High-throughput", "Automated workflow", "FDA-cleared"],
+  },
+  {
+    name: "Guava® easyCyte™",
+    brand: "Merck",
+    category: "Flow Cytometry",
+    accent: "#E8262A",
+    desc: "Benchtop flow cytometers providing powerful multi-parameter cellular analysis with industry-leading sensitivity and reproducibility.",
+    specs: ["3 lasers / 14 parameters", "Benchtop design", "Capillary-based", "GxP compliant"],
+  },
+  {
+    name: "Guava® Muse®",
+    brand: "Merck",
+    category: "Cell Analysis",
+    accent: "#7B2D8B",
+    desc: "Compact cell analyzer offering highly accurate and precise cell counts and viability using fluorescence-based detection technology.",
+    specs: ["Cell viability", "Rapid results", "Compact footprint", "Pre-optimized kits"],
+  },
+  {
+    name: "Amnis® ImageStream® X Mk II",
+    brand: "Merck",
+    category: "Imaging Flow Cytometry",
+    accent: "#2E7D32",
+    desc: "Combines the statistical power of flow cytometry with the resolution of microscopy — capturing up to 12 images per cell in real time.",
+    specs: ["12-channel imaging", "60× magnification", "IDEAS® software", "10,000 cells/sec"],
+  },
+  {
+    name: "Amnis® CellStream®",
+    brand: "Merck",
+    category: "Flow Cytometry",
+    accent: "#F37021",
+    desc: "A compact flow cytometer with unprecedented sensitivity and dynamic range, ideal for challenging samples and rare cell populations.",
+    specs: ["4 lasers / 16 parameters", "High sensitivity", "Rare cell detection", "Low sample volume"],
+  },
+  {
+    name: "MAGPIX®",
+    brand: "Luminex",
+    category: "Multiplex Immunoassay",
+    accent: "#005BAC",
+    desc: "The most affordable and compact multiplexing platform — delivering lab-quality results for up to 50 analytes from a single sample.",
+    specs: ["50-plex capability", "CLIA-waived", "Compact design", "Cloud connectivity"],
+  },
 ];
 
 function FeaturedProducts() {
-  return (
-    <section id="products" className="py-24 bg-card border-t border-border">
-      <div className="container mx-auto px-6 md:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
-          <div>
-            <Reveal>
-              <h2 className="text-sm font-semibold tracking-widest text-primary uppercase mb-3">
-                Featured Instruments
-              </h2>
-              <h3 className="text-3xl md:text-5xl font-[var(--app-font-heading)] font-bold text-foreground leading-tight mb-6">
-                Institutional Confidence in Every Instrument.
-              </h3>
-              <p className="text-muted-foreground text-lg font-light mb-8 max-w-lg">
-                We distribute only the highest-tier analytical tools, trusted by tier-1 academic
-                medical centers and pharmaceutical leaders worldwide.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Button asChild className="rounded-none bg-foreground text-background hover:bg-foreground/90 px-8">
-                  <Link href="/products">
-                    Browse Full Catalogue
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  className="rounded-none border-border hover:bg-muted px-8"
-                >
-                  <a href="#contact">Request Quote</a>
-                </Button>
-              </div>
-            </Reveal>
-          </div>
+  const ref = useRef<HTMLElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-80px 0px" });
+  const [current, setCurrent] = useState(0);
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [progress, setProgress] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-          <Reveal direction="right" delay={0.1}>
-            <div className="relative aspect-square md:aspect-[4/3] w-full">
-              <div className="absolute inset-0 bg-primary/5 translate-x-4 translate-y-4 z-0" />
-              <motion.img
-                src={img("/images/sc-instruments.png")}
-                alt="Laboratory analytical instruments"
-                className="w-full h-full object-cover z-10 relative border border-border"
-                whileHover={{ scale: 1.02 }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-              />
-            </div>
-          </Reveal>
+  const DURATION = 4000;
+
+  const startTimer = () => {
+    setProgress(0);
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    const start = Date.now();
+    intervalRef.current = setInterval(() => {
+      const elapsed = Date.now() - start;
+      const pct = Math.min((elapsed / DURATION) * 100, 100);
+      setProgress(pct);
+      if (elapsed >= DURATION) {
+        setCurrent(c => (c + 1) % products.length);
+      }
+    }, 30);
+  };
+
+  useEffect(() => {
+    if (hovered !== null) {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      return;
+    }
+    startTimer();
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+  }, [current, hovered]);
+
+  const go = (i: number) => { setCurrent(i); };
+  const prev = () => go((current - 1 + products.length) % products.length);
+  const next = () => go((current + 1) % products.length);
+
+  const p = products[current];
+
+  return (
+    <section ref={ref} id="products" className="py-24 bg-background border-t border-border overflow-hidden">
+      <div className="container mx-auto px-6 md:px-12">
+
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+          <div>
+            <motion.div className="text-xs font-bold tracking-[0.18em] text-primary uppercase mb-3"
+              initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }}>
+              Featured Instruments
+            </motion.div>
+            <motion.h3 className="text-3xl md:text-5xl font-[var(--app-font-heading)] font-bold text-foreground tracking-tight leading-tight"
+              initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.55, delay: 0.05 }}>
+              Institutional Confidence<br className="hidden md:block" /> in Every Instrument.
+            </motion.h3>
+          </div>
+          <motion.div className="flex gap-3"
+            initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ duration: 0.5, delay: 0.15 }}>
+            <Button asChild className="rounded-none bg-foreground text-background hover:bg-foreground/90 px-6">
+              <Link href="/products">Browse All <ArrowRight className="ml-2 h-4 w-4" /></Link>
+            </Button>
+            <Button asChild variant="outline" className="rounded-none border-border px-6">
+              <a href="#contact">Request Quote</a>
+            </Button>
+          </motion.div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((p, i) => (
-            <Reveal key={i} delay={0.05 * i}>
-              <motion.div
-                className="bg-background border border-border p-6 flex flex-col cursor-pointer group h-full"
-                whileHover={{
-                  borderColor: "hsl(var(--primary))",
-                  y: -4,
-                  boxShadow: "0 12px 40px -8px hsl(var(--primary) / 0.15)",
-                }}
-                transition={{ duration: 0.25, ease: "easeOut" }}
-              >
-                <div className="flex justify-between items-start mb-12">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground bg-muted px-2 py-1">
+        {/* Main Slideshow */}
+        <motion.div className="relative w-full h-[420px] md:h-[520px] overflow-hidden"
+          initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.2 }}>
+
+          {/* Background layer */}
+          <AnimatePresence mode="sync">
+            <motion.div key={"bg-" + current}
+              className="absolute inset-0"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.7 }}
+              style={{ background: `linear-gradient(135deg, ${p.accent}22 0%, ${p.accent}08 50%, transparent 100%)` }}
+            />
+          </AnimatePresence>
+
+          {/* Animated grid pattern */}
+          <div className="absolute inset-0 opacity-[0.035]"
+            style={{ backgroundImage: "linear-gradient(rgba(0,0,0,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.8) 1px, transparent 1px)", backgroundSize: "48px 48px" }} />
+
+          {/* Border */}
+          <div className="absolute inset-0 border border-border" />
+
+          {/* Left: main content */}
+          <div className="absolute inset-0 flex flex-col justify-between p-8 md:p-12">
+            {/* Top row */}
+            <div className="flex items-center justify-between">
+              <AnimatePresence mode="wait">
+                <motion.div key={"tag-" + current} className="flex items-center gap-3"
+                  initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 16 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}>
+                  <span className="text-xs font-bold tracking-[0.18em] uppercase px-3 py-1.5 rounded-sm"
+                    style={{ color: p.accent, background: p.accent + "20", border: `1px solid ${p.accent}40` }}>
                     {p.brand}
                   </span>
-                  <div className="text-muted-foreground group-hover:text-primary transition-colors">
-                    <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-                  </div>
+                  <span className="text-muted-foreground text-xs font-medium tracking-wide hidden md:block">
+                    {p.category}
+                  </span>
+                </motion.div>
+              </AnimatePresence>
+              {/* Counter */}
+              <div className="text-muted-foreground text-xs font-bold tracking-[0.2em]">
+                <span className="text-foreground">{String(current + 1).padStart(2, "0")}</span>
+                <span className="mx-2">/</span>
+                {String(products.length).padStart(2, "0")}
+              </div>
+            </div>
+
+            {/* Center: big instrument name */}
+            <AnimatePresence mode="wait">
+              <motion.div key={"name-" + current}
+                initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
+                <div className="text-muted-foreground text-xs font-bold tracking-[0.25em] uppercase mb-4">
+                  Focus Instrument
                 </div>
-                <h4 className="text-lg font-[var(--app-font-heading)] font-bold text-foreground mb-2 mt-auto">
+                <h2 className="font-[var(--app-font-heading)] font-black text-foreground leading-none tracking-tight"
+                  style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}>
                   {p.name}
-                </h4>
-                <p className="text-sm text-muted-foreground font-light">{p.desc}</p>
+                </h2>
+                <p className="text-muted-foreground text-base md:text-lg font-light mt-5 max-w-xl leading-relaxed">
+                  {p.desc}
+                </p>
               </motion.div>
-            </Reveal>
-          ))}
+            </AnimatePresence>
+
+            {/* Bottom: progress + nav */}
+            <div className="flex items-center justify-between gap-6">
+              {/* Progress bar */}
+              <div className="flex-1 h-px bg-border relative overflow-hidden max-w-xs">
+                <motion.div className="absolute left-0 top-0 h-full"
+                  style={{ width: `${progress}%`, backgroundColor: p.accent }}
+                  transition={{ duration: 0 }} />
+              </div>
+              {/* Dot nav */}
+              <div className="flex items-center gap-2">
+                {products.map((_, i) => (
+                  <button key={i} onClick={() => go(i)}
+                    className="transition-all duration-300 rounded-full"
+                    style={{
+                      width: i === current ? "24px" : "6px",
+                      height: "6px",
+                      backgroundColor: i === current ? p.accent : "var(--border)",
+                    }} />
+                ))}
+              </div>
+              {/* Arrows */}
+              <div className="flex gap-2">
+                {[{ fn: prev, label: "←" }, { fn: next, label: "→" }].map(({ fn, label }) => (
+                  <button key={label} onClick={fn}
+                    className="w-10 h-10 flex items-center justify-center border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-all duration-200 text-sm font-bold">
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Right: specs panel (desktop only) */}
+          <AnimatePresence mode="wait">
+            <motion.div key={"specs-" + current}
+              className="absolute right-0 top-0 bottom-0 w-64 hidden lg:flex flex-col justify-center p-8 border-l border-border"
+              initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}>
+              <div className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground mb-5">
+                Key Specs
+              </div>
+              <div className="space-y-3">
+                {p.specs.map((spec, i) => (
+                  <motion.div key={i} className="flex items-center gap-3"
+                    initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.35, delay: 0.15 + i * 0.07, ease: [0.16, 1, 0.3, 1] }}>
+                    <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: p.accent }} />
+                    <span className="text-sm text-foreground font-medium">{spec}</span>
+                  </motion.div>
+                ))}
+              </div>
+              <a href="#contact"
+                className="mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] transition-colors"
+                style={{ color: p.accent }}>
+                Request Quote <ArrowRight className="h-3 w-3" />
+              </a>
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
+
+        {/* Thumbnail strip with hover popup */}
+        <div className="mt-4 grid grid-cols-3 md:grid-cols-6 gap-2">
+          {products.map((prod, i) => {
+            const isActive = i === current;
+            const isHov = hovered === i;
+            return (
+              <div key={i} className="relative"
+                onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)}>
+                <motion.button
+                  onClick={() => go(i)}
+                  className="w-full p-3 md:p-4 text-left border transition-all duration-300 relative overflow-hidden"
+                  style={{
+                    borderColor: isActive ? prod.accent : "var(--border)",
+                    background: isActive ? prod.accent + "12" : "transparent",
+                  }}
+                  whileHover={{ y: -2 }}
+                  transition={{ duration: 0.2 }}>
+                  {/* Active indicator */}
+                  {isActive && (
+                    <motion.div layoutId="active-thumb"
+                      className="absolute top-0 left-0 right-0 h-0.5"
+                      style={{ backgroundColor: prod.accent }} />
+                  )}
+                  <div className="text-[10px] font-bold tracking-wide uppercase mb-1"
+                    style={{ color: isActive ? prod.accent : "var(--muted-foreground)" }}>
+                    {prod.brand}
+                  </div>
+                  <div className="text-xs font-semibold text-foreground leading-tight line-clamp-2">
+                    {prod.name}
+                  </div>
+                </motion.button>
+
+                {/* Hover popup */}
+                <AnimatePresence>
+                  {isHov && (
+                    <motion.div
+                      className="absolute bottom-full left-1/2 mb-3 w-64 z-50 pointer-events-none"
+                      style={{ x: "-50%" }}
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                      transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}>
+                      {/* Arrow */}
+                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full w-3 h-3 rotate-45 border-r border-b border-border"
+                        style={{ backgroundColor: "var(--background)" }} />
+                      {/* Card */}
+                      <div className="bg-background border border-border p-5 shadow-2xl">
+                        {/* Top accent bar */}
+                        <div className="h-0.5 w-full mb-4 rounded-full" style={{ backgroundColor: prod.accent }} />
+                        <div className="flex items-center justify-between mb-3">
+                          <span className="text-[10px] font-bold tracking-[0.18em] uppercase px-2 py-1 rounded-sm"
+                            style={{ color: prod.accent, background: prod.accent + "18" }}>
+                            {prod.brand}
+                          </span>
+                          <span className="text-[10px] text-muted-foreground font-medium">{prod.category}</span>
+                        </div>
+                        <div className="font-[var(--app-font-heading)] font-bold text-foreground text-sm mb-2 leading-snug">
+                          {prod.name}
+                        </div>
+                        <p className="text-muted-foreground text-xs font-light leading-relaxed mb-4">
+                          {prod.desc}
+                        </p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {prod.specs.slice(0, 3).map((s, si) => (
+                            <span key={si} className="text-[10px] font-medium px-2 py-0.5 border border-border text-muted-foreground">
+                              {s}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
