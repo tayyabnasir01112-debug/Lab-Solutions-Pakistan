@@ -209,7 +209,7 @@ function Hero({ visible }: { visible: boolean }) {
   }, []);
 
   return (
-    <section ref={ref} className="relative min-h-[100dvh] flex items-center pt-24 pb-12 overflow-hidden bg-background">
+    <section ref={ref} className="relative min-h-[100dvh] flex items-center pt-24 pb-12 bg-background">
 
       {/* ── Animated background layers ── */}
       {/* Parallax image */}
@@ -255,7 +255,7 @@ function Hero({ visible }: { visible: boolean }) {
             </motion.div>
 
             {/* Headline */}
-            <div className="overflow-hidden mb-2">
+            <div className="mb-2">
               <motion.h1
                 className="text-5xl md:text-[4.25rem] lg:text-[4.75rem] font-[var(--app-font-heading)] font-black text-foreground leading-[1.0] tracking-tight"
                 variants={fadeUp} custom={0.1} initial="hidden" animate={visible ? "visible" : "hidden"}
@@ -265,7 +265,7 @@ function Hero({ visible }: { visible: boolean }) {
             </div>
 
             {/* Animated cycling specialty */}
-            <div className="mb-6 pb-2" style={{ minHeight: "1.25em" }}>
+            <div className="mb-6" style={{ minHeight: "1.5em", paddingBottom: "0.25em", overflow: "visible" }}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={specIndex}
