@@ -242,12 +242,18 @@ function Hero({ visible }: { visible: boolean }) {
             </div>
 
             {/* Animated cycling specialty */}
-            <div className="overflow-hidden mb-6 h-[1.15em]">
+            <div className="overflow-hidden mb-6" style={{ minHeight: "1.15em" }}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={specIndex}
-                  className="text-5xl md:text-[4.25rem] lg:text-[4.75rem] font-[var(--app-font-heading)] font-black leading-[1.0] tracking-tight text-transparent bg-clip-text"
-                  style={{ backgroundImage: "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)))" }}
+                  className="text-5xl md:text-[4.25rem] lg:text-[4.75rem] font-[var(--app-font-heading)] font-black leading-[1.0] tracking-tight"
+                  style={{
+                    backgroundImage: "linear-gradient(90deg, hsl(var(--primary)), hsl(var(--accent)))",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    color: "transparent",
+                  }}
                   initial={{ y: 60, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   exit={{ y: -60, opacity: 0 }}
