@@ -286,51 +286,194 @@ function Hero({ visible }: { visible: boolean }) {
 }
 
 /* ─── Partners ────────────────────────────────────────────────── */
+const partnerBrands = [
+  {
+    name: "Luminex",
+    sub: "Bio-Rad Company",
+    color: "#0077C8",
+    bg: "from-blue-600/10 to-blue-500/5",
+    border: "border-blue-500/20",
+    initial: "LX",
+    weight: "font-black",
+  },
+  {
+    name: "Merck",
+    sub: "Sigma-Aldrich",
+    color: "#E8262A",
+    bg: "from-red-600/10 to-red-500/5",
+    border: "border-red-500/20",
+    initial: "M",
+    weight: "font-black",
+  },
+  {
+    name: "One Lambda",
+    sub: "Thermo Fisher Scientific",
+    color: "#F37021",
+    bg: "from-orange-500/10 to-orange-400/5",
+    border: "border-orange-500/20",
+    initial: "OL",
+    weight: "font-bold",
+  },
+  {
+    name: "cytognos",
+    sub: "Flow Cytometry",
+    color: "#CC0000",
+    bg: "from-red-700/10 to-red-600/5",
+    border: "border-red-600/20",
+    initial: "●",
+    weight: "font-bold",
+  },
+  {
+    name: "DWK Life Sciences",
+    sub: "Lab Glassware",
+    color: "#005BAC",
+    bg: "from-blue-700/10 to-blue-600/5",
+    border: "border-blue-600/20",
+    initial: "DWK",
+    weight: "font-bold",
+  },
+  {
+    name: "KERN",
+    sub: "Precision Instruments",
+    color: "#003087",
+    bg: "from-indigo-700/10 to-indigo-600/5",
+    border: "border-indigo-600/20",
+    initial: "K",
+    weight: "font-black",
+  },
+  {
+    name: "CNW",
+    sub: "Chromatography",
+    color: "#2E7D32",
+    bg: "from-green-700/10 to-green-600/5",
+    border: "border-green-600/20",
+    initial: "CNW",
+    weight: "font-bold",
+  },
+  {
+    name: "Meso Scale",
+    sub: "Diagnostics",
+    color: "#7B2D8B",
+    bg: "from-purple-700/10 to-purple-600/5",
+    border: "border-purple-600/20",
+    initial: "MSD",
+    weight: "font-bold",
+  },
+];
+
 function Partners() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px 0px" });
+  const [hovered, setHovered] = useState<number | null>(null);
 
   return (
-    <section ref={ref} id="partners" className="py-12 border-y border-border bg-muted/30">
+    <section ref={ref} id="partners" className="py-20 md:py-28 border-y border-border overflow-hidden">
       <div className="container mx-auto px-6 md:px-12">
-        <motion.p
-          className="text-center text-sm font-semibold tracking-widest text-muted-foreground uppercase mb-8"
-          initial={{ opacity: 0, y: 16 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-        >
-          Official Partner of Globally Recognized Brands
-        </motion.p>
-        <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24">
-          {[
-            {
-              name: "LUMINEX",
-              dot: <div className="h-4 w-4 bg-primary rounded-sm" />,
-              bg: "bg-primary/20",
-              delay: 0.1,
-            },
-            {
-              name: "MERCK",
-              dot: <div className="h-4 w-4 bg-blue-900 rounded-full" />,
-              bg: "bg-blue-900/20",
-              delay: 0.2,
-            },
-          ].map(({ name, dot, bg, delay }) => (
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+          <div>
             <motion.div
-              key={name}
-              className="text-2xl md:text-3xl font-[var(--app-font-heading)] font-extrabold tracking-tight text-foreground flex items-center gap-3 opacity-80 hover:opacity-100 transition-opacity duration-300"
-              initial={{ opacity: 0, scale: 0.88 }}
-              animate={inView ? { opacity: 0.8, scale: 1 } : {}}
-              transition={{ duration: 0.55, delay, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ scale: 1.06 }}
+              className="text-xs font-bold tracking-[0.18em] text-primary uppercase mb-3"
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5 }}
             >
-              <div className={`h-8 w-8 ${bg} rounded flex items-center justify-center`}>
-                {dot}
-              </div>
-              {name}
+              Trusted Partnerships
             </motion.div>
-          ))}
+            <motion.h3
+              className="text-3xl md:text-4xl font-[var(--app-font-heading)] font-bold text-foreground tracking-tight"
+              initial={{ opacity: 0, y: 16 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.55, delay: 0.05 }}
+            >
+              Official Partner of Globally<br className="hidden md:block" /> Recognized Brands
+            </motion.h3>
+          </div>
+          <motion.p
+            className="text-muted-foreground text-sm md:text-base font-light max-w-xs md:text-right"
+            initial={{ opacity: 0, y: 12 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            Representing world-class manufacturers across diagnostics, life sciences, and laboratory instrumentation.
+          </motion.p>
         </div>
+
+        {/* Brand Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+          {partnerBrands.map((brand, i) => {
+            const isHovered = hovered === i;
+            return (
+              <motion.div
+                key={i}
+                onMouseEnter={() => setHovered(i)}
+                onMouseLeave={() => setHovered(null)}
+                initial={{ opacity: 0, y: 24 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.55, delay: 0.08 * i, ease: [0.16, 1, 0.3, 1] }}
+                className={`relative group cursor-pointer border rounded-sm p-6 md:p-8 flex flex-col justify-between gap-6 transition-all duration-400 overflow-hidden ${brand.border}`}
+                style={{
+                  background: isHovered
+                    ? `linear-gradient(135deg, ${brand.color}18 0%, ${brand.color}08 100%)`
+                    : "transparent",
+                }}
+              >
+                {/* Top: initial badge */}
+                <div className="flex items-center justify-between">
+                  <div
+                    className="text-xs md:text-sm tracking-[0.12em] font-bold px-2.5 py-1 rounded-sm"
+                    style={{
+                      color: brand.color,
+                      backgroundColor: brand.color + "18",
+                      border: `1px solid ${brand.color}30`,
+                    }}
+                  >
+                    {brand.initial}
+                  </div>
+                  {/* Arrow icon - appears on hover */}
+                  <motion.div
+                    animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : -6 }}
+                    transition={{ duration: 0.25 }}
+                    style={{ color: brand.color }}
+                  >
+                    <ArrowRight className="h-4 w-4" />
+                  </motion.div>
+                </div>
+
+                {/* Bottom: name + sub */}
+                <div>
+                  <div
+                    className={`text-lg md:text-xl ${brand.weight} font-[var(--app-font-heading)] leading-tight mb-1 transition-colors duration-300`}
+                    style={{ color: isHovered ? brand.color : "var(--foreground)" }}
+                  >
+                    {brand.name}
+                  </div>
+                  <div className="text-muted-foreground text-xs font-medium tracking-wide">
+                    {brand.sub}
+                  </div>
+                </div>
+
+                {/* Bottom accent line */}
+                <motion.div
+                  className="absolute bottom-0 left-0 h-0.5 rounded-full"
+                  animate={{ width: isHovered ? "100%" : "0%" }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  style={{ backgroundColor: brand.color }}
+                />
+              </motion.div>
+            );
+          })}
+        </div>
+
+        {/* Bottom note */}
+        <motion.p
+          className="text-center text-muted-foreground text-xs font-medium tracking-widest uppercase mt-10"
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
+          Authorized distributor across Pakistan
+        </motion.p>
       </div>
     </section>
   );
