@@ -417,8 +417,19 @@ function Solutions() {
           </div>
         </div>
 
-        {/* ngenebio-style horizontal expanding panels */}
-        <div className="flex h-[540px] md:h-[620px] w-full overflow-hidden rounded-sm">
+        {/* ngenebio-style: single image behind all panels, colored overlay on hover */}
+        <div className="relative flex h-[520px] md:h-[600px] w-full overflow-hidden">
+
+          {/* Single shared background image */}
+          <img
+            src={img("/images/sc-hero.png")}
+            alt="Lab background"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          {/* Dark tint over whole image */}
+          <div className="absolute inset-0 bg-black/50" />
+
+          {/* Panels on top */}
           {solutions.map((s, i) => {
             const isActive = active === i;
             return (
@@ -427,87 +438,43 @@ function Solutions() {
                 onMouseEnter={() => setActive(i)}
                 onMouseLeave={() => setActive(null)}
                 animate={{ flex: isActive ? 4 : 1 }}
-                transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                 className="relative overflow-hidden cursor-pointer"
                 style={{ minWidth: 0 }}
               >
-                {/* Unique gradient background per solution */}
-                <div
-                  className="absolute inset-0 transition-all duration-700"
-                  style={{
-                    background: isActive
-                      ? `linear-gradient(160deg, ${s.accent} 0%, ${s.accent}bb 50%, ${s.accent}66 100%)`
-                      : `linear-gradient(160deg, ${s.accent}55 0%, ${s.accent}22 50%, #080810 100%)`,
-                  }}
-                />
-
-                {/* Subtle dot pattern overlay */}
-                <div
-                  className="absolute inset-0 opacity-[0.06]"
-                  style={{
-                    backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
-                    backgroundSize: "20px 20px",
-                  }}
-                />
-
-                {/* Strong accent glow top */}
-                <div
-                  className="absolute -top-10 -left-10 w-40 h-40 rounded-full blur-2xl transition-all duration-700"
-                  style={{ background: s.accent, opacity: isActive ? 0.5 : 0.25 }}
-                />
-
-                {/* Bottom fade */}
-                <div
-                  className="absolute inset-x-0 bottom-0 h-1/2"
-                  style={{
-                    background: isActive
-                      ? "linear-gradient(to top, rgba(0,0,0,0.4), transparent)"
-                      : "linear-gradient(to top, rgba(0,0,0,0.6), transparent)",
-                  }}
-                />
-
-                {/* Collapsed state — icon + horizontal title at bottom */}
+                {/* Colored overlay - only on hover */}
                 <motion.div
-                  className="absolute inset-0 flex flex-col justify-between p-5 md:p-6"
+                  className="absolute inset-0"
+                  animate={{ opacity: isActive ? 1 : 0 }}
+                  transition={{ duration: 0.4 }}
+                  style={{ backgroundColor: s.accent + "e0" }}
+                />
+
+                {/* Thin right border between panels */}
+                {i < solutions.length - 1 && (
+                  <div className="absolute right-0 top-0 bottom-0 w-px bg-white/20 z-10" />
+                )}
+
+                {/* Collapsed: just title at bottom */}
+                <motion.div
+                  className="absolute inset-0 flex items-end p-6"
                   animate={{ opacity: isActive ? 0 : 1 }}
                   transition={{ duration: 0.2 }}
                 >
-                  {/* Number top */}
-                  <div className="text-white/40 text-xs font-bold tracking-[0.2em]">
-                    {String(i + 1).padStart(2, "0")}
-                  </div>
-                  {/* Icon + title bottom */}
-                  <div className="flex flex-col gap-3">
-                    <div
-                      className="w-10 h-10 flex items-center justify-center rounded-sm text-white"
-                      style={{ backgroundColor: s.accent + "66", border: `1px solid ${s.accent}99` }}
-                    >
-                      {s.icon}
-                    </div>
-                    <h4 className="text-white font-[var(--app-font-heading)] font-bold text-sm leading-snug drop-shadow-lg">
-                      {s.title}
-                    </h4>
-                    <div className="w-6 h-0.5 rounded-full" style={{ backgroundColor: s.accent }} />
-                  </div>
+                  <h4 className="text-white font-[var(--app-font-heading)] font-bold text-base md:text-lg leading-snug drop-shadow-md">
+                    {s.title}
+                  </h4>
                 </motion.div>
 
                 {/* Expanded content */}
                 <motion.div
-                  className="absolute inset-0 flex flex-col justify-between p-8 md:p-10"
-                  animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 24 }}
-                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: isActive ? 0.18 : 0 }}
+                  className="absolute inset-0 flex flex-col justify-between p-8 md:p-10 z-10"
+                  animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: isActive ? 0.15 : 0 }}
                 >
-                  {/* Top: number + icon */}
-                  <div className="flex items-center justify-between">
-                    <div className="text-white/40 text-xs font-bold tracking-[0.22em] uppercase">
-                      Focus Area · {String(i + 1).padStart(2, "0")}
-                    </div>
-                    <div
-                      className="w-10 h-10 flex items-center justify-center rounded-sm text-white"
-                      style={{ backgroundColor: "rgba(255,255,255,0.15)" }}
-                    >
-                      {s.icon}
-                    </div>
+                  {/* Top icon */}
+                  <div className="w-12 h-12 flex items-center justify-center rounded-sm bg-white/20 text-white">
+                    {s.icon}
                   </div>
 
                   {/* Bottom: title + desc + arrow */}
@@ -515,26 +482,14 @@ function Solutions() {
                     <h4 className="font-[var(--app-font-heading)] text-2xl md:text-3xl font-bold text-white leading-tight tracking-tight mb-4">
                       {s.title}
                     </h4>
-                    <p className="text-white/70 text-sm md:text-[15px] font-light leading-relaxed mb-8 max-w-xs">
+                    <p className="text-white/85 text-sm md:text-[15px] font-light leading-relaxed mb-8 max-w-xs">
                       {s.desc}
                     </p>
-                    <div className="flex items-center gap-4">
-                      <div
-                        className="w-13 h-13 w-12 h-12 rounded-full border border-dashed border-white/50 flex items-center justify-center text-white hover:bg-white/10 transition-all duration-300"
-                      >
-                        <ArrowRight className="h-4 w-4" />
-                      </div>
-                      <span className="text-white/50 text-xs font-bold tracking-[0.15em] uppercase">
-                        Learn more
-                      </span>
+                    <div className="w-12 h-12 rounded-full border border-dashed border-white/70 flex items-center justify-center text-white hover:bg-white/15 transition-all duration-300">
+                      <ArrowRight className="h-4 w-4" />
                     </div>
                   </div>
                 </motion.div>
-
-                {/* Thin divider between panels */}
-                {i < solutions.length - 1 && (
-                  <div className="absolute right-0 top-8 bottom-8 w-px bg-white/8 z-10" />
-                )}
               </motion.div>
             );
           })}
