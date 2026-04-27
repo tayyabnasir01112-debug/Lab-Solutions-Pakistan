@@ -113,9 +113,9 @@ export function SiteNavbar({ visible = true }: { visible?: boolean }) {
       <div className="container mx-auto px-6 md:px-12 h-24 flex items-center justify-between">
         <Link href="/" className="flex items-center">
           <img
-            src={img("/images/sc-logo.png")}
+            src={img("/images/sc-logo-full.png")}
             alt="Science Centre Logo"
-            className="h-12 w-auto object-contain"
+            className="h-14 w-auto object-contain"
           />
         </Link>
 

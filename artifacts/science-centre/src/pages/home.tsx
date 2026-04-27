@@ -83,71 +83,94 @@ function Reveal({
 
 /* ─── Intro Splash ────────────────────────────────────────────── */
 function IntroSplash({ onDone }: { onDone: () => void }) {
+  const [phase, setPhase] = useState<"logo" | "fill" | "done">("logo");
+
   useEffect(() => {
-    const t = setTimeout(onDone, 2400);
-    return () => clearTimeout(t);
+    // Phase 1: logo appears (grayscale) — 0.9s
+    // Phase 2: color fills in — 1.4s
+    // Phase 3: exit — 0.7s
+    const t1 = setTimeout(() => setPhase("fill"), 900);
+    const t2 = setTimeout(() => setPhase("done"), 2600);
+    const t3 = setTimeout(onDone, 3200);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
   }, [onDone]);
 
   return (
     <motion.div
-      className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-background"
+      className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-background overflow-hidden"
       initial={{ opacity: 1 }}
-      exit={{ opacity: 0, scale: 1.04 }}
-      transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
     >
-      {/* Animated grid lines */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {[...Array(6)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute top-0 bottom-0 w-px bg-primary/8"
-            style={{ left: `${(i + 1) * (100 / 7)}%` }}
-            initial={{ scaleY: 0, opacity: 0 }}
-            animate={{ scaleY: 1, opacity: 1 }}
-            transition={{ duration: 1.2, delay: i * 0.06, ease: "easeOut" }}
+      {/* Subtle animated grid */}
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ backgroundImage: "radial-gradient(circle, hsl(var(--border)) 1px, transparent 1px)", backgroundSize: "40px 40px", opacity: 0.4 }} />
+
+      {/* Center logo container */}
+      <div className="relative flex flex-col items-center gap-8">
+
+        {/* Glow that pulses when color fills */}
+        <motion.div
+          className="absolute inset-0 blur-3xl rounded-full pointer-events-none"
+          style={{ background: "hsl(var(--primary)/0.15)" }}
+          animate={phase === "fill" ? { scale: [1, 1.8, 1.2], opacity: [0, 0.8, 0.3] } : { opacity: 0 }}
+          transition={{ duration: 1.4, ease: "easeOut" }}
+        />
+
+        {/* Logo — grayscale then color */}
+        <div className="relative w-72 md:w-96">
+          {/* Grayscale base — always visible */}
+          <motion.img
+            src={img("/images/sc-logo-full.png")}
+            alt="Science Centre"
+            className="w-full h-auto object-contain"
+            style={{ filter: "grayscale(1) brightness(0.5)" }}
+            initial={{ opacity: 0, scale: 0.8, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           />
-        ))}
-      </div>
 
-      {/* Logo group */}
-      <motion.div
-        className="flex flex-col items-center gap-6 relative z-10"
-        initial={{ opacity: 0, scale: 0.85, y: 20 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-      >
-        {/* Glow halo */}
-        <motion.div
-          className="absolute inset-0 rounded-full bg-primary/10 blur-3xl"
-          initial={{ scale: 0 }}
-          animate={{ scale: 2.5, opacity: [0, 0.6, 0] }}
-          transition={{ duration: 1.8, delay: 0.4, ease: "easeOut" }}
-        />
+          {/* Colored version — revealed left-to-right via clip */}
+          <motion.div
+            className="absolute inset-0 overflow-hidden"
+            initial={{ clipPath: "inset(0 100% 0 0)" }}
+            animate={phase !== "logo" ? { clipPath: "inset(0 0% 0 0)" } : { clipPath: "inset(0 100% 0 0)" }}
+            transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
+          >
+            <img
+              src={img("/images/sc-logo-full.png")}
+              alt="Science Centre"
+              className="w-full h-auto object-contain drop-shadow-xl"
+            />
+          </motion.div>
 
-        <img
-          src={img("/images/sc-logo.png")}
-          alt="Science Centre"
-          className="h-24 w-auto object-contain drop-shadow-lg"
-        />
+          {/* Bright sweep line that travels across during fill */}
+          <motion.div
+            className="absolute top-0 bottom-0 w-0.5 pointer-events-none"
+            style={{ background: "linear-gradient(to bottom, transparent, white, transparent)", boxShadow: "0 0 12px 4px rgba(255,255,255,0.8)" }}
+            initial={{ left: "-2px", opacity: 0 }}
+            animate={phase !== "logo" ? { left: ["0%", "100%"], opacity: [0, 1, 0] } : { left: "-2px", opacity: 0 }}
+            transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
+          />
+        </div>
 
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.65 }}
+        {/* Tagline fades in after color fills */}
+        <motion.p
+          className="text-xs tracking-[0.4em] text-muted-foreground uppercase font-medium"
+          initial={{ opacity: 0, y: 8 }}
+          animate={phase === "fill" || phase === "done" ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
         >
-          <p className="text-xs tracking-[0.35em] text-muted-foreground uppercase font-medium">
-            Pakistan
-          </p>
-        </motion.div>
-      </motion.div>
+          Your Partner in Science
+        </motion.p>
+      </div>
 
       {/* Bottom progress bar */}
       <motion.div
-        className="absolute bottom-0 left-0 h-0.5 bg-gradient-to-r from-primary via-accent to-primary"
+        className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-primary via-accent to-primary"
         initial={{ width: "0%" }}
         animate={{ width: "100%" }}
-        transition={{ duration: 2.0, delay: 0.3, ease: "linear" }}
+        transition={{ duration: 2.8, delay: 0.2, ease: "linear" }}
       />
     </motion.div>
   );
@@ -242,7 +265,7 @@ function Hero({ visible }: { visible: boolean }) {
             </div>
 
             {/* Animated cycling specialty */}
-            <div className="overflow-hidden mb-6" style={{ minHeight: "1.15em" }}>
+            <div className="mb-6 pb-2" style={{ minHeight: "1.25em" }}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={specIndex}
