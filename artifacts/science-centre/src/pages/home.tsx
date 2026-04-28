@@ -500,27 +500,25 @@ function Partners() {
   const row1 = partnerBrands;
   const row2 = [...partnerBrands.slice(4), ...partnerBrands.slice(0, 4)];
 
-  const BrandPill = ({ brand }: { brand: typeof partnerBrands[0] }) => (
+  const BrandPill = ({ brand, dark = false }: { brand: typeof partnerBrands[0], dark?: boolean }) => (
     <div
       className="flex-shrink-0 flex items-center gap-3 px-5 py-3 border mx-2 group cursor-default transition-all duration-300 hover:scale-105"
       style={{
-        borderColor: brand.color + "30",
-        background: brand.color + "08",
+        borderColor: brand.color + (dark ? "40" : "30"),
+        background: brand.color + (dark ? "15" : "08"),
       }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div
-        className="text-[11px] font-black tracking-[0.14em] px-2 py-0.5"
-        style={{ color: brand.color, background: brand.color + "18" }}
-      >
+      <div className="text-[11px] font-black tracking-[0.14em] px-2 py-0.5"
+        style={{ color: brand.color, background: brand.color + "25" }}>
         {brand.initial}
       </div>
       <div>
-        <div className="text-sm font-[var(--app-font-heading)] font-bold text-foreground leading-none mb-0.5 whitespace-nowrap">
+        <div className={`text-sm font-[var(--app-font-heading)] font-bold leading-none mb-0.5 whitespace-nowrap ${dark ? "text-white" : "text-foreground"}`}>
           {brand.name}
         </div>
-        <div className="text-[10px] text-muted-foreground font-medium tracking-wide whitespace-nowrap">
+        <div className={`text-[10px] font-medium tracking-wide whitespace-nowrap ${dark ? "text-white/40" : "text-muted-foreground"}`}>
           {brand.sub}
         </div>
       </div>
@@ -528,91 +526,76 @@ function Partners() {
   );
 
   return (
-    <section ref={ref} id="partners" className="flex flex-col justify-center border-y border-border overflow-hidden" style={{ height: "100dvh" }}>
-      {/* Header — compact, inline */}
-      <div className="container mx-auto px-6 md:px-12 mb-10">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-          <motion.div
-            initial={{ opacity: 0, x: -16 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            className="flex items-center gap-4"
-          >
-            <div className="w-6 h-px bg-primary" />
-            <span className="text-xs font-bold tracking-[0.2em] text-primary uppercase">
-              Trusted Partnerships
-            </span>
-          </motion.div>
+    <section ref={ref} id="partners" className="flex flex-col justify-center overflow-hidden relative" style={{ height: "100dvh", background: "hsl(var(--foreground))" }}>
+
+      {/* Background dot grid */}
+      <div className="absolute inset-0 opacity-[0.04]"
+        style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+
+      {/* Big centered headline */}
+      <div className="container mx-auto px-6 md:px-12 mb-12 relative z-10">
+        <motion.div className="flex items-center gap-3 mb-5"
+          initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }}>
+          <div className="w-6 h-px bg-primary" />
+          <span className="text-xs font-bold tracking-[0.2em] text-primary uppercase">Trusted Partnerships</span>
+        </motion.div>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+          <motion.h2
+            className="text-4xl md:text-6xl font-[var(--app-font-heading)] font-black text-white leading-tight tracking-tight"
+            initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.05 }}>
+            Representing the World's<br className="hidden md:block" />
+            <span className="text-primary">Best Science Brands.</span>
+          </motion.h2>
           <motion.p
-            initial={{ opacity: 0, x: 16 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-muted-foreground text-xs font-medium tracking-wide"
-          >
-            Official distributor of 8+ globally recognized scientific brands across Pakistan
+            className="text-white/50 text-sm font-light max-w-xs md:text-right leading-relaxed"
+            initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ duration: 0.5, delay: 0.2 }}>
+            Official distributor of 8+ globally recognized scientific brands across Pakistan for 30+ years
           </motion.p>
         </div>
       </div>
 
       {/* Marquee rows */}
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={inView ? { opacity: 1 } : {}}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        className="space-y-3"
+        initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ duration: 0.6, delay: 0.3 }}
+        className="space-y-3 relative z-10"
       >
         {/* Row 1 — scrolls left */}
         <div className="relative flex overflow-hidden">
-          {/* Edge fade masks */}
           <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: "linear-gradient(to right, var(--background), transparent)" }} />
+            style={{ background: `linear-gradient(to right, hsl(var(--foreground)), transparent)` }} />
           <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: "linear-gradient(to left, var(--background), transparent)" }} />
-
-          <div
-            className="flex"
-            style={{
-              animation: paused ? "none" : "marquee-left 28s linear infinite",
-              willChange: "transform",
-            }}
-          >
-            {[...row1, ...row1, ...row1].map((brand, i) => (
-              <BrandPill key={i} brand={brand} />
-            ))}
+            style={{ background: `linear-gradient(to left, hsl(var(--foreground)), transparent)` }} />
+          <div className="flex" style={{ animation: paused ? "none" : "marquee-left 28s linear infinite", willChange: "transform" }}>
+            {[...row1, ...row1, ...row1].map((brand, i) => (<BrandPill key={i} brand={brand} dark />))}
           </div>
         </div>
-
         {/* Row 2 — scrolls right */}
         <div className="relative flex overflow-hidden">
           <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: "linear-gradient(to right, var(--background), transparent)" }} />
+            style={{ background: `linear-gradient(to right, hsl(var(--foreground)), transparent)` }} />
           <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: "linear-gradient(to left, var(--background), transparent)" }} />
-
-          <div
-            className="flex"
-            style={{
-              animation: paused ? "none" : "marquee-right 34s linear infinite",
-              willChange: "transform",
-            }}
-          >
-            {[...row2, ...row2, ...row2].map((brand, i) => (
-              <BrandPill key={i} brand={brand} />
-            ))}
+            style={{ background: `linear-gradient(to left, hsl(var(--foreground)), transparent)` }} />
+          <div className="flex" style={{ animation: paused ? "none" : "marquee-right 34s linear infinite", willChange: "transform" }}>
+            {[...row2, ...row2, ...row2].map((brand, i) => (<BrandPill key={i} brand={brand} dark />))}
           </div>
         </div>
       </motion.div>
 
-      {/* CSS keyframes injected inline */}
+      {/* Bottom stat strip */}
+      <div className="container mx-auto px-6 md:px-12 mt-12 relative z-10">
+        <div className="flex items-center gap-12 border-t border-white/10 pt-8">
+          {[["8+", "Global Brands"], ["30+", "Years of Partnership"], ["500+", "Clients Served"], ["4", "Cities Nationwide"]].map(([val, label]) => (
+            <div key={label} className="flex flex-col">
+              <span className="text-2xl font-black font-[var(--app-font-heading)] text-white">{val}</span>
+              <span className="text-xs text-white/40 font-medium tracking-wide">{label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
       <style>{`
-        @keyframes marquee-left {
-          0%   { transform: translateX(0); }
-          100% { transform: translateX(-33.333%); }
-        }
-        @keyframes marquee-right {
-          0%   { transform: translateX(-33.333%); }
-          100% { transform: translateX(0); }
-        }
+        @keyframes marquee-left { 0% { transform: translateX(0); } 100% { transform: translateX(-33.333%); } }
+        @keyframes marquee-right { 0% { transform: translateX(-33.333%); } 100% { transform: translateX(0); } }
       `}</style>
     </section>
   );
@@ -874,7 +857,7 @@ function FeaturedProducts() {
   const p = products[current];
 
   return (
-    <section ref={ref} id="products" className="bg-background border-t border-border overflow-hidden flex flex-col justify-center" style={{ height: "100dvh", paddingTop: "96px" }}>
+    <section ref={ref} id="products" className="bg-background border-t border-border overflow-hidden flex flex-col justify-center" style={{ height: "100dvh", paddingTop: "108px" }}>
       <div className="container mx-auto px-6 md:px-12">
 
         {/* Header */}
@@ -1188,55 +1171,82 @@ const offices = [
 
 function Locations() {
   return (
-    <section className="bg-background flex flex-col justify-center" style={{ height: "100dvh", paddingTop: "96px" }}>
-      <div className="container mx-auto px-6 md:px-12">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <Reveal>
-            <h2 className="text-sm font-semibold tracking-widest text-primary uppercase mb-3">
-              Presence
-            </h2>
-            <h3 className="text-3xl md:text-5xl font-[var(--app-font-heading)] font-bold text-foreground">
-              National Infrastructure
-            </h3>
+    <section className="relative flex flex-col justify-center overflow-hidden" style={{ height: "100dvh", paddingTop: "96px", background: "hsl(var(--background))" }}>
+
+      {/* Subtle background accent */}
+      <div className="absolute right-0 top-0 bottom-0 w-1/2 pointer-events-none"
+        style={{ background: "linear-gradient(to left, hsl(var(--primary)/0.04), transparent)" }} />
+
+      <div className="container mx-auto px-6 md:px-12 relative z-10">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
+          <div>
+            <Reveal>
+              <div className="text-xs font-bold tracking-[0.2em] text-primary uppercase mb-3 flex items-center gap-2">
+                <div className="w-5 h-px bg-primary" /> Presence
+              </div>
+              <h2 className="text-4xl md:text-6xl font-[var(--app-font-heading)] font-black text-foreground leading-tight tracking-tight">
+                Nationwide<br />
+                <span className="text-primary">Infrastructure.</span>
+              </h2>
+            </Reveal>
+          </div>
+          <Reveal delay={0.1}>
+            <p className="text-muted-foreground text-sm font-light max-w-xs leading-relaxed md:text-right">
+              Strategically located across Pakistan's major cities to serve hospitals, labs and research institutes nationwide.
+            </p>
           </Reveal>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
+        {/* Office cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           {offices.map((office, i) => (
             <Reveal key={i} delay={0.07 * i}>
               <motion.div
-                className={`p-8 border h-full ${
-                  office.main ? "bg-muted/50 border-primary/30" : "bg-background border-border"
-                }`}
-                whileHover={{ y: -3, borderColor: "hsl(var(--primary) / 0.4)" }}
-                transition={{ duration: 0.2 }}
+                className={`p-6 border-l-2 relative overflow-hidden group ${office.main ? "bg-primary/5 border-l-primary" : "bg-muted/30 border-l-border hover:border-l-primary"}`}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.25 }}
               >
                 {office.main && (
-                  <span className="text-[10px] uppercase tracking-wider font-bold text-primary bg-primary/10 px-2 py-1 mb-4 inline-block">
+                  <span className="text-[10px] uppercase tracking-wider font-bold text-primary bg-primary/10 px-2 py-1 mb-3 inline-block">
                     Head Office
                   </span>
                 )}
-                <h4 className="text-xl font-[var(--app-font-heading)] font-bold text-foreground mb-1">
-                  {office.city}
-                </h4>
-                <p className="text-xs text-muted-foreground mb-4">{office.province}</p>
-                <div className="flex items-start gap-3 mb-3 text-muted-foreground">
-                  <MapPin className="h-5 w-5 shrink-0 text-primary" />
-                  <span className="text-sm font-light">{office.address}</span>
+                <h4 className="text-2xl font-[var(--app-font-heading)] font-black text-foreground mb-1">{office.city}</h4>
+                <p className="text-xs text-primary font-semibold tracking-wide mb-5">{office.province}</p>
+                <div className="space-y-3">
+                  <div className="flex items-start gap-2 text-muted-foreground">
+                    <MapPin className="h-4 w-4 shrink-0 text-primary mt-0.5" />
+                    <span className="text-sm font-light leading-snug">{office.address}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Phone className="h-4 w-4 shrink-0 text-primary" />
+                    <a href={`tel:${office.phone.replace(/\s/g, "")}`}
+                      className="text-sm font-semibold text-foreground hover:text-primary transition-colors">
+                      {office.phone}
+                    </a>
+                  </div>
                 </div>
-                <div className="flex items-center gap-3 text-muted-foreground">
-                  <Phone className="h-5 w-5 shrink-0 text-primary" />
-                  <a
-                    href={`tel:${office.phone.replace(/\s/g, "")}`}
-                    className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-                  >
-                    {office.phone}
-                  </a>
-                </div>
+                {/* Hover accent */}
+                <motion.div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
+                  initial={{ scaleX: 0 }} whileHover={{ scaleX: 1 }}
+                  style={{ originX: 0 }} transition={{ duration: 0.3 }} />
               </motion.div>
             </Reveal>
           ))}
         </div>
+
+        {/* Bottom call-to-action */}
+        <Reveal delay={0.3}>
+          <div className="mt-8 flex items-center justify-between border-t border-border pt-6">
+            <p className="text-muted-foreground text-sm">
+              <span className="text-foreground font-semibold">4 offices</span> across Pakistan — Rawalpindi, Karachi, Peshawar & Lahore
+            </p>
+            <a href="#contact" className="text-xs font-bold tracking-[0.15em] uppercase text-primary flex items-center gap-2 hover:gap-3 transition-all duration-200">
+              Contact Us <ArrowRight className="h-3.5 w-3.5" />
+            </a>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
