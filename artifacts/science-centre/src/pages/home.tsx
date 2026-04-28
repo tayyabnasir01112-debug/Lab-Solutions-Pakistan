@@ -1450,7 +1450,7 @@ export default function Home() {
   return (
     <div className="h-[100dvh] w-full bg-background overflow-hidden selection:bg-primary selection:text-primary-foreground text-foreground">
       <AnimatePresence>{!splashDone && <IntroSplash onDone={() => setSplashDone(true)} />}</AnimatePresence>
-      <SiteNavbar visible={splashDone} />
+      <SiteNavbar visible={splashDone && current !== 2} />
 
       {/* Full-screen panel container */}
       <div className="relative w-full overflow-hidden" style={{ height: "100dvh" }}>
