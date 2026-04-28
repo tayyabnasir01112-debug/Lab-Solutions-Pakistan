@@ -40,6 +40,8 @@ export function SiteNavbar({ visible = true }: { visible?: boolean }) {
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [location] = useLocation();
   const isHome = location === "/";
+  const isDarkPage = location === "/" || location === "/about";
+  const solid = scrolled || !isDarkPage;
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
@@ -53,8 +55,6 @@ export function SiteNavbar({ visible = true }: { visible?: boolean }) {
     setMegaOpen(false);
     setMenuOpen(false);
   }, [location]);
-
-  const solid = scrolled || !isHome;
 
   function hrefFor(link: typeof NAV_LINKS[number]) {
     if (link.isPage && "href" in link) return link.href;
@@ -119,7 +119,7 @@ export function SiteNavbar({ visible = true }: { visible?: boolean }) {
           />
         </Link>
 
-        <div className="hidden lg:flex items-center gap-8 text-sm font-medium text-foreground">
+        <div className={`hidden lg:flex items-center gap-8 text-sm font-medium ${!solid ? "text-white" : "text-foreground"}`}>
           {NAV_LINKS.map((link, i) => {
             const href = hrefFor(link);
             const Inner = (

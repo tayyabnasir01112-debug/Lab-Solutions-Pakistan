@@ -95,7 +95,7 @@ function CEOPanel() {
     <div className="relative w-full bg-[#0a0a0a] flex flex-col" style={{ height: "100dvh" }}>
 
       {/* CEO Name — centered at top */}
-      <div className="flex items-center justify-center pt-28 pb-10 flex-shrink-0">
+      <div className="flex items-center justify-center flex-shrink-0" style={{ paddingTop: "120px", paddingBottom: "32px" }}>
         <motion.h1
           className="text-sm md:text-base font-bold tracking-[0.35em] text-white/90 uppercase"
           initial={{ opacity: 0, y: -10 }}
