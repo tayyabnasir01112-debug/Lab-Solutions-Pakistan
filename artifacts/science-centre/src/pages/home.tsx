@@ -528,7 +528,7 @@ function Partners() {
   );
 
   return (
-    <section ref={ref} id="partners" className="py-16 border-y border-border overflow-hidden">
+    <section ref={ref} id="partners" className="flex flex-col justify-center border-y border-border overflow-hidden" style={{ height: "100dvh" }}>
       {/* Header — compact, inline */}
       <div className="container mx-auto px-6 md:px-12 mb-10">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
@@ -674,16 +674,16 @@ function Solutions() {
   const [active, setActive] = useState<number | null>(null);
 
   return (
-    <section id="solutions" className="py-24 md:py-32 bg-background overflow-hidden">
-      <div className="container mx-auto px-6 md:px-12">
-        {/* Title */}
-        <div className="grid md:grid-cols-12 gap-8 mb-14 md:mb-20">
+    <section id="solutions" className="bg-background overflow-hidden flex flex-col" style={{ height: "100dvh", paddingTop: "96px" }}>
+      <div className="container mx-auto px-6 md:px-12 flex flex-col flex-1 overflow-hidden py-8">
+        {/* Title — compact */}
+        <div className="grid md:grid-cols-12 gap-4 mb-6">
           <div className="md:col-span-6">
             <Reveal>
-              <div className="text-xs font-bold tracking-[0.18em] text-primary uppercase mb-4">
+              <div className="text-xs font-bold tracking-[0.18em] text-primary uppercase mb-2">
                 Focus Areas
               </div>
-              <h3 className="text-3xl md:text-5xl font-[var(--app-font-heading)] font-bold text-foreground leading-[1.05] tracking-tight">
+              <h3 className="text-2xl md:text-4xl font-[var(--app-font-heading)] font-bold text-foreground leading-[1.05] tracking-tight">
                 Comprehensive Solutions <br className="hidden md:block" />
                 for Clinical Precision.
               </h3>
@@ -691,7 +691,7 @@ function Solutions() {
           </div>
           <div className="md:col-span-6 md:pl-12 flex md:items-end">
             <Reveal delay={0.1}>
-              <p className="text-muted-foreground text-base md:text-lg font-light leading-relaxed max-w-md">
+              <p className="text-muted-foreground text-sm md:text-base font-light leading-relaxed max-w-md">
                 Across six clinical and research focus areas, we partner with the world's most
                 trusted manufacturers to deliver end-to-end laboratory solutions.
               </p>
@@ -699,8 +699,8 @@ function Solutions() {
           </div>
         </div>
 
-        {/* ngenebio-style: single image behind all panels, colored overlay on hover */}
-        <div className="relative flex h-[520px] md:h-[600px] w-full overflow-hidden">
+        {/* Panels — fill remaining height */}
+        <div className="relative flex flex-1 overflow-hidden">
 
           {/* Single shared background image */}
           <img
@@ -874,17 +874,17 @@ function FeaturedProducts() {
   const p = products[current];
 
   return (
-    <section ref={ref} id="products" className="py-24 bg-background border-t border-border overflow-hidden">
+    <section ref={ref} id="products" className="bg-background border-t border-border overflow-hidden flex flex-col justify-center" style={{ height: "100dvh", paddingTop: "96px" }}>
       <div className="container mx-auto px-6 md:px-12">
 
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
           <div>
-            <motion.div className="text-xs font-bold tracking-[0.18em] text-primary uppercase mb-3"
+            <motion.div className="text-xs font-bold tracking-[0.18em] text-primary uppercase mb-2"
               initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }}>
               Featured Instruments
             </motion.div>
-            <motion.h3 className="text-3xl md:text-5xl font-[var(--app-font-heading)] font-bold text-foreground tracking-tight leading-tight"
+            <motion.h3 className="text-2xl md:text-4xl font-[var(--app-font-heading)] font-bold text-foreground tracking-tight leading-tight"
               initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.55, delay: 0.05 }}>
               Institutional Confidence<br className="hidden md:block" /> in Every Instrument.
             </motion.h3>
@@ -901,7 +901,7 @@ function FeaturedProducts() {
         </div>
 
         {/* Main Slideshow */}
-        <motion.div className="relative w-full h-[420px] md:h-[520px] overflow-hidden"
+        <motion.div className="relative w-full h-[320px] md:h-[380px] overflow-hidden"
           initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.2 }}>
 
           {/* Background layer */}
@@ -1135,7 +1135,7 @@ function AnimatedStat({ value, label, sub, delay }: { value: string; label: stri
 /* ─── Credibility ─────────────────────────────────────────────── */
 function Credibility() {
   return (
-    <section id="about" className="py-24 bg-foreground text-background relative overflow-hidden">
+    <section id="about" className="bg-foreground text-background relative overflow-hidden flex items-center justify-center" style={{ height: "100dvh" }}>
       <div className="absolute top-0 right-0 w-1/2 h-full opacity-20 pointer-events-none">
         <img
           src={img("/images/sc-diagnostics.png")}
@@ -1188,7 +1188,7 @@ const offices = [
 
 function Locations() {
   return (
-    <section className="py-24 bg-background">
+    <section className="bg-background flex flex-col justify-center" style={{ height: "100dvh", paddingTop: "96px" }}>
       <div className="container mx-auto px-6 md:px-12">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <Reveal>
@@ -1253,7 +1253,7 @@ function Contact() {
   }
 
   return (
-    <section id="contact" className="py-24 bg-muted/30 border-y border-border">
+    <section id="contact" className="bg-muted/30 border-y border-border flex flex-col justify-center" style={{ height: "100dvh", paddingTop: "96px" }}>
       <div className="container mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <Reveal direction="left">
