@@ -377,6 +377,7 @@ const PANEL_NAMES = ["CEO", "Mission", "Journey", "Values", "Contact"];
 export default function About() {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
+  const [navVisible, setNavVisible] = useState(false);
   const cooldown = useRef(false);
 
   const panels = [
@@ -395,8 +396,24 @@ export default function About() {
     setTimeout(() => { cooldown.current = false; }, 900);
   };
 
+  // Hover-to-reveal navbar on CEO panel, always visible on others
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    if (current !== 0) {
+      setNavVisible(true);
+      return;
+    }
+    setNavVisible(false);
+    const onMouseMove = (e: MouseEvent) => {
+      setNavVisible(e.clientY < 80);
+    };
+    const onMouseLeave = () => setNavVisible(false);
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseleave", onMouseLeave);
+    return () => {
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseleave", onMouseLeave);
+    };
+  }, [current]);
     document.body.style.height = "100dvh";
     return () => { document.body.style.overflow = ""; document.body.style.height = ""; };
   }, []);
@@ -433,7 +450,7 @@ export default function About() {
 
   return (
     <div className="h-[100dvh] w-full overflow-hidden bg-background">
-      <SiteNavbar />
+      <SiteNavbar visible={navVisible} />
 
       {/* Panels */}
       <div className="relative w-full overflow-hidden" style={{ height: "100dvh" }}>
