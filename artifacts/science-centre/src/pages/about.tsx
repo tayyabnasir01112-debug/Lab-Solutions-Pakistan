@@ -414,6 +414,9 @@ export default function About() {
       window.removeEventListener("mouseleave", onMouseLeave);
     };
   }, [current]);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
     document.body.style.height = "100dvh";
     return () => { document.body.style.overflow = ""; document.body.style.height = ""; };
   }, []);
