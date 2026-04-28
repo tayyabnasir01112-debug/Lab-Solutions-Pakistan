@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import React from "react";
 import { Link } from "wouter";
 import { motion, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -1374,25 +1375,132 @@ function Contact() {
 /* ─── Footer ──────────────────────────────────────────────────── */
 
 /* ─── Root ────────────────────────────────────────────────────── */
+const SECTIONS = ["home", "partners", "solutions", "products", "about", "locations", "contact"];
+
 export default function Home() {
   const [splashDone, setSplashDone] = useState(false);
+  const [current, setCurrent] = useState(0);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const cooldown = useRef(false);
+
+  const goTo = (index: number) => {
+    const target = sectionRefs.current[index];
+    if (!target || cooldown.current) return;
+    cooldown.current = true;
+    setIsScrolling(true);
+    setCurrent(index);
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    setTimeout(() => {
+      cooldown.current = false;
+      setIsScrolling(false);
+    }, 900);
+  };
+
+  useEffect(() => {
+    if (!splashDone) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      if (cooldown.current) return;
+      if (e.deltaY > 30) goTo(Math.min(current + 1, SECTIONS.length - 1));
+      else if (e.deltaY < -30) goTo(Math.max(current - 1, 0));
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowDown" || e.key === "PageDown") { e.preventDefault(); goTo(Math.min(current + 1, SECTIONS.length - 1)); }
+      if (e.key === "ArrowUp" || e.key === "PageUp") { e.preventDefault(); goTo(Math.max(current - 1, 0)); }
+    };
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("keydown", onKey);
+    return () => { window.removeEventListener("wheel", onWheel); window.removeEventListener("keydown", onKey); };
+  }, [splashDone, current]);
+
+  // Touch support
+  useEffect(() => {
+    if (!splashDone) return;
+    let touchStartY = 0;
+    const onTouchStart = (e: TouchEvent) => { touchStartY = e.touches[0].clientY; };
+    const onTouchEnd = (e: TouchEvent) => {
+      const diff = touchStartY - e.changedTouches[0].clientY;
+      if (Math.abs(diff) < 50) return;
+      if (diff > 0) goTo(Math.min(current + 1, SECTIONS.length - 1));
+      else goTo(Math.max(current - 1, 0));
+    };
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    return () => { window.removeEventListener("touchstart", onTouchStart); window.removeEventListener("touchend", onTouchEnd); };
+  }, [splashDone, current]);
+
+  const sectionNames = ["Home", "Partners", "Solutions", "Instruments", "About", "Locations", "Contact"];
 
   return (
-    <div className="min-h-[100dvh] w-full bg-background selection:bg-primary selection:text-primary-foreground text-foreground">
+    <div className="h-[100dvh] w-full bg-background overflow-hidden selection:bg-primary selection:text-primary-foreground text-foreground">
       <AnimatePresence>{!splashDone && <IntroSplash onDone={() => setSplashDone(true)} />}</AnimatePresence>
 
       <SiteNavbar visible={splashDone} />
 
-      <main>
-        <Hero visible={splashDone} />
-        <Partners />
-        <Solutions />
-        <FeaturedProducts />
-        <Credibility />
-        <Locations />
-        <Contact />
-      </main>
-      <SiteFooter />
+      {/* Scroll container */}
+      <div ref={containerRef} className="h-[100dvh] overflow-hidden">
+        {([
+          <Hero key="hero" visible={splashDone} />,
+          <Partners key="partners" />,
+          <Solutions key="solutions" />,
+          <FeaturedProducts key="products" />,
+          <Credibility key="credibility" />,
+          <Locations key="locations" />,
+          <Contact key="contact" />,
+        ] as React.ReactElement[]).map((section, i) => (
+          <div
+            key={i}
+            ref={el => { sectionRefs.current[i] = el; }}
+            style={{ height: "100dvh", overflowY: "auto", overflowX: "hidden" }}
+          >
+            {section}
+          </div>
+        ))}
+      </div>
+
+      {/* Section dot indicator — right side */}
+      {splashDone && (
+        <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3 items-center">
+          {sectionNames.map((name, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              title={name}
+              className="group flex items-center gap-2 justify-end"
+            >
+              {/* Label on hover */}
+              <motion.span
+                className="text-[10px] font-bold tracking-widest uppercase text-foreground bg-background/90 px-2 py-1 border border-border opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap"
+              >
+                {name}
+              </motion.span>
+              {/* Dot */}
+              <motion.div
+                className="rounded-full border-2 border-foreground/30 transition-all duration-400"
+                animate={{
+                  width: i === current ? 10 : 6,
+                  height: i === current ? 10 : 6,
+                  backgroundColor: i === current ? "hsl(var(--primary))" : "transparent",
+                  borderColor: i === current ? "hsl(var(--primary))" : "hsl(var(--foreground)/0.3)",
+                }}
+              />
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Scroll progress bar — bottom */}
+      {splashDone && (
+        <div className="fixed bottom-0 left-0 right-0 h-0.5 bg-border z-50">
+          <motion.div
+            className="h-full bg-primary"
+            animate={{ width: `${((current) / (SECTIONS.length - 1)) * 100}%` }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          />
+        </div>
+      )}
     </div>
   );
 }

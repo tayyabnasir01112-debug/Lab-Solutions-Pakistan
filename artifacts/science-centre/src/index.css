@@ -160,20 +160,12 @@
     @apply border-border;
   }
   html {
-    scroll-behavior: smooth;
-    scroll-snap-type: y mandatory;
-    scroll-padding-top: 96px;
+    scroll-behavior: auto; /* JS controls scrolling */
   }
   body {
     @apply font-sans antialiased bg-background text-foreground;
-  }
-
-  /* Each section = one full screen panel */
-  main section {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-    min-height: 100dvh;
-    box-sizing: border-box;
+    overflow: hidden; /* JS scroll container takes over */
+    height: 100dvh;
   }
 }
 
