@@ -23,7 +23,7 @@ const NAV_LINKS = [
   { label: "Solutions", anchor: "solutions", isPage: false, hasMega: false },
   { label: "Products", anchor: "products", isPage: true, href: "/products", hasMega: true },
   { label: "Partners", anchor: "partners", isPage: false, hasMega: false },
-  { label: "About", anchor: "about", isPage: false, hasMega: false },
+  { label: "About", anchor: "about", isPage: true, href: "/about", hasMega: false },
   { label: "Contact", anchor: "contact", isPage: false, hasMega: false },
 ] as const;
 
