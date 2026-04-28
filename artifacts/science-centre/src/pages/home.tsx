@@ -657,109 +657,106 @@ function Solutions() {
   const [active, setActive] = useState<number | null>(null);
 
   return (
-    <section id="solutions" className="bg-background overflow-hidden flex flex-col" style={{ height: "100dvh", paddingTop: "96px" }}>
-      <div className="container mx-auto px-6 md:px-12 flex flex-col flex-1 overflow-hidden py-8">
-        {/* Title — compact */}
-        <div className="grid md:grid-cols-12 gap-4 mb-6">
-          <div className="md:col-span-6">
-            <Reveal>
-              <div className="text-xs font-bold tracking-[0.18em] text-primary uppercase mb-2">
-                Focus Areas
-              </div>
-              <h3 className="text-2xl md:text-4xl font-[var(--app-font-heading)] font-bold text-foreground leading-[1.05] tracking-tight">
-                Comprehensive Solutions <br className="hidden md:block" />
-                for Clinical Precision.
-              </h3>
-            </Reveal>
-          </div>
-          <div className="md:col-span-6 md:pl-12 flex md:items-end">
-            <Reveal delay={0.1}>
-              <p className="text-muted-foreground text-sm md:text-base font-light leading-relaxed max-w-md">
-                Across six clinical and research focus areas, we partner with the world's most
-                trusted manufacturers to deliver end-to-end laboratory solutions.
-              </p>
-            </Reveal>
-          </div>
+    <section id="solutions" className="relative overflow-hidden" style={{ height: "100dvh" }}>
+
+      {/* Floating section label — top left over navbar */}
+      <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-8 pt-5 pointer-events-none">
+        <div className="flex items-center gap-3">
+          <div className="w-4 h-px bg-white/60" />
+          <span className="text-[10px] font-bold tracking-[0.25em] text-white/70 uppercase">Focus Areas</span>
         </div>
+        <span className="text-[10px] font-bold tracking-[0.2em] text-white/50 uppercase">
+          Hover to Explore
+        </span>
+      </div>
 
-        {/* Panels — fill remaining height */}
-        <div className="relative flex flex-1 overflow-hidden">
+      {/* Full-bleed shared background image */}
+      <img
+        src={img("/images/sc-hero.png")}
+        alt="Lab background"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 bg-black/55" />
 
-          {/* Single shared background image */}
-          <img
-            src={img("/images/sc-hero.png")}
-            alt="Lab background"
-            className="absolute inset-0 w-full h-full object-cover"
-          />
-          {/* Dark tint over whole image */}
-          <div className="absolute inset-0 bg-black/50" />
-
-          {/* Panels on top */}
-          {solutions.map((s, i) => {
-            const isActive = active === i;
-            return (
+      {/* Panels — full height */}
+      <div className="relative flex h-full">
+        {solutions.map((s, i) => {
+          const isActive = active === i;
+          return (
+            <motion.div
+              key={i}
+              onMouseEnter={() => setActive(i)}
+              onMouseLeave={() => setActive(null)}
+              animate={{ flex: isActive ? 4.5 : 1 }}
+              transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+              className="relative overflow-hidden cursor-pointer"
+              style={{ minWidth: 0 }}
+            >
+              {/* Colored overlay on hover */}
               <motion.div
-                key={i}
-                onMouseEnter={() => setActive(i)}
-                onMouseLeave={() => setActive(null)}
-                animate={{ flex: isActive ? 4 : 1 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="relative overflow-hidden cursor-pointer"
-                style={{ minWidth: 0 }}
+                className="absolute inset-0"
+                animate={{ opacity: isActive ? 1 : 0 }}
+                transition={{ duration: 0.45 }}
+                style={{ backgroundColor: s.accent + "d8" }}
+              />
+
+              {/* Vertical divider */}
+              {i < solutions.length - 1 && (
+                <div className="absolute right-0 top-0 bottom-0 w-px bg-white/15 z-10" />
+              )}
+
+              {/* Collapsed state — number top + title bottom */}
+              <motion.div
+                className="absolute inset-0 flex flex-col justify-between p-5 md:p-7"
+                animate={{ opacity: isActive ? 0 : 1 }}
+                transition={{ duration: 0.2 }}
               >
-                {/* Colored overlay - only on hover */}
-                <motion.div
-                  className="absolute inset-0"
-                  animate={{ opacity: isActive ? 1 : 0 }}
-                  transition={{ duration: 0.4 }}
-                  style={{ backgroundColor: s.accent + "e0" }}
-                />
+                <span className="text-white/30 text-xs font-bold tracking-[0.2em]">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h4 className="text-white font-[var(--app-font-heading)] font-bold text-sm md:text-base leading-snug drop-shadow-lg">
+                  {s.title}
+                </h4>
+              </motion.div>
 
-                {/* Thin right border between panels */}
-                {i < solutions.length - 1 && (
-                  <div className="absolute right-0 top-0 bottom-0 w-px bg-white/20 z-10" />
-                )}
-
-                {/* Collapsed: just title at bottom */}
-                <motion.div
-                  className="absolute inset-0 flex items-end p-6"
-                  animate={{ opacity: isActive ? 0 : 1 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <h4 className="text-white font-[var(--app-font-heading)] font-bold text-base md:text-lg leading-snug drop-shadow-md">
-                    {s.title}
-                  </h4>
-                </motion.div>
-
-                {/* Expanded content */}
-                <motion.div
-                  className="absolute inset-0 flex flex-col justify-between p-8 md:p-10 z-10"
-                  animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 20 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1], delay: isActive ? 0.15 : 0 }}
-                >
-                  {/* Top icon */}
-                  <div className="w-12 h-12 flex items-center justify-center rounded-sm bg-white/20 text-white">
+              {/* Expanded content */}
+              <motion.div
+                className="absolute inset-0 flex flex-col justify-between p-10 md:p-14 z-10"
+                animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 24 }}
+                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: isActive ? 0.15 : 0 }}
+              >
+                {/* Top: number + icon */}
+                <div className="flex items-center justify-between">
+                  <span className="text-white/50 text-xs font-bold tracking-[0.25em] uppercase">
+                    {String(i + 1).padStart(2, "0")} / {String(solutions.length).padStart(2, "0")}
+                  </span>
+                  <div className="w-11 h-11 flex items-center justify-center bg-white/15 text-white rounded-sm backdrop-blur-sm">
                     {s.icon}
                   </div>
+                </div>
 
-                  {/* Bottom: title + desc + arrow */}
-                  <div>
-                    <h4 className="font-[var(--app-font-heading)] text-2xl md:text-3xl font-bold text-white leading-tight tracking-tight mb-4">
-                      {s.title}
-                    </h4>
-                    <p className="text-white/85 text-sm md:text-[15px] font-light leading-relaxed mb-8 max-w-xs">
-                      {s.desc}
-                    </p>
-                    <div className="w-12 h-12 rounded-full border border-dashed border-white/70 flex items-center justify-center text-white hover:bg-white/15 transition-all duration-300">
-                      <ArrowRight className="h-4 w-4" />
-                    </div>
+                {/* Bottom: title + desc + cta */}
+                <div>
+                  <div className="text-[10px] font-bold tracking-[0.2em] uppercase mb-3" style={{ color: "rgba(255,255,255,0.6)" }}>
+                    {s.short}
                   </div>
-                </motion.div>
+                  <h4 className="font-[var(--app-font-heading)] text-3xl md:text-4xl font-black text-white leading-tight tracking-tight mb-5">
+                    {s.title}
+                  </h4>
+                  <p className="text-white/75 text-sm md:text-base font-light leading-relaxed mb-8 max-w-sm">
+                    {s.desc}
+                  </p>
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-full border border-dashed border-white/60 flex items-center justify-center text-white hover:bg-white/10 transition-all duration-300 group">
+                      <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
+                    <span className="text-white/50 text-xs font-bold tracking-[0.15em] uppercase">Learn more</span>
+                  </div>
+                </div>
               </motion.div>
-            );
-          })}
-        </div>
-
+            </motion.div>
+          );
+        })}
       </div>
     </section>
   );
