@@ -92,62 +92,46 @@ const slideVariants = {
 /* ─── Panel 1: CEO ────────────────────────────────────────────── */
 function CEOPanel() {
   return (
-    <div className="relative w-full bg-[#0a0a0a] flex flex-col" style={{ height: "100dvh" }}>
+    <div className="relative w-full bg-[#0a0a0a]" style={{ height: "100dvh", display: "grid", gridTemplateRows: "auto 1fr" }}>
 
-      {/* CEO Name — centered at top, letter-spaced like reference */}
-      <motion.div
-        className="flex-shrink-0 flex items-center justify-center"
-        style={{ paddingTop: "110px", paddingBottom: "48px" }}
-        initial={{ opacity: 0, y: -12 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}>
-        <h1 className="text-sm font-semibold tracking-[0.45em] text-white/85 uppercase">
-          Najam Iqbal
-        </h1>
+      {/* Name — centered at top */}
+      <motion.div className="flex items-center justify-center" style={{ paddingTop: "108px", paddingBottom: "32px" }}
+        initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
+        <h1 className="text-xs font-semibold tracking-[0.5em] text-white/80 uppercase">Najam Iqbal</h1>
       </motion.div>
 
-      {/* Two-column: Photo left, Message right */}
-      <div className="flex flex-1 min-h-0 items-center px-20 md:px-28 gap-20">
+      {/* Body: photo left | message right */}
+      <div style={{ display: "grid", gridTemplateColumns: "45% 1fr", paddingBottom: "48px", paddingLeft: "80px", paddingRight: "100px", gap: "80px", alignItems: "center", minHeight: 0 }}>
 
-        {/* LEFT — large portrait photo */}
-        <motion.div
-          className="flex-shrink-0 relative"
-          style={{ width: "38%", height: "75%" }}
-          initial={{ opacity: 0, x: -24 }}
-          animate={{ opacity: 1, x: 0 }}
+        {/* LEFT: full-height portrait photo */}
+        <motion.div className="relative h-full" style={{ maxHeight: "480px" }}
+          initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}>
 
-          {/* Photo / placeholder */}
-          <div className="w-full h-full relative overflow-hidden"
-            style={{ background: "linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%)" }}>
-            {/* Replace this div's contents with <img> when CEO photo is ready */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-white/10">
-              <Users className="h-24 w-24 mb-4" />
-              <span className="text-xs tracking-[0.3em] uppercase font-light">CEO Photo</span>
+          <div className="w-full h-full relative"
+            style={{ background: "linear-gradient(160deg, #1c1c1c 0%, #101010 100%)" }}>
+            {/* CEO photo goes here — replace inner div with <img className="w-full h-full object-cover object-top" src={img("/images/ceo.png")} /> */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-white/10 gap-3">
+              <Users className="h-28 w-28" />
+              <span className="text-xs tracking-[0.35em] uppercase font-light">CEO Photo</span>
             </div>
           </div>
 
-          {/* Bleed edges into black — exactly like reference */}
+          {/* Bleed right + bottom into black */}
           <div className="absolute inset-0 pointer-events-none"
-            style={{ background: "linear-gradient(to right, transparent 55%, #0a0a0a 100%)" }} />
+            style={{ background: "linear-gradient(to right, transparent 50%, #0a0a0a 100%)" }} />
           <div className="absolute inset-0 pointer-events-none"
-            style={{ background: "linear-gradient(to bottom, #0a0a0a 0%, transparent 12%, transparent 85%, #0a0a0a 100%)" }} />
-          <div className="absolute inset-0 pointer-events-none"
-            style={{ background: "linear-gradient(to left, transparent 85%, #0a0a0a 100%)" }} />
+            style={{ background: "linear-gradient(to bottom, transparent 80%, #0a0a0a 100%)" }} />
         </motion.div>
 
-        {/* RIGHT — CEO message */}
+        {/* RIGHT: message paragraphs */}
         <motion.div
-          className="flex-1 max-w-md"
-          initial={{ opacity: 0, x: 24 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}>
           <div className="space-y-5">
             {ceoParagraphs.map((para, i) => (
-              <motion.p key={i}
-                className="text-white/55 text-sm leading-[1.9] font-light"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
+              <motion.p key={i} className="text-white/55 text-sm leading-[1.95] font-light"
+                initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.65 + i * 0.09 }}>
                 {para}
               </motion.p>
