@@ -1409,7 +1409,15 @@ export default function Home() {
   const [direction, setDirection] = useState(1);
   const cooldown = useRef(false);
 
-  const sections = [
+  // Lock body scroll — homepage controls its own scrolling
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    document.body.style.height = "100dvh";
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.height = "";
+    };
+  }, []);
     <Hero key="hero" visible={splashDone} />,
     <Partners key="partners" />,
     <Solutions key="solutions" />,

@@ -160,12 +160,10 @@
     @apply border-border;
   }
   html {
-    scroll-behavior: auto; /* JS controls scrolling */
+    scroll-behavior: auto;
   }
   body {
     @apply font-sans antialiased bg-background text-foreground;
-    overflow: hidden; /* JS scroll container takes over */
-    height: 100dvh;
   }
 }
 
