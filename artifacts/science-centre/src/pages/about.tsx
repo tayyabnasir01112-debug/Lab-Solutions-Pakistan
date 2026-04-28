@@ -94,71 +94,65 @@ function CEOPanel() {
   return (
     <div className="relative w-full bg-[#0a0a0a] flex flex-col" style={{ height: "100dvh" }}>
 
-      {/* CEO Name — centered at top */}
-      <div className="flex items-center justify-center flex-shrink-0" style={{ paddingTop: "120px", paddingBottom: "32px" }}>
-        <motion.h1
-          className="text-sm md:text-base font-bold tracking-[0.35em] text-white/90 uppercase"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}>
+      {/* CEO Name — centered at top, letter-spaced like reference */}
+      <motion.div
+        className="flex-shrink-0 flex items-center justify-center"
+        style={{ paddingTop: "110px", paddingBottom: "48px" }}
+        initial={{ opacity: 0, y: -12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}>
+        <h1 className="text-sm font-semibold tracking-[0.45em] text-white/85 uppercase">
           Najam Iqbal
-        </motion.h1>
-      </div>
+        </h1>
+      </motion.div>
 
-      {/* Main content — photo left, message right */}
-      <div className="flex flex-1 items-center px-16 md:px-24 gap-16 min-h-0">
+      {/* Two-column: Photo left, Message right */}
+      <div className="flex flex-1 min-h-0 items-center px-20 md:px-28 gap-20">
 
-        {/* LEFT: CEO Photo — merges into black */}
+        {/* LEFT — large portrait photo */}
         <motion.div
           className="flex-shrink-0 relative"
-          style={{ width: "340px", height: "420px" }}
-          initial={{ opacity: 0, x: -30 }}
+          style={{ width: "38%", height: "75%" }}
+          initial={{ opacity: 0, x: -24 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}>
+          transition={{ duration: 1.1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}>
 
-          {/* Placeholder — swap with real photo */}
-          <div className="w-full h-full bg-gradient-to-br from-white/5 to-transparent relative overflow-hidden">
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-white/15">
-              <Users className="h-20 w-20 mb-3" />
-              <span className="text-xs tracking-widest uppercase">CEO Photo</span>
+          {/* Photo / placeholder */}
+          <div className="w-full h-full relative overflow-hidden"
+            style={{ background: "linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%)" }}>
+            {/* Replace this div's contents with <img> when CEO photo is ready */}
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-white/10">
+              <Users className="h-24 w-24 mb-4" />
+              <span className="text-xs tracking-[0.3em] uppercase font-light">CEO Photo</span>
             </div>
           </div>
 
-          {/* Fade edges so photo bleeds into black background — like reference */}
+          {/* Bleed edges into black — exactly like reference */}
           <div className="absolute inset-0 pointer-events-none"
-            style={{ background: "linear-gradient(to right, transparent 60%, #0a0a0a)" }} />
+            style={{ background: "linear-gradient(to right, transparent 55%, #0a0a0a 100%)" }} />
           <div className="absolute inset-0 pointer-events-none"
-            style={{ background: "linear-gradient(to bottom, #0a0a0a 0%, transparent 15%, transparent 80%, #0a0a0a 100%)" }} />
+            style={{ background: "linear-gradient(to bottom, #0a0a0a 0%, transparent 12%, transparent 85%, #0a0a0a 100%)" }} />
           <div className="absolute inset-0 pointer-events-none"
-            style={{ background: "linear-gradient(to left, transparent 80%, #0a0a0a)" }} />
+            style={{ background: "linear-gradient(to left, transparent 85%, #0a0a0a 100%)" }} />
         </motion.div>
 
-        {/* RIGHT: CEO Message */}
+        {/* RIGHT — CEO message */}
         <motion.div
-          className="flex-1 max-w-lg"
-          initial={{ opacity: 0, x: 30 }}
+          className="flex-1 max-w-md"
+          initial={{ opacity: 0, x: 24 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}>
-
           <div className="space-y-5">
             {ceoParagraphs.map((para, i) => (
               <motion.p key={i}
-                className="text-white/60 text-sm leading-[1.9] font-light"
-                initial={{ opacity: 0, y: 10 }}
+                className="text-white/55 text-sm leading-[1.9] font-light"
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 + i * 0.1 }}>
+                transition={{ duration: 0.5, delay: 0.65 + i * 0.09 }}>
                 {para}
               </motion.p>
             ))}
           </div>
-
-          {/* Signature */}
-          <motion.div className="mt-10 pt-8 border-t border-white/10"
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1.2 }}>
-            <div className="text-white/80 text-sm font-bold tracking-widest uppercase">Najam Iqbal</div>
-            <div className="text-primary text-xs tracking-[0.2em] uppercase mt-1 font-medium">Chief Executive Officer</div>
-          </motion.div>
         </motion.div>
       </div>
     </div>
