@@ -161,9 +161,18 @@
   }
   html {
     scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
+    scroll-padding-top: 96px; /* height of fixed navbar */
   }
   body {
     @apply font-sans antialiased bg-background text-foreground;
+  }
+
+  /* Each section snaps to top */
+  main > section,
+  main > div > section {
+    scroll-snap-align: start;
+    scroll-snap-stop: normal;
   }
 }
 

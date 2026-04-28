@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import type { ReactNode } from "react";
 import { Link } from "wouter";
 import { motion, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -1375,15 +1374,6 @@ function Contact() {
 /* ─── Footer ──────────────────────────────────────────────────── */
 
 /* ─── Root ────────────────────────────────────────────────────── */
-/* Snap wrapper — each section snaps cleanly to the top */
-function Snap({ children }: { children: ReactNode }) {
-  return (
-    <div style={{ scrollSnapAlign: "start", scrollSnapStop: "always" }}>
-      {children}
-    </div>
-  );
-}
-
 export default function Home() {
   const [splashDone, setSplashDone] = useState(false);
 
@@ -1393,26 +1383,16 @@ export default function Home() {
 
       <SiteNavbar visible={splashDone} />
 
-      {/* Scroll snap container */}
-      <main
-        style={{
-          scrollSnapType: "y proximity",
-          overflowY: "scroll",
-          height: "100dvh",
-          scrollPaddingTop: "96px",
-          scrollbarWidth: "none",
-        }}
-        className="[&::-webkit-scrollbar]:hidden"
-      >
-        <Snap><Hero visible={splashDone} /></Snap>
-        <Snap><Partners /></Snap>
-        <Snap><Solutions /></Snap>
-        <Snap><FeaturedProducts /></Snap>
-        <Snap><Credibility /></Snap>
-        <Snap><Locations /></Snap>
-        <Snap><Contact /></Snap>
-        <Snap><SiteFooter /></Snap>
+      <main>
+        <Hero visible={splashDone} />
+        <Partners />
+        <Solutions />
+        <FeaturedProducts />
+        <Credibility />
+        <Locations />
+        <Contact />
       </main>
+      <SiteFooter />
     </div>
   );
 }
