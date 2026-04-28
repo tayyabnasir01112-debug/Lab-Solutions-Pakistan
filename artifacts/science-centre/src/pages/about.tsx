@@ -1,8 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { SiteNavbar } from "@/components/site-navbar";
-import { SiteFooter } from "@/components/site-footer";
-import { ArrowRight, Quote, Award, Users, Globe, HeartPulse, Microscope, FlaskConical, Dna } from "lucide-react";
+import { ArrowRight, Award, Users, Globe, HeartPulse, Microscope, FlaskConical, Dna } from "lucide-react";
 import { Link } from "wouter";
 
 function img(src: string) {
@@ -92,104 +91,75 @@ const slideVariants = {
 
 /* ─── Panel 1: CEO ────────────────────────────────────────────── */
 function CEOPanel() {
-  const [activePara, setActivePara] = useState(0);
-
-  useEffect(() => {
-    const t = setInterval(() => setActivePara(i => (i + 1) % ceoParagraphs.length), 4000);
-    return () => clearInterval(t);
-  }, []);
-
   return (
-    <div className="relative w-full bg-[#080810]" style={{ height: "100dvh" }}>
-      {/* Dot grid */}
-      <div className="absolute inset-0 opacity-[0.035]"
-        style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+    <div className="relative w-full bg-[#0a0a0a] flex flex-col" style={{ height: "100dvh" }}>
 
-      <div className="relative h-full grid lg:grid-cols-2">
+      {/* CEO Name — centered at top */}
+      <div className="flex items-center justify-center pt-28 pb-10 flex-shrink-0">
+        <motion.h1
+          className="text-sm md:text-base font-bold tracking-[0.35em] text-white/90 uppercase"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}>
+          Najam Iqbal
+        </motion.h1>
+      </div>
 
-        {/* LEFT: CEO Photo */}
-        <div className="relative overflow-hidden">
-          {/* Photo placeholder — replaced when CEO image is uploaded */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#080810]/0 via-transparent to-[#080810]" style={{ zIndex: 2 }} />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#080810] via-transparent to-transparent" style={{ zIndex: 2 }} />
+      {/* Main content — photo left, message right */}
+      <div className="flex flex-1 items-center px-16 md:px-24 gap-16 min-h-0">
 
-          {/* CEO Image — replace src when photo is ready */}
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-[#0d0d1a] to-[#080810]">
-            {/* Placeholder visual */}
-            <div className="w-64 h-80 border border-white/10 flex flex-col items-center justify-center text-white/20 relative">
-              <div className="absolute top-0 left-0 w-6 h-6 border-t border-l border-primary/60" />
-              <div className="absolute bottom-0 right-0 w-6 h-6 border-b border-r border-primary/60" />
-              <Users className="h-16 w-16 mb-3" />
-              <span className="text-xs tracking-widest uppercase font-medium">CEO Photo</span>
-              <span className="text-[10px] text-white/20 mt-1">Upload Coming Soon</span>
+        {/* LEFT: CEO Photo — merges into black */}
+        <motion.div
+          className="flex-shrink-0 relative"
+          style={{ width: "340px", height: "420px" }}
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}>
+
+          {/* Placeholder — swap with real photo */}
+          <div className="w-full h-full bg-gradient-to-br from-white/5 to-transparent relative overflow-hidden">
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-white/15">
+              <Users className="h-20 w-20 mb-3" />
+              <span className="text-xs tracking-widest uppercase">CEO Photo</span>
             </div>
           </div>
 
-          {/* Name overlay at bottom */}
-          <div className="absolute bottom-0 left-0 right-0 p-10 z-10">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.7 }}>
-              <div className="text-[10px] font-bold tracking-[0.3em] text-primary uppercase mb-2">Chief Executive Officer</div>
-              <h2 className="text-3xl md:text-4xl font-[var(--app-font-heading)] font-black text-white leading-tight">
-                Najam Iqbal
-              </h2>
-              <div className="w-12 h-0.5 bg-primary mt-4" />
-            </motion.div>
+          {/* Fade edges so photo bleeds into black background — like reference */}
+          <div className="absolute inset-0 pointer-events-none"
+            style={{ background: "linear-gradient(to right, transparent 60%, #0a0a0a)" }} />
+          <div className="absolute inset-0 pointer-events-none"
+            style={{ background: "linear-gradient(to bottom, #0a0a0a 0%, transparent 15%, transparent 80%, #0a0a0a 100%)" }} />
+          <div className="absolute inset-0 pointer-events-none"
+            style={{ background: "linear-gradient(to left, transparent 80%, #0a0a0a)" }} />
+        </motion.div>
+
+        {/* RIGHT: CEO Message */}
+        <motion.div
+          className="flex-1 max-w-lg"
+          initial={{ opacity: 0, x: 30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}>
+
+          <div className="space-y-5">
+            {ceoParagraphs.map((para, i) => (
+              <motion.p key={i}
+                className="text-white/60 text-sm leading-[1.9] font-light"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6 + i * 0.1 }}>
+                {para}
+              </motion.p>
+            ))}
           </div>
-        </div>
 
-        {/* RIGHT: Message */}
-        <div className="flex flex-col justify-center px-10 md:px-16 pt-24 pb-10 relative">
-          {/* Glow orb */}
-          <div className="absolute top-1/3 right-0 w-64 h-64 rounded-full blur-3xl pointer-events-none"
-            style={{ background: "radial-gradient(circle, hsl(var(--primary)/0.12), transparent 70%)" }} />
-
-          <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3, duration: 0.7 }}>
-            {/* Label */}
-            <div className="flex items-center gap-3 mb-8">
-              <Quote className="h-6 w-6 text-primary flex-shrink-0" />
-              <div>
-                <div className="text-xs font-bold tracking-[0.22em] text-primary uppercase">CEO's Message</div>
-                <div className="text-white/30 text-[11px] font-light mt-0.5">A word from our leadership</div>
-              </div>
-            </div>
-
-            {/* Cycling paragraphs */}
-            <div className="relative" style={{ minHeight: "200px" }}>
-              <AnimatePresence mode="wait">
-                <motion.p key={activePara}
-                  className="text-white/80 text-base md:text-lg font-light leading-relaxed absolute inset-0"
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -16 }}
-                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}>
-                  <span className="text-primary text-2xl leading-none mr-1">❝</span>
-                  {ceoParagraphs[activePara]}
-                </motion.p>
-              </AnimatePresence>
-            </div>
-
-            {/* Para dots */}
-            <div className="flex gap-2 mt-52 mb-8">
-              {ceoParagraphs.map((_, i) => (
-                <button key={i} onClick={() => setActivePara(i)}
-                  className="transition-all duration-300 rounded-full h-1.5"
-                  style={{ width: i === activePara ? "24px" : "6px", backgroundColor: i === activePara ? "hsl(var(--primary))" : "rgba(255,255,255,0.2)" }} />
-              ))}
-            </div>
-
-            {/* Stats strip */}
-            <div className="grid grid-cols-4 gap-4 border-t border-white/10 pt-8">
-              {stats.map((s, i) => (
-                <div key={i} className="text-center">
-                  <div className="text-xl font-[var(--app-font-heading)] font-black text-white">
-                    <CountUp to={s.value} suffix={s.suffix} />
-                  </div>
-                  <div className="text-[10px] text-white/40 font-medium tracking-wide mt-1 leading-tight">{s.label}</div>
-                </div>
-              ))}
-            </div>
+          {/* Signature */}
+          <motion.div className="mt-10 pt-8 border-t border-white/10"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 1.2 }}>
+            <div className="text-white/80 text-sm font-bold tracking-widest uppercase">Najam Iqbal</div>
+            <div className="text-primary text-xs tracking-[0.2em] uppercase mt-1 font-medium">Chief Executive Officer</div>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
