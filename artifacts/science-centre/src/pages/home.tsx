@@ -659,17 +659,6 @@ function Solutions() {
   return (
     <section id="solutions" className="relative overflow-hidden" style={{ height: "100dvh" }}>
 
-      {/* Floating section label — top left over navbar */}
-      <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-8 pt-5 pointer-events-none">
-        <div className="flex items-center gap-3">
-          <div className="w-4 h-px bg-white/60" />
-          <span className="text-[10px] font-bold tracking-[0.25em] text-white/70 uppercase">Focus Areas</span>
-        </div>
-        <span className="text-[10px] font-bold tracking-[0.2em] text-white/50 uppercase">
-          Hover to Explore
-        </span>
-      </div>
-
       {/* Full-bleed shared background image */}
       <img
         src={img("/images/sc-hero.png")}
@@ -705,15 +694,13 @@ function Solutions() {
                 <div className="absolute right-0 top-0 bottom-0 w-px bg-white/15 z-10" />
               )}
 
-              {/* Collapsed state — number top + title bottom */}
+              {/* Collapsed state — title at bottom only */}
               <motion.div
-                className="absolute inset-0 flex flex-col justify-between p-5 md:p-7"
+                className="absolute inset-0 flex flex-col justify-end p-6 md:p-8"
                 animate={{ opacity: isActive ? 0 : 1 }}
                 transition={{ duration: 0.2 }}
               >
-                <span className="text-white/30 text-xs font-bold tracking-[0.2em]">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
+                <div className="w-5 h-px bg-white/40 mb-3" />
                 <h4 className="text-white font-[var(--app-font-heading)] font-bold text-sm md:text-base leading-snug drop-shadow-lg">
                   {s.title}
                 </h4>
@@ -725,11 +712,8 @@ function Solutions() {
                 animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 24 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: isActive ? 0.15 : 0 }}
               >
-                {/* Top: number + icon */}
-                <div className="flex items-center justify-between">
-                  <span className="text-white/50 text-xs font-bold tracking-[0.25em] uppercase">
-                    {String(i + 1).padStart(2, "0")} / {String(solutions.length).padStart(2, "0")}
-                  </span>
+                {/* Top: icon only */}
+                <div className="flex justify-end pt-28">
                   <div className="w-11 h-11 flex items-center justify-center bg-white/15 text-white rounded-sm backdrop-blur-sm">
                     {s.icon}
                   </div>
@@ -737,9 +721,6 @@ function Solutions() {
 
                 {/* Bottom: title + desc + cta */}
                 <div>
-                  <div className="text-[10px] font-bold tracking-[0.2em] uppercase mb-3" style={{ color: "rgba(255,255,255,0.6)" }}>
-                    {s.short}
-                  </div>
                   <h4 className="font-[var(--app-font-heading)] text-3xl md:text-4xl font-black text-white leading-tight tracking-tight mb-5">
                     {s.title}
                   </h4>
