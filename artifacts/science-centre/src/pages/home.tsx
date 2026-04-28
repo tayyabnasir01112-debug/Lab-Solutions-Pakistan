@@ -1418,6 +1418,8 @@ export default function Home() {
       document.body.style.height = "";
     };
   }, []);
+
+  const sections = [
     <Hero key="hero" visible={splashDone} />,
     <Partners key="partners" />,
     <Solutions key="solutions" />,
