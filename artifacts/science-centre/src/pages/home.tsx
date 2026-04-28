@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import React from "react";
 import { Link } from "wouter";
 import { motion, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -1375,27 +1374,47 @@ function Contact() {
 /* ─── Footer ──────────────────────────────────────────────────── */
 
 /* ─── Root ────────────────────────────────────────────────────── */
-const SECTIONS = ["home", "partners", "solutions", "products", "about", "locations", "contact"];
+const SECTION_NAMES = ["Home", "Partners", "Solutions", "Instruments", "About", "Locations", "Contact"];
+
+const slideVariants = {
+  enter: (dir: number) => ({
+    y: dir > 0 ? "100%" : "-100%",
+    opacity: 0,
+  }),
+  center: {
+    y: "0%",
+    opacity: 1,
+    transition: { duration: 0.75, ease: [0.76, 0, 0.24, 1] },
+  },
+  exit: (dir: number) => ({
+    y: dir > 0 ? "-100%" : "100%",
+    opacity: 0,
+    transition: { duration: 0.75, ease: [0.76, 0, 0.24, 1] },
+  }),
+};
 
 export default function Home() {
   const [splashDone, setSplashDone] = useState(false);
   const [current, setCurrent] = useState(0);
-  const [isScrolling, setIsScrolling] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [direction, setDirection] = useState(1);
   const cooldown = useRef(false);
 
+  const sections = [
+    <Hero key="hero" visible={splashDone} />,
+    <Partners key="partners" />,
+    <Solutions key="solutions" />,
+    <FeaturedProducts key="products" />,
+    <Credibility key="credibility" />,
+    <Locations key="locations" />,
+    <Contact key="contact" />,
+  ];
+
   const goTo = (index: number) => {
-    const target = sectionRefs.current[index];
-    if (!target || cooldown.current) return;
+    if (cooldown.current || index === current) return;
     cooldown.current = true;
-    setIsScrolling(true);
+    setDirection(index > current ? 1 : -1);
     setCurrent(index);
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
-    setTimeout(() => {
-      cooldown.current = false;
-      setIsScrolling(false);
-    }, 900);
+    setTimeout(() => { cooldown.current = false; }, 850);
   };
 
   useEffect(() => {
@@ -1403,27 +1422,26 @@ export default function Home() {
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
       if (cooldown.current) return;
-      if (e.deltaY > 30) goTo(Math.min(current + 1, SECTIONS.length - 1));
-      else if (e.deltaY < -30) goTo(Math.max(current - 1, 0));
+      if (e.deltaY > 20) goTo(Math.min(current + 1, sections.length - 1));
+      else if (e.deltaY < -20) goTo(Math.max(current - 1, 0));
     };
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "ArrowDown" || e.key === "PageDown") { e.preventDefault(); goTo(Math.min(current + 1, SECTIONS.length - 1)); }
-      if (e.key === "ArrowUp" || e.key === "PageUp") { e.preventDefault(); goTo(Math.max(current - 1, 0)); }
+      if (["ArrowDown","PageDown"].includes(e.key)) { e.preventDefault(); goTo(Math.min(current + 1, sections.length - 1)); }
+      if (["ArrowUp","PageUp"].includes(e.key)) { e.preventDefault(); goTo(Math.max(current - 1, 0)); }
     };
     window.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("keydown", onKey);
     return () => { window.removeEventListener("wheel", onWheel); window.removeEventListener("keydown", onKey); };
   }, [splashDone, current]);
 
-  // Touch support
   useEffect(() => {
     if (!splashDone) return;
-    let touchStartY = 0;
-    const onTouchStart = (e: TouchEvent) => { touchStartY = e.touches[0].clientY; };
+    let startY = 0;
+    const onTouchStart = (e: TouchEvent) => { startY = e.touches[0].clientY; };
     const onTouchEnd = (e: TouchEvent) => {
-      const diff = touchStartY - e.changedTouches[0].clientY;
-      if (Math.abs(diff) < 50) return;
-      if (diff > 0) goTo(Math.min(current + 1, SECTIONS.length - 1));
+      const diff = startY - e.changedTouches[0].clientY;
+      if (Math.abs(diff) < 60) return;
+      if (diff > 0) goTo(Math.min(current + 1, sections.length - 1));
       else goTo(Math.max(current - 1, 0));
     };
     window.addEventListener("touchstart", onTouchStart, { passive: true });
@@ -1431,74 +1449,78 @@ export default function Home() {
     return () => { window.removeEventListener("touchstart", onTouchStart); window.removeEventListener("touchend", onTouchEnd); };
   }, [splashDone, current]);
 
-  const sectionNames = ["Home", "Partners", "Solutions", "Instruments", "About", "Locations", "Contact"];
-
   return (
     <div className="h-[100dvh] w-full bg-background overflow-hidden selection:bg-primary selection:text-primary-foreground text-foreground">
       <AnimatePresence>{!splashDone && <IntroSplash onDone={() => setSplashDone(true)} />}</AnimatePresence>
-
       <SiteNavbar visible={splashDone} />
 
-      {/* Scroll container */}
-      <div ref={containerRef} className="h-[100dvh] overflow-hidden">
-        {([
-          <Hero key="hero" visible={splashDone} />,
-          <Partners key="partners" />,
-          <Solutions key="solutions" />,
-          <FeaturedProducts key="products" />,
-          <Credibility key="credibility" />,
-          <Locations key="locations" />,
-          <Contact key="contact" />,
-        ] as React.ReactElement[]).map((section, i) => (
-          <div
-            key={i}
-            ref={el => { sectionRefs.current[i] = el; }}
-            style={{ height: "100dvh", overflowY: "auto", overflowX: "hidden" }}
+      {/* Full-screen panel container */}
+      <div className="relative w-full overflow-hidden" style={{ height: "100dvh" }}>
+        <AnimatePresence custom={direction} mode="sync">
+          <motion.div
+            key={current}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="absolute inset-0 w-full"
+            style={{ height: "100dvh", overflowY: "auto" }}
           >
-            {section}
-          </div>
-        ))}
+            {sections[current]}
+          </motion.div>
+        </AnimatePresence>
       </div>
 
-      {/* Section dot indicator — right side */}
+      {/* Section dots — right side */}
       {splashDone && (
-        <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3 items-center">
-          {sectionNames.map((name, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              title={name}
-              className="group flex items-center gap-2 justify-end"
-            >
-              {/* Label on hover */}
-              <motion.span
-                className="text-[10px] font-bold tracking-widest uppercase text-foreground bg-background/90 px-2 py-1 border border-border opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap"
-              >
+        <div className="fixed right-5 top-1/2 -translate-y-1/2 z-50 flex flex-col gap-3">
+          {SECTION_NAMES.map((name, i) => (
+            <button key={i} onClick={() => goTo(i)} className="group flex items-center gap-2 justify-end" title={name}>
+              <span className="text-[10px] font-bold tracking-widest uppercase bg-background/95 text-foreground px-2 py-1 border border-border opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap shadow-sm">
                 {name}
-              </motion.span>
-              {/* Dot */}
+              </span>
               <motion.div
-                className="rounded-full border-2 border-foreground/30 transition-all duration-400"
+                className="rounded-full"
                 animate={{
-                  width: i === current ? 10 : 6,
-                  height: i === current ? 10 : 6,
-                  backgroundColor: i === current ? "hsl(var(--primary))" : "transparent",
-                  borderColor: i === current ? "hsl(var(--primary))" : "hsl(var(--foreground)/0.3)",
+                  width:  i === current ? 10 : 5,
+                  height: i === current ? 10 : 5,
+                  backgroundColor: i === current ? "hsl(var(--primary))" : "hsl(var(--border))",
+                  boxShadow: i === current ? "0 0 8px hsl(var(--primary)/0.6)" : "none",
                 }}
+                transition={{ duration: 0.3 }}
               />
             </button>
           ))}
         </div>
       )}
 
-      {/* Scroll progress bar — bottom */}
+      {/* Bottom progress bar */}
       {splashDone && (
-        <div className="fixed bottom-0 left-0 right-0 h-0.5 bg-border z-50">
+        <div className="fixed bottom-0 left-0 right-0 h-[2px] bg-border/50 z-50">
           <motion.div
             className="h-full bg-primary"
-            animate={{ width: `${((current) / (SECTIONS.length - 1)) * 100}%` }}
-            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            animate={{ width: `${(current / (sections.length - 1)) * 100}%` }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           />
+        </div>
+      )}
+
+      {/* Section name label — bottom left */}
+      {splashDone && (
+        <div className="fixed bottom-4 left-6 z-50">
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={current}
+              className="text-[10px] font-bold tracking-[0.25em] uppercase text-muted-foreground"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.3 }}
+            >
+              {String(current + 1).padStart(2, "0")} / {String(sections.length).padStart(2, "0")} — {SECTION_NAMES[current]}
+            </motion.span>
+          </AnimatePresence>
         </div>
       )}
     </div>
