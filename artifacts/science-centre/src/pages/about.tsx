@@ -113,11 +113,13 @@ function CEOPanel() {
               src={img("/images/ceo.png")}
               alt="Najam Iqbal — CEO Science Centre"
               className="w-full h-full object-cover object-top"
-              style={{ filter: "contrast(1.05) brightness(0.88)" }}
             />
-            {/* Extra left-side overlay to kill wall stripes */}
+            {/* Right edge fade into black */}
             <div className="absolute inset-0 pointer-events-none"
-              style={{ background: "linear-gradient(to right, rgba(10,10,10,0.45) 0%, rgba(10,10,10,0.1) 40%, transparent 65%)" }} />
+              style={{ background: "linear-gradient(to right, transparent 60%, #0a0a0a 100%)" }} />
+            {/* Bottom edge fade */}
+            <div className="absolute inset-0 pointer-events-none"
+              style={{ background: "linear-gradient(to bottom, transparent 75%, #0a0a0a 100%)" }} />
           </div>
 
           {/* Bleed right + bottom into black */}
