@@ -59,7 +59,7 @@ const stats = [
 
 const values = [
   { icon: <Award className="h-5 w-5" />, title: "Excellence", desc: "Delivering only certified, internationally validated instruments and reagents to Pakistan's top institutions.", accent: "#0077C8" },
-  { icon: <Users className="h-5 w-5" />, title: "Partnership", desc: "Long-term relationships with global principals and local clients — built on trust, transparency, and shared purpose.", accent: "#2E7D32" },
+  { icon: <Globe className="h-5 w-5" />, title: "Partnership", desc: "Long-term relationships with global principals and local clients — built on trust, transparency, and shared purpose.", accent: "#2E7D32" },
   { icon: <Globe className="h-5 w-5" />, title: "Innovation", desc: "Continuously introducing cutting-edge technologies to elevate Pakistan's scientific and clinical landscape.", accent: "#7B2D8B" },
   { icon: <HeartPulse className="h-5 w-5" />, title: "Impact", desc: "Every instrument distributed has real consequences — faster diagnoses, more accurate results, better outcomes.", accent: "#E8262A" },
 ];
