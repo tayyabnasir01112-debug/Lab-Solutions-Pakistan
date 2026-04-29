@@ -32,7 +32,7 @@ type PreviewState =
   | { kind: "brand"; id: string }
   | { kind: "category"; id: string };
 
-export function SiteNavbar({ visible = true }: { visible?: boolean }) {
+export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: boolean; forceSolid?: boolean }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
@@ -41,7 +41,7 @@ export function SiteNavbar({ visible = true }: { visible?: boolean }) {
   const [location] = useLocation();
   const isHome = location === "/";
   const isDarkPage = location === "/" || location === "/about";
-  const solid = scrolled || !isDarkPage;
+  const solid = forceSolid || scrolled || !isDarkPage;
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
