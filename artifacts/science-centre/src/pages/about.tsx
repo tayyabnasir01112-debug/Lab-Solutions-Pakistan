@@ -108,18 +108,12 @@ function CEOPanel() {
           initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}>
 
-          <div className="w-full h-full relative overflow-hidden bg-[#0a0a0a]">
+          <div className="w-full h-full relative bg-[#0a0a0a]">
             <img
               src={img("/images/ceo.png")}
               alt="Najam Iqbal — CEO Science Centre"
               className="w-full h-full object-cover object-top"
             />
-            {/* Right edge fade into black */}
-            <div className="absolute inset-0 pointer-events-none"
-              style={{ background: "linear-gradient(to right, transparent 60%, #0a0a0a 100%)" }} />
-            {/* Bottom edge fade */}
-            <div className="absolute inset-0 pointer-events-none"
-              style={{ background: "linear-gradient(to bottom, transparent 75%, #0a0a0a 100%)" }} />
           </div>
 
           {/* Bleed right + bottom into black */}
