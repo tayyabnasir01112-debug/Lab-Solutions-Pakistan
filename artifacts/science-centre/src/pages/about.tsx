@@ -89,55 +89,107 @@ const slideVariants = {
   exit: (dir: number) => ({ y: dir > 0 ? "-100%" : "100%", opacity: 0, transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1] } }),
 };
 
-/* ─── Panel 1: CEO ────────────────────────────────────────────── */
+/* ─── Panel 4: CEO Cinematic Reveal ──────────────────────────── */
 function CEOPanel() {
+  const [phase, setPhase] = useState<"title" | "reveal">("title");
+
+  useEffect(() => {
+    const t = setTimeout(() => setPhase("reveal"), 1800);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
-    <div className="relative w-full bg-[#0a0a0a]" style={{ height: "100dvh", display: "grid", gridTemplateRows: "auto 1fr" }}>
+    <div className="relative w-full bg-[#0a0a0a] flex flex-col overflow-hidden" style={{ height: "100dvh" }}>
 
-      {/* Name — centered at top */}
-      <motion.div className="flex items-center justify-center" style={{ paddingTop: "108px", paddingBottom: "32px" }}
-        initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}>
-        <h1 className="text-xs font-semibold tracking-[0.5em] text-white/80 uppercase">Najam Iqbal</h1>
-      </motion.div>
+      {/* Subtle dot grid */}
+      <div className="absolute inset-0 opacity-[0.025]"
+        style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
 
-      {/* Body: photo left | message right */}
-      <div style={{ display: "grid", gridTemplateColumns: "45% 1fr", paddingBottom: "48px", paddingLeft: "80px", paddingRight: "100px", gap: "80px", alignItems: "center", minHeight: 0 }}>
+      {/* PHASE 1: Full-screen title reveal */}
+      <AnimatePresence>
+        {phase === "title" && (
+          <motion.div
+            className="absolute inset-0 flex flex-col items-center justify-center z-20"
+            exit={{ opacity: 0, scale: 1.04 }}
+            transition={{ duration: 1, ease: [0.76, 0, 0.24, 1] }}>
+            <motion.div className="h-px bg-primary/60 mb-10"
+              initial={{ width: 0 }} animate={{ width: "48px" }}
+              transition={{ duration: 0.8, delay: 0.3 }} />
+            <motion.p className="text-white/40 text-[11px] tracking-[0.5em] uppercase font-light mb-5"
+              initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.5 }}>
+              Chief Executive Officer
+            </motion.p>
+            <motion.h1
+              className="text-5xl md:text-7xl font-[var(--app-font-heading)] font-black text-white tracking-tight text-center"
+              initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.7, ease: [0.16, 1, 0.3, 1] }}>
+              Najam Iqbal
+            </motion.h1>
+            <motion.div className="h-px bg-primary/60 mt-10"
+              initial={{ width: 0 }} animate={{ width: "48px" }}
+              transition={{ duration: 0.8, delay: 1.0 }} />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-        {/* LEFT: full-height portrait photo */}
-        <motion.div className="relative h-full" style={{ maxHeight: "480px" }}
-          initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}>
+      {/* PHASE 2: Photo + message */}
+      <AnimatePresence>
+        {phase === "reveal" && (
+          <motion.div className="absolute inset-0 flex flex-col"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            transition={{ duration: 0.9 }}>
 
-          <div className="w-full h-full relative bg-[#0a0a0a]">
-            <img
-              src={img("/images/ceo.png")}
-              alt="Najam Iqbal — CEO Science Centre"
-              className="w-full h-full object-cover object-top"
-            />
-          </div>
+            {/* Name top */}
+            <motion.div className="flex-shrink-0 flex items-center justify-center"
+              style={{ paddingTop: "110px", paddingBottom: "40px" }}
+              initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.2 }}>
+              <h2 className="text-xs font-semibold tracking-[0.5em] text-white/80 uppercase">Najam Iqbal</h2>
+            </motion.div>
 
-          {/* Bleed right + bottom into black */}
-          <div className="absolute inset-0 pointer-events-none"
-            style={{ background: "linear-gradient(to right, transparent 50%, #0a0a0a 100%)" }} />
-          <div className="absolute inset-0 pointer-events-none"
-            style={{ background: "linear-gradient(to bottom, transparent 80%, #0a0a0a 100%)" }} />
-        </motion.div>
+            {/* Two-column grid */}
+            <div style={{ display: "grid", gridTemplateColumns: "45% 1fr", flex: 1,
+              paddingBottom: "48px", paddingLeft: "80px", paddingRight: "100px",
+              gap: "80px", alignItems: "center", minHeight: 0 }}>
 
-        {/* RIGHT: message paragraphs */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}>
-          <div className="space-y-5">
-            {ceoParagraphs.map((para, i) => (
-              <motion.p key={i} className="text-white/55 text-sm leading-[1.95] font-light"
-                initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.65 + i * 0.09 }}>
-                {para}
-              </motion.p>
-            ))}
-          </div>
-        </motion.div>
-      </div>
+              {/* Photo */}
+              <motion.div className="relative h-full" style={{ maxHeight: "480px" }}
+                initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 1.1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}>
+                <div className="w-full h-full relative bg-[#0a0a0a]">
+                  <img src={img("/images/ceo.png")} alt="Najam Iqbal"
+                    className="w-full h-full object-cover object-top" />
+                </div>
+              </motion.div>
+
+              {/* Message */}
+              <div>
+                <motion.div className="h-px bg-primary mb-6"
+                  initial={{ width: 0 }} animate={{ width: "32px" }}
+                  transition={{ duration: 0.6, delay: 0.4 }} />
+                <div className="space-y-4">
+                  {ceoParagraphs.map((para, i) => (
+                    <motion.p key={i} className="text-white/55 text-sm leading-[1.95] font-light"
+                      initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.55, delay: 0.5 + i * 0.1 }}>
+                      {para}
+                    </motion.p>
+                  ))}
+                </div>
+                <motion.div className="mt-8 flex items-center gap-4"
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 1.1 }}>
+                  <div className="w-8 h-px bg-primary/50" />
+                  <span className="text-[10px] tracking-[0.3em] text-primary uppercase font-semibold">
+                    Chief Executive Officer · Science Centre
+                  </span>
+                </motion.div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -371,7 +423,7 @@ function CTAPanel() {
 }
 
 /* ─── Main About Page ─────────────────────────────────────────── */
-const PANEL_NAMES = ["CEO", "Mission", "Journey", "Values", "Contact"];
+const PANEL_NAMES = ["Who We Are", "Our Journey", "Our Values", "Leadership", "Work With Us"];
 
 export default function About() {
   const [current, setCurrent] = useState(0);
@@ -380,10 +432,10 @@ export default function About() {
   const cooldown = useRef(false);
 
   const panels = [
-    <CEOPanel key="ceo" />,
     <MissionPanel key="mission" />,
     <TimelinePanel key="timeline" />,
     <ValuesPanel key="values" />,
+    <CEOPanel key="ceo" />,
     <CTAPanel key="cta" />,
   ];
 
@@ -395,9 +447,9 @@ export default function About() {
     setTimeout(() => { cooldown.current = false; }, 900);
   };
 
-  // Hover-to-reveal navbar on CEO panel, always visible on others
+  // Hover-to-reveal navbar only on CEO panel (index 3), always visible on others
   useEffect(() => {
-    if (current !== 0) {
+    if (current !== 3) {
       setNavVisible(true);
       return;
     }
