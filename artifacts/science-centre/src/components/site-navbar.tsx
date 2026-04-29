@@ -40,7 +40,8 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [location] = useLocation();
   const isHome = location === "/";
-  const isDarkPage = location === "/" || location === "/about";
+  // Only /about has dark panels that need transparent navbar
+  const isDarkPage = location === "/about";
   const solid = forceSolid || scrolled || !isDarkPage;
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 

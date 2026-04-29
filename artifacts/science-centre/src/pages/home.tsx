@@ -1450,7 +1450,16 @@ export default function Home() {
   return (
     <div className="h-[100dvh] w-full bg-background overflow-hidden selection:bg-primary selection:text-primary-foreground text-foreground">
       <AnimatePresence>{!splashDone && <IntroSplash onDone={() => setSplashDone(true)} />}</AnimatePresence>
-      <SiteNavbar visible={splashDone && current !== 2} />
+      {/* 
+        Section backgrounds:
+        0=Hero(light bg), 1=Partners(dark), 2=Solutions(hidden), 
+        3=Instruments(light), 4=Credibility(dark), 5=Locations(light), 6=Contact(light)
+        forceSolid=true on light sections so links are dark and visible
+      */}
+      <SiteNavbar
+        visible={splashDone && current !== 2}
+        forceSolid={current === 0 || current === 3 || current === 5 || current === 6}
+      />
 
       {/* Full-screen panel container */}
       <div className="relative w-full overflow-hidden" style={{ height: "100dvh" }}>
