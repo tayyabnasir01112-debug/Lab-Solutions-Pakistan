@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { SiteNavbar } from "@/components/site-navbar";
-import { ArrowRight, Award, Users, Globe, HeartPulse, Microscope, FlaskConical, Dna } from "lucide-react";
+import { ArrowRight, Award, Globe, HeartPulse, Microscope, FlaskConical, Dna } from "lucide-react";
 import { Link } from "wouter";
 
 function img(src: string) {
@@ -108,13 +108,12 @@ function CEOPanel() {
           initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1.1, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}>
 
-          <div className="w-full h-full relative"
-            style={{ background: "linear-gradient(160deg, #1c1c1c 0%, #101010 100%)" }}>
-            {/* CEO photo goes here — replace inner div with <img className="w-full h-full object-cover object-top" src={img("/images/ceo.png")} /> */}
-            <div className="absolute inset-0 flex flex-col items-center justify-center text-white/10 gap-3">
-              <Users className="h-28 w-28" />
-              <span className="text-xs tracking-[0.35em] uppercase font-light">CEO Photo</span>
-            </div>
+          <div className="w-full h-full relative overflow-hidden bg-[#0a0a0a]">
+            <img
+              src={img("/images/ceo.png")}
+              alt="Najam Iqbal — CEO Science Centre"
+              className="w-full h-full object-cover object-top"
+            />
           </div>
 
           {/* Bleed right + bottom into black */}
