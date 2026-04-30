@@ -51,7 +51,7 @@ const ceoParagraphs = [
 ];
 
 const stats = [
-  { value: 39, suffix: "+", label: "Years of Excellence" },
+  { value: 41, suffix: "+", label: "Years of Excellence" },
   { value: 500, suffix: "+", label: "Clients Served" },
   { value: 8, suffix: "+", label: "Global Brands" },
   { value: 4, suffix: "", label: "Cities Nationwide" },
@@ -213,7 +213,7 @@ function MissionPanel() {
               </h2>
               <div className="w-12 h-0.5 bg-primary mb-8" />
               <p className="text-muted-foreground text-lg font-light leading-relaxed">
-                For over 39 years, Science Centre has connected Pakistan's hospitals, research institutes, universities, and pharmaceutical companies with the world's most advanced laboratory instruments and diagnostic technologies.
+                For over 41 years, Science Centre has connected Pakistan's hospitals, research institutes, universities, and pharmaceutical companies with the world's most advanced laboratory instruments and diagnostic technologies.
               </p>
             </Reveal>
           </div>
@@ -276,7 +276,7 @@ function TimelinePanel() {
                 <div className="w-5 h-px bg-primary" /> Our Journey
               </div>
               <h2 className="text-3xl md:text-4xl font-[var(--app-font-heading)] font-black text-white tracking-tight mb-8">
-                39 Years of Scientific Excellence.
+                41 Years of Scientific Excellence.
               </h2>
             </Reveal>
 

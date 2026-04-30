@@ -1124,7 +1124,7 @@ function Credibility() {
               Our Heritage
             </h2>
             <h3 className="text-4xl md:text-6xl font-[var(--app-font-heading)] font-bold mb-12 leading-tight">
-              39 Years of Scientific <br className="hidden md:block" /> Excellence.
+              41 Years of Scientific <br className="hidden md:block" /> Excellence.
             </h3>
           </Reveal>
 
