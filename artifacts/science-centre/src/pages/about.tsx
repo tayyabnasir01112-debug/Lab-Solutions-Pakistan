@@ -148,15 +148,16 @@ function CEOPanel() {
               <h2 className="text-xs font-semibold tracking-[0.5em] text-white/80 uppercase">Najam Iqbal</h2>
             </motion.div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "32% 1fr", flex: 1,
+            <div style={{ display: "grid", gridTemplateColumns: "280px 1fr", flex: 1,
               paddingBottom: "48px", paddingLeft: "80px", paddingRight: "100px",
               gap: "80px", alignItems: "center", minHeight: 0 }}>
 
-              {/* Photo */}
-              <motion.div className="relative flex items-center justify-center h-full"
+              {/* Photo — fixed small width */}
+              <motion.div className="relative flex items-center justify-center"
+                style={{ height: "360px" }}
                 initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1.1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}>
-                <div className="relative bg-[#0a0a0a]" style={{ width: "100%", maxHeight: "380px", aspectRatio: "3/4" }}>
+                <div className="relative bg-[#0a0a0a] h-full w-full">
                   <img src={img("/images/ceo.png")} alt="Najam Iqbal"
                     className="w-full h-full object-cover object-top" />
                 </div>
