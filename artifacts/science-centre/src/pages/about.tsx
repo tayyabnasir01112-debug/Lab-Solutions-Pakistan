@@ -70,7 +70,7 @@ const timeline = [
   { year: "2005", title: "Luminex Partnership", desc: "Became official distributor for Luminex — bringing multiplexing technology to Pakistan's leading hospitals." },
   { year: "2010", title: "Merck Alliance", desc: "Partnered with Merck to distribute the full Guava® and Amnis® flow cytometry portfolio nationwide." },
   { year: "2015", title: "National Expansion", desc: "Opened regional offices in Karachi, Peshawar, and Lahore — covering the full country." },
-  { year: "2024", title: "Today", desc: "Serving 500+ clients across hospitals, research institutes, universities and pharmaceutical companies." },
+  { year: "2026", title: "Today", desc: "Serving 500+ clients across hospitals, research institutes, universities and pharmaceutical companies." },
 ];
 
 const focusAreas = [
