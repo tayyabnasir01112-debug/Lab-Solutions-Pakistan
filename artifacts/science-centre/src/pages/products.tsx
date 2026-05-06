@@ -208,9 +208,14 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             </span>
           )}
         </div>
-        {/* hover overlay with inquire */}
-        <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <Link href="/#contact">
+        {/* hover overlay with view + inquire */}
+        <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2">
+          <Link href={`/products/${product.id}`} className="flex-1">
+            <Button variant="outline" className="rounded-none w-full text-xs uppercase tracking-[0.14em] font-semibold h-10 bg-background/90 backdrop-blur-sm">
+              View Details
+            </Button>
+          </Link>
+          <Link href="/#contact" className="flex-1">
             <Button className="rounded-none w-full bg-foreground text-background hover:bg-foreground/90 text-xs uppercase tracking-[0.14em] font-semibold h-10">
               Inquire <ArrowRight className="ml-2 h-3.5 w-3.5" />
             </Button>
@@ -223,8 +228,8 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           {category.icon}
           <span className="truncate">{category.name}</span>
         </div>
-        <h3 className="font-[var(--app-font-heading)] text-[15px] font-semibold leading-snug text-foreground mb-1.5 line-clamp-2">
-          {product.name}
+        <h3 className="font-[var(--app-font-heading)] text-[15px] font-semibold leading-snug text-foreground mb-1.5 line-clamp-2 group-hover:text-primary transition-colors cursor-pointer">
+          <Link href={`/products/${product.id}`}>{product.name}</Link>
         </h3>
         <p className="text-[13px] text-muted-foreground leading-relaxed line-clamp-2">
           {product.description}
