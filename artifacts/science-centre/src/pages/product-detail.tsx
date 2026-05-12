@@ -17,7 +17,7 @@ function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
     <motion.div
       ref={ref}
       initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] }}>
       {children}
     </motion.div>
@@ -82,7 +82,7 @@ export default function ProductDetail() {
   const allRelated = [...related, ...moreBrand].slice(0, 3);
 
   return (
-    <div className="bg-background" style={{ minHeight: "100dvh" }}>
+    <div className="min-h-[100dvh] bg-background">
       <SiteNavbar />
       <main className="pt-28 pb-24">
 
