@@ -1,616 +1,491 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Product Image Upload — Science Centre Pakistan</title>
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Product Image Upload — Science Centre Pakistan</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:#f5f6f8;color:#1a1a2e;min-height:100vh}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-      background: #f5f6f8;
-      color: #1a1a2e;
-      min-height: 100vh;
-    }
+/* header */
+header{background:#1a1a2e;padding:16px 28px;display:flex;align-items:center;gap:14px}
+header img{height:44px;filter:brightness(0)invert(1);object-fit:contain}
+header .htext h1{font-size:16px;font-weight:700;color:#fff}
+header .htext p{font-size:12px;color:rgba(255,255,255,.45);margin-top:2px}
 
-    /* ── Header ── */
-    header {
-      background: #fff;
-      border-bottom: 3px solid #d71920;
-      padding: 18px 32px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-    header img { height: 48px; }
-    header div h1 { font-size: 17px; font-weight: 700; color: #1a1a2e; }
-    header div p  { font-size: 13px; color: #888; margin-top: 2px; }
+/* progress */
+#prog-bar-wrap{background:#fff;border-bottom:1px solid #e8e8e8;padding:10px 28px;display:flex;align-items:center;gap:14px}
+#prog-label{font-size:12px;color:#666;white-space:nowrap;min-width:110px}
+#prog-track{flex:1;height:5px;background:#e8e8e8;border-radius:99px;overflow:hidden}
+#prog-fill{height:100%;background:#d71920;border-radius:99px;transition:width .4s}
+#prog-count{font-size:12px;color:#666;white-space:nowrap}
 
-    /* ── Progress ── */
-    #progress-bar-wrap {
-      background: #fff;
-      border-bottom: 1px solid #e8e8e8;
-      padding: 10px 32px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    #progress-label { font-size: 13px; color: #555; white-space: nowrap; }
-    #progress-track {
-      flex: 1;
-      height: 6px;
-      background: #e8e8e8;
-      border-radius: 99px;
-      overflow: hidden;
-    }
-    #progress-fill {
-      height: 100%;
-      background: #d71920;
-      border-radius: 99px;
-      transition: width 0.4s ease;
-    }
+main{max-width:700px;margin:32px auto;padding:0 16px 100px}
 
-    /* ── Main ── */
-    main {
-      max-width: 760px;
-      margin: 40px auto;
-      padding: 0 20px 80px;
-    }
+/* card */
+.card{background:#fff;border-radius:12px;box-shadow:0 2px 16px rgba(0,0,0,.07);overflow:hidden}
+.card-head{background:#1a1a2e;padding:22px 28px}
+.card-head .tag{display:inline-block;background:#d71920;color:#fff;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 9px;border-radius:4px;margin-bottom:8px}
+.card-head h2{font-size:20px;font-weight:700;color:#fff;line-height:1.3}
+.card-head .meta{font-size:11px;color:rgba(255,255,255,.4);margin-top:4px}
+.card-head a{display:inline-flex;align-items:center;gap:5px;margin-top:10px;color:#60b4f0;font-size:12px;text-decoration:none;border:1px solid rgba(96,180,240,.3);padding:4px 11px;border-radius:6px}
+.card-head a:hover{background:rgba(96,180,240,.12)}
+.card-body{padding:28px}
 
-    /* ── Card ── */
-    .card {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
-      overflow: hidden;
-    }
-    .card-header {
-      background: #1a1a2e;
-      padding: 24px 32px;
-    }
-    .card-header .step-tag {
-      display: inline-block;
-      background: #d71920;
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      padding: 3px 10px;
-      border-radius: 4px;
-      margin-bottom: 10px;
-    }
-    .card-header h2 { font-size: 22px; color: #fff; font-weight: 700; line-height: 1.3; }
-    .card-header .meta { font-size: 12px; color: rgba(255,255,255,.5); margin-top: 6px; }
-    .card-header a.page-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      margin-top: 12px;
-      color: #60b4f0;
-      font-size: 13px;
-      text-decoration: none;
-      border: 1px solid rgba(96,180,240,.35);
-      padding: 5px 12px;
-      border-radius: 6px;
-      transition: background .2s;
-    }
-    .card-header a.page-link:hover { background: rgba(96,180,240,.12); }
+/* info box */
+.info-box{background:#eef6fb;border-left:3px solid #2e75b6;border-radius:0 8px 8px 0;padding:11px 15px;font-size:13px;color:#1f4e79;line-height:1.6;margin-bottom:24px}
+.info-box strong{font-weight:700}
 
-    .card-body { padding: 32px; }
+/* field */
+.field{margin-bottom:24px}
+.lbl{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#666;margin-bottom:8px}
+textarea{width:100%;font-family:inherit;font-size:14px;color:#1a1a2e;background:#fff;border:1.5px solid #dde0e6;border-radius:8px;padding:12px;outline:none;resize:vertical;min-height:110px;line-height:1.6;transition:border-color .2s}
+textarea:focus{border-color:#d71920}
+textarea::placeholder{color:#bbb}
 
-    /* ── Product selector ── */
-    .field { margin-bottom: 28px; }
-    label.lbl {
-      display: block;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: .08em;
-      color: #555;
-      margin-bottom: 8px;
-    }
-    select, textarea {
-      width: 100%;
-      font-family: inherit;
-      font-size: 15px;
-      color: #1a1a2e;
-      background: #fff;
-      border: 1.5px solid #dde0e6;
-      border-radius: 8px;
-      padding: 12px 14px;
-      outline: none;
-      transition: border-color .2s;
-      appearance: none;
-    }
-    select:focus, textarea:focus { border-color: #d71920; }
-    select { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
-    textarea { resize: vertical; min-height: 130px; line-height: 1.6; }
+/* drop zone */
+#drop-zone{border:2px dashed #dde0e6;border-radius:10px;padding:32px 20px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative}
+#drop-zone.over{border-color:#d71920;background:#fff5f5}
+#drop-zone .dz-icon{font-size:36px;margin-bottom:10px}
+#drop-zone h3{font-size:14px;font-weight:600;margin-bottom:4px}
+#drop-zone p{font-size:12px;color:#999}
+#file-input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
 
-    /* ── Upload zone ── */
-    #drop-zone {
-      border: 2px dashed #dde0e6;
-      border-radius: 12px;
-      padding: 36px 24px;
-      text-align: center;
-      cursor: pointer;
-      transition: border-color .2s, background .2s;
-      position: relative;
-    }
-    #drop-zone.drag-over { border-color: #d71920; background: #fff5f5; }
-    #drop-zone .icon { font-size: 40px; margin-bottom: 12px; }
-    #drop-zone h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
-    #drop-zone p { font-size: 13px; color: #888; }
-    #drop-zone input[type=file] {
-      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
-    }
+/* preview */
+#preview-wrap{display:none;margin-top:14px}
+#preview-img{width:100%;max-height:240px;object-fit:contain;border-radius:8px;border:1px solid #eee;background:#f8f8f8}
+#file-info{margin-top:8px;font-size:12px;color:#555}
+.badge{display:inline-block;padding:2px 9px;border-radius:99px;font-size:11px;font-weight:700;margin-left:6px}
+.b-great{background:#e6f9f0;color:#1a7a4a}
+.b-ok{background:#fff7e0;color:#a06000}
+.b-low{background:#feecea;color:#c0392b}
+#remove-btn{background:none;border:1px solid #eee;border-radius:6px;padding:5px 12px;font-size:12px;cursor:pointer;color:#c0392b;margin-top:8px;transition:background .2s}
+#remove-btn:hover{background:#feecea}
 
-    /* ── Preview ── */
-    #preview-wrap { display: none; margin-top: 16px; }
-    #preview-img {
-      width: 100%;
-      max-height: 280px;
-      object-fit: contain;
-      border-radius: 8px;
-      border: 1px solid #e8e8e8;
-      background: #f9f9f9;
-    }
-    #file-info { margin-top: 10px; font-size: 13px; color: #555; }
-    #quality-badge {
-      display: inline-block;
-      padding: 3px 10px;
-      border-radius: 99px;
-      font-size: 12px;
-      font-weight: 700;
-      margin-left: 8px;
-    }
-    .badge-great { background: #e6f9f0; color: #1a7a4a; }
-    .badge-ok    { background: #fff7e0; color: #a06000; }
-    .badge-low   { background: #feecea; color: #c0392b; }
+/* optional badge */
+.optional-note{font-size:12px;color:#aaa;font-weight:400;margin-left:6px;text-transform:none;letter-spacing:0}
 
-    #remove-btn {
-      background: none;
-      border: 1px solid #dde0e6;
-      border-radius: 6px;
-      padding: 6px 14px;
-      font-size: 13px;
-      cursor: pointer;
-      color: #c0392b;
-      margin-top: 10px;
-      transition: background .2s;
-    }
-    #remove-btn:hover { background: #feecea; }
+/* buttons */
+#save-btn{width:100%;background:#d71920;color:#fff;border:none;border-radius:8px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;transition:background .2s}
+#save-btn:hover{background:#b51018}
+#save-btn:disabled{background:#ccc;cursor:not-allowed}
+.nav-row{display:flex;gap:10px;margin-top:14px}
+.nav-btn{flex:1;background:#fff;border:1.5px solid #dde0e6;border-radius:8px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;color:#333;transition:border-color .2s,background .2s}
+.nav-btn:hover:not(:disabled){border-color:#333}
+.nav-btn:disabled{opacity:.35;cursor:not-allowed}
 
-    /* ── Quality guide ── */
-    .quality-guide {
-      background: #f0f4ff;
-      border-left: 3px solid #2e75b6;
-      border-radius: 0 8px 8px 0;
-      padding: 12px 16px;
-      font-size: 13px;
-      color: #2e4f80;
-      margin-bottom: 28px;
-      line-height: 1.6;
-    }
-    .quality-guide strong { font-weight: 700; }
+/* status pill */
+#status-pill{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:99px;margin-left:8px;vertical-align:middle}
+.sp-done{background:#e6f9f0;color:#1a7a4a}
+.sp-skip{background:#f0f0f0;color:#888}
 
-    /* ── Submit ── */
-    #submit-btn {
-      width: 100%;
-      background: #d71920;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 15px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background .2s, transform .1s;
-      letter-spacing: .02em;
-    }
-    #submit-btn:hover:not(:disabled) { background: #b51018; }
-    #submit-btn:active:not(:disabled) { transform: scale(.99); }
-    #submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+/* download screen */
+#dl-screen{display:none;padding:40px 28px;text-align:center}
+#dl-screen .dl-emoji{font-size:56px;margin-bottom:16px}
+#dl-screen h2{font-size:22px;font-weight:700;margin-bottom:10px;color:#1a1a2e}
+#dl-screen p{font-size:14px;color:#555;line-height:1.7;margin-bottom:24px;max-width:480px;margin-left:auto;margin-right:auto}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 auto 28px;max-width:380px}
+.summary-box{background:#f5f6f8;border-radius:8px;padding:14px;text-align:center}
+.summary-box .num{font-size:28px;font-weight:800;color:#d71920}
+.summary-box .lbl2{font-size:12px;color:#888;margin-top:2px}
+#dl-btn{background:#1a1a2e;color:#fff;border:none;border-radius:8px;padding:14px 36px;font-size:16px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:background .2s}
+#dl-btn:hover{background:#d71920}
+#dl-btn:disabled{background:#ccc;cursor:not-allowed}
+.send-note{margin-top:20px;font-size:13px;color:#888;background:#f5f6f8;border-radius:8px;padding:14px 18px;text-align:left;line-height:1.7}
+.send-note strong{color:#333}
 
-    /* ── Nav buttons ── */
-    .nav-row { display: flex; gap: 12px; margin-top: 20px; }
-    .nav-btn {
-      flex: 1;
-      background: #fff;
-      border: 1.5px solid #dde0e6;
-      border-radius: 8px;
-      padding: 11px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      color: #333;
-      transition: border-color .2s, background .2s;
-    }
-    .nav-btn:hover { border-color: #1a1a2e; background: #f5f6f8; }
-    .nav-btn:disabled { opacity: .35; cursor: not-allowed; }
-
-    /* ── Success ── */
-    #success-screen {
-      display: none;
-      text-align: center;
-      padding: 48px 32px;
-    }
-    #success-screen .big-tick { font-size: 56px; margin-bottom: 16px; }
-    #success-screen h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; color: #1a7a4a; }
-    #success-screen p { font-size: 15px; color: #555; margin-bottom: 24px; }
-    #next-btn {
-      background: #1a1a2e;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 13px 32px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    #next-btn:hover { background: #d71920; }
-
-    /* ── All done ── */
-    #all-done {
-      display: none;
-      text-align: center;
-      padding: 56px 32px;
-    }
-    #all-done .emoji { font-size: 64px; margin-bottom: 20px; }
-    #all-done h2 { font-size: 26px; font-weight: 700; margin-bottom: 10px; }
-    #all-done p { font-size: 16px; color: #555; }
-
-    /* ── Responsive ── */
-    @media (max-width: 500px) {
-      header { padding: 14px 16px; }
-      main { margin: 20px auto; }
-      .card-body { padding: 20px; }
-      .card-header { padding: 20px; }
-    }
-  </style>
+@media(max-width:500px){
+  .card-body{padding:20px}.card-head{padding:18px 20px}
+  header{padding:12px 16px}
+}
+</style>
 </head>
 <body>
 
-<!-- Netlify Forms bot field (hidden) -->
-<form name="product-image-upload" netlify netlify-honeypot="bot-field" enctype="multipart/form-data" style="display:none">
-  <input name="bot-field" />
-  <input name="product-id" />
-  <input name="product-name" />
-  <input name="category" />
-  <input name="product-url" />
-  <input type="file" name="product-image" />
-  <textarea name="notes"></textarea>
-</form>
-
 <header>
-  <img src="/images/sc-logo-full.png" alt="Science Centre Pakistan" onerror="this.style.display='none'">
-  <div>
-    <h1>Product Image Upload Portal</h1>
-    <p>Science Centre Pakistan — One Lambda Product Catalogue</p>
+  <img src="/images/sc-logo-full.png" alt="SC" onerror="this.style.display='none'">
+  <div class="htext">
+    <h1>Product Image Upload</h1>
+    <p>Science Centre Pakistan — One Lambda Catalogue</p>
   </div>
 </header>
 
-<div id="progress-bar-wrap">
-  <span id="progress-label">Product 1 of 56</span>
-  <div id="progress-track"><div id="progress-fill" style="width:2%"></div></div>
+<div id="prog-bar-wrap">
+  <span id="prog-label">Product 1 of 56</span>
+  <div id="prog-track"><div id="prog-fill" style="width:2%"></div></div>
+  <span id="prog-count">0 photos added</span>
 </div>
 
 <main>
-  <div class="card">
+<div class="card">
 
-    <!-- Form view -->
-    <div id="form-view">
-      <div class="card-header">
-        <div class="step-tag" id="step-tag">Step 1 of 56</div>
-        <h2 id="product-name-display">Loading...</h2>
-        <div class="meta" id="product-meta"></div>
-        <a class="page-link" id="product-link" href="#" target="_blank" rel="noopener">
-          🔗 View current product page
-        </a>
+  <!-- Form view -->
+  <div id="form-view">
+    <div class="card-head">
+      <div class="tag" id="step-tag">Step 1 of 56</div>
+      <h2 id="prod-name">Loading…</h2>
+      <div class="meta" id="prod-meta"></div>
+      <a id="prod-link" href="#" target="_blank" rel="noopener">🔗 View current product page</a>
+    </div>
+    <div class="card-body">
+
+      <div class="info-box">
+        <strong>Image quality:</strong> Upload the highest resolution available.
+        Minimum <strong>800 × 800 px</strong>. Accepted: JPG, PNG, TIFF, WEBP, GIF. Max 50 MB.
+        Images are saved at <strong>full original quality</strong> — no compression.
       </div>
 
-      <div class="card-body">
-        <div class="quality-guide">
-          <strong>Image quality guide:</strong> Please upload the highest resolution image available.
-          Minimum recommended: <strong>800 × 800 px</strong>. Accepted: JPG, PNG, TIFF, WEBP.
-          Max file size: 20 MB. The image will be used directly on the website so quality matters.
+      <div class="field">
+        <label class="lbl">Product Image</label>
+        <div id="drop-zone">
+          <div class="dz-icon">📷</div>
+          <h3>Drop image here or click to browse</h3>
+          <p>JPG · PNG · TIFF · WEBP · GIF — up to 50 MB</p>
+          <input type="file" id="file-input" accept="image/*">
         </div>
-
-        <!-- Upload zone -->
-        <div class="field">
-          <label class="lbl">Product Image</label>
-          <div id="drop-zone">
-            <div class="icon">📷</div>
-            <h3>Drop image here or click to browse</h3>
-            <p>JPG, PNG, TIFF, WEBP — up to 20 MB</p>
-            <input type="file" id="file-input" accept="image/jpeg,image/png,image/tiff,image/webp,image/gif" />
-          </div>
-          <div id="preview-wrap">
-            <img id="preview-img" src="" alt="Preview" />
-            <div id="file-info"></div>
-            <button id="remove-btn" type="button">✕ Remove image</button>
-          </div>
-        </div>
-
-        <!-- Notes -->
-        <div class="field">
-          <label class="lbl" for="notes">Changes / Corrections (optional)</label>
-          <textarea id="notes" placeholder="Write any corrections, additions, or updates needed for this product's name, description, specifications, or packaging information. Leave blank if everything looks correct."></textarea>
-        </div>
-
-        <button id="submit-btn" type="button" disabled>Select or upload an image to continue</button>
-
-        <div class="nav-row">
-          <button class="nav-btn" id="prev-btn" type="button" disabled>← Previous</button>
-          <button class="nav-btn" id="skip-btn" type="button">Skip this product →</button>
+        <div id="preview-wrap">
+          <img id="preview-img" alt="Preview">
+          <div id="file-info"></div>
+          <button id="remove-btn" type="button">✕ Remove</button>
         </div>
       </div>
-    </div>
 
-    <!-- Success view (per submission) -->
-    <div id="success-screen">
-      <div class="big-tick">✅</div>
-      <h2>Submitted!</h2>
-      <p id="success-msg">Image and notes saved for <strong id="success-name"></strong>.</p>
-      <button id="next-btn" type="button">Next Product →</button>
-    </div>
+      <div class="field">
+        <label class="lbl">Changes / Corrections <span class="optional-note">(optional — leave blank if everything looks right)</span></label>
+        <textarea id="notes" placeholder="E.g. Wrong description on line 2, packaging unit should be 10 trays not 1 kit, add catalogue number XYZ…"></textarea>
+      </div>
 
-    <!-- All done view -->
-    <div id="all-done">
-      <div class="emoji">🎉</div>
-      <h2>All done — thank you!</h2>
-      <p>Your images and notes have been received. The Science Centre team will review and update the website shortly.</p>
-    </div>
+      <button id="save-btn" type="button" disabled>Upload an image to save & continue</button>
 
+      <div class="nav-row">
+        <button class="nav-btn" id="prev-btn" type="button" disabled>← Previous</button>
+        <button class="nav-btn" id="skip-btn" type="button">Skip — no image →</button>
+      </div>
+
+    </div>
   </div>
+
+  <!-- Download screen -->
+  <div id="dl-screen">
+    <div class="dl-emoji">📦</div>
+    <h2>Ready to download!</h2>
+    <p>All your images and notes have been packaged into a ZIP file. Download it and send it to your Science Centre contact via email, WhatsApp, or Google Drive.</p>
+
+    <div class="summary-grid">
+      <div class="summary-box">
+        <div class="num" id="dl-photos">0</div>
+        <div class="lbl2">Photos added</div>
+      </div>
+      <div class="summary-box">
+        <div class="num" id="dl-notes">0</div>
+        <div class="lbl2">Products with notes</div>
+      </div>
+    </div>
+
+    <button id="dl-btn" type="button">⬇ Download ZIP Package</button>
+
+    <div class="send-note">
+      <strong>What's inside the ZIP:</strong><br>
+      • All images named by product ID (e.g. <code>ol-labscreen-sa1.jpg</code>)<br>
+      • A <code>notes.csv</code> file with all your corrections<br>
+      • A <code>README.txt</code> with instructions<br><br>
+      <strong>How to send:</strong> Email the ZIP to <strong>info@sciencecentre.com.pk</strong> or share via Google Drive / WhatsApp.
+    </div>
+  </div>
+
+</div>
 </main>
 
 <script>
 const PRODUCTS = [
-  // ANTIBODY DETECTION
-  { id:"ol-labscreen-sa1",   cat:"Antibody Detection",          sub:"Luminex-based HLA Antibody Identification",           name:"LABScreen™ Single Antigen HLA Class I" },
-  { id:"ol-labscreen-sa2",   cat:"Antibody Detection",          sub:"Luminex-based HLA Antibody Identification",           name:"LABScreen™ Single Antigen HLA Class II" },
-  { id:"ol-labscreen-mixed", cat:"Antibody Detection",          sub:"Luminex-based HLA Antibody Identification",           name:"LABScreen™ Mixed Class I & II Antibody Screening" },
-  { id:"ol-labscreen-pra",   cat:"Antibody Detection",          sub:"Luminex-based HLA Antibody Identification",           name:"LABScreen™ PRA" },
-  { id:"ol-labscreen-multi", cat:"Antibody Detection",          sub:"Luminex-based HLA Antibody Identification",           name:"LABScreen™ Multi" },
-  { id:"ol-labscreen-mica",  cat:"Antibody Detection",          sub:"Luminex-based HLA Antibody Identification",           name:"LABScreen™ MICA Single Antigen Group 1" },
-  { id:"ol-labscreen-explex",cat:"Antibody Detection",          sub:"Luminex-based HLA Antibody Identification",           name:"LABScreen™ Single Antigen ExPlex Assay" },
-  { id:"ol-labscreen-supplement",cat:"Antibody Detection",      sub:"Luminex-based HLA Antibody Identification",           name:"LABScreen™ Single Antigen Supplement" },
-  { id:"ol-labscreen-ancillary",  cat:"Antibody Detection",     sub:"Luminex-based HLA Antibody Identification",           name:"LABScreen™ Ancillary Reagents" },
-  { id:"ol-c1qscreen",       cat:"Antibody Detection",          sub:"Complement Binding HLA Antibody Identification",      name:"C1qScreen™ HLA Antibody Detection" },
-  { id:"ol-flowpra-sa",      cat:"Antibody Detection",          sub:"Flow Cytometry Based HLA Antibody Identification",    name:"FlowPRA™ Single Antigen" },
-  { id:"ol-flowpra-specific",cat:"Antibody Detection",          sub:"Flow Cytometry Based HLA Antibody Identification",    name:"FlowPRA™ Specific" },
-  { id:"ol-flowpra-ancillary",cat:"Antibody Detection",         sub:"Flow Cytometry Based HLA Antibody Identification",    name:"FlowPRA™ Ancillary Products" },
-  { id:"ol-flowdsa-xm",      cat:"Antibody Detection",          sub:"Advanced Crossmatch Testing",                         name:"FlowDSA-XM™ Advanced Crossmatch" },
-  { id:"ol-magsort",         cat:"Antibody Detection",          sub:"Advanced Antibody Testing",                           name:"One Lambda™ MagSort™" },
-  { id:"ol-lat",             cat:"Antibody Detection",          sub:"ELISA-Based HLA Antibody Identification",             name:"Lambda Antigen Tray (LAT™)" },
-  { id:"ol-lat-mixed",       cat:"Antibody Detection",          sub:"ELISA-Based HLA Antibody Identification",             name:"Lambda Antigen Tray Mixed" },
-  { id:"ol-lat-class1",      cat:"Antibody Detection",          sub:"ELISA-Based HLA Antibody Identification",             name:"Lambda Antigen Tray™ Class I Single Antigen" },
-  { id:"ol-at1r-etar",       cat:"Antibody Detection",          sub:"ELISA-Based Non-HLA Antibody Identification",         name:"AT1R and ETAR Non-HLA Antibody Assays" },
-  { id:"ol-labscreen-autoantibody",cat:"Antibody Detection",    sub:"Non-HLA Luminex Based Antibody Identification",       name:"LABScreen™ Autoantibody" },
-  { id:"ol-lambda-cell-trays",cat:"Antibody Detection",         sub:"Serological-based HLA Antibody Identification",       name:"Lambda Cell Trays" },
-  // MOLECULAR TYPING
-  { id:"ol-alltype-ngs",     cat:"Molecular Typing",            sub:"Next-Generation Sequencing",                          name:"AllType™ NGS HLA Typing Kit" },
-  { id:"ol-alltype-fastplex",cat:"Molecular Typing",            sub:"Next-Generation Sequencing",                          name:"AllType™ FASTplex™ NGS" },
-  { id:"ol-alltype-rapid",   cat:"Molecular Typing",            sub:"Next-Generation Sequencing",                          name:"AllType™ Rapid 11 Loci Kit" },
-  { id:"ol-hybritype",       cat:"Molecular Typing",            sub:"Next-Generation Sequencing",                          name:"One Lambda™ HybriType™ NGS Hybrid Capture Assay" },
-  { id:"ol-microssp-generic",cat:"Molecular Typing",            sub:"Sequence-Specific Primer Typing",                     name:"Micro SSP™ Generic HLA Typing Trays" },
-  { id:"ol-microssp-highres",cat:"Molecular Typing",            sub:"Sequence-Specific Primer Typing",                     name:"Micro SSP™ High Resolution Typing Trays" },
-  { id:"ol-bulk-primers",    cat:"Molecular Typing",            sub:"Sequence-Specific Primer Typing",                     name:"Bulk Primer Sets" },
-  { id:"ol-labtype-sso",     cat:"Molecular Typing",            sub:"Reverse SSO Typing",                                  name:"LABType™ SSO HLA Typing" },
-  { id:"ol-labtype-ancillary",cat:"Molecular Typing",           sub:"Reverse SSO Typing",                                  name:"LABType™ Ancillary Reagents" },
-  { id:"ol-secore-sbt",      cat:"Molecular Typing",            sub:"Sequence Based Typing",                               name:"SeCore™ SBT HLA Typing Kits" },
-  { id:"ol-secore-gssp",     cat:"Molecular Typing",            sub:"Sequence Based Typing",                               name:"SeCore™ GSSP Kit" },
-  { id:"ol-linkseq-hla-kir", cat:"Molecular Typing",            sub:"LinkSeq Real-Time PCR",                               name:"LinkSeq™ HLA and KIR Typing Kits" },
-  { id:"ol-linkseq-hpa-abo", cat:"Molecular Typing",            sub:"LinkSeq Real-Time PCR",                               name:"LinkSeq™ HPA and ABO Typing Kits" },
-  { id:"ol-linkseq-ancillary",cat:"Molecular Typing",           sub:"LinkSeq Real-Time PCR",                               name:"LinkSeq™ Ancillary Products" },
-  { id:"ol-cytokine-genotyping",cat:"Molecular Typing",         sub:"Non-HLA Genotyping",                                  name:"Cytokine Genotyping Kits" },
-  { id:"ol-hna-genotyping",  cat:"Molecular Typing",            sub:"Non-HLA Genotyping",                                  name:"HNA Genotyping" },
-  { id:"ol-kir-sso",         cat:"Molecular Typing",            sub:"Non-HLA Genotyping",                                  name:"KIR SSO Genotyping" },
-  { id:"ol-qubit",           cat:"Molecular Typing",            sub:"Molecular Biology Instrumentation",                   name:"Qubit™ Fluorometric Quantitation" },
-  { id:"ol-veritiPro",       cat:"Molecular Typing",            sub:"Molecular Biology Instrumentation",                   name:"VeritiPro™ Thermal Cycler" },
-  // SEROLOGICAL TYPING
-  { id:"ol-terasaki-trays",  cat:"Serological Typing",          sub:"HLA Tissue Typing Trays",                             name:"Terasaki HLA Tissue Typing Trays" },
-  { id:"ol-terasaki-supplement",cat:"Serological Typing",       sub:"HLA Tissue Typing Trays",                             name:"Terasaki Supplement HLA Tissue Typing Trays" },
-  { id:"ol-lmt",             cat:"Serological Typing",          sub:"HLA Tissue Typing Trays",                             name:"Lambda Monoclonal Trays (LMT™)" },
-  { id:"ol-b27-antibody",    cat:"Serological Typing",          sub:"Serological Reagents",                                name:"B27 Monoclonal Antibody" },
-  { id:"ol-cytotoxic-controls",cat:"Serological Typing",        sub:"Serological Reagents",                                name:"Cytotoxic Controls" },
-  { id:"ol-dynabeads",       cat:"Serological Typing",          sub:"Serological Reagents",                                name:"Dynabeads™ for Cell Isolation" },
-  { id:"ol-fluoroquench",    cat:"Serological Typing",          sub:"Serological Reagents",                                name:"FluoroQuench™ Staining/Quenching Reagent" },
-  { id:"ol-bulk-monoclonal", cat:"Serological Typing",          sub:"Serological Reagents",                                name:"Bulk Monoclonal Antibody" },
-  // INSTRUMENTS & SOFTWARE
-  { id:"ol-labscan3d",       cat:"Instruments & Software",      sub:"Readers & Analysers",                                 name:"LABScan3D™ Multiplex Analyzer" },
-  { id:"ol-labscan100",      cat:"Instruments & Software",      sub:"Readers & Analysers",                                 name:"LABScan™ 100 Analyser" },
-  { id:"ol-fusion",          cat:"Instruments & Software",      sub:"Software",                                            name:"HLA Fusion™ Software" },
-  { id:"ol-typestream",      cat:"Instruments & Software",      sub:"Software",                                            name:"TypeStream™ Visual NGS Analysis Software" },
-  { id:"ol-hla-pro",         cat:"Instruments & Software",      sub:"Automated Pipettor",                                  name:"One Lambda™ HLA PRO Automated Pipettor" },
-  // POST-TRANSPLANT MONITORING
-  { id:"ol-chimerism-ngs",   cat:"Post-Transplant Monitoring",  sub:"Chimerism Monitoring",                                name:"One Lambda Devyser Chimerism NGS Assay" },
-  { id:"ol-chimerism",       cat:"Post-Transplant Monitoring",  sub:"Chimerism Monitoring",                                name:"One Lambda Devyser Chimerism Assay" },
-  { id:"ol-accept-cfdna",    cat:"Post-Transplant Monitoring",  sub:"Donor-Derived Cell-Free DNA",                         name:"One Lambda Devyser Accept cfDNA Assay" },
+  {id:"ol-labscreen-sa1",   cat:"Antibody Detection", sub:"Luminex-based HLA Antibody Identification",           name:"LABScreen™ Single Antigen HLA Class I"},
+  {id:"ol-labscreen-sa2",   cat:"Antibody Detection", sub:"Luminex-based HLA Antibody Identification",           name:"LABScreen™ Single Antigen HLA Class II"},
+  {id:"ol-labscreen-mixed", cat:"Antibody Detection", sub:"Luminex-based HLA Antibody Identification",           name:"LABScreen™ Mixed Class I & II Antibody Screening"},
+  {id:"ol-labscreen-pra",   cat:"Antibody Detection", sub:"Luminex-based HLA Antibody Identification",           name:"LABScreen™ PRA"},
+  {id:"ol-labscreen-multi", cat:"Antibody Detection", sub:"Luminex-based HLA Antibody Identification",           name:"LABScreen™ Multi"},
+  {id:"ol-labscreen-mica",  cat:"Antibody Detection", sub:"Luminex-based HLA Antibody Identification",           name:"LABScreen™ MICA Single Antigen Group 1"},
+  {id:"ol-labscreen-explex",cat:"Antibody Detection", sub:"Luminex-based HLA Antibody Identification",           name:"LABScreen™ Single Antigen ExPlex Assay"},
+  {id:"ol-labscreen-supplement",cat:"Antibody Detection",sub:"Luminex-based HLA Antibody Identification",        name:"LABScreen™ Single Antigen Supplement"},
+  {id:"ol-labscreen-ancillary", cat:"Antibody Detection",sub:"Luminex-based HLA Antibody Identification",        name:"LABScreen™ Ancillary Reagents"},
+  {id:"ol-c1qscreen",       cat:"Antibody Detection", sub:"Complement Binding HLA Antibody Identification",      name:"C1qScreen™ HLA Antibody Detection"},
+  {id:"ol-flowpra-sa",      cat:"Antibody Detection", sub:"Flow Cytometry Based HLA Antibody Identification",    name:"FlowPRA™ Single Antigen"},
+  {id:"ol-flowpra-specific",cat:"Antibody Detection", sub:"Flow Cytometry Based HLA Antibody Identification",    name:"FlowPRA™ Specific"},
+  {id:"ol-flowpra-ancillary",cat:"Antibody Detection",sub:"Flow Cytometry Based HLA Antibody Identification",    name:"FlowPRA™ Ancillary Products"},
+  {id:"ol-flowdsa-xm",      cat:"Antibody Detection", sub:"Advanced Crossmatch Testing",                         name:"FlowDSA-XM™ Advanced Crossmatch"},
+  {id:"ol-magsort",         cat:"Antibody Detection", sub:"Advanced Antibody Testing",                           name:"One Lambda™ MagSort™"},
+  {id:"ol-lat",             cat:"Antibody Detection", sub:"ELISA-Based HLA Antibody Identification",             name:"Lambda Antigen Tray (LAT™)"},
+  {id:"ol-lat-mixed",       cat:"Antibody Detection", sub:"ELISA-Based HLA Antibody Identification",             name:"Lambda Antigen Tray Mixed"},
+  {id:"ol-lat-class1",      cat:"Antibody Detection", sub:"ELISA-Based HLA Antibody Identification",             name:"Lambda Antigen Tray™ Class I Single Antigen"},
+  {id:"ol-at1r-etar",       cat:"Antibody Detection", sub:"ELISA-Based Non-HLA Antibody Identification",         name:"AT1R and ETAR Non-HLA Antibody Assays"},
+  {id:"ol-labscreen-autoantibody",cat:"Antibody Detection",sub:"Non-HLA Luminex Based Antibody Identification",  name:"LABScreen™ Autoantibody"},
+  {id:"ol-lambda-cell-trays",cat:"Antibody Detection", sub:"Serological-based HLA Antibody Identification",     name:"Lambda Cell Trays"},
+  {id:"ol-alltype-ngs",     cat:"Molecular Typing",   sub:"Next-Generation Sequencing",                          name:"AllType™ NGS HLA Typing Kit"},
+  {id:"ol-alltype-fastplex",cat:"Molecular Typing",   sub:"Next-Generation Sequencing",                          name:"AllType™ FASTplex™ NGS"},
+  {id:"ol-alltype-rapid",   cat:"Molecular Typing",   sub:"Next-Generation Sequencing",                          name:"AllType™ Rapid 11 Loci Kit"},
+  {id:"ol-hybritype",       cat:"Molecular Typing",   sub:"Next-Generation Sequencing",                          name:"One Lambda™ HybriType™ NGS Hybrid Capture Assay"},
+  {id:"ol-microssp-generic",cat:"Molecular Typing",   sub:"Sequence-Specific Primer Typing",                     name:"Micro SSP™ Generic HLA Typing Trays"},
+  {id:"ol-microssp-highres",cat:"Molecular Typing",   sub:"Sequence-Specific Primer Typing",                     name:"Micro SSP™ High Resolution Typing Trays"},
+  {id:"ol-bulk-primers",    cat:"Molecular Typing",   sub:"Sequence-Specific Primer Typing",                     name:"Bulk Primer Sets"},
+  {id:"ol-labtype-sso",     cat:"Molecular Typing",   sub:"Reverse SSO Typing",                                  name:"LABType™ SSO HLA Typing"},
+  {id:"ol-labtype-ancillary",cat:"Molecular Typing",  sub:"Reverse SSO Typing",                                  name:"LABType™ Ancillary Reagents"},
+  {id:"ol-secore-sbt",      cat:"Molecular Typing",   sub:"Sequence Based Typing",                               name:"SeCore™ SBT HLA Typing Kits"},
+  {id:"ol-secore-gssp",     cat:"Molecular Typing",   sub:"Sequence Based Typing",                               name:"SeCore™ GSSP Kit"},
+  {id:"ol-linkseq-hla-kir", cat:"Molecular Typing",   sub:"LinkSeq Real-Time PCR",                               name:"LinkSeq™ HLA and KIR Typing Kits"},
+  {id:"ol-linkseq-hpa-abo", cat:"Molecular Typing",   sub:"LinkSeq Real-Time PCR",                               name:"LinkSeq™ HPA and ABO Typing Kits"},
+  {id:"ol-linkseq-ancillary",cat:"Molecular Typing",  sub:"LinkSeq Real-Time PCR",                               name:"LinkSeq™ Ancillary Products"},
+  {id:"ol-cytokine-genotyping",cat:"Molecular Typing",sub:"Non-HLA Genotyping",                                  name:"Cytokine Genotyping Kits"},
+  {id:"ol-hna-genotyping",  cat:"Molecular Typing",   sub:"Non-HLA Genotyping",                                  name:"HNA Genotyping"},
+  {id:"ol-kir-sso",         cat:"Molecular Typing",   sub:"Non-HLA Genotyping",                                  name:"KIR SSO Genotyping"},
+  {id:"ol-qubit",           cat:"Molecular Typing",   sub:"Molecular Biology Instrumentation",                   name:"Qubit™ Fluorometric Quantitation"},
+  {id:"ol-veritiPro",       cat:"Molecular Typing",   sub:"Molecular Biology Instrumentation",                   name:"VeritiPro™ Thermal Cycler"},
+  {id:"ol-terasaki-trays",  cat:"Serological Typing", sub:"HLA Tissue Typing Trays",                             name:"Terasaki HLA Tissue Typing Trays"},
+  {id:"ol-terasaki-supplement",cat:"Serological Typing",sub:"HLA Tissue Typing Trays",                           name:"Terasaki Supplement HLA Tissue Typing Trays"},
+  {id:"ol-lmt",             cat:"Serological Typing", sub:"HLA Tissue Typing Trays",                             name:"Lambda Monoclonal Trays (LMT™)"},
+  {id:"ol-b27-antibody",    cat:"Serological Typing", sub:"Serological Reagents",                                name:"B27 Monoclonal Antibody"},
+  {id:"ol-cytotoxic-controls",cat:"Serological Typing",sub:"Serological Reagents",                               name:"Cytotoxic Controls"},
+  {id:"ol-dynabeads",       cat:"Serological Typing", sub:"Serological Reagents",                                name:"Dynabeads™ for Cell Isolation"},
+  {id:"ol-fluoroquench",    cat:"Serological Typing", sub:"Serological Reagents",                                name:"FluoroQuench™ Staining/Quenching Reagent"},
+  {id:"ol-bulk-monoclonal", cat:"Serological Typing", sub:"Serological Reagents",                                name:"Bulk Monoclonal Antibody"},
+  {id:"ol-labscan3d",       cat:"Instruments & Software",sub:"Readers & Analysers",                              name:"LABScan3D™ Multiplex Analyzer"},
+  {id:"ol-labscan100",      cat:"Instruments & Software",sub:"Readers & Analysers",                              name:"LABScan™ 100 Analyser"},
+  {id:"ol-fusion",          cat:"Instruments & Software",sub:"Software",                                         name:"HLA Fusion™ Software"},
+  {id:"ol-typestream",      cat:"Instruments & Software",sub:"Software",                                         name:"TypeStream™ Visual NGS Analysis Software"},
+  {id:"ol-hla-pro",         cat:"Instruments & Software",sub:"Automated Pipettor",                               name:"One Lambda™ HLA PRO Automated Pipettor"},
+  {id:"ol-chimerism-ngs",   cat:"Post-Transplant Monitoring",sub:"Chimerism Monitoring",                         name:"One Lambda Devyser Chimerism NGS Assay"},
+  {id:"ol-chimerism",       cat:"Post-Transplant Monitoring",sub:"Chimerism Monitoring",                         name:"One Lambda Devyser Chimerism Assay"},
+  {id:"ol-accept-cfdna",    cat:"Post-Transplant Monitoring",sub:"Donor-Derived Cell-Free DNA",                  name:"One Lambda Devyser Accept cfDNA Assay"},
 ];
 
-const TOTAL = PRODUCTS.length;
-let currentIndex = 0;
-let selectedFile = null;
+const T = PRODUCTS.length;
 
-// ── DOM refs ──────────────────────────────────────────────────
-const stepTag         = document.getElementById('step-tag');
-const productNameEl   = document.getElementById('product-name-display');
-const productMetaEl   = document.getElementById('product-meta');
-const productLinkEl   = document.getElementById('product-link');
-const dropZone        = document.getElementById('drop-zone');
-const fileInput       = document.getElementById('file-input');
-const previewWrap     = document.getElementById('preview-wrap');
-const previewImg      = document.getElementById('preview-img');
-const fileInfoEl      = document.getElementById('file-info');
-const removeBtn       = document.getElementById('remove-btn');
-const notesEl         = document.getElementById('notes');
-const submitBtn       = document.getElementById('submit-btn');
-const prevBtn         = document.getElementById('prev-btn');
-const skipBtn         = document.getElementById('skip-btn');
-const progressLabel   = document.getElementById('progress-label');
-const progressFill    = document.getElementById('progress-fill');
-const formView        = document.getElementById('form-view');
-const successScreen   = document.getElementById('success-screen');
-const successName     = document.getElementById('success-name');
-const nextBtn         = document.getElementById('next-btn');
-const allDone         = document.getElementById('all-done');
+// State: per-product stored in memory
+// data[i] = { file: File|null, notes: string, done: bool, skipped: bool }
+const data = PRODUCTS.map(() => ({file:null, notes:'', done:false, skipped:false}));
+let cur = 0;
 
-// ── Render current product ────────────────────────────────────
-function render() {
-  const p = PRODUCTS[currentIndex];
-  const pct = Math.max(2, Math.round(((currentIndex) / TOTAL) * 100));
+// DOM
+const stepTag    = document.getElementById('step-tag');
+const prodName   = document.getElementById('prod-name');
+const prodMeta   = document.getElementById('prod-meta');
+const prodLink   = document.getElementById('prod-link');
+const dropZone   = document.getElementById('drop-zone');
+const fileInput  = document.getElementById('file-input');
+const prevWrap   = document.getElementById('preview-wrap');
+const prevImg    = document.getElementById('preview-img');
+const fileInfo   = document.getElementById('file-info');
+const removeBtn  = document.getElementById('remove-btn');
+const notesEl    = document.getElementById('notes');
+const saveBtn    = document.getElementById('save-btn');
+const prevBtn    = document.getElementById('prev-btn');
+const skipBtn    = document.getElementById('skip-btn');
+const progLabel  = document.getElementById('prog-label');
+const progFill   = document.getElementById('prog-fill');
+const progCount  = document.getElementById('prog-count');
+const formView   = document.getElementById('form-view');
+const dlScreen   = document.getElementById('dl-screen');
 
-  stepTag.textContent     = `Step ${currentIndex + 1} of ${TOTAL}`;
-  productNameEl.textContent = p.name;
-  productMetaEl.textContent = `${p.cat}  ›  ${p.sub}`;
-  productLinkEl.href        = `https://statuesque-malabi-f45882.netlify.app/products/${p.id}`;
-  progressLabel.textContent = `Product ${currentIndex + 1} of ${TOTAL}`;
-  progressFill.style.width  = pct + '%';
+function photoCount(){ return data.filter(d=>d.file).length; }
+function noteCount(){  return data.filter(d=>d.notes.trim()).length; }
 
-  prevBtn.disabled = currentIndex === 0;
-  clearFile();
-  notesEl.value = '';
-  updateSubmitState();
+function updateProgress(){
+  const done = data.filter(d=>d.done||d.skipped).length;
+  const pct  = Math.max(2, Math.round((done/T)*100));
+  progFill.style.width = pct+'%';
+  progLabel.textContent = `Product ${cur+1} of ${T}`;
+  progCount.textContent = `${photoCount()} photo${photoCount()!==1?'s':''} added`;
 }
 
-// ── File handling ─────────────────────────────────────────────
-function handleFile(file) {
-  if (!file) return;
+function render(){
+  const p = PRODUCTS[cur];
+  const d = data[cur];
+  stepTag.textContent  = `Step ${cur+1} of ${T}`;
+  prodName.textContent = p.name;
+  prodMeta.textContent = `${p.cat}  ›  ${p.sub}`;
+  prodLink.href        = `https://statuesque-malabi-f45882.netlify.app/products/${p.id}`;
+  prevBtn.disabled     = cur===0;
+  notesEl.value        = d.notes;
 
-  const maxMB = 20;
-  if (file.size > maxMB * 1024 * 1024) {
-    alert(`File is too large (${(file.size/1024/1024).toFixed(1)} MB). Please use an image under ${maxMB} MB.`);
-    return;
-  }
-  if (!file.type.startsWith('image/')) {
-    alert('Please upload an image file (JPG, PNG, TIFF, WEBP).');
-    return;
-  }
-
-  selectedFile = file;
-  const url = URL.createObjectURL(file);
-  previewImg.src = url;
-  previewWrap.style.display = 'block';
-  dropZone.style.display = 'none';
-
-  // Check dimensions
-  const img = new Image();
-  img.onload = () => {
-    const w = img.naturalWidth, h = img.naturalHeight;
-    const sizeMB = (file.size / 1024 / 1024).toFixed(2);
-    let badge, bclass;
-    if (w >= 1200 && h >= 1200) { badge = '✅ Excellent quality'; bclass = 'badge-great'; }
-    else if (w >= 800  && h >= 800)  { badge = '✔ Good quality';      bclass = 'badge-ok'; }
-    else                             { badge = '⚠ Low resolution — try to find a higher quality image'; bclass = 'badge-low'; }
-
-    fileInfoEl.innerHTML =
-      `<strong>${file.name}</strong> — ${w}×${h} px — ${sizeMB} MB` +
-      `<span id="quality-badge" class="${bclass}">${badge}</span>`;
-
-    URL.revokeObjectURL(url);
-    updateSubmitState();
-  };
-  img.src = url;
+  // restore file state
+  if(d.file){ showPreview(d.file, false); }
+  else { clearPreview(false); }
+  updateSaveBtn();
+  updateProgress();
 }
 
-function clearFile() {
-  selectedFile = null;
-  fileInput.value = '';
-  previewImg.src = '';
-  previewWrap.style.display = 'none';
-  dropZone.style.display = '';
-  fileInfoEl.innerHTML = '';
-  updateSubmitState();
-}
-
-function updateSubmitState() {
-  if (selectedFile) {
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Submit & Continue →';
+function showPreview(file, fresh){
+  if(fresh){
+    const url = URL.createObjectURL(file);
+    prevImg.src = url;
+    // check dims
+    const img = new Image();
+    img.onload = ()=>{
+      const w=img.naturalWidth, h=img.naturalHeight;
+      const mb=(file.size/1024/1024).toFixed(2);
+      let badge, bc;
+      if(w>=1200&&h>=1200){badge='✅ Excellent quality';bc='b-great';}
+      else if(w>=800&&h>=800){badge='✔ Good quality';bc='b-ok';}
+      else{badge='⚠ Low resolution';bc='b-low';}
+      fileInfo.innerHTML=`<strong>${file.name}</strong> — ${w}×${h}px — ${mb}MB <span class="badge ${bc}">${badge}</span>`;
+      URL.revokeObjectURL(url);
+    };
+    img.src=url;
   } else {
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Upload an image to continue';
+    // show stored file without creating new object URL
+    const url = URL.createObjectURL(file);
+    prevImg.src = url;
+    const mb=(file.size/1024/1024).toFixed(2);
+    fileInfo.innerHTML=`<strong>${file.name}</strong> — ${mb}MB`;
+  }
+  prevWrap.style.display='block';
+  dropZone.style.display='none';
+}
+
+function clearPreview(resetInput){
+  prevWrap.style.display='none';
+  dropZone.style.display='';
+  prevImg.src='';
+  fileInfo.innerHTML='';
+  if(resetInput) fileInput.value='';
+}
+
+function updateSaveBtn(){
+  const d=data[cur];
+  if(d.file){
+    saveBtn.disabled=false;
+    saveBtn.textContent=`Save & Continue →`;
+  } else {
+    saveBtn.disabled=true;
+    saveBtn.textContent=`Upload an image to save & continue`;
   }
 }
 
-// ── Drag & drop ───────────────────────────────────────────────
-dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('drag-over'); });
-dropZone.addEventListener('dragleave', () => dropZone.classList.remove('drag-over'));
-dropZone.addEventListener('drop', e => {
-  e.preventDefault();
-  dropZone.classList.remove('drag-over');
-  const f = e.dataTransfer.files[0];
-  if (f) handleFile(f);
-});
-fileInput.addEventListener('change', () => { if (fileInput.files[0]) handleFile(fileInput.files[0]); });
-removeBtn.addEventListener('click', clearFile);
+function handleFile(file){
+  if(!file) return;
+  if(!file.type.startsWith('image/')){ alert('Please choose an image file.'); return; }
+  if(file.size>50*1024*1024){ alert(`File too large (${(file.size/1024/1024).toFixed(1)}MB). Max 50MB.`); return; }
+  data[cur].file=file;
+  showPreview(file, true);
+  updateSaveBtn();
+}
 
-// ── Submit ────────────────────────────────────────────────────
-submitBtn.addEventListener('click', async () => {
-  if (!selectedFile) return;
-  const p = PRODUCTS[currentIndex];
+// Events
+fileInput.addEventListener('change', ()=>{ if(fileInput.files[0]) handleFile(fileInput.files[0]); });
+dropZone.addEventListener('dragover', e=>{ e.preventDefault(); dropZone.classList.add('over'); });
+dropZone.addEventListener('dragleave', ()=>dropZone.classList.remove('over'));
+dropZone.addEventListener('drop', e=>{ e.preventDefault(); dropZone.classList.remove('over'); const f=e.dataTransfer.files[0]; if(f) handleFile(f); });
+removeBtn.addEventListener('click', ()=>{ data[cur].file=null; clearPreview(true); updateSaveBtn(); });
 
-  submitBtn.disabled = true;
-  submitBtn.textContent = 'Submitting…';
+notesEl.addEventListener('input', ()=>{ data[cur].notes=notesEl.value; });
 
-  const fd = new FormData();
-  fd.append('form-name',     'product-image-upload');
-  fd.append('bot-field',     '');
-  fd.append('product-id',    p.id);
-  fd.append('product-name',  p.name);
-  fd.append('category',      `${p.cat} › ${p.sub}`);
-  fd.append('product-url',   `https://statuesque-malabi-f45882.netlify.app/products/${p.id}`);
-  fd.append('product-image', selectedFile, selectedFile.name);
-  fd.append('notes',         notesEl.value.trim());
-
-  try {
-    const res = await fetch('/', { method: 'POST', body: fd });
-    if (!res.ok) throw new Error('Network response was not ok');
-
-    // Show success
-    successName.textContent = p.name;
-    formView.style.display  = 'none';
-    successScreen.style.display = 'block';
-    allDone.style.display   = 'none';
-  } catch (err) {
-    alert('Submission failed — please check your connection and try again.');
-    submitBtn.disabled = false;
-    submitBtn.textContent = 'Submit & Continue →';
-  }
-});
-
-// ── Skip ──────────────────────────────────────────────────────
-skipBtn.addEventListener('click', () => advance());
-
-// ── Next (after success) ──────────────────────────────────────
-nextBtn.addEventListener('click', () => {
-  successScreen.style.display = 'none';
-  formView.style.display      = '';
+saveBtn.addEventListener('click', ()=>{
+  data[cur].notes  = notesEl.value;
+  data[cur].done   = true;
+  data[cur].skipped= false;
   advance();
 });
 
-// ── Prev ─────────────────────────────────────────────────────
-prevBtn.addEventListener('click', () => {
-  if (currentIndex > 0) { currentIndex--; render(); }
+skipBtn.addEventListener('click', ()=>{
+  data[cur].notes  = notesEl.value;
+  data[cur].skipped= true;
+  advance();
 });
 
-function advance() {
-  currentIndex++;
-  if (currentIndex >= TOTAL) {
-    formView.style.display   = 'none';
-    successScreen.style.display = 'none';
-    allDone.style.display    = '';
-    progressFill.style.width = '100%';
-    progressLabel.textContent = `All ${TOTAL} products completed!`;
-  } else {
-    render();
-  }
+prevBtn.addEventListener('click', ()=>{
+  data[cur].notes = notesEl.value;
+  if(cur>0){ cur--; render(); }
+});
+
+function advance(){
+  cur++;
+  if(cur>=T){ showDownload(); }
+  else { render(); }
 }
 
-// ── Init ──────────────────────────────────────────────────────
+// ── Download ZIP ──────────────────────────────────────────────
+function showDownload(){
+  formView.style.display='none';
+  dlScreen.style.display='block';
+  progFill.style.width='100%';
+  progLabel.textContent=`All ${T} products reviewed`;
+  progCount.textContent=`${photoCount()} photos added`;
+  document.getElementById('dl-photos').textContent=photoCount();
+  document.getElementById('dl-notes').textContent=noteCount();
+}
+
+document.getElementById('dl-btn').addEventListener('click', async()=>{
+  const btn=document.getElementById('dl-btn');
+  btn.disabled=true;
+  btn.textContent='⏳ Building ZIP…';
+
+  const zip = new JSZip();
+  const imgs = zip.folder('images');
+  const date = new Date().toISOString().slice(0,10);
+
+  // Add images
+  for(let i=0;i<T;i++){
+    const d=data[i];
+    if(!d.file) continue;
+    const ext = d.file.name.split('.').pop().toLowerCase();
+    const fname = `${PRODUCTS[i].id}.${ext}`;
+    const buf = await d.file.arrayBuffer();
+    imgs.file(fname, buf);
+  }
+
+  // Notes CSV
+  let csv = 'Product ID,Product Name,Category,Subcategory,Has Photo,Filename,Notes\n';
+  for(let i=0;i<T;i++){
+    const p=PRODUCTS[i], d=data[i];
+    const fn=d.file ? `${p.id}.${d.file.name.split('.').pop().toLowerCase()}` : '';
+    const notes=(d.notes||'').replace(/"/g,'""');
+    csv += `"${p.id}","${p.name}","${p.cat}","${p.sub}","${d.file?'Yes':'No'}","${fn}","${notes}"\n`;
+  }
+  zip.file('notes.csv', csv);
+
+  // README
+  const readme=[
+    'SCIENCE CENTRE PAKISTAN — PRODUCT IMAGE PACKAGE',
+    '================================================',
+    `Date: ${date}`,
+    `Products reviewed: ${T}`,
+    `Photos provided: ${photoCount()}`,
+    `Products with notes/corrections: ${noteCount()}`,
+    '',
+    'CONTENTS',
+    '--------',
+    'images/    — Product images named by product ID (e.g. ol-labscreen-sa1.jpg)',
+    'notes.csv  — All corrections and notes in spreadsheet format',
+    '',
+    'HOW TO USE (for Science Centre team)',
+    '------------------------------------',
+    '1. Copy images from images/ folder to the website images directory',
+    '2. In catalogue.tsx, set image: "/images/<filename>" for each product',
+    '3. Review notes.csv for any content corrections to apply',
+    '',
+    'Image naming convention: <product-id>.<ext>',
+    'Example: ol-labscreen-sa1.jpg → product id ol-labscreen-sa1',
+  ].join('\n');
+  zip.file('README.txt', readme);
+
+  // Generate and download
+  const blob = await zip.generateAsync({
+    type:'blob',
+    compression:'STORE', // no compression = preserve image quality 100%
+  });
+
+  const url = URL.createObjectURL(blob);
+  const a   = document.createElement('a');
+  a.href    = url;
+  a.download= `ScienceCentre_OneLambda_Images_${date}.zip`;
+  a.click();
+  URL.revokeObjectURL(url);
+
+  btn.disabled=false;
+  btn.textContent='⬇ Download ZIP Package';
+});
+
+// Init
 render();
 </script>
 </body>
