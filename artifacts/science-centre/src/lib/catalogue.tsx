@@ -88,7 +88,8 @@ export const products: Product[] = [
   // ═══ ONE LAMBDA — ANTIBODY DETECTION ═══════════════════════════════════════
 
   { id:"ol-labscreen-sa1", name:"LABScreen™ Single Antigen HLA Class I", brand:"onelambda", category:"transplant", subcategory:"Luminex-based HLA Antibody Identification",
-    description:"High-resolution identification of HLA Class I antibodies (HLA-A, B, C) using Luminex xMAP® single-antigen bead technology. Each bead is coated with a single purified HLA antigen for precise antibody specificity determination.", featured:true,
+    image:"/images/ol-labscreen-sa1.jpg",
+    description:"Single antigen assays provide a unique solution to the dilemma presented by high PRA patients. In these patients, antibody reactive to one or more dominant epitopes can mask the presence of additional antibody specificities. These specificities can now be identified by single antigen technology.", featured:true,
     tags:["hla","transplant","antibody","class-i","luminex"],
     highlights:["Single-antigen resolution for HLA-A, B, C","Over 90 HLA Class I specificities covered","FDA 510(k) cleared, CE marked","Compatible with LABScan3D™ and FLEXMAP 3D®"],
     features:["Single purified recombinant HLA Class I antigen per bead","PE-conjugated anti-human IgG fluorescent detection","High inter-assay reproducibility","HLA Fusion™ software compatible","Interpretable with automated cut-off application"],
@@ -101,7 +102,8 @@ export const products: Product[] = [
     relatedProducts:["ol-labscreen-sa2","ol-labscreen-mixed","ol-labscan3d","ol-c1qscreen"] },
 
   { id:"ol-labscreen-sa2", name:"LABScreen™ Single Antigen HLA Class II", brand:"onelambda", category:"transplant", subcategory:"Luminex-based HLA Antibody Identification",
-    description:"Definitive identification of HLA Class II antibodies (DRB1, DRB3/4/5, DQA1, DQB1, DPA1, DPB1) using single-antigen bead technology on the Luminex xMAP® platform.", featured:true,
+    image:"/images/ol-labscreen-sa2.jpg",
+    description:"Single antigen assays provide a unique solution to the dilemma presented by high PRA patients. In these patients, antibody reactive to one or more dominant epitopes can mask the presence of additional antibody specificities. These specificities can now be identified by single antigen technology.", featured:true,
     tags:["hla","transplant","antibody","class-ii","luminex"],
     highlights:["Full DRB1, DRB3/4/5, DQA1, DQB1, DPA1, DPB1 coverage","Alpha-beta heterodimer pairs for DQ and DP loci","Detects rare and low-frequency specificities","FDA 510(k) cleared, CE marked"],
     features:["Single purified recombinant HLA Class II antigen per bead","Alpha-beta heterodimer pairs for DQ and DP","PE-conjugated anti-human IgG detection","HLA Fusion™ software compatible"],
@@ -114,7 +116,8 @@ export const products: Product[] = [
     relatedProducts:["ol-labscreen-sa1","ol-labscreen-mixed","ol-labscan3d","ol-c1qscreen"] },
 
   { id:"ol-labscreen-mixed", name:"LABScreen™ Mixed Class I & II Antibody Screening", brand:"onelambda", category:"transplant", subcategory:"Luminex-based HLA Antibody Identification",
-    description:"Simultaneously screens for HLA Class I and Class II antibodies in a single well. Cost-effective first-line screening before single-antigen testing.",
+    image:"/images/ol-labscreen-mixed.jpg",
+    description:"LABScreen Mixed Tests for the presence of HLA Class I and Class II antibodies, as well as MICA antibodies, with a single tube protocol. Well suited for monthly patient antibody screens in both low and high throughput laboratories.",
     tags:["hla","transplant","screening"],
     packaging:[{name:"LABScreen™ Mixed",catalogueNumber:"LSMA04",units:"1 Kit",format:"96-well microplate"}],
     relatedProducts:["ol-labscreen-sa1","ol-labscreen-sa2"],
@@ -124,7 +127,8 @@ export const products: Product[] = [
    },
 
   { id:"ol-labscreen-pra", name:"LABScreen™ PRA", brand:"onelambda", category:"transplant", subcategory:"Luminex-based HLA Antibody Identification",
-    description:"Panel Reactive Antibody (PRA) determination using Luminex xMAP® bead technology. Provides percentage PRA calculation for Class I and Class II.",
+    image:"/images/ol-labscreen-pra.jpg",
+    description:"Determines percent PRA and identifies antibody specificities using HLA antigens purified from different cells. HLA Class I and Class II PRA tests may be used separately or together.",
     tags:["hla","transplant","pra","screening"],
     packaging:[
       {name:"LABScreen™ PRA Class I",catalogueNumber:"LSPRA1A04",units:"1 Kit",format:"96-well microplate"},
@@ -135,17 +139,9 @@ export const products: Product[] = [
     specs:{"PRA Output":"Class I % PRA, Class II % PRA","Format":"96-well microplate","Analyzer":"LABScan3D™, FLEXMAP 3D®","Sample Volume":"20 µL","Regulatory":"FDA cleared, CE marked"},
    },
 
-  { id:"ol-labscreen-multi", name:"LABScreen™ Multi", brand:"onelambda", category:"transplant", subcategory:"Luminex-based HLA Antibody Identification",
-    description:"Screens for HLA antibodies against a broad panel of common HLA specificities. Ideal for initial sensitization assessment.",
-    tags:["hla","transplant","screening"],
-    packaging:[{name:"LABScreen™ Multi",catalogueNumber:"LSMULIA4",units:"1 Kit",format:"96-well microplate"}],
-    features:["Broad panel of representative HLA antigens per bead","Rapid initial sensitisation assessment","Semi-quantitative screening result","Compatible with LABScan3D™ and FLEXMAP 3D®"],
-    applications:["Broad HLA antibody screen for newly listed transplant candidates","Screening to guide single-antigen test ordering","Cost-effective monitoring of wait-listed patients"],
-    specs:{"Coverage":"Representative HLA-A,B,C,DR,DQ antigens","Format":"96-well microplate","Sample Volume":"20 µL","Regulatory":"FDA cleared, CE marked"},
-   },
-
   { id:"ol-labscreen-mica", name:"LABScreen™ MICA Single Antigen Group 1", brand:"onelambda", category:"transplant", subcategory:"Luminex-based HLA Antibody Identification",
-    description:"Detects and identifies antibodies against MICA antigens using Luminex bead technology — important for non-HLA antibody assessment in transplant.",
+    image:"/images/ol-labscreen-mica.jpg",
+    description:"LABScreen Single Antigen MICA A single antigen panel designed to identify MICA antibodies.",
     tags:["mica","non-hla","transplant"],
     packaging:[{name:"LABScreen™ MICA Single Antigen Group 1",catalogueNumber:"LSM12A04",units:"1 Kit",format:"96-well microplate"}],
     features:["Single MICA antigen per bead for precise specificity identification","Detects IgG antibodies against MICA alleles","Luminex xMAP® platform","Compatible with LABScan3D™"],
@@ -154,7 +150,8 @@ export const products: Product[] = [
    },
 
   { id:"ol-labscreen-explex", name:"LABScreen™ Single Antigen ExPlex Assay", brand:"onelambda", category:"transplant", subcategory:"Luminex-based HLA Antibody Identification",
-    description:"Extended single antigen panels with additional HLA specificities beyond standard SAB kits, improving resolution for complex patient profiles.",
+    image:"/images/ol-labscreen-explex.jpeg",
+    description:"￼￼Best-in-class coverage • Total of 151 Class I or 119 Class II common and well-documented (CWD) alleles in a single well • Enhanced coverage to better correlate with molecular typing • Provides broader antibody reactivity data to evaluate eplet patterns",
     tags:["hla","transplant","antibody"],
     packaging:[
       {name:"LABScreen™ SA ExPlex Class I",catalogueNumber:"LSA1EPXA04",units:"1 Kit",format:"96-well microplate"},
@@ -165,17 +162,9 @@ export const products: Product[] = [
     specs:{"Coverage":"Extended Class I and Class II specificities","Format":"96-well microplate","Analyzer":"LABScan3D™, FLEXMAP 3D®","Regulatory":"CE marked"},
    },
 
-  { id:"ol-labscreen-supplement", name:"LABScreen™ Single Antigen Supplement", brand:"onelambda", category:"transplant", subcategory:"Luminex-based HLA Antibody Identification",
-    description:"Supplementary single antigen beads providing additional HLA specificities to complement standard LABScreen™ SAB kits.",
-    tags:["hla","transplant","supplement"],
-    packaging:[{name:"LABScreen™ SA Supplement Class I",catalogueNumber:"LS1SUPPA04",units:"1 Kit",format:"96-well microplate"}],
-    features:["Additional HLA-specific beads to supplement standard SAB","Covers specificities not in standard panels","Luminex xMAP® platform"],
-    applications:["Supplementary testing for rare specificities","Completing antibody profiles in complex patients"],
-    specs:{"Coverage":"Supplemental HLA Class I specificities","Format":"96-well microplate","Regulatory":"CE marked"},
-   },
-
   { id:"ol-labscreen-ancillary", name:"LABScreen™ Ancillary Reagents", brand:"onelambda", category:"transplant", subcategory:"Luminex-based HLA Antibody Identification",
-    description:"Supporting reagents for LABScreen™ assays: wash buffer, positive/negative controls, and serum diluent.",
+    image:"/images/ol-labscreen-ancillary.jpg",
+    description:"Negative control serum used as an indicator of the non-specific background signal of each LABScreen and LABScreen Multi bead when reacting with a serum sample that does not contain any anti-HLA Class I or Class II antibody.",
     tags:["ancillary","reagents","labscreen"],
     packaging:[
       {name:"LABScreen™ Control Sera",catalogueNumber:"LSCONTXA",units:"1 Kit",format:"Control sera"},
@@ -187,7 +176,8 @@ export const products: Product[] = [
    },
 
   { id:"ol-c1qscreen", name:"C1qScreen™ HLA Antibody Detection", brand:"onelambda", category:"transplant", subcategory:"Complement Binding HLA Antibody Identification",
-    description:"Identifies complement-fixing HLA antibodies via C1q binding. Distinguishes clinically relevant complement-activating DSA — a key predictor of antibody-mediated rejection (AMR).", featured:true,
+    image:"/images/ol-c1qscreen.webp",
+    description:"Regulatory: CE-IVD: For In Vitro Diagnostic Use. (European Union Only) Technique: Flow Analysis Use: For the detection of complement-binding HLA antibodies in human serum. Storage Temperature: -65° C or below Package Includes: C1q protein, PE-labeled anti-C1q, C1q positive control beads, HEPES Buffer (10X)", featured:true,
     tags:["complement","c1q","amr","transplant","dsa"],
     highlights:["Identifies complement-fixing (C1q-binding) HLA antibodies","Predicts risk of antibody-mediated rejection (AMR)","Single antigen bead format — Class I and Class II"],
     specs:{"Method":"C1q-binding Luminex bead assay","HLA Coverage":"Class I and Class II","Regulatory":"CE marked"},
@@ -200,41 +190,9 @@ export const products: Product[] = [
     applications:["Risk stratification of donor-specific antibodies (DSA)","Pre-transplant donor selection for sensitised patients","Post-transplant AMR diagnosis and monitoring","Clinical research on complement-activating HLA antibodies"],
    },
 
-  { id:"ol-flowpra-sa", name:"FlowPRA™ Single Antigen", brand:"onelambda", category:"transplant", subcategory:"Flow Cytometry Based HLA Antibody Identification",
-    description:"Identifies HLA Class I and Class II antibodies by flow cytometry using beads coated with individual HLA antigens. Designed for high-PRA patients.",
-    tags:["hla","flow-cytometry","pra","transplant"],
-    packaging:[
-      {name:"FlowPRA™ Single Antigen Class I",catalogueNumber:"03FL1HD",units:"1 Kit",format:"Flow cytometry"},
-      {name:"FlowPRA™ Single Antigen Class II",catalogueNumber:"03FL2HD",units:"1 Kit",format:"Flow cytometry"},
-    ],
-    features:["Individual HLA antigens on microbeads for single-antigen resolution","Flow cytometer compatible — no dedicated analyser needed","Class I and Class II separate kits","PE fluorescent detection"],
-    applications:["HLA antibody identification by flow cytometry","Pre- and post-transplant antibody monitoring","Confirmation of Luminex-based antibody results"],
-    specs:{"Method":"Flow cytometry bead-based assay","HLA Coverage":"Class I and Class II (separate kits)","Detection":"PE fluorescence","Equipment":"Standard flow cytometer","Regulatory":"CE marked"},
-   },
-
-  { id:"ol-flowpra-specific", name:"FlowPRA™ Specific", brand:"onelambda", category:"transplant", subcategory:"Flow Cytometry Based HLA Antibody Identification",
-    description:"Flow cytometry-based screening using microbeads coated with pooled HLA antigens for rapid antibody screening.",
-    tags:["hla","flow-cytometry","screening"],
-    packaging:[
-      {name:"FlowPRA™ Specific Class I",catalogueNumber:"03FLC1S",units:"1 Kit",format:"Flow cytometry"},
-      {name:"FlowPRA™ Specific Class II",catalogueNumber:"03FLC2S",units:"1 Kit",format:"Flow cytometry"},
-    ],
-    features:["Pooled HLA antigen microbeads for rapid screening","Flow cytometry readout","Separate Class I and Class II screening kits","Semi-quantitative result"],
-    applications:["Initial HLA antibody screening by flow cytometry","PRA estimation for clinical decision-making","Screening before single-antigen identification"],
-    specs:{"Method":"Flow cytometry pooled bead screening","Format":"Class I and Class II kits","Equipment":"Standard flow cytometer","Regulatory":"CE marked"},
-   },
-
-  { id:"ol-flowpra-ancillary", name:"FlowPRA™ Ancillary Products", brand:"onelambda", category:"transplant", subcategory:"Flow Cytometry Based HLA Antibody Identification",
-    description:"Supporting reagents for FlowPRA™ assays: control beads, wash buffer, and reagent packs.",
-    tags:["ancillary","flow-cytometry"],
-    packaging:[{name:"FlowPRA™ Control Beads",catalogueNumber:"03FLCB",units:"1 Vial",format:"Control beads"}],
-    features:["Pre-validated control beads for assay QC","Wash buffer optimised for FlowPRA™ protocols","Supports laboratory accreditation requirements"],
-    applications:["Quality control for FlowPRA™ assays","Workflow standardisation in flow cytometry HLA labs"],
-    specs:{"Components":"Control beads, wash buffer","Compatibility":"All FlowPRA™ assay kits"},
-   },
-
   { id:"ol-flowdsa-xm", name:"FlowDSA-XM™ Advanced Crossmatch", brand:"onelambda", category:"transplant", subcategory:"Advanced Crossmatch Testing",
-    description:"Advanced flow cytometry crossmatch for specific detection of donor-directed HLA antibodies. Greater sensitivity than standard CDC crossmatch.",
+    image:"/images/ol-flowdsa-xm.jpeg",
+    description:"Distinguish leukocyte antibodies from autoantibodies   Our FlowDSA-XM assay is a flow cytometry-based crossmatch assay optimized for the detection of leukocyte antibodies. Combining traditional flow cytometry cellular crossmatch testing with the specificity of microbeads technology, the FlowDSA-XM test selectively distinguishes leukocyte antibodies, allowing you to obtain selective detection in the first run.   FlowDSA-XM advances the science of crossmatch testing by combining traditional flow cytometry with microbead technology. Together, these proven technologies selectively distinguish human leukocyte antigen antibodies from autoantibodies, allowing you to obtain selective detection in the first run.  FlowDSA-XM assay features Crossmatch testing that distinguishes leukocyte antibodies from autoantibodies Compatible with most standard single-laser flow cytometers Works with lymphocytes from fresh or frozen sources (peripheral blood, lymph nodes, or spleen) Familiar workflow",
     tags:["crossmatch","dsa","flow-cytometry","transplant"],
     packaging:[{name:"FlowDSA-XM™",catalogueNumber:"FLOWDSA",units:"1 Kit",format:"Flow cytometry"}],
     features:["Detects donor-specific HLA antibodies by flow cytometry","Greater sensitivity than CDC crossmatch","Class I and Class II DSA identification","Compatible with standard flow cytometers"],
@@ -243,7 +201,8 @@ export const products: Product[] = [
    },
 
   { id:"ol-magsort", name:"One Lambda™ MagSort™", brand:"onelambda", category:"transplant", subcategory:"Advanced Antibody Testing",
-    description:"Magnetic bead-based technology for advanced HLA antibody testing and prozone/hook effect removal. Improves antibody detection accuracy.",
+    image:"/images/ol-magsort.jpeg",
+    description:"Targeted isolation of HLA antibodies from human sera using adsorption/elution via HLA-specific antigen-coated magnetic beads HLA-antibody isolation  One Lambda™ MagSort™ comprises of a comprehensive panel of single HLA-antigen bound magnetic beads covering 6 classical loci – HLA-A, B, C, DR, DQ and DP.  The technology enables elution of targeted HLA antibodies from complex serum, thereby facilitating focused antibody assessment without the extent of cross-reactivity which may occur in the primary serum.  One Lambda™ MagSort™ can be applied to:    Isolation of individual HLA antibodies of interest (e.g. donor specific antibody) to explore antibody properties, including through downstream cellular (e.g. flow cytometric crossmatch) and solid-phase assays (e.g. LABScreen Single Antigen & Single Antigen ExPlex). Enhancing eplet-level HLA-antibody specificity analysis, supported by HLA Matchmaker functionality within HLA Fusion software.  Includes potential for novel eplet discovery based on unique antibody binding patterns. Assessment of HLA eplet immunogenicity. Distinguishing genuine reactivity from background reactivity and aiding in identification of weak reactivity. Determining polyclonal or monoclonal nature of HLA-antibody profile. In specific cases, indirect assessment of relative HLA-antibody quantity and binding strength.",
     tags:["antibody","magsort","prozone"],
     packaging:[{name:"MagSort™ Class I & II",catalogueNumber:"MAGSORT04",units:"1 Kit",format:"Magnetic beads"}],
     features:["Magnetic bead separation of interfering factors","Removes prozone/hook-effect causing substances","Improves antibody detection sensitivity and specificity","Compatible with Luminex-based SAB assays"],
@@ -251,67 +210,9 @@ export const products: Product[] = [
     specs:{"Method":"Magnetic bead separation","Compatible Assays":"LABScreen™ Single Antigen Class I and II","Sample Treatment":"Pre-incubation step","Regulatory":"RUO"},
    },
 
-  { id:"ol-lat", name:"Lambda Antigen Tray (LAT™)", brand:"onelambda", category:"transplant", subcategory:"ELISA-Based HLA Antibody Identification",
-    description:"ELISA-based Terasaki trays coated with HLA antigens for detecting HLA antibodies and PRA screening.",
-    tags:["elisa","hla","transplant","lat"],
-    packaging:[{name:"Lambda Antigen Tray",catalogueNumber:"03LATMHD",units:"20 Tests",format:"Terasaki tray"}],
-    features:["HLA antigen mixture on each Terasaki tray well","ELISA-based colorimetric detection","No Luminex analyser required","Standard laboratory microplate reader compatible"],
-    applications:["HLA antibody PRA screening","Pre-transplant sensitisation assessment","Laboratories without Luminex access"],
-    specs:{"Method":"ELISA on Terasaki tray","Format":"Terasaki microdroplet tray","Detection":"Colorimetric ELISA","Equipment":"Standard microplate reader"},
-   },
-
-  { id:"ol-lat-mixed", name:"Lambda Antigen Tray Mixed", brand:"onelambda", category:"transplant", subcategory:"ELISA-Based HLA Antibody Identification",
-    description:"ELISA Terasaki trays with comprehensive mixture of Class I and Class II HLA antigens for broad antibody screening.",
-    tags:["elisa","hla","transplant"],
-    packaging:[{name:"Lambda Antigen Tray Mixed",catalogueNumber:"03LATMHD",units:"20 Tests",format:"Terasaki tray"}],
-    features:["Mixed Class I and Class II HLA antigens per well","ELISA colorimetric detection","Broad antibody screening in one assay","No dedicated analyser required"],
-    applications:["Broad Class I + Class II HLA antibody screening","PRA determination in ELISA-based laboratories"],
-    specs:{"Method":"ELISA on Terasaki tray","HLA Coverage":"Mixed Class I and Class II","Format":"Terasaki tray","Equipment":"Microplate reader"},
-   },
-
-  { id:"ol-lat-class1", name:"Lambda Antigen Tray™ Class I Single Antigen", brand:"onelambda", category:"transplant", subcategory:"ELISA-Based HLA Antibody Identification",
-    description:"ELISA Terasaki trays coated with individual HLA Class I antigens for high-resolution antibody identification in high-PRA patients.",
-    tags:["elisa","hla","class-i","transplant"],
-    packaging:[{name:"Lambda Antigen Tray Class I Single Antigen",catalogueNumber:"03LAT1HD",units:"20 Tests",format:"Terasaki tray"}],
-    features:["Individual HLA Class I antigens per tray well","ELISA detection method","Single-antigen resolution for Class I","No Luminex equipment required"],
-    applications:["Class I HLA antibody identification in high-PRA patients","ELISA-based single-antigen antibody testing","Confirmation of Luminex antibody profiles"],
-    specs:{"Method":"ELISA on Terasaki tray","HLA Coverage":"Class I single antigen","Format":"Terasaki tray","Equipment":"Microplate reader"},
-   },
-
-  { id:"ol-at1r-etar", name:"AT1R and ETAR Non-HLA Antibody Assays", brand:"onelambda", category:"transplant", subcategory:"ELISA-Based Non-HLA Antibody Identification",
-    description:"ELISA assays for quantitative determination of anti-AT1R and anti-ETAR antibodies — non-HLA antibodies associated with poor transplant outcomes.",
-    tags:["non-hla","at1r","etar","elisa"],
-    packaging:[
-      {name:"EIA for Anti-AT1R Antibodies",catalogueNumber:"AT1REIA",units:"96 Tests",format:"ELISA plate"},
-      {name:"EIA for Anti-ETAR Antibodies",catalogueNumber:"ETAREIA",units:"96 Tests",format:"ELISA plate"},
-    ],
-    features:["Quantitative ELISA for anti-AT1R antibody determination","Quantitative ELISA for anti-ETAR antibody determination","Validated clinically relevant cut-offs","Standalone 96-well ELISA plate format"],
-    applications:["Pre-transplant non-HLA antibody risk assessment","Post-transplant AMR investigation beyond HLA","Research into vascular rejection mechanisms","Comprehensive antibody profiling in sensitised patients"],
-    specs:{"Method":"Quantitative ELISA","Targets":"AT1R (Angiotensin II receptor), ETAR (Endothelin receptor)","Format":"96-well ELISA plate","Units":"U/mL","Cut-off":"Validated clinical thresholds","Regulatory":"CE marked"},
-   },
-
-  { id:"ol-labscreen-autoantibody", name:"LABScreen™ Autoantibody", brand:"onelambda", category:"transplant", subcategory:"Non-HLA Luminex Based Antibody Identification",
-    description:"Luminex-based assay for detecting autoantibodies relevant to transplant outcomes. Complements HLA antibody testing for comprehensive pre-transplant assessment.",
-    tags:["autoantibody","non-hla","luminex"],
-    packaging:[{name:"LABScreen™ Autoantibody",catalogueNumber:"LSAUTO04",units:"1 Kit",format:"96-well microplate"}],
-    features:["Luminex bead-based autoantibody detection","Complements HLA antibody panel testing","Detects clinically relevant non-HLA autoantibodies","Semi-quantitative MFI results"],
-    applications:["Comprehensive pre-transplant non-HLA antibody assessment","Post-transplant rejection investigation","Research into autoantibody-mediated graft injury"],
-    specs:{"Method":"Luminex xMAP® bead assay","Format":"96-well microplate","Analyzer":"LABScan3D™","Regulatory":"RUO / CE marked (region dependent)"},
-   },
-
-  { id:"ol-lambda-cell-trays", name:"Lambda Cell Trays", brand:"onelambda", category:"transplant", subcategory:"Serological-based HLA Antibody Identification",
-    description:"Cell-based trays for serological HLA antibody identification using complement-dependent cytotoxicity (CDC) methodology.",
-    tags:["cdc","serological","hla"],
-    packaging:[{name:"Lambda Cell Trays",catalogueNumber:"LCELL",units:"Varies",format:"Serological tray"}],
-    features:["Lymphocyte cell panels on Terasaki trays","Complement-dependent cytotoxicity (CDC) method","Class I expressed on T and B cells; Class II on B cells","Suitable for antibody identification and crossmatch"],
-    applications:["Serological HLA antibody identification by CDC","T-cell and B-cell crossmatch testing","Traditional PRA determination using cell panels"],
-    specs:{"Method":"Complement-Dependent Cytotoxicity (CDC)","Cell Types":"T and B lymphocytes","Format":"Terasaki tray","Staining":"Fluorescent dye exclusion","Regulatory":"CE marked"},
-   },
-
-  // ═══ ONE LAMBDA — MOLECULAR TYPING ═════════════════════════════════════════
-
   { id:"ol-alltype-ngs", name:"AllType™ NGS HLA Typing Kit", brand:"onelambda", category:"ngs", subcategory:"Next-Generation Sequencing",
-    description:"Comprehensive HLA typing across 11 loci in a single amplification and sequencing run. Delivers allele-level, high-resolution HLA typing from 50 ng DNA. Completed on-bench within one workday.", featured:true,
+    image:"/images/ol-alltype-ngs.jpeg",
+    description:"Next-Generation Sequencing (NGS) technology has revolutionized the field of Human Leukocyte Antigen (HLA) typing, which is critical for organ transplantation, disease association studies, and immune response research. NGS offers a powerful, precise, and efficient approach for high resolution HLA typing, improving the matching process in transplantation and enhancing our understanding of the genetic foundations of the immune system.  Many labs might find NGS difficult to adopt due to the increased complexity, dedicated labor requirements and data management challenges. Laboratory throughput influences the strategy used in consolidating genotyping technologies.  We offer a comprehensive portfolio that meets the diverse needs of the HLA genotyping market and our One Lambda NGS assays are designed for simplicity and flexibility allowing laboratories greater cross-training on their platform of choice.", featured:true,
     tags:["hla","typing","ngs","allele-level"],
     highlights:["11-locus typing: A, B, C, DRB1/3/4/5, DQA1, DQB1, DPA1, DPB1","Allele-level phased typing from 50 ng DNA","Illumina® MiSeq and Ion Torrent™ compatible","Turnaround under 24 hours — single workday"],
     features:["Long-range PCR covering full exonic regions","High-resolution phased allele assignment","TypeStream™ Visual software for automated analysis","Scalable 8 to 96 samples per run","CE-IVD marked for in vitro diagnostic use"],
@@ -325,7 +226,8 @@ export const products: Product[] = [
     relatedProducts:["ol-alltype-fastplex","ol-typestream","ol-labscan3d"] },
 
   { id:"ol-alltype-fastplex", name:"AllType™ FASTplex™ NGS", brand:"onelambda", category:"ngs", subcategory:"Next-Generation Sequencing",
-    description:"Accelerated AllType™ NGS with streamlined amplification for faster turnaround. Optimised for Illumina short-read platforms.",
+    image:"/images/ol-alltype-fastplex.jpeg",
+    description:"AllType™ FASTplex™ NGS provides a fast, CE-IVD compliant method for HLA NGS.  Sample to sequencing in less than 7 hours ensures the AllType™ FASTplex™ workflow is completed in a single-day (with less than 90 minutes hands-on time), with reportable results 1.5 days or less.  The simple method requires a minimal learning curve.  The AllType™ FASTplex™ NGS assay is a rapid, high-resolution HLA typing solution from One Lambda (Thermo Fisher Scientific) designed for transplant diagnostics. It offers a single-day protocol (< 7 hours total, < 90 min hands-on) by utilizing a single-tube, 11-loci multiplex PCR workflow that covers HLA Class I and Class II, providing efficient, cost-effective, and accurate genotyping with minimal pipetting.  High-resolution genotyping: intelligently simple Key Features and Benefits:  Amplification:  One PCR reaction per sample Multiplexed amplification of all HLA Class I and Class II loci in 2.5 hours: HLA-A, B, C, DRB1, DRB3/4/5, DQA1, DQB1, DPA1 and DPB1 Enhanced gene coverage No pooling of amplicons Library preparation:  Early sample pooling Single-tube protocols for library processing Low number of pipetting events Compatible with Illumina™ MiSeq™, MiniSeq™ and iSeq™, and Ion GeneStudio™ S5 Systems",
     tags:["hla","ngs","typing","fast"],
     packaging:[
       {name:"AllType™ FASTplex™ 24-Sample",catalogueNumber:"OLIFPX24A",units:"24 Samples",format:"NGS amplification kit"},
@@ -338,7 +240,8 @@ export const products: Product[] = [
    },
 
   { id:"ol-alltype-rapid", name:"AllType™ Rapid 11 Loci Kit", brand:"onelambda", category:"ngs", subcategory:"Next-Generation Sequencing",
-    description:"Rapid 11-loci HLA typing with the same comprehensive coverage as AllType™ NGS in an accelerated workflow.",
+    image:"/images/ol-alltype-rapid.jpeg",
+    description:"High-resolution genotyping: high quality results with less complexity Key Features and Benefits:  Flexible and Rapid Workflow:  Single and multi-sample workflows (up to 24 samples) Single sample results in <4.5 hours Multi-sample results in <11 hours Compatible with Oxford Nanopore Technologies 4 Flow cell MinION Mk1 Sequencing Devices Phased Genotyping:  Ligase-based library preparation (no fragmentation) Completely phased long-range sequencing Helps resolve relevant second-field phase (cis-trans) ambiguities Quality Performance:  >99% second-field concordance Highly uniform coverage Balanced reads",
     tags:["hla","ngs","rapid","typing"],
     packaging:[{name:"AllType™ Rapid 11 Loci",catalogueNumber:"OLIRAP24A",units:"24 Samples",format:"NGS amplification kit"}],
     features:["11-locus HLA typing in accelerated workflow","Same loci as AllType™ NGS — A,B,C,DRB1/3/4/5,DQA1,DQB1,DPA1,DPB1","Designed for time-critical typing","Illumina sequencing compatible"],
@@ -347,7 +250,8 @@ export const products: Product[] = [
    },
 
   { id:"ol-hybritype", name:"One Lambda™ HybriType™ NGS Hybrid Capture Assay", brand:"onelambda", category:"ngs", subcategory:"Next-Generation Sequencing",
-    description:"Probe-based NGS hybrid capture for classical HLA, non-classical HLA, MICA/MICB, and ABO blood groups. Full gene or exon coverage with high read balance. Workflow completes in under 5.5 hours.",
+    image:"/images/ol-hybritype.png",
+    description:"The One Lambda™ HybriType™ NGS Hybrid Capture Assay utilises a probe-based design to optimise read balance and uniformity; potentially mitigating allele dropout for accurate, quality results.  The streamlined workflow takes less than 5.5 hours with under 2.5 hands-on time.  Sequencing data are analysed using TypeStream™ Visual NGS Analysis Software enabling rapid automated analysis and gene copy number detection.  Reporting and advanced analytics are facilitated by integration within the One Lambda software ecosystem (HLA Fusion™ analysis software and HistoTrac laboratory management system).",
     tags:["hla","ngs","hybrid-capture","abo","mica"],
     packaging:[{name:"HybriType™ HLA Plus ABO Flex Kit 96",catalogueNumber:"03HYB18ABOFX",units:"96 Samples",format:"Hybrid capture NGS kit"}],
     relatedProducts:["ol-alltype-ngs","ol-typestream"],
@@ -357,7 +261,8 @@ export const products: Product[] = [
    },
 
   { id:"ol-microssp-generic", name:"Micro SSP™ Generic HLA Typing Trays", brand:"onelambda", category:"molecular", subcategory:"Sequence-Specific Primer Typing",
-    description:"Ready-to-use lyophilised SSP trays for low-to-intermediate resolution HLA typing of Class I and Class II. Results in under 3 hours using a standard thermocycler.", featured:true,
+    image:"/images/ol-microssp-generic.jpg",
+    description:"One Lambda’s Micro SSP™ Generic trays are available to assign HLA Class I or Class II alleles individually or simultaneously; 96-well format (unless otherwise stated) with pre-aliquoted and dispensed primers and an internal control in each well providing a fast result within 2 hours.", featured:true,
     tags:["hla","ssp","typing","class-i","class-ii"],
     packaging:[
       {name:"Micro SSP™ Generic Class I Tray",catalogueNumber:"MSSPA004",units:"10 Trays",format:"96-well SSP tray"},
@@ -369,31 +274,9 @@ export const products: Product[] = [
     specs:{"Method":"Sequence-Specific Primer (SSP) PCR","Resolution":"Low to intermediate","Equipment":"Standard thermocycler + gel electrophoresis","Result Time":"< 3 hours","Storage":"Room temperature (lyophilised)","Software":"UniMatch™"},
    },
 
-  { id:"ol-microssp-highres", name:"Micro SSP™ High Resolution Typing Trays", brand:"onelambda", category:"molecular", subcategory:"Sequence-Specific Primer Typing",
-    description:"High-resolution SSP trays for allele-level discrimination at critical HLA loci, suitable for cases requiring greater resolution than generic trays.",
-    tags:["hla","ssp","typing","high-resolution"],
-    packaging:[
-      {name:"Micro SSP™ HLA-A High Resolution",catalogueNumber:"MSSHRESA",units:"10 Trays",format:"96-well SSP tray"},
-      {name:"Micro SSP™ HLA-B High Resolution",catalogueNumber:"MSSHRESB",units:"10 Trays",format:"96-well SSP tray"},
-      {name:"Micro SSP™ HLA-DRB High Resolution",catalogueNumber:"MSSHRDRB",units:"10 Trays",format:"96-well SSP tray"},
-    ],
-    relatedProducts:["ol-microssp-generic"],
-    features:["Allele-level discriminating primer sets","Higher resolution than generic SSP trays","Ready-to-use lyophilised format","Standard thermocycler compatible","Gel electrophoresis readout"],
-    applications:["High-resolution HLA allele discrimination","Resolving low-resolution typing ambiguities","Confirmatory typing following generic SSP","Specific locus high-resolution typing"],
-    specs:{"Method":"High-resolution SSP PCR","Resolution":"High (allele-level discrimination)","Equipment":"Standard thermocycler + gel electrophoresis","Loci":"HLA-A, B, DRB1 (locus specific kits)","Storage":"Room temperature (lyophilised)"},
-   },
-
-  { id:"ol-bulk-primers", name:"Bulk Primer Sets", brand:"onelambda", category:"molecular", subcategory:"Sequence-Specific Primer Typing",
-    description:"Individual HLA SSP primer sets in bulk format for large-scale typing or custom panel configuration.",
-    tags:["ssp","primers","typing"],
-    packaging:[{name:"Bulk Primer Set",catalogueNumber:"BULKPRIM",units:"Varies",format:"Individual primer sets"}],
-    features:["Individual SSP primer sets in bulk quantities","Custom panel configuration possible","Suitable for high-volume typing laboratories","Quality-controlled primer pairs"],
-    applications:["Large-scale HLA typing programmes","Custom panel configuration for specific loci","High-throughput typing centre workflows"],
-    specs:{"Method":"SSP PCR","Format":"Individual bulk primer sets","Quantity":"Varies by order","Compatibility":"Standard PCR equipment"},
-   },
-
   { id:"ol-labtype-sso", name:"LABType™ SSO HLA Typing", brand:"onelambda", category:"molecular", subcategory:"Reverse SSO Typing",
-    description:"Reverse sequence-specific oligonucleotide (rSSO) typing using Luminex xMAP® beads. Intermediate-to-high resolution HLA typing compatible with LABScan3D™ and LABScan™ 100.", featured:true,
+    image:"/images/ol-labtype-sso.jpg",
+    description:"LABType™ SSO (Sequence-Specific Oligonucleotide) HLA typing kits, developed by One Lambda (Thermo Fisher Scientific), are advanced molecular assays for identifying HLA alleles. They combine PCR amplification with Luminex bead technology for rapid, scalable, and accurate intermediate-to-high resolution typing of HLA Class I and Class II loci, commonly used in transplantation and disease association studies  Key Features and BenefitsMethodology: Uses reverse-SSO (rSSO) technology, where PCR products are hybridized to oligonucleotide probes immobilized on fluorescent microspheres.Technology Platform: Analyzed using Luminex flow analyzers (LABScan™ 100 or LABScan3D™).Efficiency: Streamlined, single-well workflow reduces labor, reagent usage, and turnaround time compared to traditional membrane-based methods.Accuracy: Delivers accurate 2-digit (low) to 4-digit (intermediate/high) resolution for HLA A, B, C, DRB1/3/4/5, DQA1/DQB1, and DPA1/DPB1", featured:true,
     tags:["hla","sso","typing","luminex"],
     highlights:["Intermediate-to-high resolution HLA typing","Luminex xMAP® bead-based rSSO method","Compatible with LABScan3D™ and LABScan™ 100","Fast 6-hour turnaround"],
     features:[
@@ -421,7 +304,8 @@ export const products: Product[] = [
     relatedProducts:["ol-labtype-ancillary","ol-labscan3d","ol-alltype-ngs"] },
 
   { id:"ol-labtype-ancillary", name:"LABType™ Ancillary Reagents", brand:"onelambda", category:"molecular", subcategory:"Reverse SSO Typing",
-    description:"Supporting reagents for LABType™ SSO assays: DNA denaturation reagent, hybridisation buffer, and wash reagents.",
+    image:"/images/ol-labtype-ancillary.jpeg",
+    description:"LABType™ Ancillary Reagents are essential buffers and components designed by One Lambda to support LABType rSSO HLA typing assays. These products, including Taq polymerase, buffers, and primer mixes, ensure optimal, high-resolution performance for DNA amplification and HLA typing, often sold in 20 or 100-test packages",
     tags:["ancillary","labtype","sso"],
     packaging:[{name:"LABType™ Ancillary Kit",catalogueNumber:"LABTYP-ANC",units:"1 Kit",format:"Ancillary reagents"}],
     features:["DNA denaturation reagent for rSSO hybridisation","Hybridisation buffer for bead-probe binding","Wash reagents for background reduction","Pre-validated for use with LABType™ SSO kits"],
@@ -430,7 +314,8 @@ export const products: Product[] = [
    },
 
   { id:"ol-secore-sbt", name:"SeCore™ SBT HLA Typing Kits", brand:"onelambda", category:"molecular", subcategory:"Sequence Based Typing",
-    description:"Sequence-based typing (SBT) kits for high-resolution allele-level HLA genotyping using Sanger sequencing — the gold standard for unambiguous allele assignment.",
+    image:"/images/ol-secore-sbt.jpeg",
+    description:"SeCore™ SBT HLA Typing Kits are high-resolution, Sanger sequencing-based solutions by Thermo Fisher Scientific designed to provide unambiguous, locus-specific identification of Class I and II Human Leukocyte Antigens (HLA). They offer a rapid, 1.5-hour amplification, with integrated workflows that include ExoSAP-IT™ for cleanup and uTYPE® Dx Software for analysis.",
     tags:["hla","sbt","typing","sanger"],
     packaging:[
       {name:"SeCore™ SBT HLA-A",catalogueNumber:"SECSBT-A",units:"1 Kit",format:"SBT amplification kit"},
@@ -442,17 +327,9 @@ export const products: Product[] = [
     specs:{"Method":"Sequence-Based Typing (SBT) — Sanger sequencing","Resolution":"Allele-level","Sequencing":"Standard capillary electrophoresis (Sanger)","Software":"SeqA™","Regulatory":"CE marked"},
    },
 
-  { id:"ol-secore-gssp", name:"SeCore™ GSSP Kit", brand:"onelambda", category:"molecular", subcategory:"Sequence Based Typing",
-    description:"Group-specific sequencing primer (GSSP) kits for resolving HLA sequence ambiguities during SBT typing.",
-    tags:["hla","sbt","gssp","ambiguity"],
-    packaging:[{name:"SeCore™ GSSP Kit",catalogueNumber:"SECGSSP04",units:"1 Kit",format:"GSSP primers"}],
-    features:["Group-specific sequencing primer sets","Resolves sequence ambiguities from standard SBT","Compatible with standard Sanger sequencing instruments","Validated allele-specific primer designs"],
-    applications:["Resolution of ambiguous allele combinations from SBT","Confirmation of novel or unusual alleles","Reducing homozygous allele ambiguities","High-resolution typing in complex cases"],
-    specs:{"Method":"Group-Specific Sequencing Primer (GSSP) PCR + Sanger sequencing","Application":"Ambiguity resolution for SBT","Equipment":"Standard Sanger sequencer","Regulatory":"CE marked"},
-   },
-
   { id:"ol-linkseq-hla-kir", name:"LinkSēq™ HLA and KIR Typing Kits", brand:"onelambda", category:"molecular", subcategory:"LinkSeq Real-Time PCR",
-    description:"Real-time PCR kits for rapid presence/absence testing of HLA and KIR genes.",
+    image:"/images/ol-linkseq-hla-kir.jpeg",
+    description:"LinkSēq™ HLA and KIR Typing Kits are rapid, real-time PCR genotyping systems developed by One Lambda / Thermo Fisher Scientific. They are designed for fast, simple identification of Human Leukocyte Antigen (HLA) and Killer-cell Immunoglobulin-like Receptor (KIR) alleles. Utilizing Polymerase Chain Reaction Sequence-Specific Primers (PCR-SSP) paired with SYBR Green melt curve analysis, this platform provides clear results in under 90 minutes with only 10 minutes of hands-on labor  Key Product OfferingsLinkSēq HLA Multi-Locus Kits: Comprehensive options like the LinkSēq HLA-ABCDRDQDP+ 384 Kit determine low-resolution to antigen-level configurations across multiple HLA loci simultaneously.LinkSēq Single Antigen Kits: Targeted formulations optimized for rapid, specific allele screening. These include the LinkSēq HLA-B27 Typing Kit and the LinkSēq HLA-B*57:01 Kit.LinkSēq KIR Typing Kits: Specialized kits designed to identify all 15 KIR genes and 2 pseudogenes. Configurations come in both 96-well and 384-well multi-sample tray formats",
     tags:["hla","kir","real-time-pcr","typing"],
     packaging:[
       {name:"LinkSēq HLA Typing Kit",catalogueNumber:"LSEQ-HLA",units:"1 Kit",format:"Real-time PCR kit"},
@@ -464,7 +341,8 @@ export const products: Product[] = [
    },
 
   { id:"ol-linkseq-hpa-abo", name:"LinkSēq™ HPA and ABO Typing Kits", brand:"onelambda", category:"molecular", subcategory:"LinkSeq Real-Time PCR",
-    description:"Real-time PCR kits for Human Platelet Antigen (HPA) and ABO blood group genotyping.",
+    image:"/images/ol-linkseq-hpa-abo.jpeg",
+    description:"LinkSēq™ HLA and ABO Typing Kits are rapid molecular genotyping systems manufactured by One Lambda / Thermo Fisher Scientific. They utilize real-time PCR-SSP (Sequence-Specific Priming) and SYBR Green melt-curve analysis to deliver fast, accurate tissue and blood grouping results. These kits eliminate the need for post-amplification gels or chips, vastly improving laboratory safety and efficiency.  Core Diagnostic ApplicationsHLA Typing: Identifies Class I (A, B, C) and Class II (DR, DQ, DP) alleles. It serves as a vital pre-transplant screening tool for solid organs and hematopoietic stem cell matching.ABO Blood Genotyping: Resolves discordant serological testing. It successfully distinguishes weak subgroups, separating A1 from non-A1, and B from B3, Bweak, or Bel alleles.Disease Associations: Features dedicated targeted assays for specific genetic conditions, including HLA-B*27 (Ankylosing Spondylitis), Coeliac disease (DQ2/DQ8), and Narcolepsy",
     tags:["hpa","abo","real-time-pcr"],
     packaging:[
       {name:"LinkSēq HPA Typing Kit",catalogueNumber:"LSEQ-HPA",units:"1 Kit",format:"Real-time PCR kit"},
@@ -475,17 +353,9 @@ export const products: Product[] = [
     specs:{"Method":"Real-time PCR allelic discrimination","Targets":"HPA antigens, ABO blood group alleles","Equipment":"Standard real-time PCR thermocycler","Turnaround":"2–4 hours","Regulatory":"CE marked"},
    },
 
-  { id:"ol-linkseq-ancillary", name:"LinkSēq™ Ancillary Products", brand:"onelambda", category:"molecular", subcategory:"LinkSeq Real-Time PCR",
-    description:"Supporting reagents for LinkSēq real-time PCR typing workflows.",
-    tags:["ancillary","linkseq","pcr"],
-    packaging:[{name:"LinkSēq Ancillary Kit",catalogueNumber:"LSEQ-ANC",units:"1 Kit",format:"Ancillary"}],
-    features:["Positive and negative controls for real-time PCR runs","Standardised master mix components","Validated reagent lots for reproducible results"],
-    applications:["Quality control for LinkSēq real-time PCR assays","Workflow standardisation","Accreditation and proficiency support"],
-    specs:{"Components":"Controls, master mix components","Compatibility":"All LinkSēq typing kits"},
-   },
-
   { id:"ol-cytokine-genotyping", name:"Cytokine Genotyping Kits", brand:"onelambda", category:"molecular", subcategory:"Non-HLA Genotyping",
-    description:"Kits for genotyping cytokine gene polymorphisms relevant to transplant rejection and immune response.",
+    image:"/images/ol-cytokine-genotyping.jpg",
+    description:"The One Lambda Cytokine Genotyping Tray (manufactured by Thermo Fisher Scientific) is a molecular assay designed to provide a simple, accurate, and economical method for detecting single nucleotide polymorphisms (SNPs) and specific alleles in human cytokine genes. It uses the Polymerase Chain Reaction-Sequence Specific Primers (PCR-SSP) methodology to amplify genomic DNA extracted from whole blood  TGF-beta (Transforming Growth Factor – beta) TNF-alpha (Tumor Necrosis Factor – alpha) IL-10 (Interleukin – 10) IL-6 (Interleukin – 6) IFN-gamma (Interferon – gamma)",
     tags:["cytokine","genotyping","non-hla"],
     packaging:[{name:"Cytokine Genotyping Kit",catalogueNumber:"CYTOKGENO",units:"1 Kit",format:"SSP typing"}],
     features:["SSP-based genotyping of cytokine gene polymorphisms","Covers TNF-α, IL-10, IL-6, IFN-γ and other clinically relevant cytokines","Ready-to-use tray format","Standard thermocycler and gel system required"],
@@ -493,17 +363,9 @@ export const products: Product[] = [
     specs:{"Method":"SSP PCR","Targets":"TNF-α, IL-10, IL-6, IFN-γ and others","Equipment":"Standard thermocycler + gel electrophoresis","Regulatory":"RUO"},
    },
 
-  { id:"ol-hna-genotyping", name:"HNA Genotyping", brand:"onelambda", category:"molecular", subcategory:"Non-HLA Genotyping",
-    description:"Human Neutrophil Antigen (HNA) genotyping for transfusion medicine and transplant applications.",
-    tags:["hna","genotyping","non-hla"],
-    packaging:[{name:"HNA Genotyping Kit",catalogueNumber:"HNAGENO",units:"1 Kit",format:"SSP typing"}],
-    features:["SSP-based genotyping for HNA-1a, 1b, 1c, 2a, 3a, 4a, 5a","Ready-to-use tray format","Standard thermocycler compatible","Validated for clinical transfusion medicine use"],
-    applications:["HNA typing for granulocyte transfusion compatibility","FNAGT (foetal/neonatal alloimmune granulocytopenia) workup","Granulocyte donor selection","Transfusion medicine and immunogenetics research"],
-    specs:{"Method":"SSP PCR","Targets":"HNA-1a,1b,1c,2a,3a,4a,5a","Equipment":"Standard thermocycler","Regulatory":"CE marked"},
-   },
-
   { id:"ol-kir-sso", name:"KIR SSO Genotyping", brand:"onelambda", category:"molecular", subcategory:"Non-HLA Genotyping",
-    description:"SSO genotyping for Killer Immunoglobulin-like Receptor (KIR) genes — critical for NK cell biology and transplant outcomes.",
+    image:"/images/ol-kir-sso.jpg",
+    description:"KIR SSO (Sequence-Specific Oligonucleotide) genotyping is a molecular technique used to identify the presence or absence of Killer Cell Immunoglobulin-like Receptor (KIR) genes. It utilizes Luminex® xMAP® technology for high-throughput, multiplexed analysis of KIR gene content (16 genes/pseudogenes) to determine KIR haplotypes (A or B). This assay is used in transplant medicine and reproductive immunology to predict outcomes",
     tags:["kir","sso","genotyping"],
     packaging:[{name:"KIR SSO Genotyping Kit",catalogueNumber:"KIRSSO04",units:"1 Kit",format:"Luminex bead kit"}],
     features:["rSSO typing on Luminex xMAP® beads for KIR gene content","Covers KIR2DL1-3, KIR2DS1-5, KIR3DL1-3, KIR3DS1, and others","High-throughput 96-well microplate format","HLA Fusion™ software compatible"],
@@ -512,7 +374,8 @@ export const products: Product[] = [
    },
 
   { id:"ol-qubit", name:"Qubit™ Fluorometric Quantitation", brand:"onelambda", category:"equipment", subcategory:"Molecular Biology Instrumentation",
-    description:"Fluorometric DNA quantitation system for accurate DNA concentration measurement before NGS library preparation.",
+    image:"/images/ol-qubit.jpg",
+    description:"Qubit™ Fluorometric Quantitation provides highly accurate, specific, and sensitive quantification of DNA, RNA, and protein using target-selective fluorescent dyes. It is the industry standard for Next-Generation Sequencing (NGS) and molecular biology applications, requiring only small sample volumes (1–20 \\(\\mu \\)L) to deliver reliable results in seconds",
     tags:["dna-quantitation","fluorometric","qubit"],
     packaging:[
       {name:"Qubit™ dsDNA HS Assay Kit",catalogueNumber:"Q32851",units:"100 Assays",format:"Fluorometric assay"},
@@ -523,18 +386,8 @@ export const products: Product[] = [
     specs:{"Method":"Fluorometric quantitation","Sensitivity":"HS: 10 pg/µL – 100 ng/µL; BR: 2 ng/µL – 1 µg/µL","Sample Volume":"1–20 µL","Instrument":"Qubit™ 4 Fluorometer","Dye":"Proprietary intercalating fluorescent dye"},
    },
 
-  { id:"ol-veritiPro", name:"VeritiPro™ Thermal Cycler", brand:"onelambda", category:"equipment", subcategory:"Molecular Biology Instrumentation",
-    description:"High-performance thermal cycler compatible with Micro SSP™, SeCore™, and all PCR-based One Lambda typing assays.",
-    tags:["thermal-cycler","pcr","instrumentation"],
-    packaging:[{name:"VeritiPro™ 96-Well Thermal Cycler",catalogueNumber:"A48138",units:"1 Instrument",format:"Thermal cycler"}],
-    features:["Gradient thermal block system for optimised PCR","12 independent temperature blocks for flexibility","Fast ramp rates for efficient cycling","Compatible with all One Lambda SSP and SBT kits","Intuitive touchscreen interface"],
-    applications:["PCR amplification for Micro SSP™ HLA typing","PCR for SeCore™ SBT HLA genotyping","Research PCR amplification applications","Batch processing of multiple sample types simultaneously"],
-    specs:{"Format":"96-well block thermal cycler","Blocks":"12 independent zones","Ramp Rate":"Up to 6°C/sec","Volume Range":"10–100 µL","Temperature Range":"0–100°C","Interface":"Touchscreen","Footprint":"Compact benchtop"},
-   },
-
-  // ═══ ONE LAMBDA — SEROLOGICAL TYPING ═══════════════════════════════════════
-
   { id:"ol-terasaki-trays", name:"Terasaki HLA Tissue Typing Trays", brand:"onelambda", category:"serological", subcategory:"HLA Tissue Typing Trays",
+    image:"/images/ol-terasaki-trays.jpg",
     description:"Complement-dependent cytotoxicity (CDC) Terasaki trays for serological HLA tissue typing — the classic method for pre-transplant crossmatch and HLA antigen identification.", featured:true,
     tags:["serological","cdc","terasaki","hla","tissue-typing"],
     highlights:["Classic CDC method for HLA tissue typing","Class I and Class II formats available","72-well tray format","High antigen coverage"],
@@ -549,49 +402,9 @@ export const products: Product[] = [
     specs:{"Method":"Complement-Dependent Cytotoxicity (CDC)","Format":"72-well Terasaki tray","Cell Types":"T lymphocytes (Class I), B lymphocytes (Class II)","Storage":"Liquid nitrogen","HLA Coverage":"Representative A, B, C, DR, DQ specificities","Regulatory":"CE marked"},
    },
 
-  { id:"ol-terasaki-supplement", name:"Terasaki Supplement HLA Tissue Typing Trays", brand:"onelambda", category:"serological", subcategory:"HLA Tissue Typing Trays",
-    description:"Supplementary Terasaki trays with additional HLA specificities to extend the standard typing panel.",
-    tags:["serological","cdc","terasaki","supplement"],
-    packaging:[{name:"Terasaki Supplement Tray",catalogueNumber:"O3SUPPL",units:"10 Trays",format:"72-well format"}],
-    relatedProducts:["ol-terasaki-trays"],
-    features:["Additional specificities extending standard typing panels","Terasaki 72-well tray format","Cryopreserved cell panels with validated HLA typing","Complements standard ASHI/EFI panel requirements"],
-    applications:["Extending antibody identification panel coverage","Typing rare or unusual HLA specificities","Supplementing standard CDC crossmatch panels"],
-    specs:{"Method":"Complement-Dependent Cytotoxicity (CDC)","Format":"72-well Terasaki tray","Coverage":"Supplemental HLA specificities","Storage":"Liquid nitrogen","Regulatory":"CE marked"},
-   },
-
-  { id:"ol-lmt", name:"Lambda Monoclonal Trays (LMT™)", brand:"onelambda", category:"serological", subcategory:"HLA Tissue Typing Trays",
-    description:"Trays containing highly specific monoclonal antibodies for accurate HLA antigen identification by CDC. Greater specificity than polyclonal antisera.",
-    tags:["serological","monoclonal","cdc","hla"],
-    packaging:[{name:"Lambda Monoclonal Trays (LMT)",catalogueNumber:"LMTMONO",units:"10 Trays",format:"Serological tray"}],
-    relatedProducts:["ol-terasaki-trays"],
-    features:["Monoclonal antibodies with defined HLA specificity","Greater lot-to-lot consistency than polyclonal antisera","Pre-titrated working dilutions","Validated against international HLA standards"],
-    applications:["HLA antigen identification by CDC in serological typing","Quality control reference typing in HLA laboratories","Confirmation of HLA antigen assignments from other methods"],
-    specs:{"Type":"Monoclonal antibody panels","Method":"CDC (Terasaki)","Format":"Serological tray","Specificity":"Validated against reference cells","Regulatory":"CE marked"},
-   },
-
-  { id:"ol-b27-antibody", name:"B27 Monoclonal Antibody", brand:"onelambda", category:"serological", subcategory:"Serological Reagents",
-    description:"Highly specific monoclonal antibody for HLA-B27 antigen identification — key marker for ankylosing spondylitis and HLA-B27 associated disorders.",
-    tags:["b27","monoclonal","serological"],
-    highlights:["Highly specific for HLA-B27 antigen","For serological typing by CDC or flow cytometry","Ready-to-use format","Quality-controlled for specificity and titre"],
-    features:["Monoclonal antibody with defined HLA-B27 specificity","Suitable for complement-dependent cytotoxicity (CDC) testing","Compatible with standard Terasaki microdroplet method","Pre-titrated and quality-controlled"],
-    applications:["HLA-B27 antigen identification in transplant workup","Ankylosing spondylitis and related HLA-B27 disease association testing","Quality control in serological HLA typing panels","Research into HLA-B27 associated autoimmune conditions"],
-    specs:{"Target":"HLA-B27 antigen","Antibody Type":"Monoclonal","Method":"CDC (Terasaki) or flow cytometry","Format":"Ready-to-use","Storage":"2–8 °C"},
-    packaging:[{name:"B27 Monoclonal Antibody",catalogueNumber:"B27MONO",units:"1 Vial",format:"Monoclonal antibody"}] },
-
-  { id:"ol-cytotoxic-controls", name:"Cytotoxic Controls", brand:"onelambda", category:"serological", subcategory:"Serological Reagents",
-    description:"Positive and negative cytotoxic control sera for quality assurance in CDC crossmatch testing.",
-    tags:["cdc","controls","serological"],
-    packaging:[
-      {name:"Positive Cytotoxic Control",catalogueNumber:"CYTPOS",units:"1 Vial",format:"Control serum"},
-      {name:"Negative Cytotoxic Control",catalogueNumber:"CYTNEG",units:"1 Vial",format:"Control serum"},
-    ],
-    features:["Positive control: validated to produce ≥80% lymphocyte killing","Negative control: validated for <10% cell death","Lot-to-lot consistency guaranteed","Compatible with standard CDC crossmatch protocols"],
-    applications:["Daily QC in CDC crossmatch testing","Accreditation and proficiency requirements","Validation of cytotoxicity assay performance"],
-    specs:{"Components":"Positive cytotoxic control serum, Negative control serum","Method":"CDC cytotoxicity assay","Expected Result":"Positive: ≥80% killing; Negative: <10%","Storage":"−20 °C","Regulatory":"CE marked"},
-   },
-
   { id:"ol-dynabeads", name:"Dynabeads™ for Cell Isolation", brand:"onelambda", category:"serological", subcategory:"Serological Reagents",
-    description:"Magnetic bead reagents for isolating T and B lymphocytes for use in CDC crossmatch assays.",
+    image:"/images/ol-dynabeads.jpg",
+    description:"Dynabeads™ HLA Class II (Catalog No. 21004D) by Invitrogen (Thermo Fisher Scientific) is a reagent kit designed for the rapid isolation of HLA Class II-positive cells directly from human biological samples. This product is primarily used in clinical immunology, tissue typing, and pre-transplant crossmatching assays to separate specific lymphocyte populations",
     tags:["dynabeads","cell-isolation","serological"],
     packaging:[
       {name:"Dynabeads™ Pan T (CD2)",catalogueNumber:"DYNAPAT",units:"1 Vial",format:"Magnetic beads"},
@@ -603,7 +416,8 @@ export const products: Product[] = [
    },
 
   { id:"ol-fluoroquench", name:"FluoroQuench™ Staining/Quenching Reagent", brand:"onelambda", category:"serological", subcategory:"Serological Reagents",
-    description:"Fluorescent quenching reagent for differentiating live from dead cells in CDC crossmatch assays.",
+    image:"/images/ol-fluoroquench.jpg",
+    description:"FluoroQuench™ Staining/Quenching Reagent is a specialized laboratory cocktail manufactured by One Lambda (a Thermo Fisher Scientific brand). It is primarily designed to simultaneously stain lymphocytes, reduce background fluorescence, and stop complement-dependent cell lysis during serological HLA microcytotoxicity assays  Core Mechanism and ComponentsAcridine Orange (AO): A fluorescent dye that penetrates viable cell membranes to selectively stain live lymphocytes, making them fluoresce green.Ethidium Bromide (EB): A dye that enters compromised membranes to stain dead cells, making them fluoresce bright red under a microscope.EDTA (Ethylenediaminetetraacetic acid): Acts as a chelating agent to immediately stop complement-dependent cell lysis, freezing the reaction at a specific endpoint.Bovine Hemoglobin: Used alongside proprietary components as a quenching agent to significantly obscure nonspecific background fluorescence.",
     tags:["fluoroquench","cdc","staining"],
     packaging:[{name:"FluoroQuench™",catalogueNumber:"FLUROQUENCH",units:"1 Vial",format:"Reagent"}],
     features:["Fluorescent dye for live/dead cell discrimination in CDC","Quenches background fluorescence in dead cells","Optimised for Terasaki microdroplet CDC method","Compatible with standard fluorescence microscopy"],
@@ -611,19 +425,9 @@ export const products: Product[] = [
     specs:{"Method":"Fluorescence-based live/dead staining","Excitation/Emission":"Compatible with standard fluorescence microscope filters","Volume":"Ready-to-use","Storage":"2–8 °C, protect from light"},
    },
 
-  { id:"ol-bulk-monoclonal", name:"Bulk Monoclonal Antibody", brand:"onelambda", category:"serological", subcategory:"Serological Reagents",
-    description:"Bulk monoclonal antibodies for HLA antigen identification in high-throughput serological laboratories.",
-    tags:["monoclonal","bulk","serological"],
-    packaging:[{name:"Bulk Monoclonal Antibody",catalogueNumber:"BULKMONO",units:"Varies",format:"Bulk antibody"}],
-    features:["Large-volume monoclonal antibody format for high-throughput labs","Defined HLA specificity and titre","Suitable for large-scale typing programmes","Quality-controlled batches"],
-    applications:["High-volume HLA serological typing","Typing centre bulk processing","Production of custom typing panels"],
-    specs:{"Type":"Monoclonal antibodies against HLA antigens","Format":"Bulk vials","Application":"CDC-based serological typing","Regulatory":"CE marked"},
-   },
-
-  // ═══ ONE LAMBDA — INSTRUMENTS & SOFTWARE ═══════════════════════════════════
-
   { id:"ol-labscan3d", name:"LABScan3D™ Multiplex Analyzer", brand:"onelambda", category:"multiplex", subcategory:"Readers & Analysers",
-    description:"One Lambda's flagship multiplex flow analyser purpose-built for transplant diagnostics. Reads Luminex xMAP® beads to deliver high-resolution HLA antibody identification and typing.", featured:true,
+    image:"/images/ol-labscan3d.jpg",
+    description:"The LABScan3D™ Multiplex Analyzer is an advanced, high-throughput In Vitro Diagnostic (IVD) certified system distributed by One Lambda (a Thermo Fisher Scientific brand). It is a specialized, brand-labeled configuration of the Luminex FLEXMAP 3D System. The instrument relies on xMAP bead-based suspension technology. It is primarily engineered for precise transplant diagnostics, human leukocyte antigen (HLA) typing, and antibody detection  Multiplex Capacity: Processes up to 500 unique bead regions simultaneously in a single sample volume.Fluidics Engineering: Equipped with dual syringe pumps and automated reagent reservoirs to minimize system downtime.Optical Sensors: Utilizes a dual-laser setup featuring a 638 nm classification laser alongside a 532 nm reporter laser.Acquisition Rates: Achieves a standard sample injection throughput rate of 2 µl per second.Software Core: Powered by Luminex xPONENT software for electronic data acquisition, reporting, and data archiving", featured:true,
     tags:["analyzer","hla","transplant","luminex","instrument"],
     highlights:["500-plex xMAP® bead technology","FDA 510(k) cleared, CE marked","Integrated with HLA Fusion™ software","Compatible with all LABScreen™ and LABType™ kits"],
     features:["Three-laser optical system with 10 fluorescent channels","Automated data acquisition via LABScan3D™ Manager software","Built-in barcode reader for sample tracking","Compatible with 96-well microplates"],
@@ -633,7 +437,8 @@ export const products: Product[] = [
     relatedProducts:["ol-labscreen-sa1","ol-labscreen-sa2","ol-labtype-sso","ol-fusion"] },
 
   { id:"ol-labscan100", name:"LABScan™ 100 Analyser", brand:"onelambda", category:"multiplex", subcategory:"Readers & Analysers",
-    description:"Entry-level Luminex bead reader for lower-throughput laboratories. Compatible with all One Lambda Luminex-based assays.",
+    image:"/images/ol-labscan100.png",
+    description:"The LABScan™ 100 Analyser is a flow-based multiplex laboratory reader manufactured by Luminex Corporation and heavily utilized in transplantation immunology. Powered by proprietary xMAP® Technology, the system can simultaneously identify, detect, and measure up to 100 unique analytes inside a single microplate reaction volume. It is broadly distributed by transplant diagnostic companies like Thermo Fisher Scientific (One Lambda) and VH Bio for human leukocyte antigen (HLA) typing and antibody detection",
     tags:["analyzer","luminex","instrument"],
     packaging:[{name:"LABScan™ 100",catalogueNumber:"LABScan100",units:"1 Instrument",format:"Benchtop analyser"}],
     relatedProducts:["ol-labscan3d"],
@@ -643,7 +448,8 @@ export const products: Product[] = [
    },
 
   { id:"ol-fusion", name:"HLA Fusion™ Software", brand:"onelambda", category:"transplant", subcategory:"Software",
-    description:"Comprehensive laboratory information and analysis software for transplant diagnostics. Integrates LABScreen™ antibody assays, LABType™ typing, and LABScan3D™ data into a single workflow.",
+    image:"/images/ol-fusion.jpg",
+    description:"HLA Fusion™ Software from Thermo Fisher Scientific (One Lambda) is a comprehensive, widely used, and validated diagnostic software platform for analyzing molecular typing and antibody screening data in transplant diagnostics. It integrates with LABScreen, LABType, FlowPRA, and other assays, offering advanced tools for epitope analysis, patient record management, and reporting",
     tags:["software","hla","transplant","lims"],
     highlights:["Centralised analysis for all One Lambda assays","Virtual crossmatch module","HL7 bidirectional LIS/HIS interface","21 CFR Part 11 compliant audit trail"],
     specs:{"Platform":"Windows desktop application","LIS Interface":"HL7 bidirectional","Compliance":"21 CFR Part 11"},
@@ -651,7 +457,8 @@ export const products: Product[] = [
     relatedProducts:["ol-labscan3d","ol-labscreen-sa1"] },
 
   { id:"ol-typestream", name:"TypeStream™ Visual NGS Analysis Software", brand:"onelambda", category:"ngs", subcategory:"Software",
-    description:"Intelligent standalone software for AllType™ NGS and HybriType™ data analysis. Automates processing of Illumina FASTQ and Ion Torrent BAM files with quality metrics and reporting.",
+    image:"/images/ol-typestream.jpeg",
+    description:"TypeStream™ Visual NGS Analysis Software (TSV) is a standalone bioinformatics platform developed by One Lambda (a Thermo Fisher Scientific brand). It automates the genotyping and analysis of Next-Generation Sequencing (NGS) data for Human Leukocyte Antigen (HLA) typing. The software is specifically tailored to process data generated by AllType and HybriType NGS assays",
     tags:["software","ngs","analysis","hla"],
     packaging:[{name:"TypeStream™ Visual Software",catalogueNumber:"TYPESTREAM",units:"1 License",format:"Software license"}],
     relatedProducts:["ol-alltype-ngs","ol-alltype-fastplex"],
@@ -661,7 +468,8 @@ export const products: Product[] = [
    },
 
   { id:"ol-hla-pro", name:"One Lambda™ HLA PRO Automated Pipettor", brand:"onelambda", category:"equipment", subcategory:"Automated Pipettor",
-    description:"Automated modular pipetting system for streamlining HLA typing and antibody detection workflows. Accommodates multiple technologies on a single instrument for maximum flexibility.",
+    image:"/images/ol-hla-pro.jpeg",
+    description:"The One Lambda™ HLA PRO Automated Pipettor is a modular, general laboratory use (GLU) automated liquid handling system designed to streamline transplant diagnostic workflows. Built on the high-performance Tecan Fluent® platform, it automates complex sample preparation to increase efficiency, precision, and consistency in high-throughput histocompatibility and immunogenetics laboratories",
     tags:["automation","pipettor","instrument"],
     packaging:[{name:"One Lambda™ HLA PRO",catalogueNumber:"HLA-PRO",units:"1 Instrument",format:"Automated pipettor"}],
     relatedProducts:["ol-labscan3d","ol-labtype-sso"],
@@ -673,7 +481,8 @@ export const products: Product[] = [
   // ═══ ONE LAMBDA — POST-TRANSPLANT MONITORING ═══════════════════════════════
 
   { id:"ol-accept-cfdna", name:"One Lambda Devyser Accept cfDNA Assay", brand:"onelambda", category:"posttransplant", subcategory:"Donor-Derived Cell-Free DNA",
-    description:"CE-IVD marked NGS solution for monitoring donor-derived cell-free DNA (dd-cfDNA) in solid organ transplant recipients. Enables earlier detection of allograft injury with 0.1% limit of detection.", featured:true,
+    image:"/images/ol-accept-cfdna.jpg",
+    description:"The One Lambda Devyser Accept cfDNA Assay is a highly sensitive, single-tube Next-Generation Sequencing (NGS) assay designed for the detection and relative quantification of donor-derived cell-free DNA (dd-cfDNA) in post-transplant human plasma samples. Developed through a partnership between Devyser and Thermo Fisher Scientific, the assay allows in-house HLA and transplant laboratories to track solid organ graft health and catch potential allograft rejections earlier than traditional methods like serum creatinine monitoring", featured:true,
     tags:["cfdna","post-transplant","ngs","monitoring","allograft"],
     highlights:["0.1% limit of detection — industry-leading sensitivity","All-in-one: PCR amplification, indexing, sequencing-ready library","< 45 minutes hands-on time","CE-IVD marked"],
     specs:{"LOD":"0.1% dd-cfDNA","Method":"50-indel multiplex PCR + NGS","Platforms":"Illumina","Hands-on Time":"< 45 minutes","Workflow":"~1 day","Regulatory":"CE-IVD marked"},
@@ -684,7 +493,8 @@ export const products: Product[] = [
    },
 
   { id:"ol-chimerism-ngs", name:"One Lambda Devyser Chimerism NGS Assay", brand:"onelambda", category:"posttransplant", subcategory:"Chimerism Monitoring",
-    description:"NGS-based post-transplant chimerism monitoring for accurate quantification of donor and recipient cell populations after haematopoietic stem cell transplantation.",
+    image:"/images/ol-chimerism-ngs.jpg",
+    description:"The One Lambda Devyser Chimerism NGS Assay is a targeted next-generation sequencing solution designed for high-throughput post-transplant monitoring. Distributed via Thermo Fisher Scientific, it tracks donor and recipient DNA proportions following hematopoietic stem cell transplantation (HSCT) to detect early graft rejection or disease relapse",
     tags:["chimerism","post-transplant","ngs","monitoring"],
     packaging:[{name:"Devyser Chimerism NGS Kit",catalogueNumber:"CHIM-NGS",units:"24 Samples",format:"NGS kit"}],
     relatedProducts:["ol-chimerism","ol-accept-cfdna"],
@@ -694,7 +504,8 @@ export const products: Product[] = [
    },
 
   { id:"ol-chimerism", name:"One Lambda Devyser Chimerism Assay", brand:"onelambda", category:"posttransplant", subcategory:"Chimerism Monitoring",
-    description:"PCR-based chimerism monitoring using STR markers for post-transplant engraftment and relapse monitoring.",
+    image:"/images/ol-chimerism.jpeg",
+    description:"The One Lambda Devyser Chimerism NGS Assay is a targeted next-generation sequencing solution designed for high-throughput post-transplant monitoring. Distributed via Thermo Fisher Scientific, it tracks donor and recipient DNA proportions following hematopoietic stem cell transplantation (HSCT) to detect early graft rejection or disease relapse",
     tags:["chimerism","post-transplant","str","monitoring"],
     packaging:[{name:"Devyser Chimerism STR Kit",catalogueNumber:"CHIM-STR",units:"24 Samples",format:"PCR kit"}],
     relatedProducts:["ol-chimerism-ngs"],
