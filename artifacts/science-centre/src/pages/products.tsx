@@ -164,50 +164,49 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
       data-testid={`product-card-${product.id}`}
     >
       {/* Visual area */}
-      <div className="relative aspect-[4/5] overflow-hidden bg-muted/30">
+      <div className="relative aspect-[4/3] overflow-hidden bg-white border-b border-border">
+        {/* brand accent strip at top */}
         <div
-          className="absolute inset-0 transition-transform duration-700 group-hover:scale-105"
-          style={{
-            background: `linear-gradient(140deg, ${brand.accent}10 0%, ${brand.accent}25 100%)`,
-          }}
-        />
-        {/* subtle grid pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.06]"
-          style={{
-            backgroundImage:
-              "linear-gradient(hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--foreground)) 1px, transparent 1px)",
-            backgroundSize: "32px 32px",
-          }}
+          className="absolute top-0 left-0 right-0 h-[3px] z-10"
+          style={{ background: brand.accent }}
         />
         {/* big brand monogram — shown only when no image */}
         {!product.image && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div
-              className="font-[var(--app-font-heading)] font-bold tracking-tight leading-none select-none"
-              style={{
-                color: brand.accent,
-                opacity: 0.32,
-                fontSize: "clamp(80px, 14vw, 140px)",
-              }}
-            >
-              {initials}
+          <div className="absolute inset-0 flex items-center justify-center bg-zinc-50">
+            <div className="flex flex-col items-center gap-3">
+              <div
+                className="font-[var(--app-font-heading)] font-bold tracking-tight leading-none select-none"
+                style={{
+                  color: brand.accent,
+                  opacity: 0.18,
+                  fontSize: "clamp(70px, 12vw, 120px)",
+                }}
+              >
+                {initials}
+              </div>
             </div>
           </div>
         )}
         {/* actual product image */}
         {product.image && (
-          <div className="absolute inset-0 flex items-center justify-center p-6">
+          <div className="absolute inset-0 flex items-center justify-center p-5 pt-6">
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
-              style={{ filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.12))" }}
+              className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
+              style={{
+                filter: "drop-shadow(0 6px 20px rgba(0,0,0,0.13)) drop-shadow(0 1px 4px rgba(0,0,0,0.07))",
+              }}
             />
           </div>
         )}
+        {/* subtle bottom vignette to ground the image */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-16 pointer-events-none"
+          style={{ background: "linear-gradient(to top, rgba(0,0,0,0.04), transparent)" }}
+        />
         {/* top tags */}
-        <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2">
+        <div className="absolute top-4 left-3 right-3 flex items-start justify-between gap-2">
           <span
             className="px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white"
             style={{ background: brand.accent }}
