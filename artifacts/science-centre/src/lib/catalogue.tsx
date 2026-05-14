@@ -17,7 +17,9 @@ export type Product = {
   id: string; name: string; brand: string; category: string;
   subcategory?: string; description: string; featured?: boolean; tags?: string[];
   image?: string;
-  gallery?: string[];  // additional images: charts, data, workflow diagrams
+  heroBg?: string;   // full-bleed hero background image URL
+  subtitle?: string; // short tagline shown under product name in hero
+  gallery?: string[];
   highlights?: string[]; features?: string[]; applications?: string[];
   specs?: Record<string, string>; catalogueNumber?: string;
   packaging?: PackagingVariant[];
@@ -887,6 +889,8 @@ export const products: Product[] = [
     category: "flow",
     featured: true,
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Aurora-instrument-with-loader-(angle).png",
+    heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/aurora-instrument-background.jpg",
+    subtitle: "A prodigy that's taking flow cytometry to the next level of performance and flexibility.",
     gallery: [
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora.autofluorescence+extraction-01.png",
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora.particle-detection-min.png",
@@ -945,6 +949,8 @@ export const products: Product[] = [
     category: "flow",
     featured: true,
     image: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Aurora+Evo+Images/AuroraEvo_34_Web.png",
+    heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/aurora-instrument-background.jpg",
+    subtitle: "The New Standard For Full Spectrum Flow Cytometry.",
     gallery: [
       "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Aurora+Evo+Images/AuroraEvo-Figure4a.jpg",
       "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Aurora+Evo+Images/EvoFigure2.jpg",
@@ -994,6 +1000,8 @@ export const products: Product[] = [
     brand: "cytek",
     category: "flow",
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora-cs-with-computer-min.png",
+    heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/aurora-instrument-background.jpg",
+    subtitle: "Full Spectrum Cell Sorting — the power of Aurora, now for sorting.",
     gallery: [
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora-cs.optical-performance-min.png",
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora.autofluorescence+extraction-01.png",
@@ -1038,6 +1046,8 @@ export const products: Product[] = [
     brand: "cytek",
     category: "flow",
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Northern+Lights+-+Web+02022024+-+1000px+x+955px.png",
+    heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/nl-instrument-background.jpg",
+    subtitle: "Full Spectrum Flow Cytometry for All.",
     gallery: [
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.nl.Counting+and+Viability.png",
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Northern+Lights_Control+Data_Rev02062024+2.png",
@@ -1090,6 +1100,8 @@ export const products: Product[] = [
     brand: "cytek",
     category: "flow",
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.prod-nl-clc.png",
+    heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/nl-instrument-background.jpg",
+    subtitle: "Full Spectrum Flow Cytometry for Clinical Environments.",
     gallery: [
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.nl-clc.evaluating-MRD-graphic.png",
     ],
@@ -1137,6 +1149,8 @@ export const products: Product[] = [
     brand: "cytek",
     category: "flow",
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Current+Luminex+Collateral/IS_left_P1013862%400.75x.png",
+    heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/AmnisImageStreamXMKIIImagingFlowCytometer_19.jpg",
+    subtitle: "Visualize a new standard of scientific discovery.",
     gallery: [
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/amnis-landing-imagestream-2.png",
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Amnis+Images/Applications.png",
@@ -1192,6 +1206,8 @@ export const products: Product[] = [
     brand: "cytek",
     category: "flow",
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Current+Luminex+Collateral/easycyte-combination%400.75x.png",
+    heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/GuavaMuseCellAnalyzer_4.jpg",
+    subtitle: "Simple, Accurate Cell Analysis for Every Lab.",
     gallery: [
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Current+Luminex+Collateral/Guava_muse_left_Data_screen_P1013739%400.75x.png",
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/guava-landing-img.png",
@@ -1237,6 +1253,8 @@ export const products: Product[] = [
     category: "flow",
     featured: true,
     image: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Current+Luminex+Collateral/MuseMicro_34angle_Screenshot.png",
+    heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/GuavaMuseCellAnalyzer_4.jpg",
+    subtitle: "Experience Simple, Affordable Flow Cytometry.",
     gallery: [
       "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Guava+Images/MuseMicro_Schematic_031325.png",
       "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Guava+Images/Figure2_Updated.png",
@@ -1291,6 +1309,8 @@ export const products: Product[] = [
     brand: "cytek",
     category: "flow",
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/assets/heros/Cytek%2BOrion_Instrument_Web_V2.png",
+    heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/assets/heros/Orion_Banner+Background_1350x650px.png",
+    subtitle: "Automated cocktail preparation for efficient, reproducible workflows.",
     gallery: [
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Orion+Images/orion-ov-1.jpg",
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Orion+Images/orion-workflow.jpg",

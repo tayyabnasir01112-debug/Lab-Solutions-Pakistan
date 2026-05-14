@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "wouter";
 import { motion } from "framer-motion";
 import { SiteNavbar } from "@/components/site-navbar";
@@ -6,7 +6,8 @@ import { SiteFooter } from "@/components/site-footer";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight, ArrowLeft, CheckCircle2, ChevronRight,
-  FlaskConical, Tag, FileText, Layers, ImageIcon, Package, Zap, Activity, Settings2, Target
+  FlaskConical, Tag, FileText, Layers, ImageIcon, Package,
+  Zap, Activity, Settings2, Target
 } from "lucide-react";
 import { productById, brandById, categoryById, productsByBrand, type Product } from "@/lib/catalogue";
 
@@ -14,30 +15,29 @@ function Reveal({ children }: { children: React.ReactNode; delay?: number }) {
   return <div>{children}</div>;
 }
 
-function RelatedCard({ product }: { product: Product }) {
-  const brand = brandById(product.brand);
-  const isCytek = product.brand === "cytek";
+/* ─── Cytek-style Related Card ─────────────────────────────────── */
+function CytekRelatedCard({ product }: { product: Product }) {
+  const cat = categoryById(product.category);
   return (
     <Link href={`/products/${product.id}`}>
-      <motion.div
-        className={`border p-6 cursor-pointer group relative overflow-hidden h-full ${isCytek ? "bg-[#080810] border-white/10 hover:border-[#5E2A84]/50" : "border-border"}`}
-        whileHover={{ y: -4 }} transition={{ duration: 0.25 }}>
-        <div className="text-xs font-bold tracking-wide uppercase mb-3 px-2 py-1 inline-block"
-          style={{ color: brand?.accent, background: (brand?.accent || "#000") + "18" }}>
-          {brand?.short}
+      <div className="group border border-[#e8e8e8] hover:border-[#508484] transition-colors duration-300 bg-white overflow-hidden cursor-pointer">
+        {/* Image */}
+        <div className="aspect-[4/3] bg-[#f8f8f8] flex items-center justify-center p-6 overflow-hidden">
+          {product.image
+            ? <img src={product.image} alt={product.name} className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" />
+            : <div className="w-16 h-16 rounded-full border-2 border-[#508484]/30 flex items-center justify-center"><Settings2 className="h-6 w-6 text-[#508484]/40" /></div>
+          }
         </div>
-        <h4 className={`font-[var(--app-font-heading)] font-bold text-sm leading-snug mb-2 transition-colors ${isCytek ? "text-white group-hover:text-purple-400" : "text-foreground group-hover:text-primary"}`}>
-          {product.name}
-        </h4>
-        <p className={`text-xs font-light leading-relaxed line-clamp-2 ${isCytek ? "text-white/40" : "text-muted-foreground"}`}>{product.description}</p>
-        <div className={`flex items-center gap-1 mt-4 text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity ${isCytek ? "text-purple-400" : "text-primary"}`}>
-          View Product <ArrowRight className="h-3 w-3" />
+        {/* Text */}
+        <div className="px-5 py-4 border-t border-[#f0f0f0]">
+          <div className="text-[11px] font-bold tracking-[0.15em] uppercase text-[#508484] mb-2">{cat?.name}</div>
+          <h4 className="font-[var(--app-font-heading)] font-bold text-[15px] leading-snug text-[#333] group-hover:text-[#508484] transition-colors mb-1">{product.name}</h4>
+          <p className="text-[#707070] text-[13px] line-clamp-2 leading-relaxed">{product.description}</p>
+          <div className="flex items-center gap-1 mt-3 text-[#E99E2A] text-[12px] font-bold opacity-0 group-hover:opacity-100 transition-opacity">
+            Learn More <ArrowRight className="h-3.5 w-3.5" />
+          </div>
         </div>
-        <motion.div className="absolute bottom-0 left-0 h-0.5"
-          style={{ backgroundColor: brand?.accent }}
-          initial={{ width: 0 }} whileHover={{ width: "100%" }}
-          transition={{ duration: 0.35 }} />
-      </motion.div>
+      </div>
     </Link>
   );
 }
@@ -45,278 +45,314 @@ function RelatedCard({ product }: { product: Product }) {
 /* ─── Cytek Premium Detail ─────────────────────────────────────── */
 
 function CytekProductDetail({ product }: { product: Product }) {
-  const brand = brandById(product.brand);
   const category = categoryById(product.category);
   const related = (product.relatedProducts || []).map(rid => productById(rid)).filter(Boolean) as Product[];
   const moreBrand = productsByBrand(product.brand).filter(p => p.id !== product.id && !product.relatedProducts?.includes(p.id)).slice(0, 3 - related.length);
   const allRelated = [...related, ...moreBrand].slice(0, 3);
 
-  // Extract key stat blocks from specs
-  const statMap: { label: string; value: string; icon: React.ReactNode }[] = [];
+  // Tab state — Overview vs Performance Data
+  const [tab, setTab] = useState<"overview" | "performance">("overview");
+
+  // Key stats extracted from specs
+  const stats: { label: string; value: string }[] = [];
   if (product.specs) {
     const s = product.specs;
-    if (s["Fluorescence Channels"]) statMap.push({ label: "Fluorescence Channels", value: s["Fluorescence Channels"], icon: <Activity className="h-5 w-5" /> });
+    if (s["Fluorescence Channels"]) stats.push({ label: "Fluorescence Channels", value: s["Fluorescence Channels"] });
     if (s["Laser Lines"]) {
-      const laserCount = s["Laser Lines"].match(/Up to (\d+)/)?.[1] || s["Laser Lines"].match(/^(\d+)/)?.[1];
-      if (laserCount) statMap.push({ label: "Laser Lines", value: `Up to ${laserCount}`, icon: <Zap className="h-5 w-5" /> });
+      const m = s["Laser Lines"].match(/Up to (\d+)/)?.[1] || s["Laser Lines"].match(/^(\d+)/)?.[1];
+      if (m) stats.push({ label: "Laser Lines", value: `Up to ${m}` });
     }
-    if (s["Max Colors Demonstrated"]) statMap.push({ label: "Colors in a Panel", value: s["Max Colors Demonstrated"], icon: <Target className="h-5 w-5" /> });
-    if (s["Imaging Channels"]) statMap.push({ label: "Imaging Channels", value: s["Imaging Channels"], icon: <Activity className="h-5 w-5" /> });
-    if (s["Technology"]) statMap.push({ label: "Technology", value: s["Technology"].split("™")[0] + "™", icon: <Settings2 className="h-5 w-5" /> });
-    if (s["Instrument Type"]) statMap.push({ label: "Instrument Type", value: s["Instrument Type"], icon: <Settings2 className="h-5 w-5" /> });
-    if (s["Regulatory Status"]) statMap.push({ label: "Regulatory", value: "Clinical Cleared", icon: <Target className="h-5 w-5" /> });
-    if (s["Award"]) statMap.push({ label: "Award", value: "2025 BioTech Breakthrough", icon: <Zap className="h-5 w-5" /> });
+    if (s["Max Colors Demonstrated"]) stats.push({ label: "Colors Demonstrated", value: s["Max Colors Demonstrated"] });
+    if (s["Imaging Channels"]) stats.push({ label: "Imaging Channels", value: s["Imaging Channels"] });
+    if (s["Footprint"]) stats.push({ label: "Form Factor", value: s["Footprint"] });
+    if (s["Regulatory Status"]) stats.push({ label: "Regulatory", value: "Clinically Cleared" });
+    if (s["Launched"]) stats.push({ label: "Launched", value: s["Launched"] });
+    if (s["Award"]) stats.push({ label: "Recognition", value: "2025 Award Winner" });
   }
-  const displayStats = statMap.slice(0, 4);
+  const displayStats = stats.slice(0, 4);
+
+  // Feature card icons (mapping index to icon)
+  const cardIcons = [<Zap className="h-8 w-8" />, <Activity className="h-8 w-8" />, <Target className="h-8 w-8" />, <FlaskConical className="h-8 w-8" />, <Settings2 className="h-8 w-8" />, <Layers className="h-8 w-8" />];
 
   return (
-    <div className="min-h-[100dvh] bg-[#06060d] text-white">
+    <div className="min-h-[100dvh] bg-white text-[#333]">
+      {/* Teal navbar to match Cytek brand */}
       <SiteNavbar forceSolid />
+
       <main>
-        {/* ── Dark Hero ─────────────────────────────────────── */}
-        <div className="relative pt-24 pb-0 overflow-hidden">
-          {/* Background layers */}
-          <div className="absolute inset-0"
-            style={{ background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(94,42,132,0.18) 0%, transparent 70%)" }} />
-          <div className="absolute inset-0 opacity-20"
-            style={{ backgroundImage: "radial-gradient(circle, rgba(94,42,132,0.3) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+        {/* ═══════════════════════════════════════════════════════
+            HERO — full bleed, background image, instrument photo
+        ════════════════════════════════════════════════════════ */}
+        <div className="relative min-h-[580px] flex items-center overflow-hidden"
+          style={{
+            backgroundImage: product.heroBg ? `url(${product.heroBg})` : undefined,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundColor: product.heroBg ? undefined : "#2a4a4a",
+          }}>
+          {/* Dark overlay so text is readable */}
+          <div className="absolute inset-0" style={{ background: "linear-gradient(100deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.55) 50%, rgba(0,0,0,0.2) 100%)" }} />
 
-          <div className="container mx-auto px-6 md:px-12 relative z-10">
-            {/* Breadcrumb */}
-            <nav className="flex items-center gap-2 text-xs text-white/30 flex-wrap mb-10">
-              <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
-              <ChevronRight className="h-3 w-3 flex-shrink-0" />
-              <Link href="/products" className="hover:text-white/60 transition-colors">Products</Link>
-              <ChevronRight className="h-3 w-3 flex-shrink-0" />
-              <span className="text-white/60 font-medium truncate max-w-[200px]">{product.name}</span>
-            </nav>
-
-            <div className="grid lg:grid-cols-2 gap-12 items-center pb-16">
-              {/* Left: Info */}
-              <div>
-                {/* Brand + Category tags */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  <span className="px-3 py-1.5 text-xs font-bold tracking-[0.15em] uppercase text-white"
-                    style={{ background: "#5E2A84" }}>Cytek Biosciences</span>
-                  {category && (
-                    <span className="px-3 py-1.5 text-xs font-medium text-white/50 border border-white/10 flex items-center gap-1.5">
-                      {category.icon} {category.name}
-                    </span>
-                  )}
-                  {product.featured && (
-                    <span className="px-3 py-1.5 text-xs font-bold text-amber-400 border border-amber-400/30 bg-amber-400/5">★ Featured</span>
-                  )}
+          <div className="relative z-10 w-full">
+            <div className="max-w-[1400px] mx-auto px-8 md:px-16 pt-28 pb-16 grid lg:grid-cols-2 gap-0 items-center">
+              {/* Left: text */}
+              <div className="pr-0 lg:pr-12">
+                {/* Breadcrumb */}
+                <div className="text-[13px] font-bold text-white mb-4 tracking-wide">
+                  PRODUCTS &amp; SERVICES
                 </div>
 
-                <h1 className="text-4xl md:text-5xl font-[var(--app-font-heading)] font-black text-white leading-tight tracking-tight mb-6"
-                  style={{ textShadow: "0 0 60px rgba(94,42,132,0.4)" }}>
+                {/* Product name — 60px like Cytek */}
+                <h1 className="font-[var(--app-font-heading)] font-bold text-white leading-none mb-5"
+                  style={{ fontSize: "clamp(36px,5vw,60px)", letterSpacing: "-0.5px" }}>
                   {product.name}
                 </h1>
 
-                <p className="text-white/50 text-base font-light leading-relaxed mb-8 max-w-xl">
-                  {product.description}
-                </p>
+                {/* Subtitle — 28px, light weight */}
+                {product.subtitle && (
+                  <p className="text-white font-light mb-8 max-w-lg leading-snug"
+                    style={{ fontSize: "clamp(18px,2.2vw,28px)" }}>
+                    {product.subtitle}
+                  </p>
+                )}
 
+                {/* CTAs */}
                 <div className="flex flex-wrap gap-3">
-                  <Button asChild size="lg" className="rounded-none px-8 font-semibold group text-white"
-                    style={{ background: "#5E2A84" }}>
-                    <a href="/#contact">
-                      Request a Quote <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                    </a>
-                  </Button>
-                  <Button asChild variant="outline" size="lg" className="rounded-none px-6 border-white/15 text-white hover:bg-white/5 hover:text-white">
-                    <a href="/#contact">Talk to a Specialist</a>
-                  </Button>
-                  <Button asChild variant="ghost" size="lg" className="rounded-none px-4 text-white/40 hover:text-white hover:bg-white/5">
-                    <Link href="/products"><ArrowLeft className="mr-2 h-4 w-4" /> All Products</Link>
-                  </Button>
+                  <a href="/#contact"
+                    className="inline-flex items-center px-7 py-3.5 text-[13px] font-bold tracking-wide text-white border-2 border-white hover:bg-white hover:text-[#508484] transition-colors duration-200">
+                    PRODUCT BROCHURE
+                  </a>
+                  <a href="/#contact"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 text-[13px] font-bold tracking-wide"
+                    style={{ color: "#E99E2A" }}>
+                    REQUEST MORE INFORMATION <ArrowRight className="h-4 w-4" />
+                  </a>
                 </div>
               </div>
 
-              {/* Right: Instrument image */}
-              <div className="flex items-center justify-center">
-                <div className="relative w-full max-w-md">
-                  {/* Glow ring */}
-                  <div className="absolute inset-0 rounded-full"
-                    style={{ background: "radial-gradient(ellipse at center, rgba(94,42,132,0.3) 0%, transparent 70%)" }} />
-                  {product.image ? (
-                    <img src={product.image} alt={product.name} className="relative w-full object-contain"
-                      style={{ filter: "drop-shadow(0 16px 48px rgba(94,42,132,0.5)) drop-shadow(0 4px 12px rgba(0,0,0,0.8))", maxHeight: "380px" }} />
-                  ) : (
-                    <div className="relative aspect-square flex flex-col items-center justify-center gap-6 border border-white/5 bg-white/2">
-                      {/* Animated rings */}
-                      <div className="relative w-32 h-32">
-                        {[0, 1, 2].map(i => (
-                          <div key={i} className="absolute inset-0 rounded-full border border-[#5E2A84]/30"
-                            style={{ transform: `scale(${1 + i * 0.3})`, opacity: 1 - i * 0.3 }} />
-                        ))}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-12 h-12 rounded-full border-2 border-[#5E2A84]/60 flex items-center justify-center"
-                            style={{ boxShadow: "0 0 30px rgba(94,42,132,0.5)" }}>
-                            <Settings2 className="h-5 w-5 text-[#a855f7]" />
-                          </div>
-                        </div>
+              {/* Right: large instrument image */}
+              <div className="hidden lg:flex items-end justify-center relative" style={{ minHeight: "380px" }}>
+                {product.image && (
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="relative z-10 object-contain"
+                    style={{
+                      maxHeight: "500px",
+                      maxWidth: "100%",
+                      filter: "drop-shadow(0 20px 60px rgba(0,0,0,0.5))",
+                    }}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ═══════════════════════════════════════════════════════
+            TAB NAVIGATION — OVERVIEW | PERFORMANCE DATA
+        ════════════════════════════════════════════════════════ */}
+        <div className="border-b border-[#e0e0e0] sticky top-0 z-20 bg-white shadow-sm">
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16 flex items-center gap-0">
+            <button
+              onClick={() => setTab("overview")}
+              className={`py-4 px-6 text-[13px] font-bold tracking-[0.12em] uppercase border-b-[3px] transition-colors duration-200 ${tab === "overview" ? "border-[#508484] text-[#508484]" : "border-transparent text-[#707070] hover:text-[#508484]"}`}>
+              Overview
+            </button>
+            {product.gallery && product.gallery.length > 0 && (
+              <button
+                onClick={() => setTab("performance")}
+                className={`py-4 px-6 text-[13px] font-bold tracking-[0.12em] uppercase border-b-[3px] transition-colors duration-200 ${tab === "performance" ? "border-[#508484] text-[#508484]" : "border-transparent text-[#707070] hover:text-[#508484]"}`}>
+                Performance Data
+              </button>
+            )}
+            {/* Spacer then back link */}
+            <div className="ml-auto">
+              <Link href="/products" className="flex items-center gap-1.5 text-[12px] font-bold text-[#707070] hover:text-[#508484] transition-colors py-4">
+                <ArrowLeft className="h-3.5 w-3.5" /> All Products
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* ═══════════════════════════════════════════════════════
+            OVERVIEW TAB
+        ════════════════════════════════════════════════════════ */}
+        {tab === "overview" && (
+          <>
+            {/* ── Key Stats bar ──────────────────────────────── */}
+            {displayStats.length > 0 && (
+              <div className="bg-[#f8f8f8] border-b border-[#e8e8e8]">
+                <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+                  <div className={`grid grid-cols-2 lg:grid-cols-${Math.min(displayStats.length, 4)} divide-x divide-[#e8e8e8]`}>
+                    {displayStats.map((stat, i) => (
+                      <div key={i} className="px-8 py-6 text-center">
+                        <div className="text-2xl md:text-3xl font-black text-[#508484] leading-none mb-1">{stat.value}</div>
+                        <div className="text-[11px] font-bold tracking-[0.18em] uppercase text-[#707070]">{stat.label}</div>
                       </div>
-                      <div className="text-center">
-                        <p className="text-sm font-semibold text-white/20">Product Image</p>
-                        <p className="text-xs text-white/10 mt-1">Coming soon</p>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ── Our Product section heading ─────────────────── */}
+            <div className="max-w-[1400px] mx-auto px-8 md:px-16 pt-14 pb-4">
+              <h2 className="font-[var(--app-font-heading)] font-bold text-[#508484]" style={{ fontSize: "34px" }}>
+                Our Product
+              </h2>
+            </div>
+
+            {/* ── High-level overview ─────────────────────────── */}
+            <div className="max-w-[1400px] mx-auto px-8 md:px-16 pb-10">
+              <div className="grid lg:grid-cols-[1fr_420px] gap-16 items-start">
+                <div>
+                  <h3 className="font-[var(--app-font-heading)] font-bold text-[#508484] mb-5" style={{ fontSize: "24px" }}>
+                    High Level Overview
+                  </h3>
+                  <p className="text-[#707070] text-[16px] leading-relaxed mb-4">{product.description}</p>
+                  {product.subtitle && (
+                    <p className="text-[#508484] text-[16px] font-semibold italic">{product.subtitle}</p>
+                  )}
+                </div>
+                {/* Mobile: instrument image here */}
+                <div className="lg:hidden flex justify-center">
+                  {product.image && <img src={product.image} alt={product.name} className="max-h-64 object-contain" />}
+                </div>
+                {/* Specs quick-reference */}
+                {product.specs && (
+                  <div className="border border-[#e8e8e8] bg-[#fafafa]">
+                    <div className="px-6 py-4 border-b border-[#e8e8e8] bg-[#508484]">
+                      <span className="text-white font-bold text-[13px] tracking-[0.1em] uppercase">Specifications</span>
+                    </div>
+                    <div className="divide-y divide-[#eee]">
+                      {Object.entries(product.specs).slice(0, 8).map(([k, v]) => (
+                        <div key={k} className="px-6 py-3 flex justify-between gap-4">
+                          <span className="text-[#707070] text-[13px] font-semibold flex-shrink-0">{k}</span>
+                          <span className="text-[#333] text-[13px] text-right">{v}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* ── Feature cards — 3-column like Cytek ────────── */}
+            {product.highlights && product.highlights.length > 0 && (
+              <div className="bg-[#fafafa] border-y border-[#e8e8e8]" style={{ padding: "80px 0 64px" }}>
+                <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {product.highlights.slice(0, 6).map((h, i) => (
+                      <div key={i} className="group">
+                        <div className="text-[#508484] mb-4 opacity-70">{cardIcons[i % cardIcons.length]}</div>
+                        <h3 className="font-[var(--app-font-heading)] font-bold text-[#508484] mb-3" style={{ fontSize: "20px" }}>
+                          {h.split("—")[0].split(" — ")[0].split(":")[0].slice(0, 50)}
+                        </h3>
+                        <p className="text-[#707070] text-[15px] leading-relaxed">{h}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* ── Technology section ──────────────────────────── */}
+            {(product.features || product.applications) && (
+              <div className="max-w-[1400px] mx-auto px-8 md:px-16 py-14">
+                <div className="grid lg:grid-cols-2 gap-16">
+                  {product.features && product.features.length > 0 && (
+                    <div>
+                      <h3 className="font-[var(--app-font-heading)] font-bold text-[#508484] mb-6" style={{ fontSize: "24px" }}>
+                        Technology &amp; Features
+                      </h3>
+                      <div className="space-y-4">
+                        {product.features.map((f, i) => (
+                          <div key={i} className="flex items-start gap-4 pb-4 border-b border-[#f0f0f0] last:border-0">
+                            <div className="w-2 h-2 rounded-full bg-[#508484] flex-shrink-0 mt-2" />
+                            <p className="text-[#707070] text-[15px] leading-relaxed">{f}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                  {product.applications && product.applications.length > 0 && (
+                    <div>
+                      <h3 className="font-[var(--app-font-heading)] font-bold text-[#508484] mb-6" style={{ fontSize: "24px" }}>
+                        Applications
+                      </h3>
+                      <div className="space-y-4">
+                        {product.applications.map((a, i) => (
+                          <div key={i} className="flex items-start gap-4 pb-4 border-b border-[#f0f0f0] last:border-0">
+                            <div className="w-2 h-2 rounded-full bg-[#E99E2A] flex-shrink-0 mt-2" />
+                            <p className="text-[#707070] text-[15px] leading-relaxed">{a}</p>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   )}
                 </div>
               </div>
-            </div>
-          </div>
+            )}
 
-          {/* Bottom gradient fade to stats bar */}
-          <div className="h-px bg-gradient-to-r from-transparent via-[#5E2A84]/40 to-transparent" />
-        </div>
-
-        {/* ── Key Performance Stats ─────────────────────────── */}
-        {displayStats.length > 0 && (
-          <div className="bg-[#0a0a16] border-b border-white/5">
-            <div className="container mx-auto px-6 md:px-12">
-              <div className={`grid grid-cols-2 lg:grid-cols-${Math.min(displayStats.length, 4)} divide-x divide-white/5`}>
-                {displayStats.map((stat, i) => (
-                  <div key={i} className="px-8 py-7 flex items-center gap-4">
-                    <div className="text-[#5E2A84] flex-shrink-0 opacity-70">{stat.icon}</div>
-                    <div>
-                      <div className="text-xl font-black text-white leading-none mb-1">{stat.value}</div>
-                      <div className="text-[10px] font-bold tracking-[0.18em] uppercase text-white/30">{stat.label}</div>
-                    </div>
-                  </div>
-                ))}
+            {/* ── CTA Banner ──────────────────────────────────── */}
+            <div className="bg-[#508484] py-16">
+              <div className="max-w-[1400px] mx-auto px-8 md:px-16 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div>
+                  <p className="text-white/70 text-[13px] font-bold tracking-[0.15em] uppercase mb-2">Cytek Biosciences — Distributed by Science Centre Pakistan</p>
+                  <h2 className="font-[var(--app-font-heading)] font-bold text-white leading-tight" style={{ fontSize: "clamp(24px,3vw,36px)" }}>
+                    Ready to discuss {product.name}?
+                  </h2>
+                </div>
+                <div className="flex gap-4 flex-shrink-0">
+                  <a href="/#contact"
+                    className="inline-flex items-center gap-2 px-8 py-4 text-[13px] font-bold tracking-wide bg-white text-[#508484] hover:bg-[#f0f0f0] transition-colors">
+                    REQUEST A QUOTE <ArrowRight className="h-4 w-4" />
+                  </a>
+                  <a href="/#contact"
+                    className="inline-flex items-center gap-2 px-8 py-4 text-[13px] font-bold tracking-wide border-2 border-white text-white hover:bg-white/10 transition-colors">
+                    SCHEDULE A DEMO
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
+          </>
         )}
 
-        {/* ── Performance Gallery ────────────────────────────── */}
-        {product.gallery && product.gallery.length > 0 && (
-          <div className="bg-[#070710] border-b border-white/5 py-14">
-            <div className="container mx-auto px-6 md:px-12">
-              <div className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#a855f7] mb-2">Performance Data & Imagery</div>
-              <p className="text-white/25 text-sm mb-8">Charts, assay results and workflow diagrams from Cytek Biosciences</p>
-              <div className={`grid gap-4 ${product.gallery.length === 1 ? "grid-cols-1" : product.gallery.length === 2 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}`}>
-                {product.gallery.map((src, i) => (
-                  <div key={i} className="border border-white/8 bg-white/[0.02] overflow-hidden group">
-                    <img
-                      src={src}
-                      alt={`${product.name} performance data ${i + 1}`}
-                      className="w-full object-contain max-h-72 p-3 transition-transform duration-300 group-hover:scale-[1.02]"
-                      style={{ background: "#fff", mixBlendMode: "normal" }}
-                      loading="lazy"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ── Highlights ─────────────────────────────────────── */}
-        {product.highlights && product.highlights.length > 0 && (
-          <div className="bg-[#07070f] border-b border-white/5 py-14">
-            <div className="container mx-auto px-6 md:px-12">
-              <div className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#a855f7] mb-8">Why Choose This System</div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {product.highlights.map((h, i) => (
-                  <div key={i} className="flex items-start gap-3 p-4 border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors">
-                    <CheckCircle2 className="h-4 w-4 text-[#5E2A84] flex-shrink-0 mt-0.5" />
-                    <span className="text-white/70 text-sm leading-relaxed">{h}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* ── Features / Applications / Specs ─────────────────── */}
-        {(product.features || product.applications || product.specs) && (
-          <div className="bg-[#06060d] border-b border-white/5 py-16">
-            <div className="container mx-auto px-6 md:px-12 grid lg:grid-cols-3 gap-12">
-              {product.features && product.features.length > 0 && (
-                <div>
-                  <div className="flex items-center gap-2 mb-6">
-                    <Layers className="h-4 w-4 text-[#5E2A84]" />
-                    <h2 className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#a855f7]">Features</h2>
-                  </div>
-                  <ul className="space-y-3">
-                    {product.features.map((f, i) => (
-                      <li key={i} className="flex items-start gap-3 text-sm">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#5E2A84] flex-shrink-0 mt-2" />
-                        <span className="text-white/55 leading-relaxed">{f}</span>
-                      </li>
-                    ))}
-                  </ul>
+        {/* ═══════════════════════════════════════════════════════
+            PERFORMANCE DATA TAB
+        ════════════════════════════════════════════════════════ */}
+        {tab === "performance" && product.gallery && (
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16 py-14">
+            <h2 className="font-[var(--app-font-heading)] font-bold text-[#508484] mb-2" style={{ fontSize: "34px" }}>Performance Data</h2>
+            <p className="text-[#707070] text-[16px] mb-10">Real-world instrument performance from Cytek Biosciences.</p>
+            <div className="space-y-12">
+              {product.gallery.map((src, i) => (
+                <div key={i} className="border border-[#e8e8e8] overflow-hidden">
+                  <img
+                    src={src}
+                    alt={`${product.name} performance data ${i + 1}`}
+                    className="w-full object-contain bg-white"
+                    style={{ maxHeight: "550px" }}
+                    loading="lazy"
+                  />
                 </div>
-              )}
-              {product.applications && product.applications.length > 0 && (
-                <div>
-                  <div className="flex items-center gap-2 mb-6">
-                    <FlaskConical className="h-4 w-4 text-[#5E2A84]" />
-                    <h2 className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#a855f7]">Applications</h2>
-                  </div>
-                  <ul className="space-y-3">
-                    {product.applications.map((a, i) => (
-                      <li key={i} className="flex items-start gap-3 text-sm">
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#5E2A84] flex-shrink-0 mt-2" />
-                        <span className="text-white/55 leading-relaxed">{a}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {product.specs && (
-                <div>
-                  <div className="flex items-center gap-2 mb-6">
-                    <FileText className="h-4 w-4 text-[#5E2A84]" />
-                    <h2 className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#a855f7]">Specifications</h2>
-                  </div>
-                  <div className="space-y-0 border border-white/8">
-                    {Object.entries(product.specs).map(([k, v], i) => (
-                      <div key={k} className="flex flex-col sm:flex-row sm:justify-between gap-1 px-4 py-3 border-b border-white/5 last:border-0 hover:bg-white/[0.03] transition-colors">
-                        <span className="text-[11px] text-white/30 font-semibold uppercase tracking-wide">{k}</span>
-                        <span className="text-[13px] text-white/70 font-medium sm:text-right sm:max-w-[55%]">{v}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
+              ))}
             </div>
           </div>
         )}
 
-        {/* ── Dark CTA banner ────────────────────────────────── */}
-        <div className="py-20 relative overflow-hidden"
-          style={{ background: "linear-gradient(135deg, #0f051a 0%, #1a0835 50%, #0f051a 100%)" }}>
-          <div className="absolute inset-0"
-            style={{ background: "radial-gradient(ellipse 60% 80% at 50% 50%, rgba(94,42,132,0.2) 0%, transparent 70%)" }} />
-          <div className="container mx-auto px-6 md:px-12 text-center relative z-10">
-            <div className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#a855f7] mb-4">Cytek Biosciences</div>
-            <h2 className="text-3xl md:text-4xl font-[var(--app-font-heading)] font-black text-white mb-4 leading-tight">
-              Ready to elevate your flow cytometry?
-            </h2>
-            <p className="text-white/40 mb-10 max-w-lg mx-auto">Our specialists are available to discuss this instrument, arrange a demo, and provide a tailored quote for your laboratory.</p>
-            <div className="flex justify-center gap-4 flex-wrap">
-              <Button asChild size="lg" className="rounded-none px-10 h-13 font-semibold text-white"
-                style={{ background: "#5E2A84" }}>
-                <a href="/#contact">Request a Quote <ArrowRight className="ml-2 h-4 w-4" /></a>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="rounded-none px-8 border-white/20 text-white hover:bg-white/5">
-                <a href="/#contact">Schedule a Demo</a>
-              </Button>
-            </div>
-          </div>
-        </div>
-
-        {/* ── Related Products ───────────────────────────────── */}
+        {/* ═══════════════════════════════════════════════════════
+            RELATED INSTRUMENTS (always visible)
+        ════════════════════════════════════════════════════════ */}
         {allRelated.length > 0 && (
-          <div className="bg-[#06060d] border-t border-white/5 py-16">
-            <div className="container mx-auto px-6 md:px-12">
-              <div className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#a855f7] mb-8">Related Instruments</div>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                {allRelated.map(p => <RelatedCard key={p.id} product={p} />)}
+          <div className="bg-[#fafafa] border-t border-[#e8e8e8] py-14">
+            <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+              <h3 className="font-[var(--app-font-heading)] font-bold text-[#508484] mb-8" style={{ fontSize: "24px" }}>
+                Related Instruments
+              </h3>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {allRelated.map(p => <CytekRelatedCard key={p.id} product={p} />)}
               </div>
             </div>
           </div>

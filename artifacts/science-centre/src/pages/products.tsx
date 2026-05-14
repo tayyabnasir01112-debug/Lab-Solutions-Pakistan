@@ -255,16 +255,15 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 
 function CytekCard({ product, index }: { product: Product; index: number }) {
   const category = categoryById(product.category);
-  const CYTEK_ACCENT = "#5E2A84";
 
-  // Extract a key metric to display as a badge (e.g. "64 Channels", "40 Colors")
+  // Key metric from specs
   const keyMetric = product.specs
     ? product.specs["Fluorescence Channels"]
       ? { label: "Channels", value: product.specs["Fluorescence Channels"] }
       : product.specs["Max Colors Demonstrated"]
-        ? { label: "Colors", value: product.specs["Max Colors Demonstrated"].replace(" colors", "").replace(" demonstrated", "") }
+        ? { label: "Colors", value: product.specs["Max Colors Demonstrated"].replace(/ colors.*$/i, "").trim() }
         : product.specs["Launched"]
-          ? { label: "Launched", value: product.specs["Launched"] }
+          ? { label: "New", value: product.specs["Launched"] }
           : null
     : null;
 
@@ -275,94 +274,79 @@ function CytekCard({ product, index }: { product: Product; index: number }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.35, delay: Math.min(index * 0.02, 0.25), ease: [0.16, 1, 0.3, 1] }}
-      className="group bg-[#080810] border border-white/8 hover:border-[#5E2A84]/50 transition-all duration-400 overflow-hidden"
+      className="group bg-white border border-[#e0e0e0] hover:border-[#508484] hover:shadow-lg transition-all duration-300 overflow-hidden"
       data-testid={`product-card-${product.id}`}
     >
-      {/* Image area — dark, dramatic */}
-      <div className="relative aspect-[16/10] overflow-hidden">
-        {/* Layered dark gradient bg */}
-        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, #0d0d1a 0%, #12051f 60%, #0a0a14 100%)" }} />
+      {/* Image area — clean white with teal accent strip */}
+      <div className="relative aspect-[4/3] overflow-hidden bg-[#f8f8f8]">
+        {/* Top teal accent strip */}
+        <div className="absolute top-0 left-0 right-0 h-1 z-10 bg-[#508484]" />
 
-        {/* Subtle dot-grid — tech feel */}
-        <div className="absolute inset-0 opacity-30"
-          style={{ backgroundImage: "radial-gradient(circle, rgba(94,42,132,0.4) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
-
-        {/* Top accent line */}
-        <div className="absolute top-0 left-0 right-0 h-[2px]"
-          style={{ background: `linear-gradient(90deg, transparent, ${CYTEK_ACCENT}, transparent)` }} />
-
-        {/* Product image or branded placeholder */}
-        {product.image ? (
-          <div className="absolute inset-0 flex items-center justify-center p-5">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
-              style={{ filter: "drop-shadow(0 8px 24px rgba(94,42,132,0.35)) drop-shadow(0 2px 6px rgba(0,0,0,0.5))" }}
-            />
-          </div>
-        ) : (
-          <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
-            {/* Glowing ring */}
-            <div className="w-16 h-16 rounded-full border border-[#5E2A84]/40 flex items-center justify-center"
-              style={{ boxShadow: "0 0 40px rgba(94,42,132,0.25), inset 0 0 20px rgba(94,42,132,0.1)" }}>
-              <div className="w-8 h-8 rounded-full border border-[#5E2A84]/60"
-                style={{ boxShadow: "0 0 20px rgba(94,42,132,0.4)" }} />
-            </div>
-            <span className="text-[10px] font-bold tracking-[0.3em] text-white/20 uppercase">Cytek Biosciences</span>
-          </div>
-        )}
-
-        {/* Top-left brand tag */}
-        <div className="absolute top-3 left-3 flex items-center gap-2">
-          <span className="px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white"
-            style={{ background: CYTEK_ACCENT }}>Cytek</span>
+        {/* Brand tag top-left */}
+        <div className="absolute top-3 left-3 z-10 flex items-center gap-2">
+          <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-white bg-[#508484]">
+            Cytek
+          </span>
           {product.featured && (
-            <span className="px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] bg-white/10 text-white/90 flex items-center gap-1 backdrop-blur-sm">
-              <Sparkles className="h-3 w-3" />Featured
+            <span className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.1em] text-[#E99E2A] border border-[#E99E2A] bg-white">
+              Featured
             </span>
           )}
         </div>
 
         {/* Key metric badge — top right */}
         {keyMetric && (
-          <div className="absolute top-3 right-3 text-right">
-            <div className="text-xl font-black text-white leading-none" style={{ textShadow: `0 0 20px ${CYTEK_ACCENT}` }}>
-              {keyMetric.value}
-            </div>
-            <div className="text-[9px] font-bold tracking-[0.2em] uppercase text-white/40">{keyMetric.label}</div>
+          <div className="absolute top-3 right-3 z-10 text-right bg-white/90 px-2.5 py-1.5 border border-[#e0e0e0]">
+            <div className="text-lg font-black text-[#508484] leading-none">{keyMetric.value}</div>
+            <div className="text-[9px] font-bold tracking-[0.15em] uppercase text-[#999]">{keyMetric.label}</div>
           </div>
         )}
 
-        {/* Hover CTAs */}
-        <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2">
+        {/* Product image */}
+        {product.image ? (
+          <div className="absolute inset-0 flex items-center justify-center p-6 pt-8">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.05]"
+              style={{ filter: "drop-shadow(0 6px 20px rgba(0,0,0,0.12))" }}
+            />
+          </div>
+        ) : (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 pt-6">
+            <div className="w-14 h-14 rounded-full border-2 border-[#508484]/25 flex items-center justify-center">
+              <div className="w-7 h-7 rounded-full bg-[#508484]/15" />
+            </div>
+            <span className="text-[10px] font-bold tracking-[0.25em] text-[#508484]/30 uppercase">Cytek Biosciences</span>
+          </div>
+        )}
+
+        {/* Hover CTA overlay */}
+        <div className="absolute inset-0 bg-[#508484]/0 group-hover:bg-[#508484]/5 transition-colors duration-300" />
+        <div className="absolute inset-x-0 bottom-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex gap-2">
           <Link href={`/products/${product.id}`} className="flex-1">
-            <Button variant="outline" className="rounded-none w-full text-xs uppercase tracking-[0.14em] font-semibold h-10 bg-black/60 backdrop-blur-sm border-white/20 text-white hover:bg-white/10">
+            <Button className="rounded-none w-full text-[11px] uppercase tracking-[0.14em] font-bold h-10 bg-[#508484] text-white hover:bg-[#3d6e6e]">
               View Details
             </Button>
           </Link>
           <Link href="/#contact" className="flex-1">
-            <Button className="rounded-none w-full text-xs uppercase tracking-[0.14em] font-semibold h-10 text-white hover:opacity-90"
-              style={{ background: CYTEK_ACCENT }}>
-              Inquire <ArrowRight className="ml-2 h-3.5 w-3.5" />
+            <Button variant="outline" className="rounded-none w-full text-[11px] uppercase tracking-[0.14em] font-bold h-10 border-[#508484] text-[#508484] hover:bg-[#508484] hover:text-white">
+              Inquire
             </Button>
           </Link>
         </div>
       </div>
 
       {/* Text area */}
-      <div className="p-4 border-t border-white/5">
-        <div className="flex items-center gap-1.5 text-[11px] text-white/30 uppercase tracking-[0.12em] mb-2">
+      <div className="p-4 border-t border-[#f0f0f0]">
+        <div className="flex items-center gap-1.5 text-[11px] text-[#508484] uppercase tracking-[0.12em] font-bold mb-2">
           {category?.icon}
           <span className="truncate">{category?.name}</span>
         </div>
-        <h3 className="font-[var(--app-font-heading)] text-[15px] font-semibold leading-snug text-white mb-1.5 line-clamp-2 cursor-pointer"
-          style={{ transition: "color 0.2s" }}>
-          <Link href={`/products/${product.id}`} className="hover:text-[#a855f7] transition-colors">
-            {product.name}
-          </Link>
+        <h3 className="font-[var(--app-font-heading)] text-[15px] font-bold leading-snug text-[#333] mb-1.5 line-clamp-2 group-hover:text-[#508484] transition-colors cursor-pointer">
+          <Link href={`/products/${product.id}`}>{product.name}</Link>
         </h3>
-        <p className="text-[13px] text-white/35 leading-relaxed line-clamp-2">{product.description}</p>
+        <p className="text-[13px] text-[#707070] leading-relaxed line-clamp-2">{product.description}</p>
       </div>
     </motion.div>
   );
