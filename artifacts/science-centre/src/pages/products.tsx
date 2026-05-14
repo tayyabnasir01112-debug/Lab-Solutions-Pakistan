@@ -251,7 +251,122 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
   );
 }
 
-/* ─── Main Catalogue ──────────────────────────────────────────── */
+/* ─── Cytek Premium Card ──────────────────────────────────────── */
+
+function CytekCard({ product, index }: { product: Product; index: number }) {
+  const category = categoryById(product.category);
+  const CYTEK_ACCENT = "#5E2A84";
+
+  // Extract a key metric to display as a badge (e.g. "64 Channels", "40 Colors")
+  const keyMetric = product.specs
+    ? product.specs["Fluorescence Channels"]
+      ? { label: "Channels", value: product.specs["Fluorescence Channels"] }
+      : product.specs["Max Colors Demonstrated"]
+        ? { label: "Colors", value: product.specs["Max Colors Demonstrated"].replace(" colors", "").replace(" demonstrated", "") }
+        : product.specs["Launched"]
+          ? { label: "Launched", value: product.specs["Launched"] }
+          : null
+    : null;
+
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.35, delay: Math.min(index * 0.02, 0.25), ease: [0.16, 1, 0.3, 1] }}
+      className="group bg-[#080810] border border-white/8 hover:border-[#5E2A84]/50 transition-all duration-400 overflow-hidden"
+      data-testid={`product-card-${product.id}`}
+    >
+      {/* Image area — dark, dramatic */}
+      <div className="relative aspect-[16/10] overflow-hidden">
+        {/* Layered dark gradient bg */}
+        <div className="absolute inset-0" style={{ background: "linear-gradient(135deg, #0d0d1a 0%, #12051f 60%, #0a0a14 100%)" }} />
+
+        {/* Subtle dot-grid — tech feel */}
+        <div className="absolute inset-0 opacity-30"
+          style={{ backgroundImage: "radial-gradient(circle, rgba(94,42,132,0.4) 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
+
+        {/* Top accent line */}
+        <div className="absolute top-0 left-0 right-0 h-[2px]"
+          style={{ background: `linear-gradient(90deg, transparent, ${CYTEK_ACCENT}, transparent)` }} />
+
+        {/* Product image or branded placeholder */}
+        {product.image ? (
+          <div className="absolute inset-0 flex items-center justify-center p-5">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
+              style={{ filter: "drop-shadow(0 8px 24px rgba(94,42,132,0.35)) drop-shadow(0 2px 6px rgba(0,0,0,0.5))" }}
+            />
+          </div>
+        ) : (
+          <div className="absolute inset-0 flex flex-col items-center justify-center gap-4">
+            {/* Glowing ring */}
+            <div className="w-16 h-16 rounded-full border border-[#5E2A84]/40 flex items-center justify-center"
+              style={{ boxShadow: "0 0 40px rgba(94,42,132,0.25), inset 0 0 20px rgba(94,42,132,0.1)" }}>
+              <div className="w-8 h-8 rounded-full border border-[#5E2A84]/60"
+                style={{ boxShadow: "0 0 20px rgba(94,42,132,0.4)" }} />
+            </div>
+            <span className="text-[10px] font-bold tracking-[0.3em] text-white/20 uppercase">Cytek Biosciences</span>
+          </div>
+        )}
+
+        {/* Top-left brand tag */}
+        <div className="absolute top-3 left-3 flex items-center gap-2">
+          <span className="px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white"
+            style={{ background: CYTEK_ACCENT }}>Cytek</span>
+          {product.featured && (
+            <span className="px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] bg-white/10 text-white/90 flex items-center gap-1 backdrop-blur-sm">
+              <Sparkles className="h-3 w-3" />Featured
+            </span>
+          )}
+        </div>
+
+        {/* Key metric badge — top right */}
+        {keyMetric && (
+          <div className="absolute top-3 right-3 text-right">
+            <div className="text-xl font-black text-white leading-none" style={{ textShadow: `0 0 20px ${CYTEK_ACCENT}` }}>
+              {keyMetric.value}
+            </div>
+            <div className="text-[9px] font-bold tracking-[0.2em] uppercase text-white/40">{keyMetric.label}</div>
+          </div>
+        )}
+
+        {/* Hover CTAs */}
+        <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2">
+          <Link href={`/products/${product.id}`} className="flex-1">
+            <Button variant="outline" className="rounded-none w-full text-xs uppercase tracking-[0.14em] font-semibold h-10 bg-black/60 backdrop-blur-sm border-white/20 text-white hover:bg-white/10">
+              View Details
+            </Button>
+          </Link>
+          <Link href="/#contact" className="flex-1">
+            <Button className="rounded-none w-full text-xs uppercase tracking-[0.14em] font-semibold h-10 text-white hover:opacity-90"
+              style={{ background: CYTEK_ACCENT }}>
+              Inquire <ArrowRight className="ml-2 h-3.5 w-3.5" />
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+      {/* Text area */}
+      <div className="p-4 border-t border-white/5">
+        <div className="flex items-center gap-1.5 text-[11px] text-white/30 uppercase tracking-[0.12em] mb-2">
+          {category?.icon}
+          <span className="truncate">{category?.name}</span>
+        </div>
+        <h3 className="font-[var(--app-font-heading)] text-[15px] font-semibold leading-snug text-white mb-1.5 line-clamp-2 cursor-pointer"
+          style={{ transition: "color 0.2s" }}>
+          <Link href={`/products/${product.id}`} className="hover:text-[#a855f7] transition-colors">
+            {product.name}
+          </Link>
+        </h3>
+        <p className="text-[13px] text-white/35 leading-relaxed line-clamp-2">{product.description}</p>
+      </div>
+    </motion.div>
+  );
+}
 
 type SortKey = "featured" | "name" | "brand";
 
@@ -627,7 +742,9 @@ export default function Products() {
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5">
                 <AnimatePresence mode="popLayout">
                   {filtered.map((p, i) => (
-                    <ProductCard key={p.id} product={p} index={i} />
+                    p.brand === "cytek"
+                      ? <CytekCard key={p.id} product={p} index={i} />
+                      : <ProductCard key={p.id} product={p} index={i} />
                   ))}
                 </AnimatePresence>
               </div>

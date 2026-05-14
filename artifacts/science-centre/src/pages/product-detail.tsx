@@ -6,7 +6,7 @@ import { SiteFooter } from "@/components/site-footer";
 import { Button } from "@/components/ui/button";
 import {
   ArrowRight, ArrowLeft, CheckCircle2, ChevronRight,
-  FlaskConical, Tag, FileText, Layers, ImageIcon, Package
+  FlaskConical, Tag, FileText, Layers, ImageIcon, Package, Zap, Activity, Settings2, Target
 } from "lucide-react";
 import { productById, brandById, categoryById, productsByBrand, type Product } from "@/lib/catalogue";
 
@@ -16,19 +16,21 @@ function Reveal({ children }: { children: React.ReactNode; delay?: number }) {
 
 function RelatedCard({ product }: { product: Product }) {
   const brand = brandById(product.brand);
+  const isCytek = product.brand === "cytek";
   return (
     <Link href={`/products/${product.id}`}>
-      <motion.div className="border border-border p-6 cursor-pointer group relative overflow-hidden h-full"
+      <motion.div
+        className={`border p-6 cursor-pointer group relative overflow-hidden h-full ${isCytek ? "bg-[#080810] border-white/10 hover:border-[#5E2A84]/50" : "border-border"}`}
         whileHover={{ y: -4 }} transition={{ duration: 0.25 }}>
         <div className="text-xs font-bold tracking-wide uppercase mb-3 px-2 py-1 inline-block"
           style={{ color: brand?.accent, background: (brand?.accent || "#000") + "18" }}>
           {brand?.short}
         </div>
-        <h4 className="font-[var(--app-font-heading)] font-bold text-foreground text-sm leading-snug mb-2 group-hover:text-primary transition-colors">
+        <h4 className={`font-[var(--app-font-heading)] font-bold text-sm leading-snug mb-2 transition-colors ${isCytek ? "text-white group-hover:text-purple-400" : "text-foreground group-hover:text-primary"}`}>
           {product.name}
         </h4>
-        <p className="text-muted-foreground text-xs font-light leading-relaxed line-clamp-2">{product.description}</p>
-        <div className="flex items-center gap-1 mt-4 text-xs font-bold text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+        <p className={`text-xs font-light leading-relaxed line-clamp-2 ${isCytek ? "text-white/40" : "text-muted-foreground"}`}>{product.description}</p>
+        <div className={`flex items-center gap-1 mt-4 text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity ${isCytek ? "text-purple-400" : "text-primary"}`}>
           View Product <ArrowRight className="h-3 w-3" />
         </div>
         <motion.div className="absolute bottom-0 left-0 h-0.5"
@@ -37,6 +39,268 @@ function RelatedCard({ product }: { product: Product }) {
           transition={{ duration: 0.35 }} />
       </motion.div>
     </Link>
+  );
+}
+
+/* ─── Cytek Premium Detail ─────────────────────────────────────── */
+
+function CytekProductDetail({ product }: { product: Product }) {
+  const brand = brandById(product.brand);
+  const category = categoryById(product.category);
+  const related = (product.relatedProducts || []).map(rid => productById(rid)).filter(Boolean) as Product[];
+  const moreBrand = productsByBrand(product.brand).filter(p => p.id !== product.id && !product.relatedProducts?.includes(p.id)).slice(0, 3 - related.length);
+  const allRelated = [...related, ...moreBrand].slice(0, 3);
+
+  // Extract key stat blocks from specs
+  const statMap: { label: string; value: string; icon: React.ReactNode }[] = [];
+  if (product.specs) {
+    const s = product.specs;
+    if (s["Fluorescence Channels"]) statMap.push({ label: "Fluorescence Channels", value: s["Fluorescence Channels"], icon: <Activity className="h-5 w-5" /> });
+    if (s["Laser Lines"]) {
+      const laserCount = s["Laser Lines"].match(/Up to (\d+)/)?.[1] || s["Laser Lines"].match(/^(\d+)/)?.[1];
+      if (laserCount) statMap.push({ label: "Laser Lines", value: `Up to ${laserCount}`, icon: <Zap className="h-5 w-5" /> });
+    }
+    if (s["Max Colors Demonstrated"]) statMap.push({ label: "Colors in a Panel", value: s["Max Colors Demonstrated"], icon: <Target className="h-5 w-5" /> });
+    if (s["Imaging Channels"]) statMap.push({ label: "Imaging Channels", value: s["Imaging Channels"], icon: <Activity className="h-5 w-5" /> });
+    if (s["Technology"]) statMap.push({ label: "Technology", value: s["Technology"].split("™")[0] + "™", icon: <Settings2 className="h-5 w-5" /> });
+    if (s["Instrument Type"]) statMap.push({ label: "Instrument Type", value: s["Instrument Type"], icon: <Settings2 className="h-5 w-5" /> });
+    if (s["Regulatory Status"]) statMap.push({ label: "Regulatory", value: "Clinical Cleared", icon: <Target className="h-5 w-5" /> });
+    if (s["Award"]) statMap.push({ label: "Award", value: "2025 BioTech Breakthrough", icon: <Zap className="h-5 w-5" /> });
+  }
+  const displayStats = statMap.slice(0, 4);
+
+  return (
+    <div className="min-h-[100dvh] bg-[#06060d] text-white">
+      <SiteNavbar forceSolid />
+      <main>
+        {/* ── Dark Hero ─────────────────────────────────────── */}
+        <div className="relative pt-24 pb-0 overflow-hidden">
+          {/* Background layers */}
+          <div className="absolute inset-0"
+            style={{ background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(94,42,132,0.18) 0%, transparent 70%)" }} />
+          <div className="absolute inset-0 opacity-20"
+            style={{ backgroundImage: "radial-gradient(circle, rgba(94,42,132,0.3) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+
+          <div className="container mx-auto px-6 md:px-12 relative z-10">
+            {/* Breadcrumb */}
+            <nav className="flex items-center gap-2 text-xs text-white/30 flex-wrap mb-10">
+              <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
+              <ChevronRight className="h-3 w-3 flex-shrink-0" />
+              <Link href="/products" className="hover:text-white/60 transition-colors">Products</Link>
+              <ChevronRight className="h-3 w-3 flex-shrink-0" />
+              <span className="text-white/60 font-medium truncate max-w-[200px]">{product.name}</span>
+            </nav>
+
+            <div className="grid lg:grid-cols-2 gap-12 items-center pb-16">
+              {/* Left: Info */}
+              <div>
+                {/* Brand + Category tags */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <span className="px-3 py-1.5 text-xs font-bold tracking-[0.15em] uppercase text-white"
+                    style={{ background: "#5E2A84" }}>Cytek Biosciences</span>
+                  {category && (
+                    <span className="px-3 py-1.5 text-xs font-medium text-white/50 border border-white/10 flex items-center gap-1.5">
+                      {category.icon} {category.name}
+                    </span>
+                  )}
+                  {product.featured && (
+                    <span className="px-3 py-1.5 text-xs font-bold text-amber-400 border border-amber-400/30 bg-amber-400/5">★ Featured</span>
+                  )}
+                </div>
+
+                <h1 className="text-4xl md:text-5xl font-[var(--app-font-heading)] font-black text-white leading-tight tracking-tight mb-6"
+                  style={{ textShadow: "0 0 60px rgba(94,42,132,0.4)" }}>
+                  {product.name}
+                </h1>
+
+                <p className="text-white/50 text-base font-light leading-relaxed mb-8 max-w-xl">
+                  {product.description}
+                </p>
+
+                <div className="flex flex-wrap gap-3">
+                  <Button asChild size="lg" className="rounded-none px-8 font-semibold group text-white"
+                    style={{ background: "#5E2A84" }}>
+                    <a href="/#contact">
+                      Request a Quote <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </a>
+                  </Button>
+                  <Button asChild variant="outline" size="lg" className="rounded-none px-6 border-white/15 text-white hover:bg-white/5 hover:text-white">
+                    <a href="/#contact">Talk to a Specialist</a>
+                  </Button>
+                  <Button asChild variant="ghost" size="lg" className="rounded-none px-4 text-white/40 hover:text-white hover:bg-white/5">
+                    <Link href="/products"><ArrowLeft className="mr-2 h-4 w-4" /> All Products</Link>
+                  </Button>
+                </div>
+              </div>
+
+              {/* Right: Instrument image */}
+              <div className="flex items-center justify-center">
+                <div className="relative w-full max-w-md">
+                  {/* Glow ring */}
+                  <div className="absolute inset-0 rounded-full"
+                    style={{ background: "radial-gradient(ellipse at center, rgba(94,42,132,0.3) 0%, transparent 70%)" }} />
+                  {product.image ? (
+                    <img src={product.image} alt={product.name} className="relative w-full object-contain"
+                      style={{ filter: "drop-shadow(0 16px 48px rgba(94,42,132,0.5)) drop-shadow(0 4px 12px rgba(0,0,0,0.8))", maxHeight: "380px" }} />
+                  ) : (
+                    <div className="relative aspect-square flex flex-col items-center justify-center gap-6 border border-white/5 bg-white/2">
+                      {/* Animated rings */}
+                      <div className="relative w-32 h-32">
+                        {[0, 1, 2].map(i => (
+                          <div key={i} className="absolute inset-0 rounded-full border border-[#5E2A84]/30"
+                            style={{ transform: `scale(${1 + i * 0.3})`, opacity: 1 - i * 0.3 }} />
+                        ))}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-12 h-12 rounded-full border-2 border-[#5E2A84]/60 flex items-center justify-center"
+                            style={{ boxShadow: "0 0 30px rgba(94,42,132,0.5)" }}>
+                            <Settings2 className="h-5 w-5 text-[#a855f7]" />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-sm font-semibold text-white/20">Product Image</p>
+                        <p className="text-xs text-white/10 mt-1">Coming soon</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom gradient fade to stats bar */}
+          <div className="h-px bg-gradient-to-r from-transparent via-[#5E2A84]/40 to-transparent" />
+        </div>
+
+        {/* ── Key Performance Stats ─────────────────────────── */}
+        {displayStats.length > 0 && (
+          <div className="bg-[#0a0a16] border-b border-white/5">
+            <div className="container mx-auto px-6 md:px-12">
+              <div className={`grid grid-cols-2 lg:grid-cols-${Math.min(displayStats.length, 4)} divide-x divide-white/5`}>
+                {displayStats.map((stat, i) => (
+                  <div key={i} className="px-8 py-7 flex items-center gap-4">
+                    <div className="text-[#5E2A84] flex-shrink-0 opacity-70">{stat.icon}</div>
+                    <div>
+                      <div className="text-xl font-black text-white leading-none mb-1">{stat.value}</div>
+                      <div className="text-[10px] font-bold tracking-[0.18em] uppercase text-white/30">{stat.label}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Highlights ─────────────────────────────────────── */}
+        {product.highlights && product.highlights.length > 0 && (
+          <div className="bg-[#07070f] border-b border-white/5 py-14">
+            <div className="container mx-auto px-6 md:px-12">
+              <div className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#a855f7] mb-8">Why Choose This System</div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                {product.highlights.map((h, i) => (
+                  <div key={i} className="flex items-start gap-3 p-4 border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] transition-colors">
+                    <CheckCircle2 className="h-4 w-4 text-[#5E2A84] flex-shrink-0 mt-0.5" />
+                    <span className="text-white/70 text-sm leading-relaxed">{h}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ── Features / Applications / Specs ─────────────────── */}
+        {(product.features || product.applications || product.specs) && (
+          <div className="bg-[#06060d] border-b border-white/5 py-16">
+            <div className="container mx-auto px-6 md:px-12 grid lg:grid-cols-3 gap-12">
+              {product.features && product.features.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-2 mb-6">
+                    <Layers className="h-4 w-4 text-[#5E2A84]" />
+                    <h2 className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#a855f7]">Features</h2>
+                  </div>
+                  <ul className="space-y-3">
+                    {product.features.map((f, i) => (
+                      <li key={i} className="flex items-start gap-3 text-sm">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#5E2A84] flex-shrink-0 mt-2" />
+                        <span className="text-white/55 leading-relaxed">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {product.applications && product.applications.length > 0 && (
+                <div>
+                  <div className="flex items-center gap-2 mb-6">
+                    <FlaskConical className="h-4 w-4 text-[#5E2A84]" />
+                    <h2 className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#a855f7]">Applications</h2>
+                  </div>
+                  <ul className="space-y-3">
+                    {product.applications.map((a, i) => (
+                      <li key={i} className="flex items-start gap-3 text-sm">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#5E2A84] flex-shrink-0 mt-2" />
+                        <span className="text-white/55 leading-relaxed">{a}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {product.specs && (
+                <div>
+                  <div className="flex items-center gap-2 mb-6">
+                    <FileText className="h-4 w-4 text-[#5E2A84]" />
+                    <h2 className="text-[10px] font-bold tracking-[0.25em] uppercase text-[#a855f7]">Specifications</h2>
+                  </div>
+                  <div className="space-y-0 border border-white/8">
+                    {Object.entries(product.specs).map(([k, v], i) => (
+                      <div key={k} className="flex flex-col sm:flex-row sm:justify-between gap-1 px-4 py-3 border-b border-white/5 last:border-0 hover:bg-white/[0.03] transition-colors">
+                        <span className="text-[11px] text-white/30 font-semibold uppercase tracking-wide">{k}</span>
+                        <span className="text-[13px] text-white/70 font-medium sm:text-right sm:max-w-[55%]">{v}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* ── Dark CTA banner ────────────────────────────────── */}
+        <div className="py-20 relative overflow-hidden"
+          style={{ background: "linear-gradient(135deg, #0f051a 0%, #1a0835 50%, #0f051a 100%)" }}>
+          <div className="absolute inset-0"
+            style={{ background: "radial-gradient(ellipse 60% 80% at 50% 50%, rgba(94,42,132,0.2) 0%, transparent 70%)" }} />
+          <div className="container mx-auto px-6 md:px-12 text-center relative z-10">
+            <div className="text-[11px] font-bold tracking-[0.3em] uppercase text-[#a855f7] mb-4">Cytek Biosciences</div>
+            <h2 className="text-3xl md:text-4xl font-[var(--app-font-heading)] font-black text-white mb-4 leading-tight">
+              Ready to elevate your flow cytometry?
+            </h2>
+            <p className="text-white/40 mb-10 max-w-lg mx-auto">Our specialists are available to discuss this instrument, arrange a demo, and provide a tailored quote for your laboratory.</p>
+            <div className="flex justify-center gap-4 flex-wrap">
+              <Button asChild size="lg" className="rounded-none px-10 h-13 font-semibold text-white"
+                style={{ background: "#5E2A84" }}>
+                <a href="/#contact">Request a Quote <ArrowRight className="ml-2 h-4 w-4" /></a>
+              </Button>
+              <Button asChild variant="outline" size="lg" className="rounded-none px-8 border-white/20 text-white hover:bg-white/5">
+                <a href="/#contact">Schedule a Demo</a>
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Related Products ───────────────────────────────── */}
+        {allRelated.length > 0 && (
+          <div className="bg-[#06060d] border-t border-white/5 py-16">
+            <div className="container mx-auto px-6 md:px-12">
+              <div className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#a855f7] mb-8">Related Instruments</div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {allRelated.map(p => <RelatedCard key={p.id} product={p} />)}
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
+      <SiteFooter />
+    </div>
   );
 }
 
@@ -63,6 +327,11 @@ export default function ProductDetail() {
         <SiteFooter />
       </div>
     );
+  }
+
+  // Route Cytek products to premium dark detail page
+  if (product.brand === "cytek") {
+    return <CytekProductDetail product={product} />;
   }
 
   const brand = brandById(product.brand);
