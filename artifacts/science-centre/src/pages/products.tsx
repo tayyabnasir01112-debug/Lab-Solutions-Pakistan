@@ -180,19 +180,32 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             backgroundSize: "32px 32px",
           }}
         />
-        {/* big brand monogram */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div
-            className="font-[var(--app-font-heading)] font-bold tracking-tight leading-none select-none"
-            style={{
-              color: brand.accent,
-              opacity: 0.32,
-              fontSize: "clamp(80px, 14vw, 140px)",
-            }}
-          >
-            {initials}
+        {/* big brand monogram — shown only when no image */}
+        {!product.image && (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div
+              className="font-[var(--app-font-heading)] font-bold tracking-tight leading-none select-none"
+              style={{
+                color: brand.accent,
+                opacity: 0.32,
+                fontSize: "clamp(80px, 14vw, 140px)",
+              }}
+            >
+              {initials}
+            </div>
           </div>
-        </div>
+        )}
+        {/* actual product image */}
+        {product.image && (
+          <div className="absolute inset-0 flex items-center justify-center p-6">
+            <img
+              src={product.image}
+              alt={product.name}
+              className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
+              style={{ filter: "drop-shadow(0 4px 16px rgba(0,0,0,0.12))" }}
+            />
+          </div>
+        )}
         {/* top tags */}
         <div className="absolute top-3 left-3 right-3 flex items-start justify-between gap-2">
           <span
