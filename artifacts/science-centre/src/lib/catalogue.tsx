@@ -17,6 +17,7 @@ export type Product = {
   id: string; name: string; brand: string; category: string;
   subcategory?: string; description: string; featured?: boolean; tags?: string[];
   image?: string;
+  gallery?: string[];  // additional images: charts, data, workflow diagrams
   highlights?: string[]; features?: string[]; applications?: string[];
   specs?: Record<string, string>; catalogueNumber?: string;
   packaging?: PackagingVariant[];
@@ -885,6 +886,12 @@ export const products: Product[] = [
     brand: "cytek",
     category: "flow",
     featured: true,
+    image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Aurora-instrument-with-loader-(angle).png",
+    gallery: [
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora.autofluorescence+extraction-01.png",
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora.particle-detection-min.png",
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora.FlowSOM.png",
+    ],
     description: "The Cytek Aurora™ is the gold standard in full spectrum flow cytometry, enabling up to 40-color panels from a single tube using up to 5 lasers and 64 fluorescence detection channels. Its Full Spectrum Profiling™ (FSP®) technology captures the entire emission signature of every fluorochrome — eliminating the need to swap optical filters and delivering unmatched flexibility for deep immunoprofiling, cancer biology, and single-cell research.",
     highlights: [
       "Up to 5 lasers (355, 405, 488, 561, 640 nm) with 64 fluorescence channels",
@@ -937,6 +944,12 @@ export const products: Product[] = [
     brand: "cytek",
     category: "flow",
     featured: true,
+    image: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Aurora+Evo+Images/AuroraEvo_34_Web.png",
+    gallery: [
+      "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Aurora+Evo+Images/AuroraEvo-Figure4a.jpg",
+      "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Aurora+Evo+Images/EvoFigure2.jpg",
+      "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Aurora+Evo+Images/EvoFigure5.jpg",
+    ],
     description: "The Cytek Aurora™ Evo is the next evolution of the world's most cited spectral flow cytometer, reengineered in 2025 for high-throughput research and automation. Building on the proven FSP® technology of the original Aurora, the Evo introduces enhanced throughput capabilities, updated hardware design, and automation features — making it the definitive workhorse for modern, large-scale cell analysis programs.",
     highlights: [
       "Launched 2025 — the new standard for full spectrum flow cytometry",
@@ -980,6 +993,12 @@ export const products: Product[] = [
     name: "Cytek Aurora™ CS Cell Sorter",
     brand: "cytek",
     category: "flow",
+    image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora-cs-with-computer-min.png",
+    gallery: [
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora-cs.optical-performance-min.png",
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora.autofluorescence+extraction-01.png",
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora-cs.sorting-min.png",
+    ],
     description: "The Cytek Aurora™ CS brings the unmatched spectral multiplexing power of full spectrum flow cytometry to cell sorting. With up to 5 lasers and 64 fluorescence channels, the Aurora CS enables high-purity sorting of rare and complex cell populations defined by 40-color panels — delivering sorted cells for downstream functional assays, single-cell genomics, and culture-based studies.",
     highlights: [
       "Cell sorting with full spectrum FSP® technology — up to 40-color panel sorting",
@@ -1018,6 +1037,13 @@ export const products: Product[] = [
     name: "Cytek Northern Lights™ Flow Cytometer",
     brand: "cytek",
     category: "flow",
+    image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Northern+Lights+-+Web+02022024+-+1000px+x+955px.png",
+    gallery: [
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.nl.Counting+and+Viability.png",
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Northern+Lights_Control+Data_Rev02062024+2.png",
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.nl.Apoptosis+Analysis.png",
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora.autofluorescence+extraction-01.png",
+    ],
     description: "The Cytek Northern Lights™ is a flexible, high-value full spectrum flow cytometer designed for everyday research applications. With up to 3 lasers and 38 fluorescence channels, it delivers the power of FSP® technology in an accessible, easy-to-use system — enabling labs of all sizes to run complex multicolor experiments without sacrificing resolution or sensitivity.",
     highlights: [
       "Up to 3 lasers (405, 488, 638 nm) with 38 fluorescence detection channels",
@@ -1063,6 +1089,10 @@ export const products: Product[] = [
     name: "Cytek Northern Lights™ CLC Clinical System",
     brand: "cytek",
     category: "flow",
+    image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.prod-nl-clc.png",
+    gallery: [
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.nl-clc.evaluating-MRD-graphic.png",
+    ],
     description: "The Cytek Northern Lights™ CLC (Clinical Laboratory Configuration) brings full spectrum flow cytometry to clinical environments. Cleared for clinical use in China and the European Union, the NL-CLC is engineered for the operational demands of diagnostic laboratories — delivering superior immunophenotyping sensitivity with the efficiency-enhancing tools clinical teams depend on daily.",
     highlights: [
       "Full spectrum clinical flow cytometer cleared for clinical use (China & EU)",
@@ -1106,6 +1136,14 @@ export const products: Product[] = [
     name: "Cytek® Amnis® ImageStream®X Mk II",
     brand: "cytek",
     category: "flow",
+    image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Current+Luminex+Collateral/IS_left_P1013862%400.75x.png",
+    gallery: [
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/amnis-landing-imagestream-2.png",
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Amnis+Images/Applications.png",
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Amnis+Images/NFkB.png",
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Amnis+Images/EV.png",
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Amnis+Images/amnis_ai.png",
+    ],
     description: "The Cytek® Amnis® ImageStream®X Mk II is a multispectral imaging flow cytometer that uniquely combines the high-throughput statistical power of flow cytometry with the spatial and morphological insights of microscopy. Acquiring up to 12 channels of high-quality cell imagery at flow cytometry speeds, it enables applications impossible with either technique alone — from nuclear translocation to phagocytosis, cell signaling, and rare event imaging.",
     highlights: [
       "Combines flow cytometry throughput with microscopy-quality cell imaging",
@@ -1153,6 +1191,11 @@ export const products: Product[] = [
     name: "Cytek® Guava® Flow Cytometer",
     brand: "cytek",
     category: "flow",
+    image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Current+Luminex+Collateral/easycyte-combination%400.75x.png",
+    gallery: [
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Current+Luminex+Collateral/Guava_muse_left_Data_screen_P1013739%400.75x.png",
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/guava-landing-img.png",
+    ],
     description: "The Cytek® Guava® flow cytometer delivers accessible, quantitative cell analysis from a compact benchtop instrument. Using microcapillary technology for direct volumetric counting without beads, the Guava system provides accurate, reproducible results for cell counting, viability, apoptosis, and cell cycle analysis — making flow cytometry practical for any laboratory.",
     highlights: [
       "Microcapillary technology for direct, bead-free volumetric cell counting",
@@ -1193,6 +1236,14 @@ export const products: Product[] = [
     brand: "cytek",
     category: "flow",
     featured: true,
+    image: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Current+Luminex+Collateral/MuseMicro_34angle_Screenshot.png",
+    gallery: [
+      "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Guava+Images/MuseMicro_Schematic_031325.png",
+      "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Guava+Images/Figure2_Updated.png",
+      "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Guava+Images/Figure3.png",
+      "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Guava+Images/Figure4.png",
+      "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Guava+Images/Figure5_Updated.jpg",
+    ],
     description: "The Cytek® Muse® Micro is an innovative, affordable cell analyzer that makes sophisticated flow cytometry accessible to every laboratory. Launched in 2025 and winner of the BioTech Breakthrough Drug Discovery Solution of the Year award, the Muse Micro combines a compact footprint with a touchscreen interface, high-precision microcapillary technology, and pre-optimized 'Mix-and-Read' assays to deliver accurate results with minimal training and effort.",
     highlights: [
       "Winner: BioTech Breakthrough Award 2025 — Drug Discovery Solution of the Year",
@@ -1239,6 +1290,11 @@ export const products: Product[] = [
     name: "Cytek Orion™ Reagent Cocktail Preparation System",
     brand: "cytek",
     category: "flow",
+    image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/assets/heros/Cytek%2BOrion_Instrument_Web_V2.png",
+    gallery: [
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Orion+Images/orion-ov-1.jpg",
+      "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Orion+Images/orion-workflow.jpg",
+    ],
     description: "The Cytek Orion™ automates the complex, error-prone process of multi-reagent cocktail preparation for flow cytometry. By precisely pipetting and mixing antibody cocktails for each sample, the Orion system eliminates manual pipetting variability, reduces preparation time, and frees researchers to focus on science — not sample setup.",
     highlights: [
       "Automates multi-reagent antibody cocktail preparation for flow cytometry",

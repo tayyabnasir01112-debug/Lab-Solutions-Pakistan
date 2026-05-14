@@ -191,6 +191,29 @@ function CytekProductDetail({ product }: { product: Product }) {
           </div>
         )}
 
+        {/* ── Performance Gallery ────────────────────────────── */}
+        {product.gallery && product.gallery.length > 0 && (
+          <div className="bg-[#070710] border-b border-white/5 py-14">
+            <div className="container mx-auto px-6 md:px-12">
+              <div className="text-[11px] font-bold tracking-[0.25em] uppercase text-[#a855f7] mb-2">Performance Data & Imagery</div>
+              <p className="text-white/25 text-sm mb-8">Charts, assay results and workflow diagrams from Cytek Biosciences</p>
+              <div className={`grid gap-4 ${product.gallery.length === 1 ? "grid-cols-1" : product.gallery.length === 2 ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"}`}>
+                {product.gallery.map((src, i) => (
+                  <div key={i} className="border border-white/8 bg-white/[0.02] overflow-hidden group">
+                    <img
+                      src={src}
+                      alt={`${product.name} performance data ${i + 1}`}
+                      className="w-full object-contain max-h-72 p-3 transition-transform duration-300 group-hover:scale-[1.02]"
+                      style={{ background: "#fff", mixBlendMode: "normal" }}
+                      loading="lazy"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* ── Highlights ─────────────────────────────────────── */}
         {product.highlights && product.highlights.length > 0 && (
           <div className="bg-[#07070f] border-b border-white/5 py-14">
