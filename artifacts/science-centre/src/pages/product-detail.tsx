@@ -9,7 +9,7 @@ import {
   FlaskConical, Tag, FileText, Layers, ImageIcon, Package,
   Zap, Activity, Settings2, Target
 } from "lucide-react";
-import { productById, brandById, categoryById, productsByBrand, type Product } from "@/lib/catalogue";
+import { productById, brandById, categoryById, productsByBrand, type Product, type KitItem } from "@/lib/catalogue";
 
 function Reveal({ children }: { children: React.ReactNode; delay?: number }) {
   return <div>{children}</div>;
@@ -20,18 +20,18 @@ function CytekRelatedCard({ product }: { product: Product }) {
   const cat = categoryById(product.category);
   return (
     <Link href={`/products/${product.id}`}>
-      <div className="group border border-[#e8e8e8] hover:border-[#508484] transition-colors duration-300 bg-white overflow-hidden cursor-pointer">
+      <div className="group border border-[#e8e8e8] hover:border-[#2c5f5f] transition-colors duration-300 bg-white overflow-hidden cursor-pointer">
         {/* Image */}
         <div className="aspect-[4/3] bg-[#f8f8f8] flex items-center justify-center p-6 overflow-hidden">
           {product.image
             ? <img src={product.image} alt={product.name} className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" />
-            : <div className="w-16 h-16 rounded-full border-2 border-[#508484]/30 flex items-center justify-center"><Settings2 className="h-6 w-6 text-[#508484]/40" /></div>
+            : <div className="w-16 h-16 rounded-full border-2 border-[#2c5f5f]/30 flex items-center justify-center"><Settings2 className="h-6 w-6 text-[#2c5f5f]/40" /></div>
           }
         </div>
         {/* Text */}
         <div className="px-5 py-4 border-t border-[#f0f0f0]">
-          <div className="text-[11px] font-bold tracking-[0.15em] uppercase text-[#508484] mb-2">{cat?.name}</div>
-          <h4 className="font-[var(--app-font-heading)] font-bold text-[15px] leading-snug text-[#333] group-hover:text-[#508484] transition-colors mb-1">{product.name}</h4>
+          <div className="text-[11px] font-bold tracking-[0.15em] uppercase text-[#2c5f5f] mb-2">{cat?.name}</div>
+          <h4 className="font-[var(--app-font-heading)] font-bold text-[15px] leading-snug text-[#333] group-hover:text-[#2c5f5f] transition-colors mb-1">{product.name}</h4>
           <p className="text-[#707070] text-[13px] line-clamp-2 leading-relaxed">{product.description}</p>
           <div className="flex items-center gap-1 mt-3 text-[#E99E2A] text-[12px] font-bold opacity-0 group-hover:opacity-100 transition-opacity">
             Learn More <ArrowRight className="h-3.5 w-3.5" />
@@ -51,7 +51,7 @@ function CytekProductDetail({ product }: { product: Product }) {
   const allRelated = [...related, ...moreBrand].slice(0, 3);
 
   // Tab state — Overview vs Performance Data
-  const [tab, setTab] = useState<"overview" | "performance">("overview");
+  const [tab, setTab] = useState<"overview" | "performance" | "kits">("overview");
 
   // Key stats extracted from specs
   const stats: { label: string; value: string }[] = [];
@@ -98,8 +98,10 @@ function CytekProductDetail({ product }: { product: Product }) {
               {/* Left: text */}
               <div className="pr-0 lg:pr-12">
                 {/* Breadcrumb */}
-                <div className="text-[13px] font-bold text-white mb-4 tracking-wide">
-                  PRODUCTS &amp; SERVICES
+                <div className="text-[13px] font-bold text-white/70 mb-4 tracking-wide flex items-center gap-2">
+                  <span className="text-white/40">Science Centre Pakistan</span>
+                  <span className="text-white/30">›</span>
+                  <span className="text-white">Cytek Biosciences</span>
                 </div>
 
                 {/* Product name — 60px like Cytek */}
@@ -118,10 +120,18 @@ function CytekProductDetail({ product }: { product: Product }) {
 
                 {/* CTAs */}
                 <div className="flex flex-wrap gap-3">
-                  <a href="/#contact"
-                    className="inline-flex items-center px-7 py-3.5 text-[13px] font-bold tracking-wide text-white border-2 border-white hover:bg-white hover:text-[#508484] transition-colors duration-200">
-                    PRODUCT BROCHURE
-                  </a>
+                  {product.brochure && (
+                    <a href={product.brochure} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-7 py-3.5 text-[13px] font-bold tracking-wide text-white border-2 border-white hover:bg-white hover:text-[#2c5f5f] transition-colors duration-200">
+                      <FileText className="h-4 w-4" /> PRODUCT BROCHURE
+                    </a>
+                  )}
+                  {product.specSheet && (
+                    <a href={product.specSheet} target="_blank" rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-7 py-3.5 text-[13px] font-bold tracking-wide text-white border-2 border-white/40 hover:border-white hover:bg-white/10 transition-colors duration-200">
+                      <FileText className="h-4 w-4" /> TECHNICAL SPECIFICATIONS
+                    </a>
+                  )}
                   <a href="/#contact"
                     className="inline-flex items-center gap-2 px-7 py-3.5 text-[13px] font-bold tracking-wide"
                     style={{ color: "#E99E2A" }}>
@@ -150,25 +160,43 @@ function CytekProductDetail({ product }: { product: Product }) {
         </div>
 
         {/* ═══════════════════════════════════════════════════════
-            TAB NAVIGATION — OVERVIEW | PERFORMANCE DATA
+            TAB NAVIGATION — distinct button style, not merged
         ════════════════════════════════════════════════════════ */}
-        <div className="border-b border-[#e0e0e0] sticky top-0 z-20 bg-white shadow-sm">
-          <div className="max-w-[1400px] mx-auto px-8 md:px-16 flex items-center gap-0">
+        <div className="border-b border-[#e0e0e0] bg-white shadow-sm sticky top-0 z-20">
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16 flex items-center gap-3 py-3">
             <button
               onClick={() => setTab("overview")}
-              className={`py-4 px-6 text-[13px] font-bold tracking-[0.12em] uppercase border-b-[3px] transition-colors duration-200 ${tab === "overview" ? "border-[#508484] text-[#508484]" : "border-transparent text-[#707070] hover:text-[#508484]"}`}>
+              className={`px-5 py-2.5 text-[12px] font-bold tracking-[0.12em] uppercase rounded-sm transition-all duration-200 ${
+                tab === "overview"
+                  ? "bg-[#2c5f5f] text-white shadow-md"
+                  : "bg-[#f0f0f0] text-[#555] hover:bg-[#e0e0e0]"
+              }`}>
               Overview
             </button>
             {product.gallery && product.gallery.length > 0 && (
               <button
                 onClick={() => setTab("performance")}
-                className={`py-4 px-6 text-[13px] font-bold tracking-[0.12em] uppercase border-b-[3px] transition-colors duration-200 ${tab === "performance" ? "border-[#508484] text-[#508484]" : "border-transparent text-[#707070] hover:text-[#508484]"}`}>
+                className={`px-5 py-2.5 text-[12px] font-bold tracking-[0.12em] uppercase rounded-sm transition-all duration-200 ${
+                  tab === "performance"
+                    ? "bg-[#2c5f5f] text-white shadow-md"
+                    : "bg-[#f0f0f0] text-[#555] hover:bg-[#e0e0e0]"
+                }`}>
                 Performance Data
               </button>
             )}
-            {/* Spacer then back link */}
+            {product.kits && product.kits.length > 0 && (
+              <button
+                onClick={() => setTab("kits")}
+                className={`px-5 py-2.5 text-[12px] font-bold tracking-[0.12em] uppercase rounded-sm transition-all duration-200 ${
+                  tab === "kits"
+                    ? "bg-[#2c5f5f] text-white shadow-md"
+                    : "bg-[#f0f0f0] text-[#555] hover:bg-[#e0e0e0]"
+                }`}>
+                Kits &amp; Options
+              </button>
+            )}
             <div className="ml-auto">
-              <Link href="/products" className="flex items-center gap-1.5 text-[12px] font-bold text-[#707070] hover:text-[#508484] transition-colors py-4">
+              <Link href="/products" className="flex items-center gap-1.5 text-[12px] font-bold text-[#707070] hover:text-[#2c5f5f] transition-colors py-2">
                 <ArrowLeft className="h-3.5 w-3.5" /> All Products
               </Link>
             </div>
@@ -187,7 +215,7 @@ function CytekProductDetail({ product }: { product: Product }) {
                   <div className={`grid grid-cols-2 lg:grid-cols-${Math.min(displayStats.length, 4)} divide-x divide-[#e8e8e8]`}>
                     {displayStats.map((stat, i) => (
                       <div key={i} className="px-8 py-6 text-center">
-                        <div className="text-2xl md:text-3xl font-black text-[#508484] leading-none mb-1">{stat.value}</div>
+                        <div className="text-2xl md:text-3xl font-black text-[#2c5f5f] leading-none mb-1">{stat.value}</div>
                         <div className="text-[11px] font-bold tracking-[0.18em] uppercase text-[#707070]">{stat.label}</div>
                       </div>
                     ))}
@@ -198,7 +226,7 @@ function CytekProductDetail({ product }: { product: Product }) {
 
             {/* ── Our Product section heading ─────────────────── */}
             <div className="max-w-[1400px] mx-auto px-8 md:px-16 pt-14 pb-4">
-              <h2 className="font-[var(--app-font-heading)] font-bold text-[#508484]" style={{ fontSize: "34px" }}>
+              <h2 className="font-[var(--app-font-heading)] font-bold text-[#2c5f5f]" style={{ fontSize: "34px" }}>
                 Our Product
               </h2>
             </div>
@@ -207,12 +235,12 @@ function CytekProductDetail({ product }: { product: Product }) {
             <div className="max-w-[1400px] mx-auto px-8 md:px-16 pb-10">
               <div className="grid lg:grid-cols-[1fr_420px] gap-16 items-start">
                 <div>
-                  <h3 className="font-[var(--app-font-heading)] font-bold text-[#508484] mb-5" style={{ fontSize: "24px" }}>
+                  <h3 className="font-[var(--app-font-heading)] font-bold text-[#2c5f5f] mb-5" style={{ fontSize: "24px" }}>
                     High Level Overview
                   </h3>
                   <p className="text-[#707070] text-[16px] leading-relaxed mb-4">{product.description}</p>
                   {product.subtitle && (
-                    <p className="text-[#508484] text-[16px] font-semibold italic">{product.subtitle}</p>
+                    <p className="text-[#2c5f5f] text-[16px] font-semibold italic">{product.subtitle}</p>
                   )}
                 </div>
                 {/* Mobile: instrument image here */}
@@ -222,7 +250,7 @@ function CytekProductDetail({ product }: { product: Product }) {
                 {/* Specs quick-reference */}
                 {product.specs && (
                   <div className="border border-[#e8e8e8] bg-[#fafafa]">
-                    <div className="px-6 py-4 border-b border-[#e8e8e8] bg-[#508484]">
+                    <div className="px-6 py-4 border-b border-[#e8e8e8] bg-[#2c5f5f]">
                       <span className="text-white font-bold text-[13px] tracking-[0.1em] uppercase">Specifications</span>
                     </div>
                     <div className="divide-y divide-[#eee]">
@@ -245,8 +273,8 @@ function CytekProductDetail({ product }: { product: Product }) {
                   <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
                     {product.highlights.slice(0, 6).map((h, i) => (
                       <div key={i} className="group">
-                        <div className="text-[#508484] mb-4 opacity-70">{cardIcons[i % cardIcons.length]}</div>
-                        <h3 className="font-[var(--app-font-heading)] font-bold text-[#508484] mb-3" style={{ fontSize: "20px" }}>
+                        <div className="text-[#2c5f5f] mb-4 opacity-70">{cardIcons[i % cardIcons.length]}</div>
+                        <h3 className="font-[var(--app-font-heading)] font-bold text-[#2c5f5f] mb-3" style={{ fontSize: "20px" }}>
                           {h.split("—")[0].split(" — ")[0].split(":")[0].slice(0, 50)}
                         </h3>
                         <p className="text-[#707070] text-[15px] leading-relaxed">{h}</p>
@@ -263,13 +291,13 @@ function CytekProductDetail({ product }: { product: Product }) {
                 <div className="grid lg:grid-cols-2 gap-16">
                   {product.features && product.features.length > 0 && (
                     <div>
-                      <h3 className="font-[var(--app-font-heading)] font-bold text-[#508484] mb-6" style={{ fontSize: "24px" }}>
+                      <h3 className="font-[var(--app-font-heading)] font-bold text-[#2c5f5f] mb-6" style={{ fontSize: "24px" }}>
                         Technology &amp; Features
                       </h3>
                       <div className="space-y-4">
                         {product.features.map((f, i) => (
                           <div key={i} className="flex items-start gap-4 pb-4 border-b border-[#f0f0f0] last:border-0">
-                            <div className="w-2 h-2 rounded-full bg-[#508484] flex-shrink-0 mt-2" />
+                            <div className="w-2 h-2 rounded-full bg-[#2c5f5f] flex-shrink-0 mt-2" />
                             <p className="text-[#707070] text-[15px] leading-relaxed">{f}</p>
                           </div>
                         ))}
@@ -278,7 +306,7 @@ function CytekProductDetail({ product }: { product: Product }) {
                   )}
                   {product.applications && product.applications.length > 0 && (
                     <div>
-                      <h3 className="font-[var(--app-font-heading)] font-bold text-[#508484] mb-6" style={{ fontSize: "24px" }}>
+                      <h3 className="font-[var(--app-font-heading)] font-bold text-[#2c5f5f] mb-6" style={{ fontSize: "24px" }}>
                         Applications
                       </h3>
                       <div className="space-y-4">
@@ -295,22 +323,26 @@ function CytekProductDetail({ product }: { product: Product }) {
               </div>
             )}
 
-            {/* ── CTA Banner ──────────────────────────────────── */}
-            <div className="bg-[#508484] py-16">
+            {/* ── CTA Banner — Science Centre brand identity ─── */}
+            <div className="py-16 relative overflow-hidden" style={{ background: "linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%)" }}>
               <div className="max-w-[1400px] mx-auto px-8 md:px-16 flex flex-col md:flex-row items-center justify-between gap-8">
                 <div>
-                  <p className="text-white/70 text-[13px] font-bold tracking-[0.15em] uppercase mb-2">Cytek Biosciences — Distributed by Science Centre Pakistan</p>
-                  <h2 className="font-[var(--app-font-heading)] font-bold text-white leading-tight" style={{ fontSize: "clamp(24px,3vw,36px)" }}>
-                    Ready to discuss {product.name}?
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-8 h-0.5 bg-[#E99E2A]" />
+                    <span className="text-[#E99E2A] text-[11px] font-black tracking-[0.3em] uppercase">Authorised Distributor · Pakistan</span>
+                  </div>
+                  <h2 className="font-[var(--app-font-heading)] font-bold text-white leading-tight mb-2" style={{ fontSize: "clamp(22px,3vw,34px)" }}>
+                    Interested in {product.name}?
                   </h2>
+                  <p className="text-white/50 text-[14px]">Our specialists provide demos, quotes, and local installation support across Pakistan.</p>
                 </div>
-                <div className="flex gap-4 flex-shrink-0">
+                <div className="flex gap-3 flex-shrink-0 flex-wrap">
                   <a href="/#contact"
-                    className="inline-flex items-center gap-2 px-8 py-4 text-[13px] font-bold tracking-wide bg-white text-[#508484] hover:bg-[#f0f0f0] transition-colors">
+                    className="inline-flex items-center gap-2 px-8 py-4 text-[12px] font-black tracking-[0.15em] uppercase bg-[#E99E2A] text-[#0f2027] hover:bg-[#f5ab35] transition-colors">
                     REQUEST A QUOTE <ArrowRight className="h-4 w-4" />
                   </a>
                   <a href="/#contact"
-                    className="inline-flex items-center gap-2 px-8 py-4 text-[13px] font-bold tracking-wide border-2 border-white text-white hover:bg-white/10 transition-colors">
+                    className="inline-flex items-center gap-2 px-8 py-4 text-[12px] font-black tracking-[0.15em] uppercase border-2 border-white/30 text-white hover:bg-white/10 transition-colors">
                     SCHEDULE A DEMO
                   </a>
                 </div>
@@ -320,11 +352,42 @@ function CytekProductDetail({ product }: { product: Product }) {
         )}
 
         {/* ═══════════════════════════════════════════════════════
+            KITS & OPTIONS TAB
+        ════════════════════════════════════════════════════════ */}
+        {tab === "kits" && product.kits && (
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16 py-14">
+            <h2 className="font-[var(--app-font-heading)] font-bold text-[#2c5f5f] mb-2" style={{ fontSize: "34px" }}>Kits, Reagents &amp; Options</h2>
+            <p className="text-[#707070] text-[16px] mb-10">Available kits, reagents, and instrument options for the {product.name}. Contact Science Centre Pakistan for pricing and availability.</p>
+            <div className="grid md:grid-cols-2 gap-5">
+              {product.kits.map((kit, i) => (
+                <div key={i} className="border border-[#e0e0e0] bg-white p-6 hover:border-[#2c5f5f] hover:shadow-md transition-all duration-200 group">
+                  <div className="flex items-start justify-between gap-4 mb-3">
+                    <h3 className="font-[var(--app-font-heading)] font-bold text-[#2c5f5f] text-[16px] leading-snug group-hover:text-[#1a4040] transition-colors">
+                      {kit.name}
+                    </h3>
+                    {kit.catalogueNumber && (
+                      <span className="flex-shrink-0 text-[11px] font-bold text-[#999] bg-[#f5f5f5] px-2.5 py-1 border border-[#e8e8e8] tracking-wide">
+                        {kit.catalogueNumber}
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[#707070] text-[14px] leading-relaxed mb-4">{kit.description}</p>
+                  <a href="/#contact"
+                    className="inline-flex items-center gap-1.5 text-[12px] font-bold text-[#2c5f5f] hover:text-[#1a4040] transition-colors">
+                    Enquire <ArrowRight className="h-3.5 w-3.5" />
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ═══════════════════════════════════════════════════════
             PERFORMANCE DATA TAB
         ════════════════════════════════════════════════════════ */}
         {tab === "performance" && product.gallery && (
           <div className="max-w-[1400px] mx-auto px-8 md:px-16 py-14">
-            <h2 className="font-[var(--app-font-heading)] font-bold text-[#508484] mb-2" style={{ fontSize: "34px" }}>Performance Data</h2>
+            <h2 className="font-[var(--app-font-heading)] font-bold text-[#2c5f5f] mb-2" style={{ fontSize: "34px" }}>Performance Data</h2>
             <p className="text-[#707070] text-[16px] mb-10">Real-world instrument performance from Cytek Biosciences.</p>
             <div className="space-y-12">
               {product.gallery.map((src, i) => (
@@ -348,7 +411,7 @@ function CytekProductDetail({ product }: { product: Product }) {
         {allRelated.length > 0 && (
           <div className="bg-[#fafafa] border-t border-[#e8e8e8] py-14">
             <div className="max-w-[1400px] mx-auto px-8 md:px-16">
-              <h3 className="font-[var(--app-font-heading)] font-bold text-[#508484] mb-8" style={{ fontSize: "24px" }}>
+              <h3 className="font-[var(--app-font-heading)] font-bold text-[#2c5f5f] mb-8" style={{ fontSize: "24px" }}>
                 Related Instruments
               </h3>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">

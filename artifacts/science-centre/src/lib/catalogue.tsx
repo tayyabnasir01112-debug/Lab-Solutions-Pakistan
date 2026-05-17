@@ -13,13 +13,22 @@ export type PackagingVariant = {
   format?: string;
 };
 
+export type KitItem = {
+  name: string;
+  description: string;
+  catalogueNumber?: string;
+};
+
 export type Product = {
   id: string; name: string; brand: string; category: string;
   subcategory?: string; description: string; featured?: boolean; tags?: string[];
   image?: string;
-  heroBg?: string;   // full-bleed hero background image URL
-  subtitle?: string; // short tagline shown under product name in hero
+  heroBg?: string;
+  subtitle?: string;
   gallery?: string[];
+  specSheet?: string;   // URL to technical specifications PDF
+  brochure?: string;    // URL to product brochure PDF
+  kits?: KitItem[];     // Kits, Reagents & Options
   highlights?: string[]; features?: string[]; applications?: string[];
   specs?: Record<string, string>; catalogueNumber?: string;
   packaging?: PackagingVariant[];
@@ -891,6 +900,14 @@ export const products: Product[] = [
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Aurora-instrument-with-loader-(angle).png",
     heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/aurora-instrument-background.jpg",
     subtitle: "A prodigy that's taking flow cytometry to the next level of performance and flexibility.",
+    specSheet: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/documentation-center/technical-specifications/Aurora+CS/N9-20120+Rev.+E_Technical+Specifications,+Aurora+CS_WEB.pdf",
+    brochure: "https://cytek-web.s3.amazonaws.com/cytekbio.com/documentation-center/Brochures/N9-20001_Cytek_Aurora_Brochure.pdf",
+    kits: [
+      { name: "cFluor® Reagents", description: "Jumpstart your immunology research with Cytek's purpose-built cFluor® fluorescent reagents, optimised for full spectrum cytometry on the Aurora platform.", catalogueNumber: "R7-20001" },
+      { name: "SpectroFlo® QC Beads", description: "Use SpectroFlo® QC Beads to check the performance of your full spectrum flow cytometer and track performance over time.", catalogueNumber: "N9-20010" },
+      { name: "Automated Micro-Sampling System (AMS)", description: "A plate loader for Aurora systems compatible with 96-well plates and 40-tube racks, streamlining high-throughput workflows." },
+      { name: "Enhanced Small Particle (ESP™) Detection Option", description: "Upgrade enabling detection of particles nearing 100 nm, opening the door to exosome and nanoparticle applications." },
+    ],
     gallery: [
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora.autofluorescence+extraction-01.png",
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora.particle-detection-min.png",
@@ -951,6 +968,13 @@ export const products: Product[] = [
     image: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Aurora+Evo+Images/AuroraEvo_34_Web.png",
     heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/aurora-instrument-background.jpg",
     subtitle: "The New Standard For Full Spectrum Flow Cytometry.",
+    specSheet: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/documentation-center/technical-specifications/Aurora+Evo/N9-20140+Rev.+C_Technical+Specifications,+Aurora+Evo_WEB.pdf",
+    brochure: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/documentation-center/Brochures/Aurora+Evo/N9-20139+Rev.+A_Cytek+Aurora+Evo+Brochure.pdf",
+    kits: [
+      { name: "cFluor® Reagent Kits", description: "Pre-validated fluorescent reagent panels for use with the Aurora Evo's full spectrum platform, including human and mouse immunoprofiling panels." },
+      { name: "SpectroFlo® QC Beads", description: "Daily quality control beads to track and maintain Aurora Evo system performance.", catalogueNumber: "N9-20010" },
+      { name: "Cytek Orion™ Integration", description: "Combine the Aurora Evo with the Cytek Orion™ automated cocktail preparation system for fully automated panel setup." },
+    ],
     gallery: [
       "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Aurora+Evo+Images/AuroraEvo-Figure4a.jpg",
       "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Aurora+Evo+Images/EvoFigure2.jpg",
@@ -1002,6 +1026,12 @@ export const products: Product[] = [
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora-cs-with-computer-min.png",
     heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/aurora-instrument-background.jpg",
     subtitle: "Full Spectrum Cell Sorting — the power of Aurora, now for sorting.",
+    specSheet: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/documentation-center/technical-specifications/Aurora+CS/N9-20120+Rev.+E_Technical+Specifications,+Aurora+CS_WEB.pdf",
+    kits: [
+      { name: "cFluor® Reagents", description: "Fluorescent reagents optimised for the Aurora CS system's full spectrum sorting workflows." },
+      { name: "SpectroFlo® CS QC Beads", description: "Quality control beads designed for daily performance tracking of the Aurora CS cell sorter." },
+      { name: "Sort Collection Tubes & Plates", description: "Cytek-validated collection tubes, 96-well plates, and 4-way sort hardware accessories." },
+    ],
     gallery: [
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora-cs.optical-performance-min.png",
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora.autofluorescence+extraction-01.png",
@@ -1048,6 +1078,14 @@ export const products: Product[] = [
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Northern+Lights+-+Web+02022024+-+1000px+x+955px.png",
     heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/nl-instrument-background.jpg",
     subtitle: "Full Spectrum Flow Cytometry for All.",
+    brochure: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/documentation-center/Brochures/N9-20002+Rev.+L_Cytek+Northern+Lights+System,+Brochure_WEB.pdf",
+    kits: [
+      { name: "cFluor® Reagent Kits (Northern Lights)", description: "Validated multicolour panels including the 24-Color Mouse Immunoprofiling Panel and human T/B/NK profiling kits, optimised for the 3-laser Northern Lights configuration.", catalogueNumber: "R8-50498" },
+      { name: "Guava Nexin® Reagent", description: "Pre-mixed Annexin V PE / 7-AAD apoptosis reagent, validated for use on the Northern Lights system.", catalogueNumber: "4500-0450" },
+      { name: "SpectroFlo® QC Beads", description: "Daily QC beads for maintaining and tracking Northern Lights system performance.", catalogueNumber: "N9-20010" },
+      { name: "Automated Sample Loader (ASL)", description: "96-well plate and 40-tube rack loader option for automated high-throughput acquisition." },
+      { name: "ESP™ Detection Option", description: "Enhanced Small Particle detection upgrade, enabling nanoparticle and EV analysis on the Northern Lights platform." },
+    ],
     gallery: [
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.nl.Counting+and+Viability.png",
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Northern+Lights_Control+Data_Rev02062024+2.png",
@@ -1102,6 +1140,11 @@ export const products: Product[] = [
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.prod-nl-clc.png",
     heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/nl-instrument-background.jpg",
     subtitle: "Full Spectrum Flow Cytometry for Clinical Environments.",
+    brochure: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/documentation-center/Brochures/N9-20065+Rev.+H_Cytek+Northern+Lights%E2%80%93CLC+Brochure_WEB.pdf",
+    kits: [
+      { name: "SpectroFlo® QC Beads (NL-CLC)", description: "IVD-cleared quality control beads for the NL-CLC system, enabling daily automated performance tracking and pass/fail reporting.", catalogueNumber: "N9-20010C" },
+      { name: "Transferable Experiment Templates", description: "Pre-configured clinical panel templates for T/B/NK and MRD panels that can be shared across laboratory sites." },
+    ],
     gallery: [
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.nl-clc.evaluating-MRD-graphic.png",
     ],
@@ -1151,6 +1194,11 @@ export const products: Product[] = [
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Current+Luminex+Collateral/IS_left_P1013862%400.75x.png",
     heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/AmnisImageStreamXMKIIImagingFlowCytometer_19.jpg",
     subtitle: "Visualize a new standard of scientific discovery.",
+    kits: [
+      { name: "IDEAS® Image Analysis Software", description: "Dedicated imaging flow cytometry analysis software with 86 features per channel, 22 morphology mask functions, and machine learning capabilities for automated cell classification." },
+      { name: "Amnis® AI Module", description: "Deep learning module built into IDEAS® for automated image-based cell classification using convolutional neural networks — no manual gating required." },
+      { name: "INSPIRE® Acquisition Software", description: "Real-time acquisition and control software for the ImageStream®X Mk II system." },
+    ],
     gallery: [
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/amnis-landing-imagestream-2.png",
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Amnis+Images/Applications.png",
@@ -1208,6 +1256,14 @@ export const products: Product[] = [
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Current+Luminex+Collateral/easycyte-combination%400.75x.png",
     heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/GuavaMuseCellAnalyzer_4.jpg",
     subtitle: "Simple, Accurate Cell Analysis for Every Lab.",
+    brochure: "https://cytek-web.s3.amazonaws.com/cytekbio.com/documentation-center/Brochures/Guava/BR266256+Rev.+03062024_Brochure,+Cytek+Guava+easyCyte+Systems.pdf",
+    kits: [
+      { name: "Guava ViaCount® Reagent", description: "Validated reagent for accurate cell counting and viability determination by discriminating live, dead, and debris populations.", catalogueNumber: "4000-0040" },
+      { name: "Guava Nexin® Reagent", description: "Pre-mixed Annexin V PE / 7-AAD reagent for rapid no-wash apoptosis detection — distinguishes healthy, early apoptotic, late apoptotic, and dead cells.", catalogueNumber: "4500-0450" },
+      { name: "Guava Cell Cycle Reagent", description: "Single-reagent cell cycle kit providing G0/G1, S, and G2/M phase analysis with sub-3% CV performance.", catalogueNumber: "4500-0220" },
+      { name: "Guava Muse® Count & Viability Kit", description: "Ready-to-use kit for rapid count and viability analysis compatible with Guava easyCyte systems.", catalogueNumber: "MCH100102" },
+      { name: "Mycoplasma Detection Kit", description: "Fluorescent kit for detecting mycoplasma contamination in cell cultures using the Guava system.", catalogueNumber: "4460-0052" },
+    ],
     gallery: [
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Current+Luminex+Collateral/Guava_muse_left_Data_screen_P1013739%400.75x.png",
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/guava-landing-img.png",
@@ -1255,6 +1311,14 @@ export const products: Product[] = [
     image: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Current+Luminex+Collateral/MuseMicro_34angle_Screenshot.png",
     heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/GuavaMuseCellAnalyzer_4.jpg",
     subtitle: "Experience Simple, Affordable Flow Cytometry.",
+    specSheet: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/documentation-center/technical-specifications/N9-20133+Rev.+B_Technical+Specifications,+Muse+Micro.pdf",
+    kits: [
+      { name: "Muse® Count & Viability Kit", description: "Pre-optimised Mix-and-Read kit for rapid, accurate live/dead cell counting on the Muse Micro. No manual gating required.", catalogueNumber: "MCH100102" },
+      { name: "Muse® Annexin V & Dead Cell Kit", description: "No-wash apoptosis kit for detection of early and late apoptotic populations using Annexin V and a dead cell marker.", catalogueNumber: "MCH100105" },
+      { name: "Muse® Cell Cycle Kit", description: "Single-step cell cycle analysis kit providing G0/G1, S, and G2/M phase quantification.", catalogueNumber: "MCH100106" },
+      { name: "Muse® Oxidative Stress Kit", description: "Validated kit for measuring reactive oxygen species (ROS) in cells using the Muse Micro.", catalogueNumber: "MCH100111" },
+      { name: "Muse® Multicolor FISHFISH Kit", description: "Immunophenotyping kit for identification of T, B, and NK cell populations from peripheral blood." },
+    ],
     gallery: [
       "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Guava+Images/MuseMicro_Schematic_031325.png",
       "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/instruments/Guava+Images/Figure2_Updated.png",
@@ -1311,6 +1375,10 @@ export const products: Product[] = [
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/assets/heros/Cytek%2BOrion_Instrument_Web_V2.png",
     heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/assets/heros/Orion_Banner+Background_1350x650px.png",
     subtitle: "Automated cocktail preparation for efficient, reproducible workflows.",
+    kits: [
+      { name: "Orion™ Reagent Tubes", description: "Validated reagent tubes and rack accessories designed for use with the Cytek Orion™ automated cocktail preparation system." },
+      { name: "Orion™ Software Integration", description: "Seamless SpectroFlo® software integration for automated experiment setup, tube labelling, and cocktail volume calculation." },
+    ],
     gallery: [
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Orion+Images/orion-ov-1.jpg",
       "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Orion+Images/orion-workflow.jpg",
