@@ -9,7 +9,7 @@ import {
   FlaskConical, Tag, FileText, Layers, ImageIcon, Package,
   Zap, Activity, Settings2, Target
 } from "lucide-react";
-import { productById, brandById, categoryById, productsByBrand, type Product, type KitItem } from "@/lib/catalogue";
+import { productById, brandById, categoryById, productsByBrand, type Product, type KitItem, type FeatureCard } from "@/lib/catalogue";
 
 function Reveal({ children }: { children: React.ReactNode; delay?: number }) {
   return <div>{children}</div>;
@@ -266,20 +266,28 @@ function CytekProductDetail({ product }: { product: Product }) {
               </div>
             </div>
 
-            {/* ── Feature cards — 3-column like Cytek ────────── */}
-            {product.highlights && product.highlights.length > 0 && (
-              <div className="bg-[#fafafa] border-y border-[#e8e8e8]" style={{ padding: "80px 0 64px" }}>
+            {/* ── Feature cards — proper title + body ────────── */}
+            {(product.featureCards || product.highlights) && (
+              <div className="bg-[#fafafa] border-y border-[#e8e8e8]" style={{ padding: "72px 0 64px" }}>
                 <div className="max-w-[1400px] mx-auto px-8 md:px-16">
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {product.highlights.slice(0, 6).map((h, i) => (
-                      <div key={i} className="group">
-                        <div className="text-[#2c5f5f] mb-4 opacity-70">{cardIcons[i % cardIcons.length]}</div>
-                        <h3 className="font-[var(--app-font-heading)] font-bold text-[#2c5f5f] mb-3" style={{ fontSize: "20px" }}>
-                          {h.split("—")[0].split(" — ")[0].split(":")[0].slice(0, 50)}
-                        </h3>
-                        <p className="text-[#707070] text-[15px] leading-relaxed">{h}</p>
-                      </div>
-                    ))}
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-10">
+                    {product.featureCards
+                      ? product.featureCards.map((card, i) => (
+                          <div key={i} className="group">
+                            <div className="text-[#2c5f5f] mb-4 opacity-60">{cardIcons[i % cardIcons.length]}</div>
+                            <h3 className="font-[var(--app-font-heading)] font-bold text-[#2c5f5f] mb-3 leading-snug" style={{ fontSize: "19px" }}>
+                              {card.title}
+                            </h3>
+                            <p className="text-[#707070] text-[15px] leading-relaxed">{card.body}</p>
+                          </div>
+                        ))
+                      : product.highlights!.slice(0, 6).map((h, i) => (
+                          <div key={i} className="group">
+                            <div className="text-[#2c5f5f] mb-4 opacity-60">{cardIcons[i % cardIcons.length]}</div>
+                            <p className="text-[#707070] text-[15px] leading-relaxed">{h}</p>
+                          </div>
+                        ))
+                    }
                   </div>
                 </div>
               </div>

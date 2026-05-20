@@ -19,6 +19,11 @@ export type KitItem = {
   catalogueNumber?: string;
 };
 
+export type FeatureCard = {
+  title: string;
+  body: string;
+};
+
 export type Product = {
   id: string; name: string; brand: string; category: string;
   subcategory?: string; description: string; featured?: boolean; tags?: string[];
@@ -26,9 +31,10 @@ export type Product = {
   heroBg?: string;
   subtitle?: string;
   gallery?: string[];
-  specSheet?: string;   // URL to technical specifications PDF
-  brochure?: string;    // URL to product brochure PDF
-  kits?: KitItem[];     // Kits, Reagents & Options
+  specSheet?: string;
+  brochure?: string;
+  kits?: KitItem[];
+  featureCards?: FeatureCard[];  // structured title+body pairs for the feature card grid
   highlights?: string[]; features?: string[]; applications?: string[];
   specs?: Record<string, string>; catalogueNumber?: string;
   packaging?: PackagingVariant[];
@@ -902,6 +908,14 @@ export const products: Product[] = [
     subtitle: "A prodigy that's taking flow cytometry to the next level of performance and flexibility.",
     specSheet: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/documentation-center/technical-specifications/Aurora+CS/N9-20120+Rev.+E_Technical+Specifications,+Aurora+CS_WEB.pdf",
     brochure: "https://cytek-web.s3.amazonaws.com/cytekbio.com/documentation-center/Brochures/N9-20001_Cytek_Aurora_Brochure.pdf",
+    featureCards: [
+      { title: "40 Colors Demonstrated", body: "Up to 40 simultaneous colors in a single tube — including fluorochromes with overlapping spectra. More colours per sample than any conventional flow cytometer." },
+      { title: "No Filter Reconfiguration Needed", body: "Use any commercially available fluorochrome excited by the onboard lasers without swapping optical filters. One configuration handles every assay and panel design." },
+      { title: "Autofluorescence Extraction", body: "SpectroFlo® software resolves challenging samples — tumour biopsies, yeast, plant cells — by mathematically extracting autofluorescence as a separate parameter, not discarding it." },
+      { title: "Small Particle Detection", body: "The 100 mW 405 nm laser and highly sensitive violet SSC detector enable detection of particles approaching 100 nm — extracellular vesicles, viruses, bacteria, and nanoparticles in full view." },
+      { title: "Up to 5 Lasers, 64 Channels", body: "Configure with up to five spatially separated lasers (355, 405, 488, 561, 640 nm) and 64 fluorescence channels plus FSC and two SSC detectors — 67 detection channels total." },
+      { title: "SpectroFlo® Software", body: "Intuitive workflow from daily QC to deep analysis: live spectral unmixing, virtual filters, autofluorescence extraction, and a reusable reference control library that travels with your panels." },
+    ],
     kits: [
       { name: "cFluor® Reagents", description: "Jumpstart your immunology research with Cytek's purpose-built cFluor® fluorescent reagents, optimised for full spectrum cytometry on the Aurora platform.", catalogueNumber: "R7-20001" },
       { name: "SpectroFlo® QC Beads", description: "Use SpectroFlo® QC Beads to check the performance of your full spectrum flow cytometer and track performance over time.", catalogueNumber: "N9-20010" },
@@ -970,6 +984,14 @@ export const products: Product[] = [
     subtitle: "The New Standard For Full Spectrum Flow Cytometry.",
     specSheet: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/documentation-center/technical-specifications/Aurora+Evo/N9-20140+Rev.+C_Technical+Specifications,+Aurora+Evo_WEB.pdf",
     brochure: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/documentation-center/Brochures/Aurora+Evo/N9-20139+Rev.+A_Cytek+Aurora+Evo+Brochure.pdf",
+    featureCards: [
+      { title: "High-Throughput Acquisition", body: "Sample flow rates up to 200 µL/min using both tubes and 96-well plates, 384-well plates, and 40-tube racks — without sacrificing sensitivity or spectral resolution." },
+      { title: "Up to 60,000 Events/Second", body: "Exceptional throughput with up to 60,000 events per second at maximum flow rate, enabling rapid screening of large sample cohorts while maintaining high-quality data." },
+      { title: "Automated Startup & Shutdown", body: "Fully automated, schedulable startup and shutdown after daily clean or plate run — reducing hands-on instrument time and ensuring the system is ready when researchers arrive." },
+      { title: "Built-In Small Particle Detection", body: "Previously an optional upgrade on the Aurora, small particle detection is now built in as standard — enabling extracellular vesicle, virus, and nanoparticle analysis without an add-on module." },
+      { title: "Instrument Harmonisation", body: "Standardised instrument setup with automated Daily QC and CytekAssaySetting ensures reproducible biological results from one Aurora Evo to another — across sites, instruments, and time points." },
+      { title: "Proven FSP® Reliability", body: "Built on the same Full Spectrum Profiling™ technology cited in over 2,600 peer-reviewed publications — the most cited spectral flow cytometry platform in the world." },
+    ],
     kits: [
       { name: "cFluor® Reagent Kits", description: "Pre-validated fluorescent reagent panels for use with the Aurora Evo's full spectrum platform, including human and mouse immunoprofiling panels." },
       { name: "SpectroFlo® QC Beads", description: "Daily quality control beads to track and maintain Aurora Evo system performance.", catalogueNumber: "N9-20010" },
@@ -1026,6 +1048,14 @@ export const products: Product[] = [
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.aurora-cs-with-computer-min.png",
     heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/aurora-instrument-background.jpg",
     subtitle: "Full Spectrum Cell Sorting — the power of Aurora, now for sorting.",
+    featureCards: [
+      { title: "Up to 40-Color Sorting", body: "Sort complex, high-dimensional panels of up to 40 colours using Full Spectrum Profiling™ — the same optical system as the Aurora analyser, now with high-purity sorting capability." },
+      { title: "Autofluorescence Extraction in Sort", body: "Autofluorescence extraction applies during sorting, enabling isolation of positively expressing cells from highly autofluorescent samples such as yeast, gut tissue, and tumour biopsies." },
+      { title: "Easy Panel Transfer from Aurora", body: "Panels optimised on the Aurora analyser transfer directly to the Aurora CS without modification — shared optics and SpectroFlo® CS software make assay migration seamless." },
+      { title: "Automated Drop Delay & Monitoring", body: "Automated drop delay calculation, real-time clog detection, sort monitoring, and post-sort reporting keep experiments running smoothly with minimal operator intervention." },
+      { title: "High Purity for Downstream Assays", body: "Designed to sort viable and functional cells. 4-way sorting demonstrated with 100 µm and 70 µm nozzles — cells remain functional for scRNA-seq, culture, and stimulation assays." },
+      { title: "cFluor® Reagents Ready", body: "Jumpstart immunology research with Cytek's cFluor® reagents and pre-validated panels, optimised for the Aurora CS spectral platform and available for immediate use." },
+    ],
     specSheet: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/documentation-center/technical-specifications/Aurora+CS/N9-20120+Rev.+E_Technical+Specifications,+Aurora+CS_WEB.pdf",
     kits: [
       { name: "cFluor® Reagents", description: "Fluorescent reagents optimised for the Aurora CS system's full spectrum sorting workflows." },
@@ -1079,6 +1109,14 @@ export const products: Product[] = [
     heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/nl-instrument-background.jpg",
     subtitle: "Full Spectrum Flow Cytometry for All.",
     brochure: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/documentation-center/Brochures/N9-20002+Rev.+L_Cytek+Northern+Lights+System,+Brochure_WEB.pdf",
+    featureCards: [
+      { title: "Full Spectrum on 3 Lasers", body: "Up to 3 lasers (405, 488, 638 nm) and 38 fluorescence channels bring Full Spectrum Profiling™ to everyday research — enabling 8 to 24-colour panels without filter reconfiguration." },
+      { title: "Autofluorescence Extraction", body: "Handle challenging sample types — plant cells, yeast, activated macrophages — by extracting autofluorescence as a separate spectral component, improving resolution for all populations." },
+      { title: "Accurate Counting & Viability", body: "Integrated Guava® ViaCount™ workflow enables accurate, bead-free volumetric cell counts and live/dead discrimination — without additional reagents or separate instruments." },
+      { title: "Apoptosis & Cell Cycle Ready", body: "Validated workflows for Guava Nexin® apoptosis detection (Annexin V PE / 7-AAD) and cell cycle analysis with sub-3% CV — out of the box, with pre-optimised protocols." },
+      { title: "SpectroFlo® Software Platform", body: "The same SpectroFlo® software used on the Aurora — daily QC, live unmixing, reusable reference controls, and portable experiment templates for multi-site standardisation." },
+      { title: "Automated Sample Loader Option", body: "Optional ASL plate loader for 96-well deep-well plates and 40-tube racks enables walkaway acquisition for high-throughput core facility and batch sample workflows." },
+    ],
     kits: [
       { name: "cFluor® Reagent Kits (Northern Lights)", description: "Validated multicolour panels including the 24-Color Mouse Immunoprofiling Panel and human T/B/NK profiling kits, optimised for the 3-laser Northern Lights configuration.", catalogueNumber: "R8-50498" },
       { name: "Guava Nexin® Reagent", description: "Pre-mixed Annexin V PE / 7-AAD apoptosis reagent, validated for use on the Northern Lights system.", catalogueNumber: "4500-0450" },
@@ -1141,6 +1179,14 @@ export const products: Product[] = [
     heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/nl-instrument-background.jpg",
     subtitle: "Full Spectrum Flow Cytometry for Clinical Environments.",
     brochure: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/documentation-center/Brochures/N9-20065+Rev.+H_Cytek+Northern+Lights%E2%80%93CLC+Brochure_WEB.pdf",
+    featureCards: [
+      { title: "Cleared for Clinical Use", body: "Available for in vitro diagnostic use in China and the European Union — meeting the operational and regulatory requirements of clinical diagnostic laboratories." },
+      { title: "Daily QC With Pass/Fail Reporting", body: "Automated daily QC using SpectroFlo® QC Beads with quantitative pass/fail criteria. QC reports are generated automatically — no manual interpretation required." },
+      { title: "Reusable Reference Controls", body: "Reference controls are stored and reused across runs, saving precious clinical sample and reducing hands-on preparation time for routine immunophenotyping panels." },
+      { title: "Transferable Panel Templates", body: "Experiment templates can be shared across NL-CLC instruments at different sites — ensuring standardised results for multi-location clinical networks and diagnostic programmes." },
+      { title: "Fewer Tubes per Assay", body: "Full spectrum multiplexing means more markers per tube — reducing the number of tubes required per patient sample and conserving limited clinical specimens." },
+      { title: "MRD Monitoring Ready", body: "Validated for minimal residual disease (MRD) monitoring in haematological malignancies — AML and lymphoma panels benefit from the sensitivity and resolution of the FSP® platform." },
+    ],
     kits: [
       { name: "SpectroFlo® QC Beads (NL-CLC)", description: "IVD-cleared quality control beads for the NL-CLC system, enabling daily automated performance tracking and pass/fail reporting.", catalogueNumber: "N9-20010C" },
       { name: "Transferable Experiment Templates", description: "Pre-configured clinical panel templates for T/B/NK and MRD panels that can be shared across laboratory sites." },
@@ -1194,6 +1240,14 @@ export const products: Product[] = [
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Current+Luminex+Collateral/IS_left_P1013862%400.75x.png",
     heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/AmnisImageStreamXMKIIImagingFlowCytometer_19.jpg",
     subtitle: "Visualize a new standard of scientific discovery.",
+    featureCards: [
+      { title: "Flow Cytometry + Microscopy Combined", body: "Acquire high-quality cell images at flow cytometry speeds — up to 12 simultaneous imaging channels per cell including brightfield, side scatter, and up to 10 fluorescence channels." },
+      { title: "CCD Time Delay Integration", body: "The patented TDI imaging mode keeps the CCD detector synchronised with the moving cell, accumulating photons over time for exceptional sensitivity — detecting even dim fluorescent signals." },
+      { title: "IDEAS® Image Analysis Software", body: "86 morphological features per channel, 22 function masks, and a machine learning classification module — enabling quantitative analysis of nuclear translocation, phagocytosis, cell conjugates, and more." },
+      { title: "Amnis® AI Classification", body: "Deep learning with convolutional neural networks classifies cells by image-based morphology automatically — no manual gating on image features. Ideal for rare event detection and phenotypic profiling." },
+      { title: "Multiple Magnification Options", body: "Selectable objectives of 20×, 40×, or 60× give flexibility across applications — from whole-blood immunophenotyping to high-resolution nuclear localisation studies." },
+      { title: "Millions of Cell Images per Run", body: "Statistical confidence that microscopy alone cannot provide: acquire millions of individually imaged cells per experiment for robust quantitative population-level analysis." },
+    ],
     kits: [
       { name: "IDEAS® Image Analysis Software", description: "Dedicated imaging flow cytometry analysis software with 86 features per channel, 22 morphology mask functions, and machine learning capabilities for automated cell classification." },
       { name: "Amnis® AI Module", description: "Deep learning module built into IDEAS® for automated image-based cell classification using convolutional neural networks — no manual gating required." },
@@ -1257,6 +1311,14 @@ export const products: Product[] = [
     heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/GuavaMuseCellAnalyzer_4.jpg",
     subtitle: "Simple, Accurate Cell Analysis for Every Lab.",
     brochure: "https://cytek-web.s3.amazonaws.com/cytekbio.com/documentation-center/Brochures/Guava/BR266256+Rev.+03062024_Brochure,+Cytek+Guava+easyCyte+Systems.pdf",
+    featureCards: [
+      { title: "Direct Volumetric Cell Counting", body: "Microcapillary technology counts cells directly by volume — no counting beads required. Delivers accurate, reproducible absolute cell counts and concentrations from every sample." },
+      { title: "20+ Years of Platform Reliability", body: "Guava® easyCyte™ systems were the first benchtop cytometers to market. Over two decades of continuous development deliver a proven, reliable platform trusted by thousands of labs worldwide." },
+      { title: "Mix-and-Read Assay Kits", body: "Pre-optimised assay kits for viability (ViaCount®), apoptosis (Nexin®), cell cycle, proliferation, and mycoplasma detection — simply mix the reagent, add cells, and read. No complex sample preparation." },
+      { title: "InCyte™ Software", body: "Intuitive InCyte™ data acquisition and analysis software with pre-set assay templates, automated gating, and direct export — reducing analysis time and operator-to-operator variability." },
+      { title: "Cell & Gene Therapy Ready", body: "Validated for in-process analysis at multiple stages of CGT manufacturing — from viability monitoring and apoptosis detection to immunophenotyping of engineered cell products." },
+      { title: "Compact, Low-Maintenance Design", body: "Compact benchtop footprint with minimal maintenance requirements and low sample volume consumption — ideal for routine daily use in any laboratory setting." },
+    ],
     kits: [
       { name: "Guava ViaCount® Reagent", description: "Validated reagent for accurate cell counting and viability determination by discriminating live, dead, and debris populations.", catalogueNumber: "4000-0040" },
       { name: "Guava Nexin® Reagent", description: "Pre-mixed Annexin V PE / 7-AAD reagent for rapid no-wash apoptosis detection — distinguishes healthy, early apoptotic, late apoptotic, and dead cells.", catalogueNumber: "4500-0450" },
@@ -1312,6 +1374,14 @@ export const products: Product[] = [
     heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/GuavaMuseCellAnalyzer_4.jpg",
     subtitle: "Experience Simple, Affordable Flow Cytometry.",
     specSheet: "https://cytek-web.s3.us-east-1.amazonaws.com/cytekbio.com/documentation-center/technical-specifications/N9-20133+Rev.+B_Technical+Specifications,+Muse+Micro.pdf",
+    featureCards: [
+      { title: "8 × 10 Inch Footprint", body: "One of the most compact cell analysers available — at just 20 × 25 cm the Muse Micro fits comfortably on any bench, biosafety cabinet, or shared workstation." },
+      { title: "2025 BioTech Breakthrough Award Winner", body: "Recognised as Drug Discovery Solution of the Year 2025 by BioTech Breakthrough — validating its impact on simplifying and accelerating cell analysis workflows in drug discovery laboratories." },
+      { title: "High-Precision Displacement Pump", body: "Advanced microcapillary technology with a high-precision displacement pump delivers accurate, bead-free volumetric counts — the same proven counting technology behind the Guava® platform." },
+      { title: "No Manual Gating Required", body: "Automatic threshold calculation and gating for every pre-optimised Muse® assay kit — no software configuration, no drawing gates. Load, run, read results." },
+      { title: "Touchscreen-Guided Workflow", body: "The guided touchscreen interface walks users through each assay step-by-step. Designed for researchers who need reliable results without dedicated flow cytometry training." },
+      { title: "Growing Assay Kit Library", body: "Count & Viability, Annexin V apoptosis, cell cycle, oxidative stress, immunophenotyping, and more — a continuously expanding library of validated Mix-and-Read kits for routine and specialised assays." },
+    ],
     kits: [
       { name: "Muse® Count & Viability Kit", description: "Pre-optimised Mix-and-Read kit for rapid, accurate live/dead cell counting on the Muse Micro. No manual gating required.", catalogueNumber: "MCH100102" },
       { name: "Muse® Annexin V & Dead Cell Kit", description: "No-wash apoptosis kit for detection of early and late apoptotic populations using Annexin V and a dead cell marker.", catalogueNumber: "MCH100105" },
@@ -1375,6 +1445,13 @@ export const products: Product[] = [
     image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/assets/heros/Cytek%2BOrion_Instrument_Web_V2.png",
     heroBg: "https://cytek-web.s3.amazonaws.com/cytekbio.com/assets/heros/Orion_Banner+Background_1350x650px.png",
     subtitle: "Automated cocktail preparation for efficient, reproducible workflows.",
+    featureCards: [
+      { title: "Eliminate Manual Pipetting Errors", body: "The Orion™ system precisely pipettes and mixes antibody cocktails for each sample automatically — removing the operator variability that is the single largest source of error in high-parameter panel preparation." },
+      { title: "Reduce Preparation Time", body: "Automated cocktail dispensing dramatically cuts hands-on preparation time for complex 20–40 colour panels — freeing researchers to focus on science rather than sample setup." },
+      { title: "Integrated with Aurora & Northern Lights", body: "Designed to work directly with the Cytek Aurora™ and Northern Lights™ instrument ecosystems and SpectroFlo® software — experiment files and tube layouts transfer automatically to the Orion." },
+      { title: "Minimise Reagent Waste", body: "Precise dispensing volumes calculated from experiment files reduce over-pipetting and reagent waste — critical for expensive antibody panels where reagent cost is a significant budget item." },
+      { title: "Standardise Across Operators", body: "Every cocktail is prepared identically regardless of which operator is working — enabling multi-operator labs and CROs to maintain consistent panel preparation for high-reproducibility studies." },
+    ],
     kits: [
       { name: "Orion™ Reagent Tubes", description: "Validated reagent tubes and rack accessories designed for use with the Cytek Orion™ automated cocktail preparation system." },
       { name: "Orion™ Software Integration", description: "Seamless SpectroFlo® software integration for automated experiment setup, tube labelling, and cocktail volume calculation." },
