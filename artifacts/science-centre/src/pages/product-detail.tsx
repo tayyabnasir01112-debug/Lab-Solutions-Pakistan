@@ -434,6 +434,301 @@ function CytekProductDetail({ product }: { product: Product }) {
   );
 }
 
+/* ─── NgeneBio Clinical Detail Page ───────────────────────────── */
+
+function NgeneBioProductDetail({ product }: { product: Product }) {
+  const category = categoryById(product.category);
+  const related = (product.relatedProducts || []).map(rid => productById(rid)).filter(Boolean) as Product[];
+  const moreBrand = productsByBrand(product.brand).filter(p => p.id !== product.id && !product.relatedProducts?.includes(p.id)).slice(0, 3 - related.length);
+  const allRelated = [...related, ...moreBrand].slice(0, 3);
+  const [tab, setTab] = useState<"overview" | "specs" | "applications">("overview");
+  const NGENE_RED = "#C8002D";
+
+  const tabs = [
+    { key: "overview" as const, label: "Overview" },
+    ...(product.specs ? [{ key: "specs" as const, label: "Specifications" }] : []),
+    ...(product.applications ? [{ key: "applications" as const, label: "Applications" }] : []),
+  ];
+
+  return (
+    <div className="min-h-[100dvh] bg-white text-[#111]">
+      <SiteNavbar forceSolid />
+      <main>
+
+        {/* ── Hero ─────────────────────────────────────────────── */}
+        <div className="bg-[#0a0a0a] pt-24 pb-0 relative overflow-hidden">
+          {/* Subtle red glow */}
+          <div className="absolute inset-0 opacity-20" style={{ background: "radial-gradient(ellipse 70% 50% at 30% 50%, #C8002D33 0%, transparent 70%)" }} />
+          {/* Grid texture */}
+          <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16 relative z-10">
+            {/* Breadcrumb */}
+            <div className="flex items-center gap-2 text-[12px] text-white/30 mb-8">
+              <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
+              <ChevronRight className="h-3 w-3" />
+              <Link href="/products" className="hover:text-white/60 transition-colors">Products</Link>
+              <ChevronRight className="h-3 w-3" />
+              <span className="text-white/50">NgeneBio</span>
+              <ChevronRight className="h-3 w-3" />
+              <span className="text-white/70 truncate max-w-[200px]">{product.name}</span>
+            </div>
+
+            <div className="grid lg:grid-cols-[1fr_auto] gap-12 pb-12 items-end">
+              <div className="max-w-2xl">
+                {/* Badges */}
+                <div className="flex flex-wrap gap-2 mb-5">
+                  <span className="px-3 py-1 text-[11px] font-black tracking-[0.2em] uppercase text-white bg-[#C8002D]">NgeneBio</span>
+                  <span className="px-3 py-1 text-[11px] font-bold text-[#00c896] border border-[#00c896]/40 bg-[#00c896]/10 tracking-wide">CE-IVD Certified</span>
+                  {product.featured && <span className="px-3 py-1 text-[11px] font-bold text-amber-400 border border-amber-400/30 bg-amber-400/5">Featured</span>}
+                  {category && <span className="px-3 py-1 text-[11px] font-medium text-white/40 border border-white/10 flex items-center gap-1">{category.icon} {category.name}</span>}
+                </div>
+
+                {/* Product name */}
+                <h1 className="font-[var(--app-font-heading)] font-black text-white mb-3 leading-tight tracking-tight"
+                  style={{ fontSize: "clamp(30px,4.5vw,52px)" }}>
+                  {product.name}
+                </h1>
+
+                {/* Subtitle */}
+                {product.subtitle && (
+                  <p className="text-[#C8002D] font-semibold text-[15px] mb-5 tracking-wide">{product.subtitle}</p>
+                )}
+
+                <p className="text-white/50 text-[15px] leading-relaxed mb-8 max-w-xl">{product.description}</p>
+
+                {/* CTAs */}
+                <div className="flex flex-wrap gap-3">
+                  <a href="/#contact"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 text-[12px] font-black tracking-[0.15em] uppercase text-white bg-[#C8002D] hover:bg-[#a0001f] transition-colors">
+                    REQUEST A QUOTE <ArrowRight className="h-4 w-4" />
+                  </a>
+                  <a href="/#contact"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 text-[12px] font-bold tracking-[0.1em] uppercase border-2 border-white/20 text-white hover:border-white/50 hover:bg-white/5 transition-colors">
+                    SPEAK TO A SPECIALIST
+                  </a>
+                  <Link href="/products">
+                    <button className="inline-flex items-center gap-1.5 px-4 py-3.5 text-[12px] font-bold text-white/30 hover:text-white/60 transition-colors">
+                      <ArrowLeft className="h-3.5 w-3.5" /> All Products
+                    </button>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Key stats column */}
+              {product.specs && (
+                <div className="hidden lg:block w-72 flex-shrink-0">
+                  <div className="border border-white/10 divide-y divide-white/5">
+                    <div className="px-4 py-3 bg-[#C8002D]/80">
+                      <span className="text-[10px] font-black tracking-[0.2em] uppercase text-white">Key Specifications</span>
+                    </div>
+                    {Object.entries(product.specs).slice(0, 6).map(([k, v]) => (
+                      <div key={k} className="px-4 py-3">
+                        <div className="text-[10px] text-white/30 font-semibold uppercase tracking-wider mb-0.5">{k}</div>
+                        <div className="text-[13px] text-white/80 font-medium leading-snug">{v}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Tab Navigation ───────────────────────────────────── */}
+        <div className="bg-white border-b border-[#e8e8e8] sticky top-0 z-20 shadow-sm">
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16 flex items-center gap-3 py-3">
+            {tabs.map(t => (
+              <button key={t.key} onClick={() => setTab(t.key)}
+                className={`px-5 py-2 text-[12px] font-bold tracking-[0.12em] uppercase transition-all duration-200 ${
+                  tab === t.key
+                    ? "bg-[#C8002D] text-white shadow"
+                    : "bg-[#f4f4f4] text-[#555] hover:bg-[#e8e8e8]"
+                }`}>
+                {t.label}
+              </button>
+            ))}
+            <div className="ml-auto">
+              <Link href="/products" className="flex items-center gap-1.5 text-[12px] font-bold text-[#888] hover:text-[#C8002D] transition-colors">
+                <ArrowLeft className="h-3.5 w-3.5" /> All Products
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* ══ OVERVIEW TAB ══════════════════════════════════════ */}
+        {tab === "overview" && (
+          <>
+            {/* Feature cards grid */}
+            {product.featureCards && (
+              <div className="bg-[#fafafa] border-b border-[#e8e8e8] py-16">
+                <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+                  <div className="flex items-center gap-3 mb-10">
+                    <div className="w-1 h-6 bg-[#C8002D]" />
+                    <h2 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[22px]">Key Capabilities</h2>
+                  </div>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {product.featureCards.map((card, i) => (
+                      <div key={i} className="bg-white border border-[#e8e8e8] p-6 hover:border-[#C8002D]/30 hover:shadow-sm transition-all duration-200">
+                        <div className="w-8 h-8 bg-[#C8002D] flex items-center justify-center mb-4 flex-shrink-0">
+                          <span className="text-white font-black text-[13px]">{String(i + 1).padStart(2, "0")}</span>
+                        </div>
+                        <h3 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[16px] mb-2 leading-snug">{card.title}</h3>
+                        <p className="text-[#666] text-[14px] leading-relaxed">{card.body}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Features list */}
+            {product.features && (
+              <div className="border-b border-[#e8e8e8] py-14">
+                <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+                  <div className="grid lg:grid-cols-2 gap-12">
+                    <div>
+                      <div className="flex items-center gap-3 mb-8">
+                        <div className="w-1 h-6 bg-[#C8002D]" />
+                        <h2 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[22px]">Technical Features</h2>
+                      </div>
+                      <div className="space-y-3">
+                        {product.features.map((f, i) => (
+                          <div key={i} className="flex items-start gap-3 py-3 border-b border-[#f5f5f5] last:border-0">
+                            <CheckCircle2 className="h-4 w-4 text-[#C8002D] flex-shrink-0 mt-0.5" />
+                            <span className="text-[#444] text-[14px] leading-relaxed">{f}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Regulatory & trust block */}
+                    <div>
+                      <div className="flex items-center gap-3 mb-8">
+                        <div className="w-1 h-6 bg-[#C8002D]" />
+                        <h2 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[22px]">Regulatory Status</h2>
+                      </div>
+                      <div className="space-y-4">
+                        {[
+                          { badge: "CE-IVD", desc: "Certified for in vitro diagnostic use in the European Union", color: "#008060" },
+                          { badge: "MFDS", desc: "Approved by Korea's Ministry of Food and Drug Safety", color: "#1a56db" },
+                          { badge: "NGeneAnalySys™", desc: "Integrated automated bioinformatics pipeline — variant calling to clinical report", color: "#7c3aed" },
+                          { badge: "Illumina Platform", desc: "Validated on MiSeq, MiSeqDx, MiniSeq — standard clinical laboratory platforms", color: "#0369a1" },
+                        ].map((item, i) => (
+                          <div key={i} className="flex items-start gap-4 p-4 bg-[#fafafa] border border-[#f0f0f0]">
+                            <span className="px-2.5 py-1 text-[10px] font-black tracking-wide text-white flex-shrink-0" style={{ backgroundColor: item.color }}>
+                              {item.badge}
+                            </span>
+                            <p className="text-[#555] text-[13px] leading-relaxed">{item.desc}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* CTA banner */}
+            <div className="py-16 bg-[#0a0a0a] relative overflow-hidden">
+              <div className="absolute inset-0 opacity-30" style={{ background: "radial-gradient(ellipse 60% 80% at 50% 50%, #C8002D22 0%, transparent 70%)" }} />
+              <div className="max-w-[1400px] mx-auto px-8 md:px-16 flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+                <div>
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-6 h-0.5 bg-[#C8002D]" />
+                    <span className="text-[#C8002D] text-[10px] font-black tracking-[0.3em] uppercase">Science Centre Pakistan · NgeneBio Distributor</span>
+                  </div>
+                  <h2 className="font-[var(--app-font-heading)] font-black text-white leading-tight" style={{ fontSize: "clamp(20px,3vw,32px)" }}>
+                    Bring Precision NGS Diagnostics to Your Laboratory
+                  </h2>
+                  <p className="text-white/40 text-[13px] mt-2">Local support, installation, and training across Pakistan.</p>
+                </div>
+                <div className="flex gap-3 flex-shrink-0">
+                  <a href="/#contact" className="inline-flex items-center gap-2 px-8 py-4 text-[12px] font-black tracking-[0.15em] uppercase bg-[#C8002D] text-white hover:bg-[#a0001f] transition-colors">
+                    REQUEST A QUOTE <ArrowRight className="h-4 w-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* ══ SPECS TAB ════════════════════════════════════════ */}
+        {tab === "specs" && product.specs && (
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16 py-14">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-1 h-6 bg-[#C8002D]" />
+              <h2 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[22px]">Full Specifications</h2>
+            </div>
+            <div className="border border-[#e8e8e8] overflow-hidden max-w-3xl">
+              {Object.entries(product.specs).map(([k, v], i) => (
+                <div key={k} className={`flex flex-col sm:flex-row sm:items-start gap-2 px-6 py-4 border-b border-[#f0f0f0] last:border-0 ${i % 2 === 0 ? "bg-white" : "bg-[#fafafa]"}`}>
+                  <span className="text-[12px] font-bold text-[#C8002D] uppercase tracking-wide sm:w-56 flex-shrink-0">{k}</span>
+                  <span className="text-[14px] text-[#333] leading-relaxed">{v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ══ APPLICATIONS TAB ════════════════════════════════ */}
+        {tab === "applications" && product.applications && (
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16 py-14">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-1 h-6 bg-[#C8002D]" />
+              <h2 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[22px]">Clinical Applications</h2>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl">
+              {product.applications.map((a, i) => (
+                <div key={i} className="flex items-start gap-3 p-4 border border-[#e8e8e8] bg-white hover:border-[#C8002D]/30 transition-colors">
+                  <div className="w-5 h-5 bg-[#C8002D] flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <ArrowRight className="h-3 w-3 text-white" />
+                  </div>
+                  <span className="text-[14px] text-[#444] leading-relaxed">{a}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── Related Products ─────────────────────────────────── */}
+        {allRelated.length > 0 && (
+          <div className="bg-[#fafafa] border-t border-[#e8e8e8] py-14">
+            <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-1 h-6 bg-[#C8002D]" />
+                <h3 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[20px]">Related Products</h3>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {allRelated.map(p => {
+                  const cat = categoryById(p.category);
+                  return (
+                    <Link key={p.id} href={`/products/${p.id}`}>
+                      <div className="group border border-[#e8e8e8] bg-white p-5 hover:border-[#C8002D]/40 hover:shadow-sm transition-all cursor-pointer">
+                        <div className="flex items-start justify-between mb-3">
+                          <span className="px-2 py-0.5 text-[9px] font-black tracking-[0.15em] uppercase text-white bg-[#C8002D]">NgeneBio</span>
+                          <span className="px-2 py-0.5 text-[9px] font-bold text-[#008060] border border-[#008060]/30">CE-IVD</span>
+                        </div>
+                        <h4 className="font-[var(--app-font-heading)] font-bold text-[14px] text-[#111] group-hover:text-[#C8002D] transition-colors mb-1 leading-snug">{p.name}</h4>
+                        <p className="text-[12px] text-[#888] line-clamp-2 leading-relaxed">{p.description}</p>
+                        <div className="mt-3 flex items-center gap-1 text-[11px] font-bold text-[#C8002D] opacity-0 group-hover:opacity-100 transition-opacity">
+                          View Details <ArrowRight className="h-3 w-3" />
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        )}
+
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}
+
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
 
@@ -462,6 +757,11 @@ export default function ProductDetail() {
   // Route Cytek products to premium dark detail page
   if (product.brand === "cytek") {
     return <CytekProductDetail product={product} />;
+  }
+
+  // Route NgeneBio products to clinical diagnostic detail page
+  if (product.brand === "ngene") {
+    return <NgeneBioProductDetail product={product} />;
   }
 
   const brand = brandById(product.brand);

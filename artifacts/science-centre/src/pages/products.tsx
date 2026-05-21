@@ -352,6 +352,104 @@ function CytekCard({ product, index }: { product: Product; index: number }) {
   );
 }
 
+/* ─── NgeneBio Diagnostic Card ────────────────────────────────── */
+
+function NgeneBioCard({ product, index }: { product: Product; index: number }) {
+  const category = categoryById(product.category);
+  const NGENE_RED = "#C8002D";
+
+  // Pull a key stat from specs
+  const keySpec = product.specs
+    ? product.specs["DNA Panel Genes"] ?? product.specs["Gene Coverage"] ?? product.specs["Standard Loci (HLAaccuTest™)"] ?? null
+    : null;
+
+  // Cancer-type tags from tags array (first 3)
+  const tagBadges = (product.tags || []).slice(0, 3);
+
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.35, delay: Math.min(index * 0.02, 0.25), ease: [0.16, 1, 0.3, 1] }}
+      className="group bg-white border border-[#e8e8e8] hover:border-[#C8002D]/40 hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col"
+    >
+      {/* Top accent bar — red */}
+      <div className="h-1 bg-[#C8002D] flex-shrink-0" />
+
+      {/* Header area */}
+      <div className="px-5 pt-5 pb-4 flex-shrink-0">
+        {/* Brand + regulatory badges */}
+        <div className="flex items-center justify-between mb-3">
+          <span className="px-2 py-0.5 text-[10px] font-black tracking-[0.18em] uppercase text-white bg-[#C8002D]">
+            NgeneBio
+          </span>
+          <div className="flex gap-1.5">
+            <span className="px-2 py-0.5 text-[9px] font-bold text-[#008060] border border-[#008060]/30 bg-[#008060]/5 tracking-wide">CE-IVD</span>
+            {product.featured && (
+              <span className="px-2 py-0.5 text-[9px] font-bold text-[#C8002D] border border-[#C8002D]/30 bg-[#C8002D]/5 tracking-wide">Featured</span>
+            )}
+          </div>
+        </div>
+
+        {/* Product name */}
+        <h3 className="font-[var(--app-font-heading)] text-[16px] font-bold leading-snug text-[#111] mb-1.5 group-hover:text-[#C8002D] transition-colors cursor-pointer">
+          <Link href={`/products/${product.id}`}>{product.name}</Link>
+        </h3>
+
+        {/* Subtitle */}
+        {product.subtitle && (
+          <p className="text-[11px] font-semibold text-[#C8002D]/70 tracking-wide mb-3">{product.subtitle}</p>
+        )}
+
+        {/* Category */}
+        <div className="flex items-center gap-1.5 text-[11px] text-[#888] mb-3">
+          {category?.icon}
+          <span>{category?.name}</span>
+        </div>
+
+        {/* Description */}
+        <p className="text-[13px] text-[#666] leading-relaxed line-clamp-3">{product.description}</p>
+      </div>
+
+      {/* Key spec highlight */}
+      {keySpec && (
+        <div className="mx-5 mb-4 px-3 py-2.5 bg-[#fafafa] border border-[#f0f0f0] flex items-center gap-3">
+          <div className="w-1 h-8 bg-[#C8002D] flex-shrink-0" />
+          <div>
+            <div className="text-[13px] font-bold text-[#111]">{keySpec}</div>
+            <div className="text-[10px] text-[#999] font-semibold uppercase tracking-wide">Panel Coverage</div>
+          </div>
+        </div>
+      )}
+
+      {/* Tags */}
+      {tagBadges.length > 0 && (
+        <div className="px-5 pb-4 flex flex-wrap gap-1.5">
+          {tagBadges.map(t => (
+            <span key={t} className="px-2 py-0.5 text-[10px] text-[#666] bg-[#f5f5f5] border border-[#eee] rounded-sm">{t}</span>
+          ))}
+        </div>
+      )}
+
+      {/* CTA footer */}
+      <div className="mt-auto px-5 py-4 border-t border-[#f0f0f0] flex gap-2">
+        <Link href={`/products/${product.id}`} className="flex-1">
+          <button className="w-full text-[11px] font-bold uppercase tracking-[0.15em] py-2.5 text-white bg-[#C8002D] hover:bg-[#a0001f] transition-colors flex items-center justify-center gap-2">
+            View Details <ArrowRight className="h-3.5 w-3.5" />
+          </button>
+        </Link>
+        <Link href="/#contact">
+          <button className="px-4 text-[11px] font-bold uppercase tracking-[0.12em] py-2.5 border border-[#C8002D] text-[#C8002D] hover:bg-[#C8002D] hover:text-white transition-colors">
+            Enquire
+          </button>
+        </Link>
+      </div>
+    </motion.div>
+  );
+}
+
 type SortKey = "featured" | "name" | "brand";
 
 export default function Products() {
@@ -728,7 +826,9 @@ export default function Products() {
                   {filtered.map((p, i) => (
                     p.brand === "cytek"
                       ? <CytekCard key={p.id} product={p} index={i} />
-                      : <ProductCard key={p.id} product={p} index={i} />
+                      : p.brand === "ngene"
+                        ? <NgeneBioCard key={p.id} product={p} index={i} />
+                        : <ProductCard key={p.id} product={p} index={i} />
                   ))}
                 </AnimatePresence>
               </div>
