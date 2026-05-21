@@ -16,31 +16,25 @@ function Reveal({ children }: { children: React.ReactNode; delay?: number }) {
 }
 
 /* ─── Cytek-style Related Card ─────────────────────────────────── */
-function CytekRelatedCard({ product }: { product: Product }) {
-  const cat = categoryById(product.category);
+function RelatedCard({ product }: { product: Product }) {
+  const brand = brandById(product.brand);
   return (
     <Link href={`/products/${product.id}`}>
-      <div className="group border border-[#e8e8e8] hover:border-[#2c5f5f] transition-colors duration-300 bg-white overflow-hidden cursor-pointer">
-        {/* Image */}
-        <div className="aspect-[4/3] bg-[#f8f8f8] flex items-center justify-center p-6 overflow-hidden">
-          {product.image
-            ? <img src={product.image} alt={product.name} className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105" />
-            : <div className="w-16 h-16 rounded-full border-2 border-[#2c5f5f]/30 flex items-center justify-center"><Settings2 className="h-6 w-6 text-[#2c5f5f]/40" /></div>
-          }
+      <motion.div className="border border-border p-5 cursor-pointer group relative overflow-hidden h-full bg-background hover:border-primary/40 transition-colors"
+        whileHover={{ y: -3 }} transition={{ duration: 0.2 }}>
+        <div className="text-xs font-bold tracking-wide uppercase mb-2 px-2 py-0.5 inline-block"
+          style={{ color: brand?.accent, background: (brand?.accent || "#000") + "18" }}>{brand?.short}</div>
+        <h4 className="font-[var(--app-font-heading)] font-bold text-foreground text-sm leading-snug mb-2 group-hover:text-primary transition-colors">{product.name}</h4>
+        <p className="text-muted-foreground text-xs leading-relaxed line-clamp-2">{product.description}</p>
+        <div className="flex items-center gap-1 mt-3 text-xs font-bold text-primary opacity-0 group-hover:opacity-100 transition-opacity">
+          View Product <ArrowRight className="h-3 w-3" />
         </div>
-        {/* Text */}
-        <div className="px-5 py-4 border-t border-[#f0f0f0]">
-          <div className="text-[11px] font-bold tracking-[0.15em] uppercase text-[#2c5f5f] mb-2">{cat?.name}</div>
-          <h4 className="font-[var(--app-font-heading)] font-bold text-[15px] leading-snug text-[#333] group-hover:text-[#2c5f5f] transition-colors mb-1">{product.name}</h4>
-          <p className="text-[#707070] text-[13px] line-clamp-2 leading-relaxed">{product.description}</p>
-          <div className="flex items-center gap-1 mt-3 text-[#E99E2A] text-[12px] font-bold opacity-0 group-hover:opacity-100 transition-opacity">
-            Learn More <ArrowRight className="h-3.5 w-3.5" />
-          </div>
-        </div>
-      </div>
+      </motion.div>
     </Link>
   );
 }
+
+
 
 /* ─── Cytek Premium Detail ─────────────────────────────────────── */
 
@@ -442,12 +436,16 @@ function NgeneBioProductDetail({ product }: { product: Product }) {
   const moreBrand = productsByBrand(product.brand).filter(p => p.id !== product.id && !product.relatedProducts?.includes(p.id)).slice(0, 3 - related.length);
   const allRelated = [...related, ...moreBrand].slice(0, 3);
   const [tab, setTab] = useState<"overview" | "specs" | "applications">("overview");
-  const NGENE_RED = "#C8002D";
+  const RED = "#C8002D";
+  const LIGHT_RED = "#fff1f2";
+
+  const isInfection = product.category === "molecular" && (product.tags || []).some(t => ["tuberculosis","COVID-19","influenza","infection"].includes(t));
+  const isSoftware = product.id === "ngene-analyser";
 
   const tabs = [
     { key: "overview" as const, label: "Overview" },
     ...(product.specs ? [{ key: "specs" as const, label: "Specifications" }] : []),
-    ...(product.applications ? [{ key: "applications" as const, label: "Applications" }] : []),
+    ...(product.applications?.length ? [{ key: "applications" as const, label: "Applications" }] : []),
   ];
 
   return (
@@ -455,126 +453,144 @@ function NgeneBioProductDetail({ product }: { product: Product }) {
       <SiteNavbar forceSolid />
       <main>
 
-        {/* ── Hero ─────────────────────────────────────────────── */}
-        <div className="bg-[#0a0a0a] pt-24 pb-0 relative overflow-hidden">
-          {/* Subtle red glow */}
-          <div className="absolute inset-0 opacity-20" style={{ background: "radial-gradient(ellipse 70% 50% at 30% 50%, #C8002D33 0%, transparent 70%)" }} />
-          {/* Grid texture */}
-          <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
+        {/* ═══ HERO — white with bold red left panel ════════════ */}
+        <div className="pt-20 border-b border-[#e8e8e8]">
+          {/* Top red band */}
+          <div className="h-1.5 bg-[#C8002D]" />
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+            <div className="grid lg:grid-cols-[1fr_380px] gap-0 min-h-[420px]">
 
-          <div className="max-w-[1400px] mx-auto px-8 md:px-16 relative z-10">
-            {/* Breadcrumb */}
-            <div className="flex items-center gap-2 text-[12px] text-white/30 mb-8">
-              <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
-              <ChevronRight className="h-3 w-3" />
-              <Link href="/products" className="hover:text-white/60 transition-colors">Products</Link>
-              <ChevronRight className="h-3 w-3" />
-              <span className="text-white/50">NgeneBio</span>
-              <ChevronRight className="h-3 w-3" />
-              <span className="text-white/70 truncate max-w-[200px]">{product.name}</span>
-            </div>
-
-            <div className="grid lg:grid-cols-[1fr_auto] gap-12 pb-12 items-end">
-              <div className="max-w-2xl">
-                {/* Badges */}
-                <div className="flex flex-wrap gap-2 mb-5">
-                  <span className="px-3 py-1 text-[11px] font-black tracking-[0.2em] uppercase text-white bg-[#C8002D]">NgeneBio</span>
-                  <span className="px-3 py-1 text-[11px] font-bold text-[#00c896] border border-[#00c896]/40 bg-[#00c896]/10 tracking-wide">CE-IVD Certified</span>
-                  {product.featured && <span className="px-3 py-1 text-[11px] font-bold text-amber-400 border border-amber-400/30 bg-amber-400/5">Featured</span>}
-                  {category && <span className="px-3 py-1 text-[11px] font-medium text-white/40 border border-white/10 flex items-center gap-1">{category.icon} {category.name}</span>}
+              {/* Left: content */}
+              <div className="py-12 pr-0 lg:pr-16 border-r border-[#f0f0f0] flex flex-col justify-center">
+                {/* Breadcrumb */}
+                <div className="flex items-center gap-2 text-[11px] text-[#aaa] mb-6">
+                  <Link href="/" className="hover:text-[#C8002D] transition-colors">Home</Link>
+                  <ChevronRight className="h-3 w-3" />
+                  <Link href="/products" className="hover:text-[#C8002D] transition-colors">Products</Link>
+                  <ChevronRight className="h-3 w-3" />
+                  <span className="text-[#888] truncate max-w-[180px]">{product.name}</span>
                 </div>
 
-                {/* Product name */}
-                <h1 className="font-[var(--app-font-heading)] font-black text-white mb-3 leading-tight tracking-tight"
-                  style={{ fontSize: "clamp(30px,4.5vw,52px)" }}>
+                {/* Badges row */}
+                <div className="flex flex-wrap gap-2 mb-5">
+                  <span className="px-3 py-1.5 text-[11px] font-black tracking-[0.18em] uppercase text-white bg-[#C8002D]">NgeneBio</span>
+                  <span className="px-3 py-1.5 text-[11px] font-bold text-[#007a52] border border-[#007a52]/40 bg-[#007a52]/8 tracking-wide">✓ CE-IVD Certified</span>
+                  {product.featured && <span className="px-3 py-1.5 text-[11px] font-bold text-[#b45309] border border-[#b45309]/30 bg-amber-50">★ Featured</span>}
+                  {category && <span className="px-3 py-1.5 text-[11px] text-[#888] border border-[#e8e8e8] flex items-center gap-1.5">{category.icon} {category.name}</span>}
+                </div>
+
+                {/* Name */}
+                <h1 className="font-[var(--app-font-heading)] font-black text-[#111] leading-tight tracking-tight mb-3"
+                  style={{ fontSize: "clamp(28px,4vw,48px)" }}>
                   {product.name}
                 </h1>
 
                 {/* Subtitle */}
                 {product.subtitle && (
-                  <p className="text-[#C8002D] font-semibold text-[15px] mb-5 tracking-wide">{product.subtitle}</p>
+                  <p className="text-[#C8002D] font-bold text-[14px] mb-4 tracking-wide">{product.subtitle}</p>
                 )}
 
-                <p className="text-white/50 text-[15px] leading-relaxed mb-8 max-w-xl">{product.description}</p>
+                <p className="text-[#555] text-[15px] leading-relaxed mb-8 max-w-lg">{product.description}</p>
 
                 {/* CTAs */}
                 <div className="flex flex-wrap gap-3">
                   <a href="/#contact"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 text-[12px] font-black tracking-[0.15em] uppercase text-white bg-[#C8002D] hover:bg-[#a0001f] transition-colors">
+                    className="inline-flex items-center gap-2 px-7 py-3 text-[12px] font-black tracking-[0.15em] uppercase text-white bg-[#C8002D] hover:bg-[#a30024] transition-colors">
                     REQUEST A QUOTE <ArrowRight className="h-4 w-4" />
                   </a>
                   <a href="/#contact"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 text-[12px] font-bold tracking-[0.1em] uppercase border-2 border-white/20 text-white hover:border-white/50 hover:bg-white/5 transition-colors">
+                    className="inline-flex items-center gap-2 px-7 py-3 text-[12px] font-bold tracking-[0.1em] uppercase border-2 border-[#C8002D] text-[#C8002D] hover:bg-[#C8002D] hover:text-white transition-colors">
                     SPEAK TO A SPECIALIST
                   </a>
                   <Link href="/products">
-                    <button className="inline-flex items-center gap-1.5 px-4 py-3.5 text-[12px] font-bold text-white/30 hover:text-white/60 transition-colors">
+                    <button className="inline-flex items-center gap-1.5 px-4 py-3 text-[12px] font-bold text-[#aaa] hover:text-[#C8002D] transition-colors">
                       <ArrowLeft className="h-3.5 w-3.5" /> All Products
                     </button>
                   </Link>
                 </div>
               </div>
 
-              {/* Key stats column */}
-              {product.specs && (
-                <div className="hidden lg:block w-72 flex-shrink-0">
-                  <div className="border border-white/10 divide-y divide-white/5">
-                    <div className="px-4 py-3 bg-[#C8002D]/80">
-                      <span className="text-[10px] font-black tracking-[0.2em] uppercase text-white">Key Specifications</span>
+              {/* Right: red info panel */}
+              <div className="hidden lg:flex flex-col bg-[#C8002D] relative overflow-hidden">
+                {/* Decorative circles */}
+                <div className="absolute -top-16 -right-16 w-64 h-64 rounded-full border border-white/10" />
+                <div className="absolute -bottom-8 -left-8 w-40 h-40 rounded-full border border-white/10" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full border border-white/5" />
+
+                <div className="relative z-10 p-8 flex flex-col h-full justify-between">
+                  {/* Product type label */}
+                  <div>
+                    <div className="text-[10px] font-black tracking-[0.3em] uppercase text-white/40 mb-6">
+                      {isSoftware ? "Analysis Software" : isInfection ? "Infection Diagnostics" : "Precision Diagnostics"}
                     </div>
-                    {Object.entries(product.specs).slice(0, 6).map(([k, v]) => (
-                      <div key={k} className="px-4 py-3">
-                        <div className="text-[10px] text-white/30 font-semibold uppercase tracking-wider mb-0.5">{k}</div>
-                        <div className="text-[13px] text-white/80 font-medium leading-snug">{v}</div>
+
+                    {/* Key specs from the specs object */}
+                    {product.specs && (
+                      <div className="space-y-4">
+                        {Object.entries(product.specs).slice(0, 5).map(([k, v]) => (
+                          <div key={k} className="border-b border-white/15 pb-4 last:border-0">
+                            <div className="text-[9px] font-black tracking-[0.2em] uppercase text-white/40 mb-1">{k}</div>
+                            <div className="text-white font-semibold text-[13px] leading-snug">{v}</div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
+                    )}
+                  </div>
+
+                  {/* Bottom distributor badge */}
+                  <div className="border border-white/20 p-4 bg-white/5">
+                    <div className="text-[9px] font-black tracking-[0.2em] uppercase text-white/50 mb-1">Authorised Distributor</div>
+                    <div className="text-white font-bold text-[13px]">Science Centre Pakistan</div>
+                    <div className="text-white/40 text-[11px] mt-0.5">Local support · Installation · Training</div>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
 
-        {/* ── Tab Navigation ───────────────────────────────────── */}
+        {/* ═══ TAB NAV ══════════════════════════════════════════ */}
         <div className="bg-white border-b border-[#e8e8e8] sticky top-0 z-20 shadow-sm">
           <div className="max-w-[1400px] mx-auto px-8 md:px-16 flex items-center gap-3 py-3">
             {tabs.map(t => (
               <button key={t.key} onClick={() => setTab(t.key)}
-                className={`px-5 py-2 text-[12px] font-bold tracking-[0.12em] uppercase transition-all duration-200 ${
+                className={`px-5 py-2.5 text-[12px] font-bold tracking-[0.12em] uppercase transition-all duration-200 border ${
                   tab === t.key
-                    ? "bg-[#C8002D] text-white shadow"
-                    : "bg-[#f4f4f4] text-[#555] hover:bg-[#e8e8e8]"
+                    ? "bg-[#C8002D] text-white border-[#C8002D] shadow"
+                    : "bg-white text-[#666] border-[#ddd] hover:border-[#C8002D]/50 hover:text-[#C8002D]"
                 }`}>
                 {t.label}
               </button>
             ))}
             <div className="ml-auto">
-              <Link href="/products" className="flex items-center gap-1.5 text-[12px] font-bold text-[#888] hover:text-[#C8002D] transition-colors">
+              <Link href="/products" className="flex items-center gap-1.5 text-[12px] font-bold text-[#aaa] hover:text-[#C8002D] transition-colors">
                 <ArrowLeft className="h-3.5 w-3.5" /> All Products
               </Link>
             </div>
           </div>
         </div>
 
-        {/* ══ OVERVIEW TAB ══════════════════════════════════════ */}
+        {/* ═══ OVERVIEW TAB ═════════════════════════════════════ */}
         {tab === "overview" && (
           <>
-            {/* Feature cards grid */}
+            {/* Feature cards — numbered, white on light-red bg */}
             {product.featureCards && (
-              <div className="bg-[#fafafa] border-b border-[#e8e8e8] py-16">
+              <div className="py-16 bg-[#fff8f8] border-b border-[#f0e0e0]">
                 <div className="max-w-[1400px] mx-auto px-8 md:px-16">
-                  <div className="flex items-center gap-3 mb-10">
-                    <div className="w-1 h-6 bg-[#C8002D]" />
-                    <h2 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[22px]">Key Capabilities</h2>
+                  <div className="flex items-center gap-4 mb-10">
+                    <div className="w-1.5 h-8 bg-[#C8002D]" />
+                    <h2 className="font-[var(--app-font-heading)] font-black text-[#111] text-[24px]">Key Capabilities</h2>
                   </div>
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
                     {product.featureCards.map((card, i) => (
-                      <div key={i} className="bg-white border border-[#e8e8e8] p-6 hover:border-[#C8002D]/30 hover:shadow-sm transition-all duration-200">
-                        <div className="w-8 h-8 bg-[#C8002D] flex items-center justify-center mb-4 flex-shrink-0">
-                          <span className="text-white font-black text-[13px]">{String(i + 1).padStart(2, "0")}</span>
+                      <div key={i} className="bg-white border border-[#e8e8e8] p-6 hover:border-[#C8002D]/40 hover:shadow-md transition-all duration-200 group">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div className="w-9 h-9 bg-[#C8002D] flex items-center justify-center flex-shrink-0">
+                            <span className="text-white font-black text-[13px]">{String(i + 1).padStart(2, "0")}</span>
+                          </div>
+                          <h3 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[15px] leading-snug group-hover:text-[#C8002D] transition-colors">{card.title}</h3>
                         </div>
-                        <h3 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[16px] mb-2 leading-snug">{card.title}</h3>
-                        <p className="text-[#666] text-[14px] leading-relaxed">{card.body}</p>
+                        <p className="text-[#666] text-[14px] leading-relaxed pl-12">{card.body}</p>
                       </div>
                     ))}
                   </div>
@@ -582,70 +598,75 @@ function NgeneBioProductDetail({ product }: { product: Product }) {
               </div>
             )}
 
-            {/* Features list */}
+            {/* Features + Regulatory trust — two columns */}
             {product.features && (
-              <div className="border-b border-[#e8e8e8] py-14">
-                <div className="max-w-[1400px] mx-auto px-8 md:px-16">
-                  <div className="grid lg:grid-cols-2 gap-12">
-                    <div>
-                      <div className="flex items-center gap-3 mb-8">
-                        <div className="w-1 h-6 bg-[#C8002D]" />
-                        <h2 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[22px]">Technical Features</h2>
-                      </div>
-                      <div className="space-y-3">
-                        {product.features.map((f, i) => (
-                          <div key={i} className="flex items-start gap-3 py-3 border-b border-[#f5f5f5] last:border-0">
-                            <CheckCircle2 className="h-4 w-4 text-[#C8002D] flex-shrink-0 mt-0.5" />
-                            <span className="text-[#444] text-[14px] leading-relaxed">{f}</span>
-                          </div>
-                        ))}
-                      </div>
+              <div className="py-14 border-b border-[#eee]">
+                <div className="max-w-[1400px] mx-auto px-8 md:px-16 grid lg:grid-cols-2 gap-12">
+                  <div>
+                    <div className="flex items-center gap-3 mb-7">
+                      <div className="w-1.5 h-6 bg-[#C8002D]" />
+                      <h2 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[20px]">Technical Features</h2>
                     </div>
-
-                    {/* Regulatory & trust block */}
-                    <div>
-                      <div className="flex items-center gap-3 mb-8">
-                        <div className="w-1 h-6 bg-[#C8002D]" />
-                        <h2 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[22px]">Regulatory Status</h2>
-                      </div>
-                      <div className="space-y-4">
-                        {[
-                          { badge: "CE-IVD", desc: "Certified for in vitro diagnostic use in the European Union", color: "#008060" },
-                          { badge: "MFDS", desc: "Approved by Korea's Ministry of Food and Drug Safety", color: "#1a56db" },
-                          { badge: "NGeneAnalySys™", desc: "Integrated automated bioinformatics pipeline — variant calling to clinical report", color: "#7c3aed" },
-                          { badge: "Illumina Platform", desc: "Validated on MiSeq, MiSeqDx, MiniSeq — standard clinical laboratory platforms", color: "#0369a1" },
-                        ].map((item, i) => (
-                          <div key={i} className="flex items-start gap-4 p-4 bg-[#fafafa] border border-[#f0f0f0]">
-                            <span className="px-2.5 py-1 text-[10px] font-black tracking-wide text-white flex-shrink-0" style={{ backgroundColor: item.color }}>
+                    <ul className="space-y-0 border border-[#eee]">
+                      {product.features.map((f, i) => (
+                        <li key={i} className={`flex items-start gap-3 px-5 py-3.5 border-b border-[#f5f5f5] last:border-0 ${i % 2 === 0 ? "bg-white" : "bg-[#fafafa]"}`}>
+                          <CheckCircle2 className="h-4 w-4 text-[#C8002D] flex-shrink-0 mt-0.5" />
+                          <span className="text-[#444] text-[14px] leading-relaxed">{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3 mb-7">
+                      <div className="w-1.5 h-6 bg-[#C8002D]" />
+                      <h2 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[20px]">Regulatory & Certifications</h2>
+                    </div>
+                    <div className="space-y-3">
+                      {[
+                        { badge: "CE-IVD", label: "European Regulatory Clearance", body: "Certified for in vitro diagnostic use in the European Union — meeting the highest international clinical validation standards.", color: "#007a52" },
+                        { badge: "MFDS", label: "Korean Ministry Approval", body: "Approved by Korea's Ministry of Food and Drug Safety — the first market to clear NgeneBio's precision diagnostic panels.", color: "#1d4ed8" },
+                        { badge: "Illumina", label: "Platform Validated", body: "Validated on Illumina MiSeq, MiSeqDx, and MiniSeq — the standard NGS platforms deployed in clinical laboratories worldwide.", color: "#7c3aed" },
+                        { badge: "NGeneAnalySys®", label: "Integrated Software Pipeline", body: "Automated ASCO/CAP/AMP-compliant bioinformatics pipeline — from sequencing data to formatted clinical report.", color: "#C8002D" },
+                      ].map((item, i) => (
+                        <div key={i} className="border border-[#eee] bg-white flex items-start gap-4 p-4 hover:border-[#C8002D]/30 transition-colors">
+                          <div className="flex-shrink-0">
+                            <span className="inline-block px-2.5 py-1.5 text-[10px] font-black tracking-wide text-white" style={{ backgroundColor: item.color }}>
                               {item.badge}
                             </span>
-                            <p className="text-[#555] text-[13px] leading-relaxed">{item.desc}</p>
                           </div>
-                        ))}
-                      </div>
+                          <div>
+                            <div className="text-[12px] font-bold text-[#333] mb-0.5">{item.label}</div>
+                            <p className="text-[#777] text-[12px] leading-relaxed">{item.body}</p>
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* CTA banner */}
-            <div className="py-16 bg-[#0a0a0a] relative overflow-hidden">
-              <div className="absolute inset-0 opacity-30" style={{ background: "radial-gradient(ellipse 60% 80% at 50% 50%, #C8002D22 0%, transparent 70%)" }} />
-              <div className="max-w-[1400px] mx-auto px-8 md:px-16 flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+            {/* CTA Banner — white + red */}
+            <div className="border-t-4 border-[#C8002D] py-14 bg-[#fafafa]">
+              <div className="max-w-[1400px] mx-auto px-8 md:px-16 flex flex-col md:flex-row items-center justify-between gap-8">
                 <div>
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-6 h-0.5 bg-[#C8002D]" />
-                    <span className="text-[#C8002D] text-[10px] font-black tracking-[0.3em] uppercase">Science Centre Pakistan · NgeneBio Distributor</span>
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-5 h-0.5 bg-[#C8002D]" />
+                    <span className="text-[#C8002D] text-[10px] font-black tracking-[0.3em] uppercase">Authorised Distributor · Pakistan</span>
                   </div>
-                  <h2 className="font-[var(--app-font-heading)] font-black text-white leading-tight" style={{ fontSize: "clamp(20px,3vw,32px)" }}>
-                    Bring Precision NGS Diagnostics to Your Laboratory
+                  <h2 className="font-[var(--app-font-heading)] font-black text-[#111] leading-tight" style={{ fontSize: "clamp(20px,3vw,32px)" }}>
+                    Bring NgeneBio to Your Laboratory
                   </h2>
-                  <p className="text-white/40 text-[13px] mt-2">Local support, installation, and training across Pakistan.</p>
+                  <p className="text-[#666] text-[14px] mt-1">Local support, installation & training across Pakistan.</p>
                 </div>
                 <div className="flex gap-3 flex-shrink-0">
-                  <a href="/#contact" className="inline-flex items-center gap-2 px-8 py-4 text-[12px] font-black tracking-[0.15em] uppercase bg-[#C8002D] text-white hover:bg-[#a0001f] transition-colors">
+                  <a href="/#contact"
+                    className="inline-flex items-center gap-2 px-8 py-4 text-[12px] font-black tracking-[0.15em] uppercase bg-[#C8002D] text-white hover:bg-[#a30024] transition-colors">
                     REQUEST A QUOTE <ArrowRight className="h-4 w-4" />
+                  </a>
+                  <a href="/#contact"
+                    className="inline-flex items-center gap-2 px-8 py-4 text-[12px] font-bold tracking-[0.1em] uppercase border-2 border-[#C8002D] text-[#C8002D] hover:bg-[#C8002D] hover:text-white transition-colors">
+                    SCHEDULE A DEMO
                   </a>
                 </div>
               </div>
@@ -653,17 +674,17 @@ function NgeneBioProductDetail({ product }: { product: Product }) {
           </>
         )}
 
-        {/* ══ SPECS TAB ════════════════════════════════════════ */}
+        {/* ═══ SPECS TAB ════════════════════════════════════════ */}
         {tab === "specs" && product.specs && (
           <div className="max-w-[1400px] mx-auto px-8 md:px-16 py-14">
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-1 h-6 bg-[#C8002D]" />
+              <div className="w-1.5 h-6 bg-[#C8002D]" />
               <h2 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[22px]">Full Specifications</h2>
             </div>
             <div className="border border-[#e8e8e8] overflow-hidden max-w-3xl">
               {Object.entries(product.specs).map(([k, v], i) => (
-                <div key={k} className={`flex flex-col sm:flex-row sm:items-start gap-2 px-6 py-4 border-b border-[#f0f0f0] last:border-0 ${i % 2 === 0 ? "bg-white" : "bg-[#fafafa]"}`}>
-                  <span className="text-[12px] font-bold text-[#C8002D] uppercase tracking-wide sm:w-56 flex-shrink-0">{k}</span>
+                <div key={k} className={`flex flex-col sm:flex-row sm:items-start gap-3 px-6 py-4 border-b border-[#f0f0f0] last:border-0 ${i % 2 === 0 ? "bg-white" : "bg-[#fafafa]"}`}>
+                  <span className="text-[11px] font-black text-[#C8002D] uppercase tracking-wide sm:w-56 flex-shrink-0 mt-0.5">{k}</span>
                   <span className="text-[14px] text-[#333] leading-relaxed">{v}</span>
                 </div>
               ))}
@@ -671,17 +692,17 @@ function NgeneBioProductDetail({ product }: { product: Product }) {
           </div>
         )}
 
-        {/* ══ APPLICATIONS TAB ════════════════════════════════ */}
+        {/* ═══ APPLICATIONS TAB ════════════════════════════════ */}
         {tab === "applications" && product.applications && (
           <div className="max-w-[1400px] mx-auto px-8 md:px-16 py-14">
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-1 h-6 bg-[#C8002D]" />
+              <div className="w-1.5 h-6 bg-[#C8002D]" />
               <h2 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[22px]">Clinical Applications</h2>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl">
               {product.applications.map((a, i) => (
-                <div key={i} className="flex items-start gap-3 p-4 border border-[#e8e8e8] bg-white hover:border-[#C8002D]/30 transition-colors">
-                  <div className="w-5 h-5 bg-[#C8002D] flex items-center justify-center flex-shrink-0 mt-0.5">
+                <div key={i} className="flex items-start gap-3 p-4 bg-white border border-[#e8e8e8] hover:border-[#C8002D]/40 hover:bg-[#fff8f8] transition-all group">
+                  <div className="w-6 h-6 bg-[#C8002D] flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
                     <ArrowRight className="h-3 w-3 text-white" />
                   </div>
                   <span className="text-[14px] text-[#444] leading-relaxed">{a}</span>
@@ -691,12 +712,12 @@ function NgeneBioProductDetail({ product }: { product: Product }) {
           </div>
         )}
 
-        {/* ── Related Products ─────────────────────────────────── */}
+        {/* ═══ RELATED PRODUCTS ════════════════════════════════ */}
         {allRelated.length > 0 && (
-          <div className="bg-[#fafafa] border-t border-[#e8e8e8] py-14">
+          <div className="bg-[#fff8f8] border-t border-[#f0e0e0] py-14">
             <div className="max-w-[1400px] mx-auto px-8 md:px-16">
               <div className="flex items-center gap-3 mb-8">
-                <div className="w-1 h-6 bg-[#C8002D]" />
+                <div className="w-1.5 h-6 bg-[#C8002D]" />
                 <h3 className="font-[var(--app-font-heading)] font-bold text-[#111] text-[20px]">Related Products</h3>
               </div>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -704,12 +725,13 @@ function NgeneBioProductDetail({ product }: { product: Product }) {
                   const cat = categoryById(p.category);
                   return (
                     <Link key={p.id} href={`/products/${p.id}`}>
-                      <div className="group border border-[#e8e8e8] bg-white p-5 hover:border-[#C8002D]/40 hover:shadow-sm transition-all cursor-pointer">
-                        <div className="flex items-start justify-between mb-3">
+                      <div className="group border border-[#e8e8e8] bg-white p-5 hover:border-[#C8002D]/50 hover:shadow-md transition-all cursor-pointer">
+                        <div className="h-1 bg-[#C8002D] -mx-5 -mt-5 mb-5" />
+                        <div className="flex items-center justify-between mb-3">
                           <span className="px-2 py-0.5 text-[9px] font-black tracking-[0.15em] uppercase text-white bg-[#C8002D]">NgeneBio</span>
-                          <span className="px-2 py-0.5 text-[9px] font-bold text-[#008060] border border-[#008060]/30">CE-IVD</span>
+                          <span className="px-2 py-0.5 text-[9px] font-bold text-[#007a52] border border-[#007a52]/30">CE-IVD</span>
                         </div>
-                        <h4 className="font-[var(--app-font-heading)] font-bold text-[14px] text-[#111] group-hover:text-[#C8002D] transition-colors mb-1 leading-snug">{p.name}</h4>
+                        <h4 className="font-[var(--app-font-heading)] font-bold text-[14px] text-[#111] group-hover:text-[#C8002D] transition-colors mb-2 leading-snug">{p.name}</h4>
                         <p className="text-[12px] text-[#888] line-clamp-2 leading-relaxed">{p.description}</p>
                         <div className="mt-3 flex items-center gap-1 text-[11px] font-bold text-[#C8002D] opacity-0 group-hover:opacity-100 transition-opacity">
                           View Details <ArrowRight className="h-3 w-3" />
@@ -732,7 +754,6 @@ function NgeneBioProductDetail({ product }: { product: Product }) {
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
 
-  // CRITICAL: reset body overflow from homepage fullpage scroll
   useEffect(() => {
     document.body.style.overflow = "";
     document.body.style.height = "";
@@ -773,302 +794,66 @@ export default function ProductDetail() {
   return (
     <div className="min-h-[100dvh] bg-background">
       <SiteNavbar />
-      <main className="pt-28 pb-24">
-
-        {/* Breadcrumb */}
-        <div className="container mx-auto px-6 md:px-12 mb-10">
-          <nav className="flex items-center gap-2 text-xs text-muted-foreground flex-wrap">
-            <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
-            <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            <Link href="/products" className="hover:text-foreground transition-colors">Products</Link>
-            <ChevronRight className="h-3 w-3 flex-shrink-0" />
-            {product.subcategory && <><span>{product.subcategory}</span><ChevronRight className="h-3 w-3 flex-shrink-0" /></>}
-            <span className="text-foreground font-medium truncate max-w-[200px]">{product.name}</span>
-          </nav>
-        </div>
-
-        {/* ── Hero ──────────────────────────────────────────── */}
-        <div className="container mx-auto px-6 md:px-12 mb-16">
-          <div className="grid lg:grid-cols-12 gap-10 items-start">
-
-            {/* Product image */}
-            <div className="lg:col-span-4">
-              <Reveal>
-                <div className="border border-border relative overflow-hidden bg-muted/20 group"
-                  style={{ aspectRatio: "1 / 1" }}>
-                  {/* Brand accent top bar */}
-                  <div className="absolute top-0 left-0 right-0 h-1 z-10"
-                    style={{ backgroundColor: brand?.accent || "hsl(var(--primary))" }} />
-                  {product.image ? (
-                    <img src={product.image} alt={product.name} className="w-full h-full object-contain p-10" />
-                  ) : (
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-muted-foreground/30">
-                      <ImageIcon className="h-20 w-20" strokeWidth={0.8} />
-                      <div className="text-center">
-                        <p className="text-sm font-semibold text-muted-foreground/50">Product Image</p>
-                        <p className="text-xs text-muted-foreground/30 mt-1">Coming soon</p>
-                      </div>
-                    </div>
-                  )}
-                </div>
-                {/* Brand strip */}
-                <div className="mt-3 flex items-center gap-3 p-4 border border-border">
-                  <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: brand?.accent }} />
-                  <div>
-                    <div className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Manufactured by</div>
-                    <div className="text-sm font-bold text-foreground mt-0.5">{brand?.name}</div>
-                  </div>
-                </div>
-              </Reveal>
-            </div>
-
-            {/* Product info */}
-            <div className="lg:col-span-5">
-              <Reveal>
+      <main className="pb-20">
+        <div className="border-b border-border">
+          <div className="container mx-auto px-6 md:px-12 pt-28 pb-12">
+            <nav className="flex items-center gap-2 text-xs text-muted-foreground mb-8 flex-wrap">
+              <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
+              <ChevronRight className="h-3 w-3 flex-shrink-0" />
+              <Link href="/products" className="hover:text-foreground transition-colors">Products</Link>
+              <ChevronRight className="h-3 w-3 flex-shrink-0" />
+              <span className="text-foreground font-medium truncate max-w-[200px]">{product.name}</span>
+            </nav>
+            <div className="grid lg:grid-cols-[1fr_340px] gap-12 items-start">
+              <div>
                 <div className="flex flex-wrap gap-2 mb-5">
-                  <span className="text-xs font-bold tracking-[0.15em] uppercase px-3 py-1.5"
-                    style={{ color: brand?.accent, background: (brand?.accent || "#000") + "15", border: `1px solid ${brand?.accent || "#000"}25` }}>
-                    {brand?.short}
-                  </span>
-                  {category && (
-                    <span className="text-xs font-medium text-muted-foreground border border-border px-3 py-1.5 flex items-center gap-1.5">
-                      {category.icon} {category.name}
-                    </span>
-                  )}
-                  {product.featured && <span className="text-xs font-bold text-amber-600 bg-amber-50 border border-amber-200 px-3 py-1.5">★ Featured</span>}
+                  {brand && <span className="px-3 py-1.5 text-xs font-bold text-white rounded-sm" style={{ background: brand.accent }}>{brand.short}</span>}
+                  {category && <span className="px-3 py-1.5 text-xs text-muted-foreground border border-border flex items-center gap-1.5 rounded-sm">{category.icon}{category.name}</span>}
+                  {product.featured && <span className="px-3 py-1.5 text-xs font-bold text-amber-600 border border-amber-200 bg-amber-50 rounded-sm">★ Featured</span>}
                 </div>
-              </Reveal>
-
-              <Reveal delay={0.05}>
-                <h1 className="text-3xl md:text-4xl font-[var(--app-font-heading)] font-black text-foreground leading-tight tracking-tight mb-6">
-                  {product.name}
-                </h1>
-              </Reveal>
-
-              <Reveal delay={0.1}>
-                <p className="text-muted-foreground text-base font-light leading-relaxed mb-8">{product.description}</p>
-              </Reveal>
-
-              {product.highlights && product.highlights.length > 0 && (
-                <Reveal delay={0.15}>
-                  <div className="space-y-2.5 mb-8">
-                    {product.highlights.map((h, i) => (
-                      <div key={i} className="flex items-start gap-3">
-                        <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0 mt-0.5" />
-                        <span className="text-foreground text-sm font-medium">{h}</span>
-                      </div>
-                    ))}
+                <h1 className="text-4xl md:text-5xl font-[var(--app-font-heading)] font-black text-foreground leading-tight tracking-tight mb-6">{product.name}</h1>
+                <p className="text-muted-foreground text-base leading-relaxed mb-6">{product.description}</p>
+                {product.highlights && product.highlights.slice(0, 5).map((h, i) => (
+                  <div key={i} className="flex items-start gap-3 mb-2">
+                    <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0 mt-1" />
+                    <span className="text-muted-foreground text-sm">{h}</span>
                   </div>
-                </Reveal>
-              )}
-
-              <Reveal delay={0.2}>
-                <div className="flex flex-wrap gap-3">
-                  <Button asChild size="lg" className="rounded-none bg-primary text-white hover:bg-primary/90 px-8 group">
-                    <a href="/#contact">
-                      Request a Quote <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                    </a>
-                  </Button>
-                  <Button asChild variant="outline" size="lg" className="rounded-none px-6">
-                    <a href="/#contact">Talk to a Specialist</a>
-                  </Button>
-                  <Button asChild variant="ghost" size="lg" className="rounded-none px-6 text-muted-foreground">
-                    <Link href="/products"><ArrowLeft className="mr-2 h-4 w-4" /> All Products</Link>
-                  </Button>
+                ))}
+                <div className="flex gap-3 mt-8 flex-wrap">
+                  <Button asChild size="lg" className="rounded-none"><a href="/#contact">Request a Quote <ArrowRight className="ml-2 h-4 w-4" /></a></Button>
+                  <Button asChild variant="outline" size="lg" className="rounded-none"><Link href="/products"><ArrowLeft className="mr-2 h-4 w-4" /> All Products</Link></Button>
                 </div>
-              </Reveal>
-            </div>
-
-            {/* Quick spec sidebar */}
-            <div className="lg:col-span-3">
-              <Reveal delay={0.1}>
-                <div className="border border-border p-6 sticky top-28">
-                  <div className="h-0.5 -mt-6 -mx-6 mb-6"
-                    style={{ backgroundColor: brand?.accent || "hsl(var(--primary))", width: "calc(100% + 3rem)" }} />
-
-                  {product.catalogueNumber && (
-                    <div className="flex items-start gap-2 mb-5 pb-5 border-b border-border">
-                      <Tag className="h-4 w-4 text-muted-foreground flex-shrink-0 mt-0.5" />
-                      <div>
-                        <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-0.5">Catalogue No.</div>
-                        <div className="font-mono font-bold text-foreground text-sm">{product.catalogueNumber}</div>
-                      </div>
-                    </div>
-                  )}
-
-                  {product.specs && (
-                    <div>
-                      <div className="text-[10px] font-bold tracking-[0.2em] uppercase text-muted-foreground mb-3">Key Specs</div>
-                      {Object.entries(product.specs).slice(0, 6).map(([k, v]) => (
-                        <div key={k} className="flex justify-between gap-2 text-xs py-2.5 border-b border-border/50 last:border-0">
-                          <span className="text-muted-foreground font-medium">{k}</span>
-                          <span className="text-foreground font-semibold text-right">{v}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {product.tags && (
-                    <div className="flex flex-wrap gap-1.5 mt-5 pt-5 border-t border-border">
-                      {product.tags.slice(0, 6).map(tag => (
-                        <span key={tag} className="text-[10px] font-medium px-2 py-1 bg-muted text-muted-foreground uppercase tracking-wide">{tag}</span>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </Reveal>
-            </div>
-          </div>
-        </div>
-
-        {/* ── Packaging Table (vhbio.com style) ─────────────── */}
-        {product.packaging && product.packaging.length > 0 && (
-          <div className="border-t border-b border-border bg-muted/20 py-14">
-            <div className="container mx-auto px-6 md:px-12">
-              <Reveal>
-                <div className="flex items-center gap-2 mb-8">
-                  <Package className="h-4 w-4 text-primary" />
-                  <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-primary">Packaging & Ordering Information</h2>
-                </div>
-              </Reveal>
-              <Reveal delay={0.05}>
-                <div className="border border-border bg-background overflow-hidden">
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b border-border bg-muted/40">
-                        <th className="text-left px-6 py-4 text-xs font-bold tracking-[0.1em] uppercase text-muted-foreground">Product</th>
-                        <th className="text-left px-6 py-4 text-xs font-bold tracking-[0.1em] uppercase text-muted-foreground w-28">Units</th>
-                        <th className="text-left px-6 py-4 text-xs font-bold tracking-[0.1em] uppercase text-muted-foreground w-40 hidden md:table-cell">Format</th>
-                        <th className="text-right px-6 py-4 w-32"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {product.packaging.map((pkg, i) => (
-                        <tr key={i} className="border-b border-border/40 last:border-0 hover:bg-muted/20 transition-colors">
-                          <td className="px-6 py-5">
-                            <div className="font-semibold text-foreground">{pkg.name}</div>
-                            <div className="text-xs text-muted-foreground font-mono mt-1">{pkg.catalogueNumber}</div>
-                          </td>
-                          <td className="px-6 py-5 text-muted-foreground">{pkg.units}</td>
-                          <td className="px-6 py-5 text-muted-foreground hidden md:table-cell">{pkg.format || "—"}</td>
-                          <td className="px-6 py-5 text-right">
-                            <a href="/#contact" className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:text-primary/70 transition-colors">
-                              Enquire <ArrowRight className="h-3 w-3" />
-                            </a>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                    <tfoot>
-                      <tr className="border-t border-border bg-muted/30">
-                        <td colSpan={4} className="px-6 py-3 text-xs text-muted-foreground">
-                          Showing {product.packaging.length} Product{product.packaging.length !== 1 ? "s" : ""}
-                        </td>
-                      </tr>
-                    </tfoot>
-                  </table>
-                </div>
-              </Reveal>
-            </div>
-          </div>
-        )}
-
-        {/* ── Features / Applications / Specs ───────────────── */}
-        {(product.features || product.applications || product.specs) && (
-          <div className="border-t border-border">
-            <div className="container mx-auto px-6 md:px-12 py-16 grid lg:grid-cols-3 gap-16">
-              {product.features && product.features.length > 0 && (
-                <Reveal>
-                  <div className="flex items-center gap-2 mb-6">
-                    <Layers className="h-4 w-4 text-primary" />
-                    <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-primary">Features</h2>
-                  </div>
-                  <ul className="space-y-3">
-                    {product.features.map((f, i) => (
-                      <li key={i} className="flex items-start gap-3 text-sm">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0 mt-2" />
-                        <span className="text-foreground leading-relaxed">{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </Reveal>
-              )}
-              {product.applications && product.applications.length > 0 && (
-                <Reveal delay={0.1}>
-                  <div className="flex items-center gap-2 mb-6">
-                    <FlaskConical className="h-4 w-4 text-primary" />
-                    <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-primary">Applications</h2>
-                  </div>
-                  <ul className="space-y-3">
-                    {product.applications.map((a, i) => (
-                      <li key={i} className="flex items-start gap-3 text-sm">
-                        <div className="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0 mt-2" />
-                        <span className="text-foreground leading-relaxed">{a}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </Reveal>
-              )}
-              {product.specs && Object.keys(product.specs).length > 0 && (
-                <Reveal delay={0.15}>
-                  <div className="flex items-center gap-2 mb-6">
-                    <FileText className="h-4 w-4 text-primary" />
-                    <h2 className="text-xs font-bold tracking-[0.2em] uppercase text-primary">Full Specifications</h2>
-                  </div>
-                  <div>
-                    {Object.entries(product.specs).map(([k, v], i, arr) => (
-                      <div key={k} className={`flex justify-between gap-4 text-sm py-3 ${i < arr.length - 1 ? "border-b border-border/50" : ""}`}>
-                        <span className="text-muted-foreground font-medium">{k}</span>
-                        <span className="text-foreground font-semibold text-right">{v}</span>
-                      </div>
-                    ))}
-                  </div>
-                </Reveal>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* ── CTA ───────────────────────────────────────────── */}
-        <div className="bg-foreground py-14">
-          <div className="container mx-auto px-6 md:px-12 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div>
-              <div className="text-xs font-bold tracking-[0.2em] text-primary uppercase mb-3">Get in Touch</div>
-              <h3 className="text-2xl md:text-3xl font-[var(--app-font-heading)] font-black text-white leading-tight">
-                Interested in {product.name.split(" ").slice(0, 4).join(" ")}?
-              </h3>
-              <p className="text-white/50 text-sm font-light mt-2 max-w-md">
-                Our technical specialists are ready to discuss your requirements and provide a quotation.
-              </p>
-            </div>
-            <Button asChild size="lg" className="rounded-none bg-primary text-white hover:bg-primary/90 px-8 flex-shrink-0 font-bold">
-              <a href="/#contact">Request a Quote <ArrowRight className="ml-2 h-4 w-4" /></a>
-            </Button>
-          </div>
-        </div>
-
-        {/* ── Related Products ───────────────────────────────── */}
-        {allRelated.length > 0 && (
-          <div className="container mx-auto px-6 md:px-12 pt-16">
-            <Reveal>
-              <div className="flex items-center justify-between mb-10">
-                <div>
-                  <div className="text-xs font-bold tracking-[0.2em] text-primary uppercase mb-2">You May Also Need</div>
-                  <h3 className="text-2xl font-[var(--app-font-heading)] font-black text-foreground">Related Products</h3>
-                </div>
-                <Link href="/products">
-                  <Button variant="outline" className="rounded-none text-sm">Browse All <ArrowRight className="ml-2 h-3.5 w-3.5" /></Button>
-                </Link>
               </div>
-            </Reveal>
+              <div className="border border-border p-6">
+                {product.image
+                  ? <img src={product.image} alt={product.name} className="w-full object-contain max-h-64 mb-4" />
+                  : <div className="aspect-square bg-muted flex items-center justify-center mb-4"><ImageIcon className="h-16 w-16 text-muted-foreground/30" /></div>
+                }
+                {product.catalogueNumber && <div className="text-xs text-muted-foreground mb-2">Cat #: <span className="font-mono text-foreground">{product.catalogueNumber}</span></div>}
+                {product.specs && Object.entries(product.specs).slice(0, 6).map(([k, v]) => (
+                  <div key={k} className="flex justify-between gap-4 py-2 border-b border-border last:border-0 text-sm">
+                    <span className="text-muted-foreground">{k}</span>
+                    <span className="text-foreground font-medium text-right">{v}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        {(product.features || product.applications) && (
+          <div className="container mx-auto px-6 md:px-12 py-14 grid lg:grid-cols-2 gap-12">
+            {product.features && <div><h2 className="text-xl font-bold mb-5">Features</h2><ul className="space-y-3">{product.features.map((f,i) => <li key={i} className="flex gap-3 text-sm text-muted-foreground"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />{f}</li>)}</ul></div>}
+            {product.applications && <div><h2 className="text-xl font-bold mb-5">Applications</h2><ul className="space-y-3">{product.applications.map((a,i) => <li key={i} className="flex gap-3 text-sm text-muted-foreground"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />{a}</li>)}</ul></div>}
+          </div>
+        )}
+        {allRelated.length > 0 && (
+          <div className="container mx-auto px-6 md:px-12 pt-4">
+            <h3 className="text-xl font-bold mb-6">Related Products</h3>
             <div className="grid md:grid-cols-3 gap-4">
-              {allRelated.map((p, i) => (
-                <Reveal key={p.id} delay={0.05 * i}><RelatedCard product={p} /></Reveal>
-              ))}
+              {allRelated.map(p => <RelatedCard key={p.id} product={p} />)}
             </div>
           </div>
         )}
-
       </main>
       <SiteFooter />
     </div>
