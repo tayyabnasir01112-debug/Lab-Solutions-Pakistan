@@ -352,7 +352,90 @@ function CytekCard({ product, index }: { product: Product; index: number }) {
   );
 }
 
-/* ─── NgeneBio Diagnostic Card ────────────────────────────────── */
+/* ─── Sugentech POCT Card ──────────────────────────────────────── */
+
+function SugentechCard({ product, index }: { product: Product; index: number }) {
+  const category = categoryById(product.category);
+  const BLUE = "#0057A8";
+  const isAnalyzer = product.category === "equipment";
+
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 14 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.35, delay: Math.min(index * 0.02, 0.25), ease: [0.16, 1, 0.3, 1] }}
+      className="group bg-white border border-[#dce8f5] hover:border-[#0057A8]/50 hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col"
+    >
+      {/* Top blue accent */}
+      <div className="h-1 bg-[#0057A8]" />
+
+      {/* Visual area */}
+      <div className={`relative overflow-hidden flex items-center justify-center ${isAnalyzer ? "aspect-[4/3] bg-[#f0f6ff]" : "py-8 bg-[#f7faff]"}`}>
+        {/* Subtle wave/pulse pattern */}
+        <div className="absolute inset-0 opacity-[0.07]"
+          style={{ backgroundImage: "radial-gradient(circle at 30% 50%, #0057A8 1px, transparent 1px), radial-gradient(circle at 70% 50%, #0057A8 1px, transparent 1px)", backgroundSize: "24px 24px" }} />
+
+        {product.image ? (
+          <img src={product.image} alt={product.name}
+            className="relative z-10 w-full h-full object-contain p-5 transition-transform duration-500 group-hover:scale-[1.04]"
+            style={{ filter: "drop-shadow(0 4px 16px rgba(0,87,168,0.15))" }} />
+        ) : (
+          <div className="relative z-10 flex flex-col items-center gap-3 py-4">
+            {/* POCT icon */}
+            <div className="w-16 h-16 rounded-full border-2 border-[#0057A8]/20 bg-white flex items-center justify-center shadow-sm">
+              <div className="w-8 h-8 rounded-full bg-[#0057A8]/10 flex items-center justify-center">
+                <div className="w-3 h-3 rounded-full bg-[#0057A8]" />
+              </div>
+            </div>
+            <span className="text-[10px] font-black tracking-[0.25em] uppercase text-[#0057A8]/30">Sugentech</span>
+          </div>
+        )}
+
+        {/* Tags */}
+        <div className="absolute top-3 left-3 flex items-center gap-1.5 z-10">
+          <span className="px-2 py-0.5 text-[9px] font-black tracking-[0.15em] uppercase text-white bg-[#0057A8]">Sugentech</span>
+          {product.featured && <span className="px-2 py-0.5 text-[9px] font-bold text-amber-600 border border-amber-300 bg-amber-50">Featured</span>}
+        </div>
+        <div className="absolute top-3 right-3 z-10">
+          <span className="px-2 py-0.5 text-[9px] font-bold text-[#007a52] border border-[#007a52]/30 bg-white/80">CE-IVD</span>
+        </div>
+
+        {/* Hover CTAs */}
+        <div className="absolute inset-x-0 bottom-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex gap-2">
+          <Link href={`/products/${product.id}`} className="flex-1">
+            <Button className="rounded-none w-full text-[11px] uppercase tracking-[0.12em] font-bold h-9 bg-[#0057A8] text-white hover:bg-[#004080]">
+              View Details
+            </Button>
+          </Link>
+          <Link href="/#contact">
+            <Button variant="outline" className="rounded-none text-[11px] uppercase tracking-[0.12em] font-bold h-9 border-[#0057A8] text-[#0057A8] hover:bg-[#0057A8] hover:text-white px-3">
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Button>
+          </Link>
+        </div>
+      </div>
+
+      {/* Text */}
+      <div className="p-4 flex-1 flex flex-col">
+        <div className="flex items-center gap-1.5 text-[11px] text-[#0057A8]/60 uppercase tracking-[0.1em] font-semibold mb-2">
+          {category?.icon}
+          <span>{category?.name}</span>
+        </div>
+        <h3 className="font-[var(--app-font-heading)] text-[15px] font-bold leading-snug text-[#111] mb-1 group-hover:text-[#0057A8] transition-colors cursor-pointer line-clamp-2">
+          <Link href={`/products/${product.id}`}>{product.name}</Link>
+        </h3>
+        {product.subtitle && (
+          <p className="text-[11px] text-[#0057A8]/70 font-semibold mb-2 leading-snug">{product.subtitle}</p>
+        )}
+        <p className="text-[13px] text-[#666] leading-relaxed line-clamp-2 mt-auto">{product.description}</p>
+      </div>
+    </motion.div>
+  );
+}
+
+
 
 function NgeneBioCard({ product, index }: { product: Product; index: number }) {
   const category = categoryById(product.category);
@@ -828,7 +911,9 @@ export default function Products() {
                       ? <CytekCard key={p.id} product={p} index={i} />
                       : p.brand === "ngene"
                         ? <NgeneBioCard key={p.id} product={p} index={i} />
-                        : <ProductCard key={p.id} product={p} index={i} />
+                        : p.brand === "sugentech"
+                          ? <SugentechCard key={p.id} product={p} index={i} />
+                          : <ProductCard key={p.id} product={p} index={i} />
                   ))}
                 </AnimatePresence>
               </div>

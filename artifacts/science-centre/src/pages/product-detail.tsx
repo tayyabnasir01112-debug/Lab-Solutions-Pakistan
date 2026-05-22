@@ -751,6 +751,281 @@ function NgeneBioProductDetail({ product }: { product: Product }) {
   );
 }
 
+/* ─── Sugentech POCT Detail Page ──────────────────────────────── */
+
+function SugentechProductDetail({ product }: { product: Product }) {
+  const category = categoryById(product.category);
+  const related = (product.relatedProducts || []).map(rid => productById(rid)).filter(Boolean) as Product[];
+  const moreBrand = productsByBrand(product.brand).filter(p => p.id !== product.id && !product.relatedProducts?.includes(p.id)).slice(0, 3 - related.length);
+  const allRelated = [...related, ...moreBrand].slice(0, 3);
+  const [tab, setTab] = useState<"overview" | "specs" | "applications">("overview");
+  const BLUE = "#0057A8";
+  const LIGHT = "#f0f6ff";
+
+  const tabs = [
+    { key: "overview" as const, label: "Overview" },
+    ...(product.specs ? [{ key: "specs" as const, label: "Specifications" }] : []),
+    ...(product.applications?.length ? [{ key: "applications" as const, label: "Applications" }] : []),
+  ];
+
+  return (
+    <div className="min-h-[100dvh] bg-white text-[#111]">
+      <SiteNavbar forceSolid />
+      <main>
+        {/* ── Hero ─────────────────────────────────────────────── */}
+        <div className="border-b border-[#dce8f5]" style={{ background: "linear-gradient(135deg, #f0f6ff 0%, #e8f1fb 50%, #f8fbff 100%)" }}>
+          <div className="h-1.5 bg-[#0057A8]" />
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16 pt-16 pb-14">
+            {/* Breadcrumb */}
+            <div className="flex items-center gap-2 text-[11px] text-[#aaa] mb-8">
+              <Link href="/" className="hover:text-[#0057A8] transition-colors">Home</Link>
+              <ChevronRight className="h-3 w-3" />
+              <Link href="/products" className="hover:text-[#0057A8] transition-colors">Products</Link>
+              <ChevronRight className="h-3 w-3" />
+              <span className="text-[#0057A8] font-semibold truncate max-w-[200px]">{product.name}</span>
+            </div>
+
+            <div className="grid lg:grid-cols-[1fr_320px] gap-12 items-center">
+              <div>
+                {/* Badges */}
+                <div className="flex flex-wrap gap-2 mb-5">
+                  <span className="px-3 py-1.5 text-[11px] font-black tracking-[0.15em] uppercase text-white bg-[#0057A8]">Sugentech</span>
+                  <span className="px-3 py-1.5 text-[11px] font-bold text-[#007a52] border border-[#007a52]/40 bg-white tracking-wide">✓ CE-IVD</span>
+                  {product.featured && <span className="px-3 py-1.5 text-[11px] font-bold text-amber-600 border border-amber-300 bg-amber-50">★ Featured</span>}
+                  {category && <span className="px-3 py-1.5 text-[11px] text-[#777] border border-[#dce8f5] bg-white flex items-center gap-1.5">{category.icon} {category.name}</span>}
+                </div>
+
+                <h1 className="font-[var(--app-font-heading)] font-black text-[#0a1628] leading-tight tracking-tight mb-3"
+                  style={{ fontSize: "clamp(26px,4vw,48px)" }}>
+                  {product.name}
+                </h1>
+                {product.subtitle && (
+                  <p className="text-[#0057A8] font-bold text-[14px] mb-4 tracking-wide">{product.subtitle}</p>
+                )}
+                <p className="text-[#555] text-[15px] leading-relaxed mb-8 max-w-lg">{product.description}</p>
+
+                <div className="flex flex-wrap gap-3">
+                  <a href="/#contact"
+                    className="inline-flex items-center gap-2 px-7 py-3 text-[12px] font-black tracking-[0.15em] uppercase text-white bg-[#0057A8] hover:bg-[#004080] transition-colors">
+                    REQUEST A QUOTE <ArrowRight className="h-4 w-4" />
+                  </a>
+                  <a href="/#contact"
+                    className="inline-flex items-center gap-2 px-7 py-3 text-[12px] font-bold tracking-[0.1em] uppercase border-2 border-[#0057A8] text-[#0057A8] hover:bg-[#0057A8] hover:text-white transition-colors">
+                    SPEAK TO A SPECIALIST
+                  </a>
+                  <Link href="/products">
+                    <button className="inline-flex items-center gap-1.5 px-4 py-3 text-[12px] font-bold text-[#aaa] hover:text-[#0057A8] transition-colors">
+                      <ArrowLeft className="h-3.5 w-3.5" /> All Products
+                    </button>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Quick specs panel */}
+              {product.specs && (
+                <div className="hidden lg:block bg-white border border-[#dce8f5] shadow-sm overflow-hidden">
+                  <div className="px-5 py-3 bg-[#0057A8]">
+                    <span className="text-[10px] font-black tracking-[0.2em] uppercase text-white">Key Specifications</span>
+                  </div>
+                  <div className="divide-y divide-[#edf3fa]">
+                    {Object.entries(product.specs).slice(0, 7).map(([k, v]) => (
+                      <div key={k} className="px-5 py-3">
+                        <div className="text-[9px] font-black tracking-[0.18em] uppercase text-[#0057A8]/50 mb-0.5">{k}</div>
+                        <div className="text-[13px] text-[#222] font-medium leading-snug">{v}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* ── Tabs ─────────────────────────────────────────────── */}
+        <div className="bg-white border-b border-[#dce8f5] sticky top-0 z-20 shadow-sm">
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16 flex items-center gap-3 py-3">
+            {tabs.map(t => (
+              <button key={t.key} onClick={() => setTab(t.key)}
+                className={`px-5 py-2.5 text-[12px] font-bold tracking-[0.1em] uppercase transition-all duration-200 border ${
+                  tab === t.key
+                    ? "bg-[#0057A8] text-white border-[#0057A8]"
+                    : "bg-white text-[#555] border-[#dce8f5] hover:border-[#0057A8]/50 hover:text-[#0057A8]"
+                }`}>
+                {t.label}
+              </button>
+            ))}
+            <div className="ml-auto">
+              <Link href="/products" className="flex items-center gap-1.5 text-[12px] font-bold text-[#aaa] hover:text-[#0057A8] transition-colors">
+                <ArrowLeft className="h-3.5 w-3.5" /> All Products
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* ══ OVERVIEW ══════════════════════════════════════════ */}
+        {tab === "overview" && (
+          <>
+            {product.featureCards && (
+              <div className="py-16 bg-white border-b border-[#edf3fa]">
+                <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+                  <div className="flex items-center gap-3 mb-10">
+                    <div className="w-1.5 h-7 bg-[#0057A8]" />
+                    <h2 className="font-[var(--app-font-heading)] font-black text-[#0a1628] text-[22px]">Key Features</h2>
+                  </div>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                    {product.featureCards.map((card, i) => (
+                      <div key={i} className="border border-[#dce8f5] bg-[#f8fbff] p-6 hover:border-[#0057A8]/40 hover:bg-[#f0f6ff] hover:shadow-sm transition-all group">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-8 h-8 rounded-sm bg-[#0057A8] flex items-center justify-center flex-shrink-0">
+                            <span className="text-white font-black text-[12px]">{String(i + 1).padStart(2, "0")}</span>
+                          </div>
+                          <h3 className="font-[var(--app-font-heading)] font-bold text-[#0a1628] text-[15px] leading-snug group-hover:text-[#0057A8] transition-colors">{card.title}</h3>
+                        </div>
+                        <p className="text-[#555] text-[13px] leading-relaxed pl-11">{card.body}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {product.features && (
+              <div className="py-14 border-b border-[#edf3fa]" style={{ background: "linear-gradient(180deg, #f8fbff 0%, #fff 100%)" }}>
+                <div className="max-w-[1400px] mx-auto px-8 md:px-16 grid lg:grid-cols-2 gap-12">
+                  <div>
+                    <div className="flex items-center gap-3 mb-7">
+                      <div className="w-1.5 h-6 bg-[#0057A8]" />
+                      <h2 className="font-[var(--app-font-heading)] font-bold text-[#0a1628] text-[20px]">Technical Features</h2>
+                    </div>
+                    <ul className="border border-[#dce8f5] divide-y divide-[#edf3fa] overflow-hidden">
+                      {product.features.map((f, i) => (
+                        <li key={i} className={`flex items-start gap-3 px-5 py-3.5 ${i % 2 === 0 ? "bg-white" : "bg-[#f8fbff]"}`}>
+                          <CheckCircle2 className="h-4 w-4 text-[#0057A8] flex-shrink-0 mt-0.5" />
+                          <span className="text-[#444] text-[13px] leading-relaxed">{f}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3 mb-7">
+                      <div className="w-1.5 h-6 bg-[#0057A8]" />
+                      <h2 className="font-[var(--app-font-heading)] font-bold text-[#0a1628] text-[20px]">Certifications</h2>
+                    </div>
+                    <div className="space-y-3">
+                      {[
+                        { badge: "CE-IVD", label: "European IVD Certification", body: "Certified for in vitro diagnostic use across the European Union — meeting stringent clinical validation and performance requirements.", color: "#007a52" },
+                        { badge: "KMFDS", label: "Korean Ministry of Food & Drug Safety", body: "Approved by Korea's Ministry of Food and Drug Safety — the originating regulatory market for all Sugentech products.", color: "#0057A8" },
+                        { badge: "POCT", label: "Point-of-Care Ready", body: "Designed for use at the patient's side — results within minutes, no specialist laboratory infrastructure required.", color: "#6d28d9" },
+                        { badge: "LIS/HIS", label: "Hospital System Integration", body: "Compatible with Laboratory and Hospital Information Systems — results flow directly into digital patient records.", color: "#0369a1" },
+                      ].map((item, i) => (
+                        <div key={i} className="flex items-start gap-4 p-4 border border-[#dce8f5] bg-white hover:border-[#0057A8]/30 transition-colors">
+                          <span className="px-2.5 py-1 text-[9px] font-black tracking-wide text-white flex-shrink-0" style={{ backgroundColor: item.color }}>{item.badge}</span>
+                          <div>
+                            <div className="text-[12px] font-bold text-[#333] mb-0.5">{item.label}</div>
+                            <p className="text-[#777] text-[12px] leading-relaxed">{item.body}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* CTA */}
+            <div className="py-14 bg-[#0057A8] relative overflow-hidden">
+              <div className="absolute inset-0 opacity-10" style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "30px 30px" }} />
+              <div className="max-w-[1400px] mx-auto px-8 md:px-16 flex flex-col md:flex-row items-center justify-between gap-8 relative z-10">
+                <div>
+                  <div className="text-white/50 text-[10px] font-black tracking-[0.3em] uppercase mb-2">Science Centre Pakistan · Sugentech Distributor</div>
+                  <h2 className="font-[var(--app-font-heading)] font-black text-white leading-tight" style={{ fontSize: "clamp(20px,3vw,32px)" }}>
+                    Bring POCT Diagnostics to Your Facility
+                  </h2>
+                  <p className="text-white/60 text-[13px] mt-1">Local installation, training, and after-sales support across Pakistan.</p>
+                </div>
+                <div className="flex gap-3 flex-shrink-0">
+                  <a href="/#contact" className="inline-flex items-center gap-2 px-8 py-4 text-[12px] font-black tracking-[0.15em] uppercase bg-white text-[#0057A8] hover:bg-[#edf3fa] transition-colors">
+                    REQUEST A QUOTE <ArrowRight className="h-4 w-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* ══ SPECS ═════════════════════════════════════════════ */}
+        {tab === "specs" && product.specs && (
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16 py-14">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-1.5 h-6 bg-[#0057A8]" />
+              <h2 className="font-[var(--app-font-heading)] font-bold text-[#0a1628] text-[22px]">Full Specifications</h2>
+            </div>
+            <div className="border border-[#dce8f5] overflow-hidden max-w-3xl">
+              {Object.entries(product.specs).map(([k, v], i) => (
+                <div key={k} className={`flex flex-col sm:flex-row sm:items-start gap-3 px-6 py-4 border-b border-[#edf3fa] last:border-0 ${i % 2 === 0 ? "bg-white" : "bg-[#f8fbff]"}`}>
+                  <span className="text-[11px] font-black text-[#0057A8] uppercase tracking-wide sm:w-52 flex-shrink-0 mt-0.5">{k}</span>
+                  <span className="text-[14px] text-[#333] leading-relaxed">{v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ══ APPLICATIONS ══════════════════════════════════════ */}
+        {tab === "applications" && product.applications && (
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16 py-14">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-1.5 h-6 bg-[#0057A8]" />
+              <h2 className="font-[var(--app-font-heading)] font-bold text-[#0a1628] text-[22px]">Clinical Applications</h2>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl">
+              {product.applications.map((a, i) => (
+                <div key={i} className="flex items-start gap-3 p-4 border border-[#dce8f5] bg-[#f8fbff] hover:border-[#0057A8]/40 hover:bg-[#f0f6ff] transition-all group">
+                  <div className="w-5 h-5 bg-[#0057A8] flex items-center justify-center flex-shrink-0 mt-0.5 group-hover:scale-110 transition-transform">
+                    <ArrowRight className="h-3 w-3 text-white" />
+                  </div>
+                  <span className="text-[13px] text-[#444] leading-relaxed">{a}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── Related ───────────────────────────────────────────── */}
+        {allRelated.length > 0 && (
+          <div className="bg-[#f0f6ff] border-t border-[#dce8f5] py-14">
+            <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-1.5 h-6 bg-[#0057A8]" />
+                <h3 className="font-[var(--app-font-heading)] font-bold text-[#0a1628] text-[20px]">Related Products</h3>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {allRelated.map(p => (
+                  <Link key={p.id} href={`/products/${p.id}`}>
+                    <div className="group border border-[#dce8f5] bg-white p-5 hover:border-[#0057A8]/50 hover:shadow-md transition-all cursor-pointer">
+                      <div className="h-0.5 bg-[#0057A8] -mx-5 -mt-5 mb-5" />
+                      <div className="flex items-center justify-between mb-3">
+                        <span className="px-2 py-0.5 text-[9px] font-black tracking-[0.15em] uppercase text-white bg-[#0057A8]">Sugentech</span>
+                        <span className="px-2 py-0.5 text-[9px] font-bold text-[#007a52] border border-[#007a52]/30 bg-white">CE-IVD</span>
+                      </div>
+                      <h4 className="font-[var(--app-font-heading)] font-bold text-[14px] text-[#0a1628] group-hover:text-[#0057A8] transition-colors mb-2 leading-snug">{p.name}</h4>
+                      <p className="text-[12px] text-[#888] line-clamp-2 leading-relaxed">{p.description}</p>
+                      <div className="mt-3 flex items-center gap-1 text-[11px] font-bold text-[#0057A8] opacity-0 group-hover:opacity-100 transition-opacity">
+                        View Details <ArrowRight className="h-3 w-3" />
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}
+
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
 
@@ -783,6 +1058,10 @@ export default function ProductDetail() {
   // Route NgeneBio products to clinical diagnostic detail page
   if (product.brand === "ngene") {
     return <NgeneBioProductDetail product={product} />;
+  }
+
+  if (product.brand === "sugentech") {
+    return <SugentechProductDetail product={product} />;
   }
 
   const brand = brandById(product.brand);
