@@ -758,7 +758,7 @@ function SugentechProductDetail({ product }: { product: Product }) {
   const related = (product.relatedProducts || []).map(rid => productById(rid)).filter(Boolean) as Product[];
   const moreBrand = productsByBrand(product.brand).filter(p => p.id !== product.id && !product.relatedProducts?.includes(p.id)).slice(0, 3 - related.length);
   const allRelated = [...related, ...moreBrand].slice(0, 3);
-  const [tab, setTab] = useState<"overview" | "specs" | "applications">("overview");
+  const [tab, setTab] = useState<"overview" | "specs" | "applications" | "kits">("overview");
   const BLUE = "#0057A8";
   const LIGHT = "#f0f6ff";
 
@@ -766,6 +766,7 @@ function SugentechProductDetail({ product }: { product: Product }) {
     { key: "overview" as const, label: "Overview" },
     ...(product.specs ? [{ key: "specs" as const, label: "Specifications" }] : []),
     ...(product.applications?.length ? [{ key: "applications" as const, label: "Applications" }] : []),
+    ...(product.kits?.length ? [{ key: "kits" as const, label: "Kits & Reagents" }] : []),
   ];
 
   return (
@@ -985,6 +986,33 @@ function SugentechProductDetail({ product }: { product: Product }) {
                     <ArrowRight className="h-3 w-3 text-white" />
                   </div>
                   <span className="text-[13px] text-[#444] leading-relaxed">{a}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ══ KITS & REAGENTS ═══════════════════════════════════ */}
+        {tab === "kits" && product.kits && (
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16 py-14">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-1.5 h-6 bg-[#0057A8]" />
+              <h2 className="font-[var(--app-font-heading)] font-bold text-[#0a1628] text-[22px]">Kits, Reagents &amp; Options</h2>
+            </div>
+            <p className="text-[#777] text-[14px] mb-8 pl-5">Compatible kits and reagents for the {product.name}. Contact Science Centre Pakistan for availability and pricing.</p>
+            <div className="grid md:grid-cols-2 gap-4">
+              {product.kits.map((kit, i) => (
+                <div key={i} className="border border-[#dce8f5] bg-white p-5 hover:border-[#0057A8]/40 hover:shadow-sm transition-all group">
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <h3 className="font-[var(--app-font-heading)] font-bold text-[#0a1628] text-[15px] leading-snug group-hover:text-[#0057A8] transition-colors">{kit.name}</h3>
+                    {kit.catalogueNumber && (
+                      <span className="flex-shrink-0 text-[10px] font-bold text-[#0057A8] bg-[#f0f6ff] border border-[#dce8f5] px-2 py-1 font-mono">{kit.catalogueNumber}</span>
+                    )}
+                  </div>
+                  <p className="text-[#666] text-[13px] leading-relaxed mb-3">{kit.description}</p>
+                  <a href="/#contact" className="inline-flex items-center gap-1.5 text-[11px] font-bold text-[#0057A8] hover:text-[#004080] transition-colors">
+                    Enquire <ArrowRight className="h-3 w-3" />
+                  </a>
                 </div>
               ))}
             </div>
