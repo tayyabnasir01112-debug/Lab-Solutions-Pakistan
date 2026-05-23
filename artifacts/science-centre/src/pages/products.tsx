@@ -352,191 +352,6 @@ function CytekCard({ product, index }: { product: Product; index: number }) {
   );
 }
 
-/* ─── Sugentech Grouped Brand View ────────────────────────────── */
-
-const SUGENTECH_GROUPS = [
-  {
-    key: "analyzers",
-    label: "POCT Analyzers",
-    icon: "⚡",
-    description: "Compact, quantitative immunoassay analyzers for point-of-care testing",
-    ids: ["sug-inclix", "sug-inclix-f100"],
-    accent: "#0057A8",
-  },
-  {
-    key: "cardiac",
-    label: "Cardiovascular & Infection",
-    icon: "🫀",
-    description: "Quantitative cartridge tests for cardiac markers, inflammation, and sepsis",
-    ids: ["sug-troponin", "sug-crp", "sug-pct"],
-    accent: "#c0392b",
-  },
-  {
-    key: "chronic",
-    label: "Chronic Disease",
-    icon: "📊",
-    description: "Long-term disease monitoring — diabetes and thyroid function",
-    ids: ["sug-hba1c"],
-    accent: "#16a085",
-  },
-  {
-    key: "respiratory",
-    label: "Respiratory Rapid Tests",
-    icon: "🧬",
-    description: "Lateral flow rapid antigen and antibody tests for COVID-19 and influenza",
-    ids: ["sug-covid-ag", "sug-covid-flu", "sug-covid-igg"],
-    accent: "#8e44ad",
-  },
-  {
-    key: "allergy",
-    label: "Allergy Diagnostics",
-    icon: "🌿",
-    description: "Multiplex allergen-specific IgE immunoblot panel — human and veterinary",
-    ids: ["sug-allergy"],
-    accent: "#27ae60",
-  },
-];
-
-function SugentechGroupedView({ products }: { products: Product[] }) {
-  const productMap = Object.fromEntries(products.map(p => [p.id, p]));
-
-  return (
-    <div className="space-y-12">
-      {/* Brand hero strip */}
-      <div className="relative overflow-hidden rounded-sm border border-[#dce8f5]"
-        style={{ background: "linear-gradient(135deg, #003d7a 0%, #0057A8 50%, #1a72c4 100%)" }}>
-        <div className="absolute inset-0 opacity-10"
-          style={{ backgroundImage: "radial-gradient(circle, #fff 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
-        <div className="relative z-10 px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div>
-            <div className="text-white/50 text-[10px] font-black tracking-[0.3em] uppercase mb-2">Korean POCT Innovator</div>
-            <h2 className="font-[var(--app-font-heading)] font-black text-white text-[28px] leading-tight">Sugentech</h2>
-            <p className="text-white/60 text-[14px] mt-1 max-w-lg">INCLIX™ quantitative POCT analyzers and SGTi-flex rapid diagnostic tests — CE-IVD certified, from Korea</p>
-          </div>
-          <div className="flex flex-wrap gap-2 flex-shrink-0">
-            {["CE-IVD", "KMFDS", "POCT", "Quantitative"].map(b => (
-              <span key={b} className="px-3 py-1.5 text-[11px] font-bold text-white border border-white/25 bg-white/10">{b}</span>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Category sections */}
-      {SUGENTECH_GROUPS.map((group) => {
-        const groupProducts = group.ids.map(id => productMap[id]).filter(Boolean);
-        if (!groupProducts.length) return null;
-
-        return (
-          <motion.div key={group.key} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}>
-            {/* Section header */}
-            <div className="flex items-center gap-4 mb-5 pb-4 border-b-2" style={{ borderColor: group.accent + "30" }}>
-              <div className="w-10 h-10 flex items-center justify-center text-xl flex-shrink-0 rounded-sm border"
-                style={{ background: group.accent + "12", borderColor: group.accent + "30" }}>
-                {group.icon}
-              </div>
-              <div className="flex-1">
-                <div className="flex items-center gap-3">
-                  <h3 className="font-[var(--app-font-heading)] font-black text-[#0a1628] text-[18px]">{group.label}</h3>
-                  <span className="px-2.5 py-0.5 text-[11px] font-bold text-white rounded-full"
-                    style={{ background: group.accent }}>
-                    {groupProducts.length} {groupProducts.length === 1 ? "product" : "products"}
-                  </span>
-                </div>
-                <p className="text-[#888] text-[13px] mt-0.5">{group.description}</p>
-              </div>
-            </div>
-
-            {/* Products in this group */}
-            {group.key === "analyzers" ? (
-              /* Analyzers: wider 2-column layout with more detail */
-              <div className="grid md:grid-cols-2 gap-5">
-                {groupProducts.map((p, i) => (
-                  <motion.div key={p.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.08 }}
-                    className="group border border-[#dce8f5] bg-white hover:border-[#0057A8]/50 hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col">
-                    <div className="h-1" style={{ background: group.accent }} />
-                    <div className="p-6 flex gap-5 flex-1">
-                      {/* Icon area */}
-                      <div className="w-20 h-20 flex-shrink-0 rounded-sm flex items-center justify-center"
-                        style={{ background: group.accent + "10", border: `1px solid ${group.accent}20` }}>
-                        <div className="w-10 h-10 rounded-full flex items-center justify-center"
-                          style={{ background: group.accent }}>
-                          <span className="text-white font-black text-[16px]">⚡</span>
-                        </div>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1.5">
-                          <span className="px-2 py-0.5 text-[9px] font-black tracking-[0.15em] uppercase text-white" style={{ background: group.accent }}>Sugentech</span>
-                          {p.featured && <span className="px-2 py-0.5 text-[9px] font-bold text-amber-600 border border-amber-300 bg-amber-50">Featured</span>}
-                        </div>
-                        <h4 className="font-[var(--app-font-heading)] font-black text-[16px] text-[#0a1628] group-hover:text-[#0057A8] transition-colors leading-snug mb-1">
-                          <Link href={`/products/${p.id}`}>{p.name}</Link>
-                        </h4>
-                        {p.subtitle && <p className="text-[12px] font-semibold mb-2" style={{ color: group.accent }}>{p.subtitle}</p>}
-                        <p className="text-[#666] text-[13px] leading-relaxed line-clamp-2">{p.description}</p>
-                      </div>
-                    </div>
-                    <div className="px-6 pb-4 flex gap-2">
-                      <Link href={`/products/${p.id}`} className="flex-1">
-                        <button className="w-full text-[11px] font-bold uppercase tracking-[0.12em] py-2.5 text-white transition-colors flex items-center justify-center gap-2"
-                          style={{ background: group.accent }}>
-                          View Details <ArrowRight className="h-3.5 w-3.5" />
-                        </button>
-                      </Link>
-                      <Link href="/#contact">
-                        <button className="px-4 text-[11px] font-bold uppercase tracking-[0.1em] py-2.5 border transition-colors"
-                          style={{ borderColor: group.accent, color: group.accent }}>
-                          Enquire
-                        </button>
-                      </Link>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            ) : (
-              /* Other groups: standard 3-column grid */
-              <div className={`grid gap-4 ${groupProducts.length === 1 ? "grid-cols-1 max-w-sm" : groupProducts.length === 2 ? "sm:grid-cols-2 max-w-2xl" : "sm:grid-cols-2 lg:grid-cols-3"}`}>
-                {groupProducts.map((p, i) => (
-                  <motion.div key={p.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.06 }}
-                    className="group border border-[#dce8f5] bg-white hover:border-[#0057A8]/40 hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col">
-                    <div className="h-1" style={{ background: group.accent }} />
-                    <div className="p-5 flex-1">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="px-2 py-0.5 text-[9px] font-black tracking-[0.13em] uppercase text-white" style={{ background: group.accent }}>Sugentech</span>
-                        <span className="text-[9px] font-bold text-[#007a52] border border-[#007a52]/30 px-2 py-0.5">CE-IVD</span>
-                      </div>
-                      <h4 className="font-[var(--app-font-heading)] font-bold text-[14px] text-[#0a1628] group-hover:text-[#0057A8] transition-colors leading-snug mb-1.5">
-                        <Link href={`/products/${p.id}`}>{p.name}</Link>
-                      </h4>
-                      {p.subtitle && <p className="text-[11px] font-semibold mb-2 leading-snug" style={{ color: group.accent }}>{p.subtitle}</p>}
-                      <p className="text-[#777] text-[12px] leading-relaxed line-clamp-3">{p.description}</p>
-                    </div>
-                    <div className="px-5 py-3 border-t border-[#edf3fa] flex gap-2">
-                      <Link href={`/products/${p.id}`} className="flex-1">
-                        <button className="w-full text-[10px] font-bold uppercase tracking-[0.12em] py-2 text-white transition-colors"
-                          style={{ background: group.accent }}>
-                          View Details
-                        </button>
-                      </Link>
-                      <Link href="/#contact">
-                        <button className="px-3 text-[10px] font-bold uppercase py-2 border transition-colors"
-                          style={{ borderColor: group.accent + "60", color: group.accent }}>
-                          Enquire
-                        </button>
-                      </Link>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            )}
-          </motion.div>
-        );
-      })}
-    </div>
-  );
-}
-
 /* ─── Sugentech POCT Card ──────────────────────────────────────── */
 
 function SugentechCard({ product, index }: { product: Product; index: number }) {
@@ -1089,26 +904,19 @@ export default function Products() {
                 </div>
               </div>
             ) : (
-              <>
-                {/* ── Sugentech brand view: grouped by category ── */}
-                {activeBrands.length === 1 && activeBrands[0] === "sugentech" && !query && !activeCats.length ? (
-                  <SugentechGroupedView products={filtered} />
-                ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5">
-                    <AnimatePresence mode="popLayout">
-                      {filtered.map((p, i) => (
-                        p.brand === "cytek"
-                          ? <CytekCard key={p.id} product={p} index={i} />
-                          : p.brand === "ngene"
-                            ? <NgeneBioCard key={p.id} product={p} index={i} />
-                            : p.brand === "sugentech"
-                              ? <SugentechCard key={p.id} product={p} index={i} />
-                              : <ProductCard key={p.id} product={p} index={i} />
-                      ))}
-                    </AnimatePresence>
-                  </div>
-                )}
-              </>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5">
+                <AnimatePresence mode="popLayout">
+                  {filtered.map((p, i) => (
+                    p.brand === "cytek"
+                      ? <CytekCard key={p.id} product={p} index={i} />
+                      : p.brand === "ngene"
+                        ? <NgeneBioCard key={p.id} product={p} index={i} />
+                        : p.brand === "sugentech"
+                          ? <SugentechCard key={p.id} product={p} index={i} />
+                          : <ProductCard key={p.id} product={p} index={i} />
+                  ))}
+                </AnimatePresence>
+              </div>
             )}
           </div>
         </div>
