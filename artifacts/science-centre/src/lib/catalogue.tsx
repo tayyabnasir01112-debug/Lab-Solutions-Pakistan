@@ -41,16 +41,121 @@ export type Product = {
   relatedProducts?: string[];
 };
 
+export type Brand = {
+  id: string; name: string; short: string; blurb: string; accent: string;
+  logo?: string;      // URL to brand logo image (fetched client-side)
+  longBlurb?: string; // Extended description for the mega menu brand panel
+  founded?: string;
+  hq?: string;
+  website?: string;
+};
+
 export const brands: Brand[] = [
-  { id: "onelambda", name: "One Lambda (Thermo Fisher Scientific)", short: "One Lambda", blurb: "Global leader in transplant diagnostics — HLA typing, antibody detection, and crossmatch solutions trusted worldwide.", accent: "#D71920" },
-  { id: "merck", name: "Merck Sigma-Aldrich", short: "Merck", blurb: "Reagents, antibodies and research chemicals — life-science gold standard.", accent: "#003366" },
-  { id: "luminex", name: "Luminex Corp", short: "Luminex", blurb: "xMAP® multiplex assay technology for high-throughput labs.", accent: "#2EA3F2" },
-  { id: "diasorin", name: "DiaSorin", short: "DiaSorin", blurb: "Immunoassays and molecular diagnostics powered by LIAISON® systems.", accent: "#0F4C81" },
-  { id: "cytek", name: "CytekBio", short: "Cytek", blurb: "Full-spectrum flow cytometry redefining cellular analysis.", accent: "#5E2A84" },
-  { id: "ngene", name: "NgeneBio", short: "NgeneBio", blurb: "Korean NGS precision diagnostics — CE-IVD certified panels for cancer, hematology, and transplant typing.", accent: "#C8002D" },
-  { id: "hkm", name: "HKM Bio", short: "HKM", blurb: "Reliable laboratory equipment — centrifuges, incubators, and safety cabinets.", accent: "#7A8B99" },
-  { id: "sugentech", name: "Sugentech", short: "Sugentech", blurb: "Korean POCT innovator — INCLIX™ quantitative immunoassay analyzers and SGTi-flex rapid diagnostic tests.", accent: "#0057A8" },
-  { id: "biolegend", name: "BioLegend", short: "BioLegend", blurb: "World-class antibodies and reagents for flow cytometry and ELISA.", accent: "#E94B3C" },
+  {
+    id: "onelambda",
+    name: "One Lambda (Thermo Fisher Scientific)",
+    short: "One Lambda",
+    accent: "#D71920",
+    logo: "https://www.thermofisher.com/etc.clientlibs/thermofisher/clientlibs/base/resources/img/TFS-Logo-Inline-White-RGB.png",
+    blurb: "Global leader in transplant diagnostics — HLA typing, antibody detection, and crossmatch solutions trusted worldwide.",
+    longBlurb: "One Lambda, a Thermo Fisher Scientific brand, is the global gold standard in transplant diagnostics. For over 40 years, transplant laboratories worldwide have trusted One Lambda for HLA typing, antibody detection (LABScreen™), flow cytometric crossmatch (FlowDSA-XM™), and NGS-based HLA typing. Used in thousands of transplant centres across 100+ countries.",
+    founded: "1975",
+    hq: "Canoga Park, California, USA",
+    website: "https://www.thermofisher.com/onelambda",
+  },
+  {
+    id: "merck",
+    name: "Merck Sigma-Aldrich",
+    short: "Merck",
+    accent: "#003366",
+    logo: "https://www.merckgroup.com/content/dam/web/corporate/non-images/company/history/Merck_Logo.svg",
+    blurb: "Reagents, antibodies and research chemicals — life-science gold standard.",
+    longBlurb: "Merck KGaA (Sigma-Aldrich) is the world's oldest and largest pharmaceutical and chemical company. Their life science division supplies over 300,000 reagents, antibodies, biochemicals, and research tools to laboratories in more than 160 countries — underpinning research from basic science to clinical diagnostics.",
+    founded: "1668",
+    hq: "Darmstadt, Germany",
+    website: "https://www.merckgroup.com/en/science-technology.html",
+  },
+  {
+    id: "luminex",
+    name: "Luminex Corp (DiaSorin Company)",
+    short: "Luminex",
+    accent: "#2EA3F2",
+    logo: "https://www.luminexcorp.com/wp-content/themes/luminex/img/luminex-logo.png",
+    blurb: "xMAP® multiplex assay technology for high-throughput labs.",
+    longBlurb: "Luminex Corporation pioneered xMAP® multiplex bead-based technology — enabling simultaneous measurement of up to 500 analytes from a single sample. Now part of DiaSorin, Luminex platforms including MAGPIX® and FLEXMAP 3D® are used globally for immunology, infectious disease, and transplant diagnostics.",
+    founded: "1995",
+    hq: "Austin, Texas, USA",
+    website: "https://www.luminexcorp.com",
+  },
+  {
+    id: "diasorin",
+    name: "DiaSorin",
+    short: "DiaSorin",
+    accent: "#0F4C81",
+    logo: "https://www.diasorin.com/themes/custom/diasorin/logo/diasorin-logo.svg",
+    blurb: "Immunoassays and molecular diagnostics powered by LIAISON® systems.",
+    longBlurb: "DiaSorin is a global leader in immunodiagnostics and molecular diagnostics. Their LIAISON® automated immunoassay platform and LIAISON MDX molecular system deliver rapid, high-throughput testing for endocrinology, infectious disease, oncology, and transplant medicine across hospital laboratories worldwide.",
+    founded: "1968",
+    hq: "Saluggia, Italy",
+    website: "https://www.diasorin.com",
+  },
+  {
+    id: "cytek",
+    name: "Cytek Biosciences",
+    short: "Cytek",
+    accent: "#5E2A84",
+    logo: "https://cytek-web.s3.amazonaws.com/cytekbio.com/CytekLogo-color.min.png",
+    blurb: "Full-spectrum flow cytometry redefining cellular analysis.",
+    longBlurb: "Cytek Biosciences pioneered Full Spectrum Profiling™ (FSP®) — a revolutionary approach to flow cytometry capturing the complete emission spectrum of every fluorochrome. The Aurora™ platform supports up to 40-color panels, cited in 2,600+ publications. The Northern Lights™, Guava®, and Muse® Micro extend the portfolio from clinical to research POCT.",
+    founded: "2014",
+    hq: "Fremont, California, USA",
+    website: "https://cytekbio.com",
+  },
+  {
+    id: "ngene",
+    name: "NgeneBio",
+    short: "NgeneBio",
+    accent: "#C8002D",
+    logo: "https://www.ngenebio.com/img/common/logo.png",
+    blurb: "Korean NGS precision diagnostics — CE-IVD certified panels for cancer, hematology, and transplant typing.",
+    longBlurb: "NgeneBio is a Korean NGS-based precision diagnostics company delivering CE-IVD certified panels for oncology, haematology, infectious disease, and HLA typing. Their BRCAaccuTest™, HEMEaccuTest™, ONCOaccuPanel™, and HLAaccuTest™ panels are deployed in leading hospitals across Asia and Europe, supported by the NGeneAnalySys® cloud bioinformatics platform.",
+    founded: "2013",
+    hq: "Seoul, South Korea",
+    website: "https://www.ngenebio.com",
+  },
+  {
+    id: "hkm",
+    name: "HKM Bio",
+    short: "HKM",
+    accent: "#7A8B99",
+    blurb: "Reliable laboratory equipment — centrifuges, incubators, and safety cabinets.",
+    longBlurb: "HKM Bio supplies a comprehensive range of laboratory equipment for clinical and research laboratories — from high-speed refrigerated centrifuges and CO₂ incubators to biosafety cabinets and analytical balances. Known for reliable performance, competitive pricing, and long-term support.",
+    hq: "Korea",
+  },
+  {
+    id: "sugentech",
+    name: "Sugentech",
+    short: "Sugentech",
+    accent: "#0057A8",
+    logo: "https://www.sugentech.com/skin/default/img/logo.png",
+    blurb: "Korean POCT innovator — INCLIX™ quantitative immunoassay analyzers and SGTi-flex rapid diagnostic tests.",
+    longBlurb: "Sugentech is a Korean in vitro diagnostics company specialising in point-of-care testing. Their INCLIX™ and INCLIX F-100™ (TRF) analyzers deliver quantitative immunoassay results at the bedside, supported by a full menu of test cartridges for cardiovascular, infection, diabetes, and allergy biomarkers. CE-IVD and KMFDS approved.",
+    founded: "2007",
+    hq: "Daejeon, South Korea",
+    website: "https://www.sugentech.com",
+  },
+  {
+    id: "biolegend",
+    name: "BioLegend",
+    short: "BioLegend",
+    accent: "#E94B3C",
+    logo: "https://www.biolegend.com/Files/Images/BioLegend/logo/biolegend-logo-2c.png",
+    blurb: "World-class antibodies and reagents for flow cytometry and ELISA.",
+    longBlurb: "BioLegend (a PerkinElmer company) is a leading manufacturer of antibodies and research reagents for immunology and cell biology. With over 17,000 products including TotalSeq™ oligo-conjugated antibodies, LEGENDplex™ multiplex bead panels, and hundreds of validated flow cytometry antibodies, BioLegend is the reagent of choice for leading research institutions globally.",
+    founded: "2002",
+    hq: "San Diego, California, USA",
+    website: "https://www.biolegend.com",
+  },
 ];
 
 export const categories: Category[] = [
