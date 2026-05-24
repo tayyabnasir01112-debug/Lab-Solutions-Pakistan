@@ -59,6 +59,16 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
 
   useEffect(() => { setMegaOpen(false); setMenuOpen(false); }, [location]);
 
+  // Lock page scroll when mega menu is open
+  useEffect(() => {
+    if (megaOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [megaOpen]);
+
   useEffect(() => {
     if (!megaOpen) return;
     const onDown = (e: MouseEvent) => {
@@ -164,7 +174,7 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-            className="hidden lg:block absolute left-0 right-0 top-full bg-background border-b border-border shadow-2xl"
+            className="hidden lg:block absolute left-0 right-0 top-full bg-background border-b border-border shadow-2xl" onWheel={e => e.stopPropagation()}
           >
             {/* Top bar */}
             <div className="border-b border-border/60 bg-muted/20">
@@ -190,7 +200,7 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
               <div className="grid grid-cols-12" style={{ height: "430px" }}>
 
                 {/* ── LEFT: Brand list ────────────────────────── */}
-                <div className="col-span-3 border-r border-border py-3 pr-3 overflow-y-auto h-full">
+                <div className="col-span-3 border-r border-border py-3 pr-3 overflow-y-auto h-full" style={{ overscrollBehavior: "contain" }} onWheel={e => e.stopPropagation()}>
                   <div className="text-[9px] font-black uppercase tracking-[0.22em] text-muted-foreground px-3 mb-3">Manufacturers</div>
                   <div className="space-y-0.5">
                     {brands.map(b => {
@@ -254,7 +264,7 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -6 }}
                     transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="col-span-9 overflow-y-auto h-full py-4 pl-6 pr-2 flex flex-col"
+                    className="col-span-9 overflow-y-auto h-full py-4 pl-6 pr-2 flex flex-col" style={{ overscrollBehavior: "contain" }} onWheel={e => e.stopPropagation()}
                   >
                     {/* Brand intro card */}
                     <div className="flex items-start gap-5 mb-4 pb-4 border-b border-border flex-shrink-0">
