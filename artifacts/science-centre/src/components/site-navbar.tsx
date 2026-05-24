@@ -187,10 +187,10 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
 
             {/* Body: brand list (left) + brand detail panel (right) */}
             <div className="container mx-auto px-6 md:px-12">
-              <div className="grid grid-cols-12 min-h-[420px] max-h-[520px]">
+              <div className="grid grid-cols-12" style={{ height: "430px" }}>
 
                 {/* ── LEFT: Brand list ────────────────────────── */}
-                <div className="col-span-3 border-r border-border py-4 pr-4 overflow-y-auto">
+                <div className="col-span-3 border-r border-border py-3 pr-3 overflow-y-auto h-full">
                   <div className="text-[9px] font-black uppercase tracking-[0.22em] text-muted-foreground px-3 mb-3">Manufacturers</div>
                   <div className="space-y-0.5">
                     {brands.map(b => {
@@ -254,16 +254,16 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -6 }}
                     transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                    className="col-span-9 py-5 pl-8 overflow-y-auto flex flex-col gap-0"
+                    className="col-span-9 overflow-y-auto h-full py-4 pl-6 pr-2 flex flex-col"
                   >
                     {/* Brand intro card */}
-                    <div className="flex items-start gap-6 mb-6 pb-5 border-b border-border">
+                    <div className="flex items-start gap-5 mb-4 pb-4 border-b border-border flex-shrink-0">
                       {/* Logo zone */}
-                      <div className="flex-shrink-0 w-48 h-24 flex items-center justify-center rounded-sm border border-border overflow-hidden"
+                      <div className="flex-shrink-0 w-36 h-16 flex items-center justify-center rounded-sm border border-border overflow-hidden"
                         style={{ background: currentBrand.accent + "08" }}>
                         {currentBrand.logo ? (
                           <img src={currentBrand.logo} alt={currentBrand.name}
-                            className="max-w-full max-h-full object-contain p-4"
+                            className="max-w-full max-h-full object-contain p-3"
                             onError={(e) => {
                               const el = e.target as HTMLImageElement;
                               el.style.display = "none";
@@ -280,28 +280,28 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
                       {/* Brand info */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1.5">
-                          <h3 className="font-[var(--app-font-heading)] font-black text-[17px] text-foreground leading-tight">
+                          <h3 className="font-[var(--app-font-heading)] font-black text-[15px] text-foreground leading-tight">
                             {currentBrand.name}
                           </h3>
                         </div>
-                        <p className="text-[13px] text-muted-foreground leading-relaxed mb-3 max-w-lg">
+                        <p className="text-[12px] text-muted-foreground leading-relaxed mb-2 line-clamp-2">
                           {currentBrand.longBlurb || currentBrand.blurb}
                         </p>
                         <div className="flex flex-wrap items-center gap-3">
                           {currentBrand.founded && (
-                            <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                            <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
                               <Building2 className="h-3 w-3" />
                               Est. {currentBrand.founded}
                             </span>
                           )}
                           {currentBrand.hq && (
-                            <span className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                            <span className="flex items-center gap-1 text-[10px] text-muted-foreground">
                               <Globe className="h-3 w-3" />
                               {currentBrand.hq}
                             </span>
                           )}
                           <Link href={`/products?brand=${activeBrand}`} onClick={closeMega}
-                            className="ml-auto inline-flex items-center gap-1.5 text-[11px] font-black uppercase tracking-[0.14em] px-4 py-2 text-white transition-colors"
+                            className="ml-auto inline-flex items-center gap-1.5 text-[10px] font-black uppercase tracking-[0.12em] px-3 py-1.5 text-white transition-colors flex-shrink-0"
                             style={{ background: currentBrand.accent }}>
                             All {brandProdCount} Products <ArrowRight className="h-3 w-3" />
                           </Link>
@@ -310,7 +310,7 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
                     </div>
 
                     {/* Categories with expandable product lists */}
-                    <div className="flex-1">
+                    <div className="flex-1 min-h-0">
                       <div className="text-[9px] font-black uppercase tracking-[0.22em] text-muted-foreground mb-3">
                         Product Categories
                       </div>
@@ -356,13 +356,13 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
                                           key={p.id}
                                           href={`/products/${p.id}`}
                                           onClick={closeMega}
-                                          className="flex items-center gap-3 px-4 py-2.5 hover:bg-background transition-colors group"
+                                          className="flex items-center gap-2.5 px-3 py-2 hover:bg-background transition-colors group"
                                         >
                                           <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: currentBrand.accent }} />
                                           <span className="text-[12px] text-foreground/80 group-hover:text-primary transition-colors leading-snug flex-1 line-clamp-1">
                                             {p.name}
                                           </span>
-                                          <ArrowRight className="h-3 w-3 text-muted-foreground/40 group-hover:text-primary flex-shrink-0 opacity-0 group-hover:opacity-100 transition-all" />
+                                          <ArrowRight className="h-2.5 w-2.5 text-muted-foreground/30 group-hover:text-primary flex-shrink-0 opacity-0 group-hover:opacity-100 transition-all" />
                                         </Link>
                                       ))}
                                       {catProds.length > 5 && (
