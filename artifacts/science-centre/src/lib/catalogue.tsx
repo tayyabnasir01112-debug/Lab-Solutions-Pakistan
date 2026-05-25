@@ -183,7 +183,7 @@ export const categories: Category[] = [
   { id: "serological",   name: "Serological Typing",          icon: <Activity className="h-4 w-4" /> },
   { id: "posttransplant",name: "Post-Transplant Monitoring",  icon: <Layers className="h-4 w-4" /> },
   /* ── REX / Electrochemical categories ─────────────────────── */
-  { id: "ph-meters",     name: "pH & Multi-Parameter Meters", icon: <Gauge className="h-4 w-4" /> },
+  { id: "benchtop-meters",     name: "Benchtop Meters", icon: <Gauge className="h-4 w-4" /> },
   { id: "portable-meters", name: "Portable Field Meters",     icon: <Waves className="h-4 w-4" /> },
   { id: "titrators",     name: "Titrators",                   icon: <FlaskConical className="h-4 w-4" /> },
   { id: "kf-titrators",  name: "Karl Fischer Titrators",      icon: <Droplets className="h-4 w-4" /> },
@@ -2362,7 +2362,7 @@ export const products: Product[] = [
 
   /* ─ Benchtop pH / Multi-Parameter Meters ─ */
   {
-    id: "rex-m600l", name: "REX M600L Multi-Parameter Analyzer", brand: "rex", category: "ph-meters", featured: true,
+    id: "rex-m600l", name: "REX M600L Multi-Parameter Analyzer", brand: "rex", category: "benchtop-meters", featured: true,
     subtitle: "Professional Modular Multi-Parameter Benchtop Analyzer",
     description: "The M600L is REX\'s top-of-range multi-parameter benchtop analyzer. Its modular slot design simultaneously measures pH, mV, ORP, ISE, EC/TDS/Salinity/Resistivity, and DO from a single instrument with a 7-inch colour touch screen, 1000-group GLP data storage, and USB/RS-232 connectivity.",
     image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/7b354f6b-4dd9-457a-8632-75e60e59b2b0.jpg",
@@ -2372,7 +2372,7 @@ export const products: Product[] = [
     relatedProducts: ["rex-ph500t", "rex-ph600l", "rex-m510t"],
   },
   {
-    id: "rex-ph600l", name: "REX PH600L pH Meter", brand: "rex", category: "ph-meters",
+    id: "rex-ph600l", name: "REX PH600L pH Meter", brand: "rex", category: "benchtop-meters",
     subtitle: "Premium Benchtop pH Meter — 600L Series",
     description: "The PH600L is REX\'s premium 600L series benchtop pH meter with a 7-inch touch screen, ±0.001 pH accuracy, 6-point calibration, GLP data management, and IP54 rating. The highest-specification single-parameter pH meter in the REX benchtop range.",
     image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
@@ -2381,7 +2381,7 @@ export const products: Product[] = [
     relatedProducts: ["rex-m600l", "rex-ph500t", "rex-ph400f"],
   },
   {
-    id: "rex-ph500t", name: "REX PH500T pH Meter", brand: "rex", category: "ph-meters", featured: true,
+    id: "rex-ph500t", name: "REX PH500T pH Meter", brand: "rex", category: "benchtop-meters", featured: true,
     subtitle: "Professional Smart Benchtop pH Meter — 7-inch Touch Screen, ±0.002 pH",
     description: "The PH500T is REX\'s flagship 500T series benchtop pH meter. Measuring pH, mV, ORP, and temperature with ±0.002 pH accuracy, it features a 7-inch colour touch screen, 6-point calibration, GMP management, 1000-group GLP storage, and IP54 waterproofing.",
     image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
@@ -2391,7 +2391,7 @@ export const products: Product[] = [
     relatedProducts: ["rex-ph400f", "rex-ph300f", "rex-m600l"],
   },
   {
-    id: "rex-ph400f", name: "REX PH400F pH Meter", brand: "rex", category: "ph-meters",
+    id: "rex-ph400f", name: "REX PH400F pH Meter", brand: "rex", category: "benchtop-meters",
     subtitle: "Accurate Smart Benchtop pH Meter — 400F Series, ±0.01 pH",
     description: "The PH400F is REX\'s 400F series (Accurate-Smart) benchtop pH meter with ±0.01 pH accuracy, 5-point calibration, colour touch screen, GLP data management, and USB/RS-232 connectivity. An excellent balance of performance and value for routine QC laboratories.",
     image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
@@ -2400,7 +2400,7 @@ export const products: Product[] = [
     relatedProducts: ["rex-ph500t", "rex-ph300f", "rex-m600l"],
   },
   {
-    id: "rex-ph300f", name: "REX PH300F pH Meter", brand: "rex", category: "ph-meters",
+    id: "rex-ph300f", name: "REX PH300F pH Meter", brand: "rex", category: "benchtop-meters",
     subtitle: "Reliable Benchtop pH Meter — 300F Series, ±0.02 pH",
     description: "The PH300F is REX\'s 300F series (Reliable-Smart) benchtop pH meter with ±0.02 pH accuracy, 3-point calibration, colour display, and USB connectivity. Reliable performance for routine QC, education, and industrial laboratories.",
     image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
@@ -2409,7 +2409,7 @@ export const products: Product[] = [
     relatedProducts: ["rex-ph400f", "rex-ph500t", "rex-ph200e"],
   },
   {
-    id: "rex-ph200e", name: "REX PH200E pH Meter", brand: "rex", category: "ph-meters",
+    id: "rex-ph200e", name: "REX PH200E pH Meter", brand: "rex", category: "benchtop-meters",
     subtitle: "Economical Benchtop pH Meter — 200E Series, ±0.05 pH",
     description: "The PH200E is REX\'s economical 200E series benchtop pH meter with ±0.05 pH accuracy, 3-point calibration, ATC, and IP54 waterproofing. Ideal for educational institutions, routine production QC, and laboratories requiring a reliable, cost-effective pH measurement solution.",
     image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
@@ -2418,7 +2418,7 @@ export const products: Product[] = [
     relatedProducts: ["rex-ph300f", "rex-ph400f"],
   },
   {
-    id: "rex-ph200em", name: "REX PH200EM pH Meter", brand: "rex", category: "ph-meters",
+    id: "rex-ph200em", name: "REX PH200EM pH Meter", brand: "rex", category: "benchtop-meters",
     subtitle: "Economical Benchtop pH Meter — 200E Series with mV",
     description: "The PH200EM is REX\'s economical benchtop pH meter with added mV measurement and IP54 waterproofing. Part of the 200E series, it measures pH, mV, and temperature — ideal for routine laboratory use where reliability and low cost are the primary requirements.",
     image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
@@ -2427,7 +2427,7 @@ export const products: Product[] = [
     relatedProducts: ["rex-ph200e", "rex-ph300f"],
   },
   {
-    id: "rex-ph100b", name: "REX PH100B pH Meter", brand: "rex", category: "ph-meters",
+    id: "rex-ph100b", name: "REX PH100B pH Meter", brand: "rex", category: "benchtop-meters",
     subtitle: "Basic Benchtop pH Meter — 100B Series",
     description: "The PH100B is REX\'s entry-level benchtop pH meter for simple routine measurements. With 2-point calibration and manual temperature compensation, it provides reliable pH measurement for educational, basic QC, and industrial applications.",
     image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
@@ -2494,7 +2494,7 @@ export const products: Product[] = [
 
   /* ─ DO Benchtop Meters ─ */
   {
-    id: "rex-do600l", name: "REX DO600L Dissolved Oxygen Meter", brand: "rex", category: "ph-meters",
+    id: "rex-do600l", name: "REX DO600L Dissolved Oxygen Meter", brand: "rex", category: "benchtop-meters",
     subtitle: "Premium Benchtop DO Meter — 600L Series, ±0.01 mg/L",
     description: "The DO600L is REX\'s premium 600L series benchtop dissolved oxygen meter with ±0.01 mg/L accuracy, 7-inch touch screen, salinity correction, barometric pressure compensation, GLP storage, and USB/RS-232 connectivity.",
     image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
@@ -2503,7 +2503,7 @@ export const products: Product[] = [
     relatedProducts: ["rex-do510t", "rex-do310f", "rex-m600l"],
   },
   {
-    id: "rex-do500t", name: "REX DO500T Dissolved Oxygen Meter", brand: "rex", category: "ph-meters",
+    id: "rex-do500t", name: "REX DO500T Dissolved Oxygen Meter", brand: "rex", category: "benchtop-meters",
     subtitle: "Professional Smart Benchtop DO Meter — 500T Series",
     description: "The DO500T is REX\'s 500T series (Professional-Smart) benchtop dissolved oxygen meter with colour touch screen, ±0.1 mg/L accuracy, GLP data management, and USB/RS-232 connectivity.",
     image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
@@ -2512,7 +2512,7 @@ export const products: Product[] = [
     relatedProducts: ["rex-do600l", "rex-do400f", "rex-m600l"],
   },
   {
-    id: "rex-do400f", name: "REX DO400F Dissolved Oxygen Meter", brand: "rex", category: "ph-meters",
+    id: "rex-do400f", name: "REX DO400F Dissolved Oxygen Meter", brand: "rex", category: "benchtop-meters",
     subtitle: "Accurate Smart Benchtop DO Meter — 400F Series",
     description: "The DO400F is REX\'s 400F series benchtop dissolved oxygen meter with ±0.2 mg/L accuracy, colour LCD, and USB connectivity. A reliable mid-range choice for routine DO measurement in water quality and environmental laboratories.",
     image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
@@ -2742,7 +2742,7 @@ export const products: Product[] = [
     subtitle: "Chemical Oxygen Demand Analyzer — COD LR (0–150 mg/L) + COD HR (150–1500 mg/L)",
     description: "The REX COD-200 is a benchtop COD analyzer using potassium dichromate colorimetry (EPA 410.4, ISO 15705). COD LR measures 0–150 mg/L at 420 nm; COD HR measures 150–1500 mg/L at 620 nm. Used with the COD-200R (40-tube) or COD-100R (20-tube) digestion reactor.",
     image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/36954e50-3694-4e83-ba4f-a6911accb013.jpg",
-    specs: { "Model": "COD-200", "Method": "COD LR + COD HR (potassium dichromate colorimetry)", "Standard": "EPA 410.4, ISO 15705:2002", "COD LR — Principle": "Potassium dichromate method", "COD LR — Range": "0 to 150.0 mg/L", "COD LR — Accuracy": "±8%", "COD LR — Repeatability": "≤3%", "COD LR — Fluctuation": "<6 mg/L (20 min)", "COD LR — Wavelength": "420 nm", "COD HR — Principle": "Potassium dichromate method", "COD HR — Range": "150 to 1500 mg/L", "COD HR — Accuracy": "±8%", "COD HR — Repeatability": "≤3%", "COD HR — Fluctuation": "<6 mg/L (20 min)", "COD HR — Wavelength": "620 nm", "Absorbance — Range": "0 to 2.000 Abs", "Absorbance — Accuracy": "±0.01 or ±5%", "Reactor": "COD-200R (40 tubes) or COD-100R (20 tubes)", "Includes": "2 × 10 mm cuvettes, 7 × 16 mm vials" },
+    specs: { "Model": "COD-200", "Method": "COD LR + COD HR", "Standard": "EPA 410.4, ISO 15705:2002", "COD LR — Principle": "Potassium dichromate method", "COD LR — Range": "(0.000~150.0) mg/L", "COD LR — Accuracy": "±8%", "COD LR — Repeatability": "≤3%", "COD LR — Fluctuation": "<6 mg/L (20 min)", "COD LR — Wavelength": "420 nm", "COD HR — Principle": "Potassium dichromate method", "COD HR — Range": "(150.0~1500) mg/L", "COD HR — Accuracy": "±8%", "COD HR — Repeatability": "≤3%", "COD HR — Fluctuation": "<6 mg/L (20 min)", "COD HR — Wavelength": "620 nm", "Absorbance — Range": "(0.000~2.000) Abs", "Absorbance — Accuracy": "±0.01 or ±5%", "Absorbance — Repeatability": "≤0.005 or 2%", "Wavelength — Range": "420 nm, 620 nm", "Wavelength — Accuracy": "±4 nm", "Transmittance(%) — Accuracy": "±2%", "Transmittance(%) — Repeatability": "≤0.5%", "Sample Cells": "10 mm cuvette, 16 mm vial", "Power Supply": "AC Adapter (Input: 100–240V AC; Output: 20V DC)", "Dimensions": "302 × 205 × 122 mm", "Net Weight": "About 1.33 kg" },
     features: ["EPA 410.4 and ISO 15705:2002 compliant", "COD LR: 0–150 mg/L at 420 nm", "COD HR: 150–1500 mg/L at 620 nm", "±8% accuracy, ≤3% repeatability", "Compatible with COD-200R (40-tube) and COD-100R (20-tube) reactors", "Includes 10 mm cuvettes and 16 mm vials"],
     applications: ["Municipal wastewater COD compliance monitoring", "Industrial effluent COD discharge permit testing", "River and lake water quality monitoring", "Environmental laboratory routine COD analysis"],
     relatedProducts: ["rex-tu4000s", "rex-m600l"],

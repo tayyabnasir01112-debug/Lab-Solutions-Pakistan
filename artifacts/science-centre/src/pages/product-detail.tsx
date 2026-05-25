@@ -1054,6 +1054,299 @@ function SugentechProductDetail({ product }: { product: Product }) {
   );
 }
 
+/* ─── INESA-REX Detail Page ────────────────────────────────────── */
+
+function RexProductDetail({ product }: { product: Product }) {
+  const category = categoryById(product.category);
+  const related = (product.relatedProducts || []).map(rid => productById(rid)).filter(Boolean) as Product[];
+  const moreBrand = productsByBrand(product.brand).filter(p => p.id !== product.id && !product.relatedProducts?.includes(p.id)).slice(0, 3 - related.length);
+  const allRelated = [...related, ...moreBrand].slice(0, 3);
+  const [tab, setTab] = useState<"overview" | "specs" | "applications">("overview");
+
+  const BLUE = "#276FB7";
+  const ORANGE = "#F68B27";
+
+  const tabs = [
+    { key: "overview" as const, label: "Overview" },
+    ...(product.specs && Object.keys(product.specs).length ? [{ key: "specs" as const, label: "Specifications" }] : []),
+    ...(product.applications?.length ? [{ key: "applications" as const, label: "Applications" }] : []),
+  ];
+
+  return (
+    <div className="min-h-[100dvh] bg-white text-[#111]">
+      <SiteNavbar forceSolid />
+      <main>
+
+        {/* ── Hero ───────────────────────────────────────────── */}
+        <div className="bg-[#f5f8fc] border-b border-[#dce8f5] pt-24 pb-10">
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+            {/* Breadcrumb */}
+            <div className="flex items-center gap-2 text-[11px] text-[#aaa] mb-6">
+              <Link href="/" className="hover:text-[#276FB7] transition-colors">Home</Link>
+              <ChevronRight className="h-3 w-3" />
+              <Link href="/products" className="hover:text-[#276FB7] transition-colors">Products</Link>
+              <ChevronRight className="h-3 w-3" />
+              <span className="text-[#276FB7] font-semibold truncate max-w-[240px]">{product.name}</span>
+            </div>
+
+            <div className="grid lg:grid-cols-[1fr_380px] gap-10 items-start">
+              {/* Left: info */}
+              <div>
+                {/* Category + brand */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  <span className="px-3 py-1.5 text-[11px] font-black tracking-[0.15em] uppercase text-white" style={{ background: BLUE }}>INESA-REX</span>
+                  {category && <span className="px-3 py-1.5 text-[11px] text-[#777] border border-[#dce8f5] bg-white flex items-center gap-1.5">{category.icon} {category.name}</span>}
+                  {product.featured && <span className="px-3 py-1.5 text-[11px] font-bold text-amber-600 border border-amber-300 bg-amber-50">★ Featured</span>}
+                </div>
+
+                <h1 className="font-[var(--app-font-heading)] font-black text-[#0a1628] leading-tight tracking-tight mb-3"
+                  style={{ fontSize: "clamp(24px,4vw,44px)" }}>
+                  {product.name}
+                </h1>
+
+                {product.subtitle && (
+                  <p className="font-semibold mb-4 text-[14px]" style={{ color: BLUE }}>{product.subtitle}</p>
+                )}
+
+                <p className="text-[#555] text-[15px] leading-relaxed mb-6 max-w-xl">{product.description}</p>
+
+                <div className="flex flex-wrap gap-3">
+                  <a href="/#contact"
+                    className="inline-flex items-center gap-2 px-7 py-3 text-[12px] font-black tracking-[0.14em] uppercase text-white transition-colors"
+                    style={{ background: BLUE }}>
+                    REQUEST A QUOTE <ArrowRight className="h-4 w-4" />
+                  </a>
+                  <a href="/#contact"
+                    className="inline-flex items-center gap-2 px-7 py-3 text-[12px] font-bold tracking-[0.1em] uppercase border-2 text-[#276FB7] transition-colors"
+                    style={{ borderColor: BLUE }}>
+                    ENQUIRE
+                  </a>
+                  <Link href="/products">
+                    <button className="inline-flex items-center gap-1.5 px-4 py-3 text-[12px] font-bold text-[#aaa] hover:text-[#276FB7] transition-colors">
+                      <ArrowLeft className="h-3.5 w-3.5" /> All Products
+                    </button>
+                  </Link>
+                </div>
+              </div>
+
+              {/* Right: product image */}
+              <div className="bg-white border border-[#dce8f5] flex items-center justify-center p-8 min-h-[260px]">
+                {product.image ? (
+                  <img src={product.image} alt={product.name}
+                    className="max-h-64 max-w-full object-contain"
+                    style={{ filter: "drop-shadow(0 6px 20px rgba(39,111,183,0.15))" }} />
+                ) : (
+                  <div className="flex flex-col items-center gap-3 text-center">
+                    <div className="w-20 h-20 rounded-full flex items-center justify-center" style={{ background: BLUE + "15" }}>
+                      <Settings2 className="h-9 w-9" style={{ color: BLUE }} />
+                    </div>
+                    <span className="text-[11px] font-bold tracking-[0.2em] uppercase" style={{ color: BLUE + "60" }}>INESA-REX</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ── Tab Nav ───────────────────────────────────────── */}
+        <div className="bg-white border-b border-[#dce8f5] sticky top-0 z-20 shadow-sm">
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16 flex items-center gap-3 py-3">
+            {tabs.map(t => (
+              <button key={t.key} onClick={() => setTab(t.key)}
+                className={`px-5 py-2.5 text-[12px] font-bold tracking-[0.1em] uppercase transition-all duration-200 border ${
+                  tab === t.key
+                    ? "text-white border-[#276FB7]"
+                    : "bg-white text-[#555] border-[#dce8f5] hover:border-[#276FB7]/50 hover:text-[#276FB7]"
+                }`}
+                style={tab === t.key ? { background: BLUE } : {}}>
+                {t.label}
+              </button>
+            ))}
+            <div className="ml-auto">
+              <Link href="/products" className="flex items-center gap-1.5 text-[12px] font-bold text-[#aaa] hover:text-[#276FB7] transition-colors">
+                <ArrowLeft className="h-3.5 w-3.5" /> All Products
+              </Link>
+            </div>
+          </div>
+        </div>
+
+        {/* ══ OVERVIEW ════════════════════════════════════════ */}
+        {tab === "overview" && (
+          <>
+            {/* Features list */}
+            {product.features && product.features.length > 0 && (
+              <div className="py-12 border-b border-[#edf3fa]">
+                <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+                  <div className="flex items-center gap-3 mb-7">
+                    <div className="w-1.5 h-7" style={{ background: BLUE }} />
+                    <h2 className="font-[var(--app-font-heading)] font-black text-[#0a1628] text-[22px]">Features</h2>
+                  </div>
+                  <ul className="border border-[#dce8f5] divide-y divide-[#edf3fa] overflow-hidden max-w-4xl">
+                    {product.features.map((f, i) => (
+                      <li key={i} className={`flex items-start gap-3 px-6 py-4 ${i % 2 === 0 ? "bg-white" : "bg-[#f8fbff]"}`}>
+                        <CheckCircle2 className="h-4 w-4 flex-shrink-0 mt-0.5" style={{ color: BLUE }} />
+                        <span className="text-[#444] text-[14px] leading-relaxed">{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
+
+            {/* Specs preview in overview — full table, NOT truncated */}
+            {product.specs && Object.keys(product.specs).length > 0 && (
+              <div className="py-12 border-b border-[#edf3fa] bg-[#f8fbff]">
+                <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+                  <div className="flex items-center justify-between mb-7">
+                    <div className="flex items-center gap-3">
+                      <div className="w-1.5 h-7" style={{ background: ORANGE }} />
+                      <h2 className="font-[var(--app-font-heading)] font-black text-[#0a1628] text-[22px]">Specifications</h2>
+                    </div>
+                    <button onClick={() => setTab("specs")}
+                      className="text-[12px] font-bold uppercase tracking-wide inline-flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+                      style={{ color: BLUE }}>
+                      View full specs <ArrowRight className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                  {/* REX-style spec table: orange header row, alternating rows */}
+                  <div className="border border-[#dce8f5] overflow-hidden max-w-4xl">
+                    {/* Orange header row matching REX site */}
+                    <div className="grid grid-cols-2 px-5 py-3 text-white font-bold text-[13px]"
+                      style={{ background: ORANGE }}>
+                      <span>Parameter</span>
+                      <span>{product.specs["Model"] || product.name}</span>
+                    </div>
+                    {Object.entries(product.specs).map(([k, v], i) => (
+                      <div key={k} className={`grid grid-cols-2 border-b border-[#edf3fa] last:border-0 ${i % 2 === 0 ? "bg-white" : "bg-[#f8fbff]"}`}>
+                        <div className="px-5 py-3 text-[13px] font-semibold text-[#444] border-r border-[#edf3fa]">{k}</div>
+                        <div className="px-5 py-3 text-[13px] text-[#222]">{v}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Applications */}
+            {product.applications && product.applications.length > 0 && (
+              <div className="py-12 border-b border-[#edf3fa]">
+                <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+                  <div className="flex items-center gap-3 mb-7">
+                    <div className="w-1.5 h-7" style={{ background: BLUE }} />
+                    <h2 className="font-[var(--app-font-heading)] font-black text-[#0a1628] text-[22px]">Applications</h2>
+                  </div>
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-4xl">
+                    {product.applications.map((a, i) => (
+                      <div key={i} className="flex items-start gap-3 p-4 border border-[#dce8f5] bg-white hover:border-[#276FB7]/40 transition-colors">
+                        <div className="w-5 h-5 flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: BLUE }}>
+                          <ArrowRight className="h-3 w-3 text-white" />
+                        </div>
+                        <span className="text-[13px] text-[#444] leading-relaxed">{a}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* CTA Banner */}
+            <div className="py-14" style={{ background: `linear-gradient(135deg, ${BLUE} 0%, #1a4a8a 100%)` }}>
+              <div className="max-w-[1400px] mx-auto px-8 md:px-16 flex flex-col md:flex-row items-center justify-between gap-8">
+                <div>
+                  <div className="text-white/50 text-[10px] font-black tracking-[0.3em] uppercase mb-1">Science Centre Pakistan · INESA-REX Distributor</div>
+                  <h2 className="font-[var(--app-font-heading)] font-black text-white leading-tight" style={{ fontSize: "clamp(20px,3vw,30px)" }}>
+                    Interested in {product.name}?
+                  </h2>
+                  <p className="text-white/60 text-[13px] mt-1">Local support, calibration, and after-sales service across Pakistan.</p>
+                </div>
+                <div className="flex gap-3 flex-shrink-0">
+                  <a href="/#contact" className="inline-flex items-center gap-2 px-8 py-4 text-[12px] font-black tracking-[0.15em] uppercase bg-white text-[#276FB7] hover:bg-[#edf3fa] transition-colors">
+                    REQUEST A QUOTE <ArrowRight className="h-4 w-4" />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* ══ SPECS TAB — complete table exactly like REX site ══ */}
+        {tab === "specs" && product.specs && (
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16 py-14">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-1.5 h-7" style={{ background: ORANGE }} />
+              <h2 className="font-[var(--app-font-heading)] font-black text-[#0a1628] text-[22px]">Full Specifications</h2>
+            </div>
+            <div className="border border-[#dce8f5] overflow-hidden max-w-4xl">
+              {/* Orange model header row — matches REX site exactly */}
+              <div className="grid grid-cols-2 px-5 py-3.5 font-bold text-[14px] text-white"
+                style={{ background: ORANGE }}>
+                <span>Model</span>
+                <span>{product.specs["Model"] || product.name}</span>
+              </div>
+              {Object.entries(product.specs).map(([k, v], i) => (
+                <div key={k} className={`grid grid-cols-2 border-b border-[#edf3fa] last:border-0 ${i % 2 === 0 ? "bg-white" : "bg-[#f8fbff]"}`}>
+                  <div className="px-5 py-3.5 text-[13px] font-semibold text-[#333] border-r border-[#edf3fa] leading-snug">{k}</div>
+                  <div className="px-5 py-3.5 text-[13px] text-[#222] leading-snug">{v}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ══ APPLICATIONS TAB ════════════════════════════════ */}
+        {tab === "applications" && product.applications && (
+          <div className="max-w-[1400px] mx-auto px-8 md:px-16 py-14">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="w-1.5 h-7" style={{ background: BLUE }} />
+              <h2 className="font-[var(--app-font-heading)] font-black text-[#0a1628] text-[22px]">Applications</h2>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-4xl">
+              {product.applications.map((a, i) => (
+                <div key={i} className="flex items-start gap-3 p-4 border border-[#dce8f5] bg-white hover:border-[#276FB7]/40 hover:bg-[#f8fbff] transition-all">
+                  <div className="w-6 h-6 flex items-center justify-center flex-shrink-0 mt-0.5" style={{ background: BLUE }}>
+                    <ArrowRight className="h-3 w-3 text-white" />
+                  </div>
+                  <span className="text-[14px] text-[#444] leading-relaxed">{a}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* ── Related Products ─────────────────────────────── */}
+        {allRelated.length > 0 && (
+          <div className="bg-[#f8fbff] border-t border-[#dce8f5] py-14">
+            <div className="max-w-[1400px] mx-auto px-8 md:px-16">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-1.5 h-6" style={{ background: BLUE }} />
+                <h3 className="font-[var(--app-font-heading)] font-bold text-[#0a1628] text-[20px]">Related Products</h3>
+              </div>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {allRelated.map(p => (
+                  <Link key={p.id} href={`/products/${p.id}`}>
+                    <div className="group border border-[#dce8f5] bg-white p-5 hover:border-[#276FB7]/50 hover:shadow-md transition-all cursor-pointer">
+                      <div className="h-0.5 -mx-5 -mt-5 mb-5" style={{ background: BLUE }} />
+                      <span className="px-2 py-0.5 text-[9px] font-black tracking-[0.15em] uppercase text-white mb-3 inline-block" style={{ background: BLUE }}>REX</span>
+                      <h4 className="font-[var(--app-font-heading)] font-bold text-[14px] text-[#0a1628] group-hover:text-[#276FB7] transition-colors mb-2 leading-snug">{p.name}</h4>
+                      {p.subtitle && <p className="text-[11px] font-semibold mb-2" style={{ color: BLUE + "90" }}>{p.subtitle}</p>}
+                      <p className="text-[12px] text-[#888] line-clamp-2 leading-relaxed">{p.description}</p>
+                      <div className="mt-3 flex items-center gap-1 text-[11px] font-bold opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: BLUE }}>
+                        View Details <ArrowRight className="h-3 w-3" />
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+      </main>
+      <SiteFooter />
+    </div>
+  );
+}
+
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
 
@@ -1090,6 +1383,10 @@ export default function ProductDetail() {
 
   if (product.brand === "sugentech") {
     return <SugentechProductDetail product={product} />;
+  }
+
+  if (product.brand === "rex") {
+    return <RexProductDetail product={product} />;
   }
 
   const brand = brandById(product.brand);
