@@ -2807,7 +2807,161 @@ export const products: Product[] = [
     relatedProducts: ["rex-kft50vc", "rex-kft50c", "rex-kft41c"],
   },
 
-    { id:"hkm-centrifuge", name:"HKM High-Speed Refrigerated Centrifuge", brand:"hkm", category:"equipment", description:"Up to 21,000 × g with ±1 °C temperature control." },
+
+  /* ─ Additional DO Benchtop Meters (fix s:0 ones) ─ */
+  {
+    id: "rex-do400f", name: "REX DO400F Dissolved Oxygen Meter", brand: "rex", category: "benchtop-meters",
+    subtitle: "Accurate Smart Benchtop DO Meter — 400F Series",
+    description: "The DO400F is REX\'s 400F series (Accurate-Smart) benchtop dissolved oxygen meter with ±0.2 mg/L accuracy, colour LCD, and USB/RS-232 output for routine DO measurement in water quality and environmental laboratories.",
+    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
+    specs: { "Model": "DO400F", "Parameters": "DO / DO Saturation / Temperature", "DO — Accuracy": "±0.2 mg/L", "Display": "Colour LCD", "Data Storage": "500 groups (GLP)", "Connectivity": "USB, RS-232", "Series": "400F: Accurate-Smart" },
+    features: ["±0.2 mg/L accuracy", "Colour LCD display", "GLP data management", "USB/RS-232 output", "400F Series: Accurate-Smart"],
+    relatedProducts: ["rex-do500t", "rex-do600l", "rex-m600l"],
+  },
+
+  /* ─ Additional Portable Turbidity ─ */
+  {
+    id: "rex-tu200p", name: "REX TU200P Portable Turbidity Meter", brand: "rex", category: "turbidity",
+    subtitle: "Portable Turbidity Meter — 0–200 NTU, 860 nm",
+    description: "The TU200P is REX\'s compact portable turbidity meter for field water quality testing, measuring 0–200 NTU with 860 nm ISO 7027-compliant optics, 0.01 NTU resolution, and battery operation.",
+    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/36954e50-3694-4e83-ba4f-a6911accb013.jpg",
+    specs: { "Model": "TU200P", "Light Source": "860 nm near-IR LED", "Range": "0 to 200 NTU", "Resolution": "0.01 NTU", "Standard": "ISO 7027", "IP Rating": "IP67", "Battery": "Alkaline batteries" },
+    features: ["860 nm LED ISO 7027", "0–200 NTU portable", "IP67 waterproof", "Battery operated"],
+    relatedProducts: ["rex-tu2000p", "rex-tu500p", "rex-tu1000p"],
+  },
+  {
+    id: "rex-tu1000p2", name: "REX TU1000P Portable Turbidity Meter", brand: "rex", category: "turbidity",
+    subtitle: "Portable Turbidity Meter — 0–1000 NTU, 860 nm",
+    description: "The TU1000P is REX\'s portable turbidity meter measuring 0–1000 NTU with 860 nm ISO 7027-compliant optics. Battery-operated and IP67 waterproof for field environmental surveys and water treatment monitoring.",
+    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/36954e50-3694-4e83-ba4f-a6911accb013.jpg",
+    specs: { "Model": "TU1000P", "Light Source": "860 nm near-IR LED", "Range": "0 to 1000 NTU", "Resolution": "0.01 NTU", "Standard": "ISO 7027", "IP Rating": "IP67", "Battery": "Alkaline batteries" },
+    features: ["860 nm ISO 7027", "0–1000 NTU range", "IP67 waterproof", "Battery operated"],
+    relatedProducts: ["rex-tu2000p", "rex-tu500p"],
+  },
+
+  /* ─ KFT-40C (id 82) ─ */
+  {
+    id: "rex-kft40c", name: "REX KFT-40C Karl Fischer Titrator (Coulometric)", brand: "rex", category: "kf-titrators",
+    subtitle: "Coulometric Karl Fischer Titrator — 40 Series",
+    description: "The KFT-40C is REX\'s 40 series coulometric Karl Fischer titrator for trace moisture measurement from 10 μg to 999.9 mg. A mid-range model balancing performance and price for routine moisture testing.",
+    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/5cde3c27-71c8-4648-bb3d-5c0368a7876e.jpg",
+    specs: { "Model": "KFT-40C", "Mode": "Coulometric Karl Fischer", "Range": "10 μg to 999.9 mg water", "Accuracy": "±2 μg or ±1%", "Display": "LCD", "Connectivity": "RS-232" },
+    features: ["Coulometric KF — trace moisture from 10 μg", "Mid-range 40 series model", "LCD display"],
+    relatedProducts: ["rex-kft50vc", "rex-kft40vc", "rex-kft41c"],
+  },
+
+  /* ─ pH Electrodes ─ */
+  {
+    id: "rex-elec-962201", name: "REX 962201 pH Composite Electrode (Premium)", brand: "rex", category: "electrodes",
+    subtitle: "Premium pH Composite Electrode — S7 Connector, Long-Life Reference",
+    description: "The 962201 is REX\'s premium pH composite electrode combining glass pH sensor, long-life reference system, and S7 connector in a single body. pH range 0–14, working temperature 0–80°C. Standard inclusion with the PH500T and M600L meters.",
+    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
+    specs: { "Model": "962201", "Name": "pH Composite Electrode (Premium)", "pH Range": "0 to 14", "Sensor Material": "Glass", "Working Temperature": "0 to 80°C", "Reference Type": "Long-life Ref.", "Connector": "S7", "Junction Material": "Ceramic" },
+    features: ["pH range: 0–14", "Glass pH sensor", "Long-life reference electrode", "S7 BNC connector", "Ceramic junction", "Standard with PH500T and M600L"],
+    relatedProducts: ["rex-elec-e201f", "rex-elec-962221", "rex-ph500t"],
+  },
+  {
+    id: "rex-elec-e201f", name: "REX E-201F pH Composite Electrode", brand: "rex", category: "electrodes",
+    subtitle: "Standard pH Composite Electrode — Q9/BNC Connector",
+    description: "The E-201F is REX\'s standard pH composite electrode for general-purpose pH measurement. Features a glass pH sensor with Q9/BNC connector, pH range 0–14, and working temperature 0–60°C. Widely compatible with REX pH meters.",
+    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
+    specs: { "Model": "E-201F", "pH Range": "0 to 14", "Sensor Material": "Glass", "Working Temperature": "0 to 60°C", "Connector": "Q9/BNC", "Junction": "Ceramic" },
+    features: ["pH 0–14 general purpose", "Glass sensor", "Q9/BNC connector", "Standard compatible with all REX meters"],
+    relatedProducts: ["rex-elec-962201", "rex-elec-e201", "rex-ph500t"],
+  },
+  {
+    id: "rex-elec-e201", name: "REX E-201 pH Composite Electrode", brand: "rex", category: "electrodes",
+    subtitle: "Economy pH Composite Electrode",
+    description: "The E-201 is REX\'s economy pH composite electrode for routine pH measurement. Q9 connector, pH range 0–14. Cost-effective solution for high-volume pH testing in QC and industrial applications.",
+    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
+    specs: { "Model": "E-201", "pH Range": "0 to 14", "Connector": "Q9" },
+    features: ["pH 0–14", "Economy model", "Q9 connector"],
+    relatedProducts: ["rex-elec-e201f", "rex-elec-962201"],
+  },
+  {
+    id: "rex-elec-962221", name: "REX 962221 pH Electrode (Ultrapure Water)", brand: "rex", category: "electrodes",
+    subtitle: "Specialist pH Electrode for Ultrapure Water — Low Conductivity",
+    description: "The 962221 is REX\'s specialist pH electrode designed for accurate pH measurement in ultrapure and low-conductivity water (deionised, distilled, WFI). pH range 3–11, standard electrode fails in ultrapure water due to alkaline error. Essential for pharmaceutical and semiconductor water quality monitoring.",
+    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
+    specs: { "Model": "962221", "Application": "Ultrapure / low-conductivity water", "pH Range": "3 to 11", "Connector": "S7", "Working Temperature": "0 to 80°C" },
+    features: ["For ultrapure and deionised water", "pH range 3–11", "Avoids alkaline error in low-conductivity matrices", "S7 connector"],
+    relatedProducts: ["rex-elec-962201", "rex-m600l"],
+  },
+  {
+    id: "rex-elec-e201z", name: "REX E-201-Z pH Electrode (Blade/Spear Tip)", brand: "rex", category: "electrodes",
+    subtitle: "Blade-Tip pH Composite Electrode — Soil, Semi-Solid Samples",
+    description: "The E-201-Z features a blade/spear-shaped tip for direct insertion into soft solids, soil, and semi-solid samples. Ideal for food, soil, and paste measurements where a standard bulb electrode cannot reach.",
+    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
+    specs: { "Model": "E-201-Z", "Application": "Soil, semi-solid, food", "Tip Shape": "Blade / Spear", "pH Range": "0 to 14", "Connector": "Q9" },
+    features: ["Blade/spear tip for semi-solid insertion", "For soil, food, paste samples", "pH 0–14"],
+    relatedProducts: ["rex-elec-e201p", "rex-elec-e201f"],
+  },
+  {
+    id: "rex-elec-e201p", name: "REX E-201-P pH Electrode (Flat Tip)", brand: "rex", category: "electrodes",
+    subtitle: "Flat-Tip pH Composite Electrode — Surface Measurement",
+    description: "The E-201-P features a flat membrane tip for surface pH measurement — ideal for paper, skin, leather, meat, and other flat or semi-solid surfaces. Q9 connector, pH range 0–14.",
+    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
+    specs: { "Model": "E-201-P", "Application": "Surface measurement — paper, skin, food", "Tip Shape": "Flat membrane", "pH Range": "0 to 14", "Connector": "Q9" },
+    features: ["Flat membrane tip for surface pH", "For paper, skin, leather, meat", "pH 0–14", "Q9 connector"],
+    relatedProducts: ["rex-elec-e201z", "rex-elec-e201f"],
+  },
+
+  /* ─ EC Electrodes ─ */
+  {
+    id: "rex-elec-ec", name: "REX Conductivity Electrodes (EC Cell Range)", brand: "rex", category: "electrodes",
+    subtitle: "Conductivity Cells — K=0.01, 0.1, 1, 10 — Full EC Range",
+    description: "REX manufactures a comprehensive range of conductivity electrode cells to cover the full EC measurement range from ultrapure water (K=0.01) through industrial and seawater applications (K=10). Models include DJS-0.01VT (K=0.01, with ATC + flow cell), DJS-0.1VTC, DJS-1VTC, and DJS-10VTC. All compatible with REX EC and multi-parameter meters.",
+    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
+    specs: { "Models": "DJS-0.01VT / DJS-0.01VTC / DJS-0.1VTC / DJS-1VTC / DJS-10VTC", "Cell Constants": "K=0.01, 0.1, 1, 10", "K=0.01 Use": "Ultrapure / deionised water (sub-µS/cm)", "K=0.1 Use": "Low conductivity — pure water, pharma WFI", "K=1 Use": "Standard — drinking water, process water", "K=10 Use": "High conductivity — seawater, industrial brines", "ATC": "Included on VTC models", "Flow Cell": "Available on 0.01VT model", "Compatibility": "REX EC meters — EC310F, EC210E, M600L, M510T" },
+    features: ["Full range: K=0.01 (ultrapure) to K=10 (seawater)", "ATC sensor integrated on VTC models", "Flow cell option for continuous monitoring", "Stainless steel and platinum cell options", "Compatible with all REX EC/multi-parameter meters"],
+    relatedProducts: ["rex-ec310f", "rex-m600l", "rex-m510t"],
+  },
+
+  /* ─ ISE Electrodes (grouped) ─ */
+  {
+    id: "rex-elec-ise", name: "REX Ion-Selective Electrodes (ISE Range)", brand: "rex", category: "electrodes",
+    subtitle: "ISE Probes — F⁻, Cl⁻, Br⁻, I⁻, NO₃⁻, CN⁻, NH₃, Cu²⁺, Pb²⁺, Ag⁺/S²⁻, Na⁺",
+    description: "REX offers a comprehensive range of ion-selective electrodes (ISE) for direct potentiometric determination of specific ions without wet chemistry. Available as combined (reference integrated) or separate half-cell configurations. Compatible with all REX pH and multi-parameter meters with ISE input. Key models: PF-202-C (F⁻), 972102 (Cl⁻), 972103 (Br⁻), 972104 (I⁻), PNO3-1-01 (NO₃⁻), PCN-1-01 (CN⁻), 972140 (NH₃), 972105 (Cu²⁺), 972106 (Pb²⁺), PAg/S-1-01 (Ag⁺/S²⁻), 972207 (Na⁺).",
+    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
+    specs: { "Fluoride (F⁻)": "PF-202-C, PF-202, PF-2-01, PF-3-01 — range: 5×10⁻⁷ to 0.1 mol/L", "Chloride (Cl⁻)": "972102 — range: 5×10⁻⁵ to 1 mol/L", "Bromide (Br⁻)": "972103 — range: 5×10⁻⁶ to 0.1 mol/L", "Iodide (I⁻)": "972104 — range: 5×10⁻⁷ to 0.1 mol/L", "Nitrate (NO₃⁻)": "PNO3-1-01 — range: 10⁻⁵ to 1 mol/L", "Cyanide (CN⁻)": "PCN-1-01 — range: 10⁻⁶ to 10⁻² mol/L", "Ammonia (NH₃)": "972140 — gas sensing electrode", "Cupric (Cu²⁺)": "972105 — range: 10⁻⁷ to 10⁻¹ mol/L", "Lead (Pb²⁺)": "972106 — range: 10⁻⁶ to 10⁻¹ mol/L", "Silver/Sulfide (Ag⁺/S²⁻)": "PAg/S-1-01 — Ag: 10⁻⁷ to 10⁻¹; S: 10⁻⁶ to 10⁻¹ mol/L", "Sodium (Na⁺)": "972207 — range: 10⁻⁵ to 1 mol/L", "Fluoroborate (BF₄⁻)": "PBF4-1-01 — range: 10⁻⁵ to 0.5 mol/L", "Perchlorate (ClO₄⁻)": "972126 — range: 5×10⁻⁶ to 0.1 mol/L", "Compatibility": "All REX pH/multi-parameter meters with pX/ISE input" },
+    features: ["11+ ion types: F⁻, Cl⁻, Br⁻, I⁻, NO₃⁻, CN⁻, NH₃, Cu²⁺, Pb²⁺, Ag⁺/S²⁻, Na⁺", "Combined (reference integrated) and half-cell configurations", "Direct potentiometric ion measurement — no wet chemistry", "Compatible with all REX ISE-capable meters"],
+    relatedProducts: ["rex-m600l", "rex-ph500t", "rex-m510t"],
+  },
+
+  /* ─ DO Electrodes ─ */
+  {
+    id: "rex-elec-do", name: "REX Dissolved Oxygen Electrodes", brand: "rex", category: "electrodes",
+    subtitle: "Polarographic & Optical DO Electrodes — DO-958-Q, DO-968-HC",
+    description: "REX offers two dissolved oxygen electrode technologies for their DO meter range: the DO-958-Q polarographic (Clark-type) electrode for general DO measurement, and the DO-968-HC optical (luminescent) DO electrode for low-maintenance, electrolyte-free operation. Both compatible with REX DO meters and multi-parameter analyzers.",
+    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
+    specs: { "DO-958-Q": "Polarographic (Clark-type) DO electrode — standard membrane-based", "DO-958-Q Range": "0 to 20 mg/L dissolved oxygen", "DO-968-HC": "Optical (luminescent) DO electrode — membrane-free, no electrolyte", "DO-968-HC Range": "0 to 20 mg/L dissolved oxygen", "Compatibility": "REX DO meters: DO210E, DO310F, DO510T, DO600L, M510T, M600L" },
+    features: ["DO-958-Q: Polarographic Clark-type — economical, proven", "DO-968-HC: Optical luminescent — no membrane replacement, no electrolyte", "Compatible with all REX DO-capable meters", "DO range: 0–20 mg/L"],
+    relatedProducts: ["rex-do510t", "rex-do310f", "rex-m510t"],
+  },
+
+  /* ─ Titration Electrodes ─ */
+  {
+    id: "rex-elec-titration", name: "REX Titration Electrodes", brand: "rex", category: "electrodes",
+    subtitle: "pH Titration Electrodes for Automatic Titrators — 982201, PNH3, PF Series",
+    description: "REX manufactures dedicated titration electrodes for use with their Ti-series automatic titrators. The 982201 is the standard pH titration electrode for potentiometric acid-base and redox titrations. Specialist electrodes for ammonia (PNH3-1-01) and fluoride (PF-2-01, PF-3-01) titrations are also available for ISE-based titration methods.",
+    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/5cde3c27-71c8-4648-bb3d-5c0368a7876e.jpg",
+    specs: { "982201": "Conventional pH titration electrode — for potentiometric acid-base and redox titrations", "PNH3-1-01": "Ammonia gas-sensing electrode — for ammonia ISE titrations", "PF-2-01": "Fluoride ISE electrode — compact body for titration use", "PF-3-01": "Fluoride ISE electrode — alternative form factor", "Compatibility": "REX Ti-21, Ti-31, Ti-40, Ti-41, Ti-50, Ti-51 automatic titrators" },
+    features: ["Standard pH titration electrode (982201) for all potentiometric titrations", "Specialist ISE titration electrodes: ammonia, fluoride", "Compatible with entire REX Ti-series titrator range"],
+    relatedProducts: ["rex-ti51", "rex-ti41", "rex-ti31"],
+  },
+
+  /* ─ Accessories & Reagents ─ */
+  {
+    id: "rex-accessories", name: "REX Accessories & Reagents", brand: "rex", category: "electrodes",
+    subtitle: "pH Buffers, Conductivity Standards, Carrying Cases & Spare Parts",
+    description: "REX supplies a comprehensive range of accessories and reagents to support their instrument portfolio: certified standard pH buffer solutions (pH 4.01, 7.00, 10.01), conductivity calibration standards, instrument carrying cases for portable meters, electrode fill solutions, and spare membranes for DO polarographic electrodes.",
+    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
+    specs: { "pH Buffers": "Certified standard solutions: pH 1.68, 4.01, 7.00, 10.01, 12.46 (DIN/NIST/GB traceable)", "Conductivity Standards": "Calibration solutions for K=0.01, 0.1, 1, 10 EC cells", "Carrying Cases": "Waterproof carry cases for portable field instruments", "KF Reagents": "Karl Fischer reagent — volumetric and coulometric grades", "DO Membranes": "Replacement membranes and electrolyte for DO-958-Q electrode" },
+    features: ["Certified pH buffer solutions — NIST/DIN/GB traceable", "Conductivity standards for full EC range", "Waterproof carrying cases for portable instruments", "KF reagents for Karl Fischer titrators", "DO replacement membranes and electrolyte"],
+    relatedProducts: ["rex-ph500t", "rex-m600l", "rex-kft50vc"],
+  },
+
+  { id:"hkm-centrifuge", name:"HKM High-Speed Refrigerated Centrifuge", brand:"hkm", category:"equipment", description:"Up to 21,000 × g with ±1 °C temperature control." },
   { id:"hkm-co2", name:"HKM CO₂ Incubator", brand:"hkm", category:"equipment", description:"Direct-heat 170 L incubator with HEPA-filtered chamber." },
   { id:"hkm-bsc", name:"HKM Class II Biosafety Cabinet", brand:"hkm", category:"equipment", description:"Type A2 cabinet with EN-12469 certification for BSL-2 handling." },
   { id:"bl-cd4-pe", name:"PE Anti-Human CD4 (Clone OKT4)", brand:"biolegend", category:"antibodies", description:"PE-conjugated antibody validated for flow cytometry.", featured:true },
