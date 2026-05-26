@@ -2809,15 +2809,6 @@ export const products: Product[] = [
 
 
   /* ─ Additional DO Benchtop Meters (fix s:0 ones) ─ */
-  {
-    id: "rex-do400f", name: "REX DO400F Dissolved Oxygen Meter", brand: "rex", category: "benchtop-meters",
-    subtitle: "Accurate Smart Benchtop DO Meter — 400F Series",
-    description: "The DO400F is REX\'s 400F series (Accurate-Smart) benchtop dissolved oxygen meter with ±0.2 mg/L accuracy, colour LCD, and USB/RS-232 output for routine DO measurement in water quality and environmental laboratories.",
-    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
-    specs: { "Model": "DO400F", "Parameters": "DO / DO Saturation / Temperature", "DO — Accuracy": "±0.2 mg/L", "Display": "Colour LCD", "Data Storage": "500 groups (GLP)", "Connectivity": "USB, RS-232", "Series": "400F: Accurate-Smart" },
-    features: ["±0.2 mg/L accuracy", "Colour LCD display", "GLP data management", "USB/RS-232 output", "400F Series: Accurate-Smart"],
-    relatedProducts: ["rex-do500t", "rex-do600l", "rex-m600l"],
-  },
 
   /* ─ Additional Portable Turbidity ─ */
   {
@@ -2828,15 +2819,6 @@ export const products: Product[] = [
     specs: { "Model": "TU200P", "Light Source": "860 nm near-IR LED", "Range": "0 to 200 NTU", "Resolution": "0.01 NTU", "Standard": "ISO 7027", "IP Rating": "IP67", "Battery": "Alkaline batteries" },
     features: ["860 nm LED ISO 7027", "0–200 NTU portable", "IP67 waterproof", "Battery operated"],
     relatedProducts: ["rex-tu2000p", "rex-tu500p", "rex-tu1000p"],
-  },
-  {
-    id: "rex-tu1000p2", name: "REX TU1000P Portable Turbidity Meter", brand: "rex", category: "turbidity",
-    subtitle: "Portable Turbidity Meter — 0–1000 NTU, 860 nm",
-    description: "The TU1000P is REX\'s portable turbidity meter measuring 0–1000 NTU with 860 nm ISO 7027-compliant optics. Battery-operated and IP67 waterproof for field environmental surveys and water treatment monitoring.",
-    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/36954e50-3694-4e83-ba4f-a6911accb013.jpg",
-    specs: { "Model": "TU1000P", "Light Source": "860 nm near-IR LED", "Range": "0 to 1000 NTU", "Resolution": "0.01 NTU", "Standard": "ISO 7027", "IP Rating": "IP67", "Battery": "Alkaline batteries" },
-    features: ["860 nm ISO 7027", "0–1000 NTU range", "IP67 waterproof", "Battery operated"],
-    relatedProducts: ["rex-tu2000p", "rex-tu500p"],
   },
 
   /* ─ KFT-40C (id 82) ─ */
