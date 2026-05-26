@@ -187,9 +187,11 @@ export const categories: Category[] = [
   { id: "portable-meters", name: "Portable Field Meters",     icon: <Waves className="h-4 w-4" /> },
   { id: "titrators",     name: "Titrators",                   icon: <FlaskConical className="h-4 w-4" /> },
   { id: "kf-titrators",  name: "Karl Fischer Titrators",      icon: <Droplets className="h-4 w-4" /> },
-  { id: "turbidity",     name: "Turbidity & COD Meters",      icon: <Thermometer className="h-4 w-4" /> },
+  { id: "turbidity",     name: "Turbidity Meters",            icon: <Thermometer className="h-4 w-4" /> },
+  { id: "cod-meters",    name: "COD Meters",                  icon: <Beaker className="h-4 w-4" /> },
   { id: "electrodes",    name: "Electrodes & Sensors",        icon: <Zap className="h-4 w-4" /> },
   { id: "moisture",      name: "Moisture Analyzers",          icon: <Scale className="h-4 w-4" /> },
+  { id: "rex-accessories", name: "Accessories & Reagents",   icon: <Layers className="h-4 w-4" /> },
 ];
 
 // Navigation tree mirroring vhbio.com One Lambda structure exactly
@@ -2738,7 +2740,7 @@ export const products: Product[] = [
 
   /* ─ COD Analyzers ─ */
   {
-    id: "rex-cod200", name: "REX COD-200 COD Analyzer", brand: "rex", category: "turbidity", featured: true,
+    id: "rex-cod200", name: "REX COD-200 COD Analyzer", brand: "rex", category: "cod-meters", featured: true,
     subtitle: "Chemical Oxygen Demand Analyzer — COD LR (0–150 mg/L) + COD HR (150–1500 mg/L)",
     description: "The REX COD-200 is a benchtop COD analyzer using potassium dichromate colorimetry (EPA 410.4, ISO 15705). COD LR measures 0–150 mg/L at 420 nm; COD HR measures 150–1500 mg/L at 620 nm. Used with the COD-200R (40-tube) or COD-100R (20-tube) digestion reactor.",
     image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/36954e50-3694-4e83-ba4f-a6911accb013.jpg",
@@ -2748,7 +2750,7 @@ export const products: Product[] = [
     relatedProducts: ["rex-tu4000s", "rex-m600l"],
   },
   {
-    id: "rex-cod-reactor", name: "REX COD-200R / COD-100R Digestion Reactor", brand: "rex", category: "turbidity",
+    id: "rex-cod-reactor", name: "REX COD-200R / COD-100R Digestion Reactor", brand: "rex", category: "cod-meters",
     subtitle: "COD Digestion Reactor — 40 Tubes (200R) or 20 Tubes (100R), 165°C",
     description: "The REX COD-200R and COD-100R are digestion reactors used with the COD-200 analyzer. The COD-200R accommodates 40 vials and the COD-100R accommodates 20 vials, both digesting samples at 165°C for 30 minutes per the potassium dichromate closed reflux method.",
     image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/36954e50-3694-4e83-ba4f-a6911accb013.jpg",
@@ -2934,7 +2936,7 @@ export const products: Product[] = [
 
   /* ─ Accessories & Reagents ─ */
   {
-    id: "rex-accessories", name: "REX Accessories & Reagents", brand: "rex", category: "electrodes",
+    id: "rex-accessories", name: "REX Accessories & Reagents", brand: "rex", category: "rex-accessories",
     subtitle: "pH Buffers, Conductivity Standards, Carrying Cases & Spare Parts",
     description: "REX supplies a comprehensive range of accessories and reagents to support their instrument portfolio: certified standard pH buffer solutions (pH 4.01, 7.00, 10.01), conductivity calibration standards, instrument carrying cases for portable meters, electrode fill solutions, and spare membranes for DO polarographic electrodes.",
     image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/380dfbb2-fc53-46e7-98e9-6a2fbd409c40.jpg",
