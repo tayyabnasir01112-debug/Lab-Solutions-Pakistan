@@ -1434,7 +1434,7 @@ export default function ProductDetail() {
                   : <div className="aspect-square bg-muted flex items-center justify-center mb-4"><ImageIcon className="h-16 w-16 text-muted-foreground/30" /></div>
                 }
                 {product.catalogueNumber && <div className="text-xs text-muted-foreground mb-2">Cat #: <span className="font-mono text-foreground">{product.catalogueNumber}</span></div>}
-                {product.specs && Object.entries(product.specs).slice(0, 6).map(([k, v]) => (
+                {product.specs && Object.entries(product.specs).map(([k, v]) => (
                   <div key={k} className="flex justify-between gap-4 py-2 border-b border-border last:border-0 text-sm">
                     <span className="text-muted-foreground">{k}</span>
                     <span className="text-foreground font-medium text-right">{v}</span>
@@ -1444,9 +1444,33 @@ export default function ProductDetail() {
             </div>
           </div>
         </div>
+        {product.detailSections && product.detailSections.length > 0 && (
+          <div className="container mx-auto px-6 md:px-12 py-14 border-b border-border">
+            <div className="max-w-5xl space-y-10">
+              {product.detailSections.map((section, i) => (
+                <section key={`${section.title}-${i}`}>
+                  <h2 className="text-2xl font-bold mb-4">{section.title}</h2>
+                  {section.body && (
+                    <p className="text-muted-foreground text-base leading-relaxed max-w-4xl">{section.body}</p>
+                  )}
+                  {section.items && section.items.length > 0 && (
+                    <ul className="space-y-3 mt-5">
+                      {section.items.map((item, itemIndex) => (
+                        <li key={itemIndex} className="flex gap-3 text-sm text-muted-foreground leading-relaxed">
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </section>
+              ))}
+            </div>
+          </div>
+        )}
         {(product.features || product.applications) && (
           <div className="container mx-auto px-6 md:px-12 py-14 grid lg:grid-cols-2 gap-12">
-            {product.features && <div><h2 className="text-xl font-bold mb-5">Features</h2><ul className="space-y-3">{product.features.map((f,i) => <li key={i} className="flex gap-3 text-sm text-muted-foreground"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />{f}</li>)}</ul></div>}
+            {product.features && <div><h2 className="text-xl font-bold mb-5">Features &amp; Benefits</h2><ul className="space-y-3">{product.features.map((f,i) => <li key={i} className="flex gap-3 text-sm text-muted-foreground"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />{f}</li>)}</ul></div>}
             {product.applications && <div><h2 className="text-xl font-bold mb-5">Applications</h2><ul className="space-y-3">{product.applications.map((a,i) => <li key={i} className="flex gap-3 text-sm text-muted-foreground"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />{a}</li>)}</ul></div>}
           </div>
         )}
