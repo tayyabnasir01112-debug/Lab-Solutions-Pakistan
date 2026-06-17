@@ -4,7 +4,6 @@ import {
   Gauge, Droplets, Thermometer, Waves, Scale, Zap,
 } from "lucide-react";
 
-export type Brand = { id: string; name: string; short: string; blurb: string; accent: string; };
 export type Category = { id: string; name: string; icon: React.ReactNode; };
 
 export type PackagingVariant = {
