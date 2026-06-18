@@ -1425,6 +1425,8 @@ export default function ProductDetail() {
     ...specEntries.filter(([key]) => !preferredQuickSpecKeys.includes(key))
   ].slice(0, 4) as [string, string][];
   const documentUrl = product.brochure || product.specSheet;
+  const hasApplicationDetailSection = product.detailSections?.some(section => section.title.trim().toLowerCase() === "application");
+  const displayedApplications = hasApplicationDetailSection ? [] : (product.applications || []);
 
   return (
     <div className="min-h-[100dvh] bg-background">
@@ -1553,10 +1555,10 @@ export default function ProductDetail() {
             </div>
           </div>
         )}
-        {(product.features || product.applications) && (
+        {(product.features || displayedApplications.length > 0) && (
           <div className="container mx-auto px-6 md:px-12 py-14 grid lg:grid-cols-2 gap-12">
             {product.features && <div><h2 className="text-xl font-bold mb-5">Features &amp; Benefits</h2><ul className="space-y-3">{product.features.map((f,i) => <li key={i} className="flex gap-3 text-sm text-muted-foreground"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />{f}</li>)}</ul></div>}
-            {product.applications && <div><h2 className="text-xl font-bold mb-5">Applications</h2><ul className="space-y-3">{product.applications.map((a,i) => <li key={i} className="flex gap-3 text-sm text-muted-foreground"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />{a}</li>)}</ul></div>}
+            {displayedApplications.length > 0 && <div><h2 className="text-xl font-bold mb-5">Applications</h2><ul className="space-y-3">{displayedApplications.map((a,i) => <li key={i} className="flex gap-3 text-sm text-muted-foreground"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />{a}</li>)}</ul></div>}
           </div>
         )}
         {allRelated.length > 0 && (
