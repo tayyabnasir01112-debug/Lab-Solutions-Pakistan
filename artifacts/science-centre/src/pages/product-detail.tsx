@@ -38,6 +38,28 @@ function RelatedCard({ product }: { product: Product }) {
 
 /* ─── Cytek Premium Detail ─────────────────────────────────────── */
 
+function ProductMedia({ product }: { product: Product }) {
+  const [imageFailed, setImageFailed] = useState(false);
+
+  if (!product.image || imageFailed) {
+    return (
+      <div className="h-full w-full flex flex-col items-center justify-center gap-3 text-muted-foreground">
+        <ImageIcon className="h-14 w-14 text-muted-foreground/30" />
+        <span className="text-xs font-semibold uppercase tracking-wide">Product image unavailable</span>
+      </div>
+    );
+  }
+
+  return (
+    <img
+      src={product.image}
+      alt={product.name}
+      className="w-full h-full object-contain p-4"
+      onError={() => setImageFailed(true)}
+    />
+  );
+}
+
 function CytekProductDetail({ product }: { product: Product }) {
   const category = categoryById(product.category);
   const related = (product.relatedProducts || []).map(rid => productById(rid)).filter(Boolean) as Product[];
@@ -1394,13 +1416,22 @@ export default function ProductDetail() {
   const related = (product.relatedProducts || []).map(rid => productById(rid)).filter(Boolean) as Product[];
   const moreBrand = productsByBrand(product.brand).filter(p => p.id !== product.id && !product.relatedProducts?.includes(p.id)).slice(0, 3 - related.length);
   const allRelated = [...related, ...moreBrand].slice(0, 3);
+  const specEntries = product.specs ? Object.entries(product.specs).filter(([, value]) => Boolean(value)) : [];
+  const preferredQuickSpecKeys = ["Output", "Operating parameters", "Resistivity", "Dimensions"];
+  const quickSpecs = [
+    ...preferredQuickSpecKeys
+      .map(key => specEntries.find(([specKey]) => specKey === key))
+      .filter(Boolean),
+    ...specEntries.filter(([key]) => !preferredQuickSpecKeys.includes(key))
+  ].slice(0, 4) as [string, string][];
+  const documentUrl = product.brochure || product.specSheet;
 
   return (
     <div className="min-h-[100dvh] bg-background">
       <SiteNavbar />
       <main className="pb-20">
-        <div className="border-b border-border">
-          <div className="container mx-auto px-6 md:px-12 pt-28 pb-12">
+        <div className="border-b border-border bg-gradient-to-b from-muted/40 via-background to-background">
+          <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
             <nav className="flex items-center gap-2 text-xs text-muted-foreground mb-8 flex-wrap">
               <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
               <ChevronRight className="h-3 w-3 flex-shrink-0" />
@@ -1408,50 +1439,104 @@ export default function ProductDetail() {
               <ChevronRight className="h-3 w-3 flex-shrink-0" />
               <span className="text-foreground font-medium truncate max-w-[200px]">{product.name}</span>
             </nav>
-            <div className="grid lg:grid-cols-[1fr_340px] gap-12 items-start">
-              <div>
+            <div className="grid lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] gap-10 xl:gap-14 items-start min-w-0">
+              <div className="min-w-0">
                 <div className="flex flex-wrap gap-2 mb-5">
                   {brand && <span className="px-3 py-1.5 text-xs font-bold text-white rounded-sm" style={{ background: brand.accent }}>{brand.short}</span>}
                   {category && <span className="px-3 py-1.5 text-xs text-muted-foreground border border-border flex items-center gap-1.5 rounded-sm">{category.icon}{category.name}</span>}
                   {product.featured && <span className="px-3 py-1.5 text-xs font-bold text-amber-600 border border-amber-200 bg-amber-50 rounded-sm">★ Featured</span>}
                 </div>
-                <h1 className="text-4xl md:text-5xl font-[var(--app-font-heading)] font-black text-foreground leading-tight tracking-tight mb-6">{product.name}</h1>
-                <p className="text-muted-foreground text-base leading-relaxed mb-6">{product.description}</p>
-                {product.highlights && product.highlights.slice(0, 5).map((h, i) => (
-                  <div key={i} className="flex items-start gap-3 mb-2">
-                    <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0 mt-1" />
-                    <span className="text-muted-foreground text-sm">{h}</span>
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-[var(--app-font-heading)] font-black text-foreground leading-tight tracking-tight mb-6 max-w-4xl break-words [overflow-wrap:anywhere] min-w-0">{product.name}</h1>
+                <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-7 max-w-3xl break-words [overflow-wrap:anywhere] min-w-0">{product.description}</p>
+                {quickSpecs.length > 0 && (
+                  <div className="grid sm:grid-cols-2 gap-3 mb-7">
+                    {quickSpecs.map(([k, v]) => (
+                      <a key={k} href="#technical-profile" className="group border border-border bg-background/80 p-4 hover:border-primary/40 hover:bg-background transition-colors min-w-0">
+                        <div className="text-[11px] uppercase tracking-wide font-bold text-muted-foreground mb-2">{k}</div>
+                        <div className="text-sm font-semibold text-foreground leading-snug line-clamp-3 group-hover:text-primary transition-colors break-words [overflow-wrap:anywhere]">{v}</div>
+                      </a>
+                    ))}
                   </div>
-                ))}
-                <div className="flex gap-3 mt-8 flex-wrap">
-                  <Button asChild size="lg" className="rounded-none"><a href="/#contact">Request a Quote <ArrowRight className="ml-2 h-4 w-4" /></a></Button>
-                  <Button asChild variant="outline" size="lg" className="rounded-none"><Link href="/products"><ArrowLeft className="mr-2 h-4 w-4" /> All Products</Link></Button>
+                )}
+                {product.highlights && (
+                  <div className="grid sm:grid-cols-2 gap-x-5 gap-y-3 mb-2">
+                    {product.highlights.slice(0, 4).map((h, i) => (
+                      <div key={i} className="flex items-start gap-3">
+                        <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0 mt-1" />
+                        <span className="text-muted-foreground text-sm leading-relaxed break-words [overflow-wrap:anywhere] min-w-0">{h}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <div className="grid sm:flex gap-3 mt-8">
+                  <Button asChild size="lg" className="rounded-none w-full sm:w-auto"><a href="/#contact">Request a Quote <ArrowRight className="ml-2 h-4 w-4" /></a></Button>
+                  <Button asChild variant="outline" size="lg" className="rounded-none w-full sm:w-auto"><Link href="/products"><ArrowLeft className="mr-2 h-4 w-4" /> All Products</Link></Button>
                 </div>
               </div>
-              <div className="border border-border p-6">
-                {product.image
-                  ? <img src={product.image} alt={product.name} className="w-full object-contain max-h-64 mb-4" />
-                  : <div className="aspect-square bg-muted flex items-center justify-center mb-4"><ImageIcon className="h-16 w-16 text-muted-foreground/30" /></div>
-                }
-                {product.catalogueNumber && <div className="text-xs text-muted-foreground mb-2">Cat #: <span className="font-mono text-foreground">{product.catalogueNumber}</span></div>}
-                {product.specs && Object.entries(product.specs).map(([k, v]) => (
-                  <div key={k} className="flex justify-between gap-4 py-2 border-b border-border last:border-0 text-sm">
-                    <span className="text-muted-foreground">{k}</span>
-                    <span className="text-foreground font-medium text-right">{v}</span>
-                  </div>
-                ))}
+              <div className="border border-border bg-background p-5 md:p-6 shadow-sm min-w-0 w-full">
+                <div className="aspect-[4/3] bg-muted/50 border border-border/60 flex items-center justify-center mb-5 overflow-hidden">
+                  <ProductMedia product={product} />
+                </div>
+                <div className="grid sm:grid-cols-2 gap-3 text-sm">
+                  {product.catalogueNumber && (
+                    <div className="border border-border p-3">
+                      <div className="text-[11px] uppercase tracking-wide font-bold text-muted-foreground mb-1">Catalogue</div>
+                      <div className="font-mono text-foreground">{product.catalogueNumber}</div>
+                    </div>
+                  )}
+                  {product.subcategory && (
+                    <div className="border border-border p-3">
+                      <div className="text-[11px] uppercase tracking-wide font-bold text-muted-foreground mb-1">Family</div>
+                      <div className="font-semibold text-foreground leading-snug break-words">{product.subcategory}</div>
+                    </div>
+                  )}
+                </div>
+                <div className="mt-4 grid sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-3">
+                  {documentUrl && (
+                    <Button asChild className="rounded-none w-full">
+                      <a href={documentUrl} target="_blank" rel="noopener noreferrer"><FileText className="mr-2 h-4 w-4" /> Download Brochure</a>
+                    </Button>
+                  )}
+                  <Button asChild variant="outline" className="rounded-none w-full">
+                    <a href="/#contact">Discuss This System <ArrowRight className="ml-2 h-4 w-4" /></a>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        {specEntries.length > 0 && (
+          <section id="technical-profile" className="container mx-auto px-6 md:px-12 py-12 border-b border-border scroll-mt-28 min-w-0">
+            <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-7">
+              <div>
+                <div className="text-xs font-bold uppercase tracking-wide text-primary mb-2">Technical profile</div>
+                <h2 className="text-2xl md:text-3xl font-[var(--app-font-heading)] font-black text-foreground">Specifications at a glance</h2>
+                <p className="text-muted-foreground text-sm md:text-base leading-relaxed mt-2 max-w-2xl">The full product specification set is grouped here so the page stays balanced while every important property remains easy to scan.</p>
+              </div>
+              {documentUrl && (
+                <Button asChild variant="outline" className="rounded-none">
+                  <a href={documentUrl} target="_blank" rel="noopener noreferrer"><FileText className="mr-2 h-4 w-4" /> Download Brochure</a>
+                </Button>
+              )}
+            </div>
+            <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-3 min-w-0">
+              {specEntries.map(([k, v]) => (
+                <div key={k} className="border border-border bg-background p-4 hover:border-primary/40 hover:shadow-sm transition-all min-w-0">
+                  <div className="text-[11px] uppercase tracking-wide font-bold text-muted-foreground mb-2">{k}</div>
+                  <div className="text-sm md:text-[15px] font-semibold text-foreground leading-relaxed break-words [overflow-wrap:anywhere]">{v}</div>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
         {product.detailSections && product.detailSections.length > 0 && (
           <div className="container mx-auto px-6 md:px-12 py-14 border-b border-border">
-            <div className="max-w-5xl space-y-10">
+            <div className="grid lg:grid-cols-2 gap-5">
               {product.detailSections.map((section, i) => (
-                <section key={`${section.title}-${i}`}>
+                <section key={`${section.title}-${i}`} className="border border-border bg-background p-6 md:p-7">
                   <h2 className="text-2xl font-bold mb-4">{section.title}</h2>
                   {section.body && (
-                    <p className="text-muted-foreground text-base leading-relaxed max-w-4xl">{section.body}</p>
+                    <p className="text-muted-foreground text-base leading-relaxed break-words">{section.body}</p>
                   )}
                   {section.items && section.items.length > 0 && (
                     <ul className="space-y-3 mt-5">
