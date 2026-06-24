@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">Research area visual</title>
+  <desc id="desc">Abstract research network with microscope, cells, and discovery nodes.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f5fbff"/>
+      <stop offset=".52" stop-color="#f1f7ff"/>
+      <stop offset="1" stop-color="#f5fbef"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <path d="M0 388c108 42 194 12 306 16 151 6 222 68 374 35 108-24 176-86 280-42v143H0z" fill="#dfedf9"/>
+  <g transform="translate(96 108)">
+    <rect x="54" y="250" width="240" height="54" rx="18" fill="#0b4a72"/>
+    <rect x="100" y="204" width="132" height="66" rx="18" fill="#2e9fc8"/>
+    <path d="M168 74l84 84-42 42-84-84z" fill="#fff" stroke="#75b9d1" stroke-width="7"/>
+    <rect x="92" y="30" width="72" height="88" rx="18" fill="#fff" stroke="#75b9d1" stroke-width="7"/>
+    <path d="M244 184l70 70" stroke="#0b4a72" stroke-width="14" stroke-linecap="round"/>
+    <circle cx="314" cy="254" r="22" fill="#f0b64c"/>
+  </g>
+  <g transform="translate(512 108)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M134 54l132 76-1 152-132 76L2 282V130z" stroke="#0b4a72" stroke-width="8"/>
+    <path d="M134 54v152l131 76M134 206L2 282M134 206L2 130M134 206l132-76" stroke="#8cc8d6" stroke-width="5"/>
+    <circle cx="134" cy="54" r="22" fill="#e85d75" stroke="none"/>
+    <circle cx="266" cy="130" r="20" fill="#2e9fc8" stroke="none"/>
+    <circle cx="265" cy="282" r="22" fill="#75c6a3" stroke="none"/>
+    <circle cx="133" cy="358" r="20" fill="#f0b64c" stroke="none"/>
+    <circle cx="2" cy="282" r="22" fill="#2e9fc8" stroke="none"/>
+    <circle cx="2" cy="130" r="20" fill="#75c6a3" stroke="none"/>
+  </g>
+  <g opacity=".48" stroke="#81c7d4" stroke-width="3" fill="none">
+    <path d="M82 78h160M704 76h148M108 456h228"/>
+    <circle cx="814" cy="420" r="38"/>
+  </g>
+</svg>

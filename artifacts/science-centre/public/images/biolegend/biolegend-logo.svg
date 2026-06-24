@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180" role="img" aria-labelledby="title desc">
+  <title id="title">BioLegend brand label</title>
+  <desc id="desc">Plain local text label for BioLegend catalogue identification.</desc>
+  <rect width="720" height="180" rx="24" fill="#ffffff"/>
+  <path d="M40 138c62-46 118-60 190-34 78 29 140 21 208-28 62-44 138-48 242-9" fill="none" stroke="#45b6cf" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="86" cy="66" r="18" fill="#4fbf93"/>
+  <circle cx="646" cy="112" r="15" fill="#f0b64c"/>
+  <text x="74" y="105" fill="#0b4a72" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="700" letter-spacing="0">BioLegend</text>
+</svg>
