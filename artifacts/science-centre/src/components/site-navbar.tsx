@@ -17,6 +17,7 @@ import {
   productsByCategory,
   brandById,
   categoryById,
+  type Product,
 } from "@/lib/catalogue";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -84,6 +85,32 @@ const APPLICATION_GROUPS = [
 ] as const;
 
 type ViewMode = "brand" | "application" | "category";
+
+function ProductShortcutLink({
+  product,
+  onClick,
+  className,
+  children,
+}: {
+  product: Product;
+  onClick?: () => void;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  if (product.brand === "biolegend" && product.specSheet) {
+    return (
+      <a href={product.specSheet} target="_blank" rel="noopener noreferrer" onClick={onClick} className={className}>
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <Link href={`/products/${product.id}`} onClick={onClick} className={className}>
+      {children}
+    </Link>
+  );
+}
 
 // Helper: get unique categories for a brand
 function brandCategories(brandId: string) {
@@ -578,12 +605,12 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
                                           transition={{ duration: 0.2 }} className="overflow-hidden border-t border-border">
                                           <div className="divide-y divide-border/50 bg-muted/20">
                                             {catProds.slice(0, 5).map(p => (
-                                              <Link key={p.id} href={`/products/${p.id}`} onClick={closeMega}
+                                              <ProductShortcutLink key={p.id} product={p} onClick={closeMega}
                                                 className="flex items-center gap-2.5 px-3 py-2 hover:bg-background transition-colors group">
                                                 <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: currentBrand.accent }} />
                                                 <span className="text-[12px] text-foreground/80 group-hover:text-primary transition-colors leading-snug flex-1 line-clamp-1">{p.name}</span>
                                                 <ArrowRight className="h-2.5 w-2.5 text-muted-foreground/30 group-hover:text-primary opacity-0 group-hover:opacity-100 transition-all flex-shrink-0" />
-                                              </Link>
+                                              </ProductShortcutLink>
                                             ))}
                                             {catProds.length > 5 && (
                                               <Link href={`/products?brand=${activeBrand}&category=${cat.id}`} onClick={closeMega}
@@ -641,7 +668,7 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
                               {appProds.filter(p => p.featured).slice(0, 6).map(p => {
                                 const brand = brandById(p.brand);
                                 return (
-                                  <Link key={p.id} href={`/products/${p.id}`} onClick={closeMega}
+                                  <ProductShortcutLink key={p.id} product={p} onClick={closeMega}
                                     className="group flex flex-col gap-2 p-3 border border-border hover:border-border/80 hover:bg-muted/40 transition-all">
                                     <div className="flex items-center gap-2">
                                       <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: currentApp.color }} />
@@ -653,7 +680,7 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
                                       {p.name}
                                     </span>
                                     <ArrowRight className="h-3 w-3 text-muted-foreground/40 group-hover:text-primary transition-colors mt-auto" />
-                                  </Link>
+                                  </ProductShortcutLink>
                                 );
                               })}
                             </div>
@@ -699,7 +726,7 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
                               {catProds.slice(0, 12).map(p => {
                                 const brand = brandById(p.brand);
                                 return (
-                                  <Link key={p.id} href={`/products/${p.id}`} onClick={closeMega}
+                                  <ProductShortcutLink key={p.id} product={p} onClick={closeMega}
                                     className="group flex items-center gap-3 p-2.5 hover:bg-muted/50 transition-colors border border-transparent hover:border-border">
                                     <div className="w-1 h-6 flex-shrink-0 rounded-full" style={{ background: brand?.accent || "#999" }} />
                                     <div className="flex-1 min-w-0">
@@ -707,7 +734,7 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
                                       <p className="text-[12px] text-foreground group-hover:text-primary transition-colors leading-tight line-clamp-1">{p.name}</p>
                                     </div>
                                     <ArrowRight className="h-3 w-3 text-muted-foreground/30 group-hover:text-primary opacity-0 group-hover:opacity-100 transition-all flex-shrink-0" />
-                                  </Link>
+                                  </ProductShortcutLink>
                                 );
                               })}
                             </div>

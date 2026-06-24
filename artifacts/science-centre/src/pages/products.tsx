@@ -144,6 +144,11 @@ function CheckRow({
 function ProductCard({ product, index }: { product: Product; index: number }) {
   const brand = brandById(product.brand);
   const category = categoryById(product.category);
+  const isBioLegendExternal = product.brand === "biolegend" && Boolean(product.specSheet);
+  const productHref = isBioLegendExternal ? product.specSheet! : `/products/${product.id}`;
+  const productLinkProps = isBioLegendExternal
+    ? { href: productHref, target: "_blank", rel: "noopener noreferrer" }
+    : { href: productHref };
   const initials = product.name
     .replace(/[®™©]/g, "")
     .split(/\s+/)
@@ -222,11 +227,19 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         </div>
         {/* hover overlay with view + inquire */}
         <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2">
-          <Link href={`/products/${product.id}`} className="flex-1">
+          {isBioLegendExternal ? (
+            <a {...productLinkProps} className="flex-1">
+              <Button variant="outline" className="rounded-none w-full text-xs uppercase tracking-[0.14em] font-semibold h-10 bg-background/90 backdrop-blur-sm">
+                Official Page
+              </Button>
+            </a>
+          ) : (
+          <Link href={productHref} className="flex-1">
             <Button variant="outline" className="rounded-none w-full text-xs uppercase tracking-[0.14em] font-semibold h-10 bg-background/90 backdrop-blur-sm">
               View Details
             </Button>
           </Link>
+          )}
           <Link href="/#contact" className="flex-1">
             <Button className="rounded-none w-full bg-foreground text-background hover:bg-foreground/90 text-xs uppercase tracking-[0.14em] font-semibold h-10">
               Inquire <ArrowRight className="ml-2 h-3.5 w-3.5" />
@@ -241,7 +254,11 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           <span className="truncate">{category.name}</span>
         </div>
         <h3 className="font-[var(--app-font-heading)] text-[15px] font-semibold leading-snug text-foreground mb-1.5 line-clamp-2 group-hover:text-primary transition-colors cursor-pointer">
-          <Link href={`/products/${product.id}`}>{product.name}</Link>
+          {isBioLegendExternal ? (
+            <a {...productLinkProps}>{product.name}</a>
+          ) : (
+            <Link href={productHref}>{product.name}</Link>
+          )}
         </h3>
         <p className="text-[13px] text-muted-foreground leading-relaxed line-clamp-2">
           {product.description}
