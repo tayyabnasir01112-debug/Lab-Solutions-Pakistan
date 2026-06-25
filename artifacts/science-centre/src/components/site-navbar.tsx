@@ -26,6 +26,7 @@ function img(path: string) { return `${BASE}${path}`; }
 const NAV_LINKS = [
   { label: "Solutions", anchor: "solutions", isPage: false, hasMega: false },
   { label: "Products",  anchor: "products",  isPage: true,  href: "/products", hasMega: true },
+  { label: "Events",    anchor: "events",    isPage: true,  href: "/events", hasMega: false },
   { label: "Partners",  anchor: "partners",  isPage: false, hasMega: false },
   { label: "About",     anchor: "about",     isPage: true,  href: "/about",    hasMega: false },
   { label: "Contact",   anchor: "contact",   isPage: false, hasMega: false },
