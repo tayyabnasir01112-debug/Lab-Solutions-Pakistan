@@ -6,14 +6,9 @@ import {
   CalendarDays,
   CheckCircle2,
   Clock,
-  Grid3X3,
-  Image as ImageIcon,
   MapPin,
-  Play,
   Search,
   Sparkles,
-  UserRound,
-  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,64 +19,37 @@ import {
   formatEventDate,
   readEvents,
   sortEvents,
-  type EventMedia,
   type ScienceEvent,
 } from "@/lib/events";
 
 type ViewMode = "all" | "upcoming" | "past";
 
-function mediaCount(event: ScienceEvent) {
-  return Math.max(event.media.length, event.coverImage ? 1 : 0);
+function titleFor(event: ScienceEvent) {
+  return event.title?.trim() || "Science Centre Event";
 }
 
-function EventMediaThumb({
-  media,
-  onOpen,
-}: {
-  media: EventMedia;
-  onOpen: (media: EventMedia) => void;
-}) {
-  return (
-    <button
-      onClick={() => onOpen(media)}
-      className="group relative min-h-[220px] overflow-hidden bg-muted text-left"
-      aria-label={`Open ${media.alt}`}
-    >
-      {media.type === "video" ? (
-        <video src={media.src} className="absolute inset-0 h-full w-full object-cover" muted playsInline />
-      ) : (
-        <img src={media.src} alt={media.alt} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-      )}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
-      {media.type === "video" && (
-        <div className="absolute left-4 top-4 grid h-10 w-10 place-items-center bg-white text-foreground">
-          <Play className="h-4 w-4 fill-current" />
-        </div>
-      )}
-      <div className="absolute inset-x-0 bottom-0 p-4">
-        <p className="line-clamp-2 text-sm font-semibold text-white">{media.caption || media.alt}</p>
-      </div>
-    </button>
-  );
+function descriptionFor(event: ScienceEvent) {
+  return event.summary?.trim() || event.details?.trim() || "Event details will be shared soon. Contact Science Centre for registration and availability.";
+}
+
+function fieldList(event: ScienceEvent) {
+  return [
+    event.date ? { icon: <CalendarDays className="h-4 w-4 text-[#1f9fd0]" />, value: formatEventDate(event) } : null,
+    event.time ? { icon: <Clock className="h-4 w-4 text-[#4fbf93]" />, value: event.time } : null,
+    event.city || event.venue ? { icon: <MapPin className="h-4 w-4 text-[#f0b64c]" />, value: [event.venue, event.city].filter(Boolean).join(", ") } : null,
+  ].filter(Boolean) as { icon: React.ReactNode; value: string }[];
 }
 
 function EventCard({
   event,
   index,
-  onMediaOpen,
 }: {
   event: ScienceEvent;
   index: number;
-  onMediaOpen: (media: EventMedia) => void;
 }) {
   const upcoming = eventIsUpcoming(event);
-  const firstMedia = event.media[0] || {
-    id: `${event.id}-cover`,
-    type: "image" as const,
-    src: event.coverImage,
-    alt: event.title,
-    caption: event.summary,
-  };
+  const meta = fieldList(event);
+  const agenda = event.agenda || [];
 
   return (
     <motion.article
@@ -90,58 +58,48 @@ function EventCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 8 }}
       transition={{ duration: 0.35, delay: Math.min(index * 0.035, 0.28), ease: [0.16, 1, 0.3, 1] }}
-      className="group grid overflow-hidden border border-border bg-background lg:grid-cols-[minmax(280px,0.9fr)_1.1fr]"
+      className="group overflow-hidden border border-border bg-background"
     >
-      <button onClick={() => onMediaOpen(firstMedia)} className="relative min-h-[280px] overflow-hidden bg-muted text-left">
-        <img src={event.coverImage} alt={event.title} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
-        <div className="absolute left-4 top-4 flex flex-wrap gap-2">
+      <div className="flex flex-col p-6 md:p-8">
+        <div className="mb-5 flex flex-wrap gap-2">
           <span className={`px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-white ${upcoming ? "bg-[#1f9fd0]" : "bg-foreground/80"}`}>
             {upcoming ? "Upcoming" : "Past"}
           </span>
           {event.featured && (
-            <span className="inline-flex items-center gap-1 bg-white px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-foreground">
-              <Sparkles className="h-3 w-3" /> Featured
+            <span className="inline-flex items-center gap-1 border border-[#f0b64c]/30 bg-[#fff7e7] px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-foreground">
+              <Sparkles className="h-3 w-3 text-[#f0b64c]" /> Featured
             </span>
           )}
-        </div>
-        <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-3 text-white">
-          <div className="flex items-center gap-2 text-sm font-semibold">
-            <Grid3X3 className="h-4 w-4" />
-            {mediaCount(event)} media item{mediaCount(event) === 1 ? "" : "s"}
-          </div>
-          <span className="text-xs font-bold uppercase tracking-[0.14em] opacity-80">View gallery</span>
-        </div>
-      </button>
-
-      <div className="flex flex-col p-6 md:p-8">
-        <div className="mb-5 flex flex-wrap gap-3 text-[12px] font-semibold text-muted-foreground">
-          <span className="inline-flex items-center gap-1.5"><CalendarDays className="h-4 w-4 text-[#1f9fd0]" />{formatEventDate(event)}</span>
-          <span className="inline-flex items-center gap-1.5"><Clock className="h-4 w-4 text-[#4fbf93]" />{event.time}</span>
-          <span className="inline-flex items-center gap-1.5"><MapPin className="h-4 w-4 text-[#f0b64c]" />{event.city}</span>
+          {event.type && (
+            <span className="border border-border px-3 py-1 text-[11px] font-black uppercase tracking-[0.16em] text-muted-foreground">{event.type}</span>
+          )}
         </div>
 
         <div className="mb-4">
-          <div className="mb-2 text-[11px] font-black uppercase tracking-[0.22em] text-[#1f9fd0]">{event.type}</div>
-          <h2 className="font-[var(--app-font-heading)] text-2xl font-black leading-tight text-foreground md:text-3xl">{event.title}</h2>
+          <h2 className="font-[var(--app-font-heading)] text-2xl font-black leading-tight text-foreground md:text-4xl">{titleFor(event)}</h2>
         </div>
 
-        <p className="mb-5 text-[15px] leading-relaxed text-muted-foreground">{event.summary}</p>
+        <p className="mb-5 max-w-4xl text-[15px] leading-relaxed text-muted-foreground">{descriptionFor(event)}</p>
 
-        <div className="mb-5 grid gap-3 text-sm md:grid-cols-2">
-          <div className="border border-border p-3">
-            <div className="mb-1 text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">Venue</div>
-            <div className="font-semibold text-foreground">{event.venue}</div>
+        {meta.length > 0 && (
+          <div className="mb-5 flex flex-wrap gap-3 text-[13px] font-semibold text-muted-foreground">
+            {meta.map((item) => (
+              <span key={item.value} className="inline-flex items-center gap-1.5 border border-border px-3 py-2">
+                {item.icon}{item.value}
+              </span>
+            ))}
           </div>
-          <div className="border border-border p-3">
-            <div className="mb-1 text-[10px] font-black uppercase tracking-[0.18em] text-muted-foreground">Audience</div>
-            <div className="line-clamp-2 font-semibold text-foreground">{event.audience}</div>
-          </div>
-        </div>
+        )}
 
-        {event.agenda.length > 0 && (
+        {event.audience && (
+          <div className="mb-5 border-l-2 border-[#1f9fd0] pl-4 text-sm font-semibold text-foreground">
+            {event.audience}
+          </div>
+        )}
+
+        {agenda.length > 0 && (
           <div className="mb-6 space-y-2">
-            {event.agenda.slice(0, 3).map((item) => (
+            {agenda.slice(0, 3).map((item) => (
               <div key={item} className="flex items-start gap-2 text-sm text-muted-foreground">
                 <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#4fbf93]" />
                 <span>{item}</span>
@@ -156,9 +114,6 @@ function EventCard({
               Request invitation <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
-          <Button variant="outline" className="rounded-none" onClick={() => onMediaOpen(firstMedia)}>
-            <ImageIcon className="mr-2 h-4 w-4" /> Open media
-          </Button>
         </div>
       </div>
     </motion.article>
@@ -170,7 +125,6 @@ export default function EventsPage() {
   const [query, setQuery] = useState("");
   const [mode, setMode] = useState<ViewMode>("all");
   const [activeType, setActiveType] = useState("all");
-  const [activeMedia, setActiveMedia] = useState<EventMedia | null>(null);
 
   useEffect(() => {
     const sync = () => setEvents(sortEvents(readEvents()).filter((event) => event.status === "published"));
@@ -182,14 +136,8 @@ export default function EventsPage() {
     };
   }, []);
 
-  const types = useMemo(() => ["all", ...Array.from(new Set(events.map((event) => event.type)))], [events]);
+  const types = useMemo(() => ["all", ...Array.from(new Set(events.map((event) => event.type).filter(Boolean)))], [events]);
   const featured = events.find((event) => event.featured) || events[0];
-  const galleryMedia = events.flatMap((event) =>
-    (event.media.length ? event.media : [{ id: `${event.id}-cover`, type: "image" as const, src: event.coverImage, alt: event.title, caption: event.summary }]).map((media) => ({
-      ...media,
-      caption: media.caption || event.title,
-    }))
-  );
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -198,7 +146,7 @@ export default function EventsPage() {
       if (mode === "past" && eventIsUpcoming(event)) return false;
       if (activeType !== "all" && event.type !== activeType) return false;
       if (!q) return true;
-      return [event.title, event.summary, event.details, event.city, event.venue, event.audience, ...event.speakers].join(" ").toLowerCase().includes(q);
+      return [event.title, event.summary, event.details, event.city, event.venue, event.audience, ...(event.speakers || [])].join(" ").toLowerCase().includes(q);
     });
   }, [activeType, events, mode, query]);
 
@@ -218,7 +166,7 @@ export default function EventsPage() {
                 Events, demos, and training moments.
               </h1>
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-                Explore upcoming workshops and browse media from Science Centre sessions across clinical diagnostics, laboratory instruments, and research workflows.
+                Explore upcoming workshops, demos, and technical sessions from Science Centre. Every listing adapts to the details available, from a simple announcement to a full programme.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Button asChild size="lg" className="rounded-none bg-foreground text-background hover:bg-foreground/90">
@@ -231,19 +179,24 @@ export default function EventsPage() {
             </div>
 
             {featured && (
-              <button onClick={() => setActiveMedia(featured.media[0] || { id: `${featured.id}-cover`, type: "image", src: featured.coverImage, alt: featured.title })} className="group relative min-h-[520px] overflow-hidden border border-border bg-white text-left">
-                <img src={featured.coverImage} alt={featured.title} className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="absolute left-5 top-5 bg-white px-3 py-2 text-[11px] font-black uppercase tracking-[0.18em] text-foreground">Featured event</div>
-                <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-                  <div className="mb-3 flex flex-wrap gap-3 text-sm font-semibold opacity-90">
-                    <span className="inline-flex items-center gap-1.5"><CalendarDays className="h-4 w-4" />{formatEventDate(featured)}</span>
-                    <span className="inline-flex items-center gap-1.5"><MapPin className="h-4 w-4" />{featured.city}</span>
+              <div className="relative overflow-hidden border border-border bg-foreground p-8 text-background lg:p-10">
+                <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)", backgroundSize: "34px 34px" }} />
+                <div className="relative">
+                  <div className="mb-10 inline-flex items-center gap-2 bg-background px-3 py-2 text-[11px] font-black uppercase tracking-[0.18em] text-foreground">
+                    <Sparkles className="h-3.5 w-3.5 text-[#f0b64c]" /> Featured event
                   </div>
-                  <h2 className="font-[var(--app-font-heading)] text-3xl font-black leading-tight">{featured.title}</h2>
-                  <p className="mt-3 line-clamp-2 max-w-xl text-sm leading-relaxed text-white/80">{featured.summary}</p>
+                  <div className="mb-5 flex flex-wrap gap-3 text-sm font-semibold text-background/75">
+                    {featured.date && <span className="inline-flex items-center gap-1.5"><CalendarDays className="h-4 w-4" />{formatEventDate(featured)}</span>}
+                    {featured.city && <span className="inline-flex items-center gap-1.5"><MapPin className="h-4 w-4" />{featured.city}</span>}
+                    {featured.time && <span className="inline-flex items-center gap-1.5"><Clock className="h-4 w-4" />{featured.time}</span>}
+                  </div>
+                  <h2 className="font-[var(--app-font-heading)] text-4xl font-black leading-tight md:text-5xl">{titleFor(featured)}</h2>
+                  <p className="mt-5 max-w-xl text-base leading-relaxed text-background/75">{descriptionFor(featured)}</p>
+                  <Button asChild className="mt-8 rounded-none bg-background text-foreground hover:bg-background/90">
+                    <Link href={featured.registrationUrl || "/#contact"}>Request invitation <ArrowRight className="ml-2 h-4 w-4" /></Link>
+                  </Button>
                 </div>
-              </button>
+              </div>
             )}
           </div>
         </section>
@@ -279,7 +232,7 @@ export default function EventsPage() {
           <div className="space-y-6">
             <AnimatePresence mode="popLayout">
               {filtered.map((event, index) => (
-                <EventCard key={event.id} event={event} index={index} onMediaOpen={setActiveMedia} />
+                <EventCard key={event.id} event={event} index={index} />
               ))}
             </AnimatePresence>
             {filtered.length === 0 && (
@@ -288,28 +241,6 @@ export default function EventsPage() {
                 <p className="mx-auto mt-2 max-w-md text-muted-foreground">Try a different filter or contact Science Centre for upcoming training dates.</p>
               </div>
             )}
-          </div>
-        </section>
-
-        <section className="border-y border-border bg-[#f8fbfc]">
-          <div className="container mx-auto px-6 py-12 md:px-12">
-            <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-              <div>
-                <div className="mb-2 text-[11px] font-black uppercase tracking-[0.22em] text-muted-foreground">Gallery</div>
-                <h2 className="font-[var(--app-font-heading)] text-3xl font-black md:text-5xl">Event media wall</h2>
-              </div>
-              <div className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground">
-                <ImageIcon className="h-4 w-4" /> {galleryMedia.length} published media items
-              </div>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {galleryMedia.slice(0, 12).map((media, index) => (
-                <div key={`${media.id}-${index}`} className={index % 5 === 0 ? "lg:col-span-2 lg:row-span-2" : ""}>
-                  <EventMediaThumb media={media} onOpen={setActiveMedia} />
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 
@@ -328,32 +259,6 @@ export default function EventsPage() {
       </main>
 
       <SiteFooter />
-
-      <AnimatePresence>
-        {activeMedia && (
-          <motion.div
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/88 p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setActiveMedia(null)}
-          >
-            <button className="absolute right-5 top-5 grid h-11 w-11 place-items-center bg-white text-foreground" onClick={() => setActiveMedia(null)} aria-label="Close media viewer">
-              <X className="h-5 w-5" />
-            </button>
-            <motion.div initial={{ scale: 0.96, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.96, opacity: 0 }} className="max-h-[88vh] w-full max-w-6xl" onClick={(event) => event.stopPropagation()}>
-              {activeMedia.type === "video" ? (
-                <video src={activeMedia.src} controls autoPlay className="max-h-[78vh] w-full bg-black object-contain" />
-              ) : (
-                <img src={activeMedia.src} alt={activeMedia.alt} className="max-h-[78vh] w-full bg-black object-contain" />
-              )}
-              {(activeMedia.caption || activeMedia.alt) && (
-                <div className="bg-white p-4 text-sm font-semibold text-foreground">{activeMedia.caption || activeMedia.alt}</div>
-              )}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   );
 }

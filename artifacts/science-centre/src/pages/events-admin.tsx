@@ -3,22 +3,16 @@ import { Link } from "wouter";
 import {
   Archive,
   CalendarDays,
-  Check,
   Copy,
   Download,
   Eye,
   FileUp,
-  ImagePlus,
   Lock,
   LogOut,
   Plus,
-  Save,
   Search,
   Sparkles,
   Trash2,
-  Upload,
-  Video,
-  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -32,8 +26,6 @@ import {
   resetEvents,
   saveEvents,
   sortEvents,
-  type EventMedia,
-  type EventMediaType,
   type EventStatus,
   type EventType,
   type ScienceEvent,
@@ -45,17 +37,8 @@ function splitLines(value: string) {
   return value.split("\n").map((item) => item.trim()).filter(Boolean);
 }
 
-function lines(value: string[]) {
-  return value.join("\n");
-}
-
-function fileToDataUrl(file: File) {
-  return new Promise<string>((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(String(reader.result));
-    reader.onerror = () => reject(reader.error);
-    reader.readAsDataURL(file);
-  });
+function lines(value?: string[]) {
+  return (value || []).join("\n");
 }
 
 function fieldClassName() {
@@ -92,7 +75,7 @@ function AdminLogin({ onLogin }: { onLogin: () => void }) {
             <div className="mb-2 text-[11px] font-black uppercase tracking-[0.22em] text-[#1f9fd0]">Events admin</div>
             <h1 className="font-[var(--app-font-heading)] text-4xl font-black leading-tight">Manage Science Centre events</h1>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Create upcoming events, publish details, upload media, and manage the public gallery.
+              Create upcoming events and publish only the details you currently have.
             </p>
           </div>
           <label className={labelClassName()} htmlFor="pin">Admin PIN</label>
@@ -111,30 +94,31 @@ function AdminLogin({ onLogin }: { onLogin: () => void }) {
 }
 
 function EventPreview({ event }: { event: ScienceEvent }) {
+  const meta = [
+    event.date ? formatEventDate(event) : null,
+    event.time || null,
+    event.city || null,
+  ].filter(Boolean);
+
   return (
     <div className="overflow-hidden border border-border bg-background">
-      <div className="relative aspect-[16/10] bg-muted">
-        {event.coverImage ? (
-          <img src={event.coverImage} alt={event.title} className="h-full w-full object-cover" />
-        ) : (
-          <div className="grid h-full place-items-center text-muted-foreground"><ImagePlus className="h-10 w-10" /></div>
-        )}
-        <div className="absolute left-4 top-4 flex gap-2">
+      <div className="p-5">
+        <div className="mb-4 flex flex-wrap gap-2">
           <span className={`px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-white ${event.status === "published" ? "bg-[#1f9fd0]" : "bg-foreground/70"}`}>
             {event.status}
           </span>
-          {event.featured && <span className="bg-white px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-foreground">Featured</span>}
+          {event.featured && <span className="bg-[#fff7e7] px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-foreground">Featured</span>}
+          {event.type && <span className="border border-border px-3 py-1 text-[10px] font-black uppercase tracking-[0.16em] text-muted-foreground">{event.type}</span>}
         </div>
-      </div>
-      <div className="p-5">
-        <div className="mb-2 text-[11px] font-black uppercase tracking-[0.18em] text-[#1f9fd0]">{event.type}</div>
-        <h3 className="font-[var(--app-font-heading)] text-2xl font-black leading-tight">{event.title}</h3>
-        <div className="mt-3 flex flex-wrap gap-3 text-xs font-semibold text-muted-foreground">
-          <span>{formatEventDate(event)}</span>
-          <span>{event.time}</span>
-          <span>{event.city}</span>
-        </div>
-        <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-muted-foreground">{event.summary}</p>
+        <h3 className="font-[var(--app-font-heading)] text-2xl font-black leading-tight">{event.title || "Science Centre Event"}</h3>
+        {meta.length > 0 && (
+          <div className="mt-3 flex flex-wrap gap-3 text-xs font-semibold text-muted-foreground">
+            {meta.map((item) => <span key={item}>{item}</span>)}
+          </div>
+        )}
+        <p className="mt-4 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+          {event.summary || event.details || "Public page will use a clean fallback message until more details are added."}
+        </p>
       </div>
     </div>
   );
@@ -145,9 +129,7 @@ export default function EventsAdminPage() {
   const [events, setEvents] = useState<ScienceEvent[]>(() => sortEvents(readEvents()));
   const [activeId, setActiveId] = useState(() => sortEvents(readEvents())[0]?.id || "");
   const [query, setQuery] = useState("");
-  const [selectedMedia, setSelectedMedia] = useState<string[]>([]);
   const importRef = useRef<HTMLInputElement>(null);
-  const mediaRef = useRef<HTMLInputElement>(null);
 
   const activeEvent = events.find((event) => event.id === activeId) || events[0];
 
@@ -196,35 +178,6 @@ export default function EventsAdminPage() {
     commit(next, next[0]?.id || "");
   }
 
-  async function uploadMedia(files: FileList | null) {
-    if (!activeEvent || !files?.length) return;
-    const uploaded: EventMedia[] = [];
-    for (const file of Array.from(files)) {
-      const type: EventMediaType = file.type.startsWith("video") ? "video" : "image";
-      const src = await fileToDataUrl(file);
-      uploaded.push({
-        id: `media-${Date.now()}-${Math.random().toString(16).slice(2)}`,
-        type,
-        src,
-        alt: file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " "),
-        caption: file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " "),
-      });
-    }
-    const coverImage = activeEvent.coverImage || uploaded.find((item) => item.type === "image")?.src || activeEvent.coverImage;
-    updateActive({ media: [...activeEvent.media, ...uploaded], coverImage });
-    if (mediaRef.current) mediaRef.current.value = "";
-  }
-
-  function removeMedia(id: string) {
-    if (!activeEvent) return;
-    const media = activeEvent.media.filter((item) => item.id !== id);
-    const coverImage = activeEvent.coverImage === activeEvent.media.find((item) => item.id === id)?.src
-      ? media.find((item) => item.type === "image")?.src || "/images/events/event-clinical-systems.svg"
-      : activeEvent.coverImage;
-    updateActive({ media, coverImage });
-    setSelectedMedia((items) => items.filter((item) => item !== id));
-  }
-
   function exportJson() {
     const blob = new Blob([JSON.stringify(events, null, 2)], { type: "application/json" });
     const url = URL.createObjectURL(blob);
@@ -268,9 +221,9 @@ export default function EventsAdminPage() {
           <div className="container mx-auto flex flex-col gap-6 px-6 py-8 md:px-12 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <div className="mb-2 text-[11px] font-black uppercase tracking-[0.22em] text-[#1f9fd0]">Client dashboard</div>
-              <h1 className="font-[var(--app-font-heading)] text-4xl font-black md:text-5xl">Events and gallery admin</h1>
+              <h1 className="font-[var(--app-font-heading)] text-4xl font-black md:text-5xl">Events admin</h1>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-                Publish upcoming events, manage event details, upload media, and curate the public gallery.
+                Publish upcoming events from whatever information is available. Blank optional fields are automatically hidden on the public page.
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
@@ -293,14 +246,14 @@ export default function EventsAdminPage() {
               {filtered.map((event) => (
                 <button
                   key={event.id}
-                  onClick={() => { setActiveId(event.id); setSelectedMedia([]); }}
+                  onClick={() => setActiveId(event.id)}
                   className={`w-full border-b border-border p-4 text-left transition-colors last:border-b-0 ${activeEvent.id === event.id ? "bg-foreground text-background" : "hover:bg-muted"}`}
                 >
                   <div className="mb-2 flex items-center justify-between gap-3">
-                    <span className={`text-[10px] font-black uppercase tracking-[0.16em] ${activeEvent.id === event.id ? "text-background/60" : "text-[#1f9fd0]"}`}>{event.type}</span>
+                    <span className={`text-[10px] font-black uppercase tracking-[0.16em] ${activeEvent.id === event.id ? "text-background/60" : "text-[#1f9fd0]"}`}>{event.type || "event"}</span>
                     <span className={`text-[10px] font-black uppercase tracking-[0.16em] ${event.status === "published" ? "text-[#4fbf93]" : "text-muted-foreground"}`}>{event.status}</span>
                   </div>
-                  <div className="line-clamp-2 font-[var(--app-font-heading)] text-lg font-black leading-tight">{event.title}</div>
+                  <div className="line-clamp-2 font-[var(--app-font-heading)] text-lg font-black leading-tight">{event.title || "Science Centre Event"}</div>
                   <div className={`mt-2 flex items-center gap-2 text-xs ${activeEvent.id === event.id ? "text-background/60" : "text-muted-foreground"}`}>
                     <CalendarDays className="h-3.5 w-3.5" /> {formatEventDate(event)}
                   </div>
@@ -314,7 +267,7 @@ export default function EventsAdminPage() {
               <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <div className="text-[11px] font-black uppercase tracking-[0.18em] text-muted-foreground">Editing</div>
-                  <h2 className="font-[var(--app-font-heading)] text-2xl font-black">{activeEvent.title}</h2>
+                  <h2 className="font-[var(--app-font-heading)] text-2xl font-black">{activeEvent.title || "Science Centre Event"}</h2>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   <Button variant="outline" className="rounded-none" onClick={duplicateEvent}><Copy className="mr-2 h-4 w-4" /> Duplicate</Button>
@@ -324,12 +277,13 @@ export default function EventsAdminPage() {
 
               <div className="grid gap-4 md:grid-cols-2">
                 <div className="md:col-span-2">
-                  <label className={labelClassName()}>Event title</label>
-                  <Input value={activeEvent.title} onChange={(event) => updateActive({ title: event.target.value })} className={fieldClassName()} />
+                  <label className={labelClassName()}>Event title optional</label>
+                  <Input value={activeEvent.title || ""} onChange={(event) => updateActive({ title: event.target.value })} className={fieldClassName()} placeholder="Science Centre Event" />
                 </div>
                 <div>
-                  <label className={labelClassName()}>Type</label>
-                  <select value={activeEvent.type} onChange={(event) => updateActive({ type: event.target.value as EventType })} className={`${fieldClassName()} w-full px-3`}>
+                  <label className={labelClassName()}>Type optional</label>
+                  <select value={activeEvent.type || ""} onChange={(event) => updateActive({ type: (event.target.value || undefined) as EventType | undefined })} className={`${fieldClassName()} w-full px-3`}>
+                    <option value="">No type</option>
                     {eventTypes.map((type) => <option key={type} value={type}>{type}</option>)}
                   </select>
                 </div>
@@ -341,108 +295,56 @@ export default function EventsAdminPage() {
                   </select>
                 </div>
                 <div>
-                  <label className={labelClassName()}>Date</label>
-                  <Input type="date" value={activeEvent.date} onChange={(event) => updateActive({ date: event.target.value })} className={fieldClassName()} />
+                  <label className={labelClassName()}>Date optional</label>
+                  <Input type="date" value={activeEvent.date || ""} onChange={(event) => updateActive({ date: event.target.value })} className={fieldClassName()} />
                 </div>
                 <div>
-                  <label className={labelClassName()}>End date</label>
+                  <label className={labelClassName()}>End date optional</label>
                   <Input type="date" value={activeEvent.endDate || ""} onChange={(event) => updateActive({ endDate: event.target.value || undefined })} className={fieldClassName()} />
                 </div>
                 <div>
-                  <label className={labelClassName()}>Time</label>
-                  <Input value={activeEvent.time} onChange={(event) => updateActive({ time: event.target.value })} className={fieldClassName()} />
+                  <label className={labelClassName()}>Time optional</label>
+                  <Input value={activeEvent.time || ""} onChange={(event) => updateActive({ time: event.target.value })} className={fieldClassName()} />
                 </div>
                 <div>
-                  <label className={labelClassName()}>City</label>
-                  <Input value={activeEvent.city} onChange={(event) => updateActive({ city: event.target.value })} className={fieldClassName()} />
+                  <label className={labelClassName()}>City optional</label>
+                  <Input value={activeEvent.city || ""} onChange={(event) => updateActive({ city: event.target.value })} className={fieldClassName()} />
                 </div>
                 <div>
-                  <label className={labelClassName()}>Venue</label>
-                  <Input value={activeEvent.venue} onChange={(event) => updateActive({ venue: event.target.value })} className={fieldClassName()} />
+                  <label className={labelClassName()}>Venue optional</label>
+                  <Input value={activeEvent.venue || ""} onChange={(event) => updateActive({ venue: event.target.value })} className={fieldClassName()} />
                 </div>
                 <div>
-                  <label className={labelClassName()}>Contact email</label>
+                  <label className={labelClassName()}>Contact email optional</label>
                   <Input value={activeEvent.contactEmail || ""} onChange={(event) => updateActive({ contactEmail: event.target.value })} className={fieldClassName()} />
                 </div>
                 <div className="md:col-span-2">
-                  <label className={labelClassName()}>Registration URL</label>
+                  <label className={labelClassName()}>Registration URL optional</label>
                   <Input value={activeEvent.registrationUrl || ""} onChange={(event) => updateActive({ registrationUrl: event.target.value })} className={fieldClassName()} />
                 </div>
                 <div className="md:col-span-2">
-                  <label className={labelClassName()}>Audience</label>
-                  <Input value={activeEvent.audience} onChange={(event) => updateActive({ audience: event.target.value })} className={fieldClassName()} />
+                  <label className={labelClassName()}>Audience optional</label>
+                  <Input value={activeEvent.audience || ""} onChange={(event) => updateActive({ audience: event.target.value })} className={fieldClassName()} />
                 </div>
                 <div className="md:col-span-2">
-                  <label className={labelClassName()}>Short summary</label>
-                  <textarea value={activeEvent.summary} onChange={(event) => updateActive({ summary: event.target.value })} className="min-h-[90px] w-full rounded-none border border-border bg-background p-3 text-sm outline-none focus:ring-1 focus:ring-ring" />
+                  <label className={labelClassName()}>Short summary optional</label>
+                  <textarea value={activeEvent.summary || ""} onChange={(event) => updateActive({ summary: event.target.value })} className="min-h-[90px] w-full rounded-none border border-border bg-background p-3 text-sm outline-none focus:ring-1 focus:ring-ring" />
                 </div>
                 <div className="md:col-span-2">
-                  <label className={labelClassName()}>Full details</label>
-                  <textarea value={activeEvent.details} onChange={(event) => updateActive({ details: event.target.value })} className="min-h-[150px] w-full rounded-none border border-border bg-background p-3 text-sm outline-none focus:ring-1 focus:ring-ring" />
+                  <label className={labelClassName()}>Full details optional</label>
+                  <textarea value={activeEvent.details || ""} onChange={(event) => updateActive({ details: event.target.value })} className="min-h-[150px] w-full rounded-none border border-border bg-background p-3 text-sm outline-none focus:ring-1 focus:ring-ring" />
                 </div>
                 <div>
-                  <label className={labelClassName()}>Agenda, one line per item</label>
+                  <label className={labelClassName()}>Agenda optional, one line per item</label>
                   <textarea value={lines(activeEvent.agenda)} onChange={(event) => updateActive({ agenda: splitLines(event.target.value) })} className="min-h-[160px] w-full rounded-none border border-border bg-background p-3 text-sm outline-none focus:ring-1 focus:ring-ring" />
                 </div>
                 <div>
-                  <label className={labelClassName()}>Speakers, one line per speaker</label>
+                  <label className={labelClassName()}>Speakers optional, one line per speaker</label>
                   <textarea value={lines(activeEvent.speakers)} onChange={(event) => updateActive({ speakers: splitLines(event.target.value) })} className="min-h-[160px] w-full rounded-none border border-border bg-background p-3 text-sm outline-none focus:ring-1 focus:ring-ring" />
                 </div>
               </div>
             </div>
 
-            <div className="border border-border bg-background p-5">
-              <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-                <div>
-                  <div className="text-[11px] font-black uppercase tracking-[0.18em] text-muted-foreground">Media library</div>
-                  <h2 className="font-[var(--app-font-heading)] text-2xl font-black">Gallery uploads</h2>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  <input ref={mediaRef} type="file" accept="image/*,video/*" multiple className="hidden" onChange={(event) => uploadMedia(event.target.files)} />
-                  <Button className="rounded-none bg-foreground text-background hover:bg-foreground/90" onClick={() => mediaRef.current?.click()}>
-                    <Upload className="mr-2 h-4 w-4" /> Upload media
-                  </Button>
-                </div>
-              </div>
-
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {activeEvent.media.map((media) => {
-                  const checked = selectedMedia.includes(media.id);
-                  return (
-                    <div key={media.id} className={`overflow-hidden border bg-background ${checked ? "border-[#1f9fd0]" : "border-border"}`}>
-                      <button onClick={() => setSelectedMedia((items) => checked ? items.filter((item) => item !== media.id) : [...items, media.id])} className="relative aspect-[4/3] w-full overflow-hidden bg-muted">
-                        {media.type === "video" ? (
-                          <video src={media.src} className="h-full w-full object-cover" muted playsInline />
-                        ) : (
-                          <img src={media.src} alt={media.alt} className="h-full w-full object-cover" />
-                        )}
-                        <span className="absolute left-3 top-3 bg-white px-2 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-foreground">{media.type === "video" ? <Video className="inline h-3 w-3" /> : "Image"}</span>
-                        {checked && <span className="absolute right-3 top-3 grid h-7 w-7 place-items-center bg-[#1f9fd0] text-white"><Check className="h-4 w-4" /></span>}
-                      </button>
-                      <div className="space-y-2 p-3">
-                        <Input value={media.caption || ""} onChange={(event) => updateActive({ media: activeEvent.media.map((item) => item.id === media.id ? { ...item, caption: event.target.value } : item) })} placeholder="Caption" className="h-9 rounded-none text-xs" />
-                        <div className="flex gap-2">
-                          {media.type === "image" && (
-                            <Button variant="outline" className="h-9 flex-1 rounded-none text-xs" onClick={() => updateActive({ coverImage: media.src })}>
-                              Cover
-                            </Button>
-                          )}
-                          <Button variant="outline" className="h-9 rounded-none border-red-200 px-3 text-red-600 hover:bg-red-50" onClick={() => removeMedia(media.id)}>
-                            <Trash2 className="h-3.5 w-3.5" />
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-                {activeEvent.media.length === 0 && (
-                  <button onClick={() => mediaRef.current?.click()} className="min-h-[220px] border border-dashed border-border bg-muted/30 p-8 text-center text-muted-foreground sm:col-span-2 lg:col-span-3">
-                    <ImagePlus className="mx-auto mb-3 h-8 w-8" />
-                    Upload images or videos for this event
-                  </button>
-                )}
-              </div>
-            </div>
           </div>
 
           <aside className="space-y-6">
@@ -470,8 +372,8 @@ export default function EventsAdminPage() {
                   <div className="text-muted-foreground">Published</div>
                 </div>
                 <div className="border border-border p-3">
-                  <div className="font-[var(--app-font-heading)] text-2xl font-black">{events.reduce((sum, event) => sum + event.media.length, 0)}</div>
-                  <div className="text-muted-foreground">Media</div>
+                  <div className="font-[var(--app-font-heading)] text-2xl font-black">{events.filter((event) => event.status === "draft").length}</div>
+                  <div className="text-muted-foreground">Drafts</div>
                 </div>
               </div>
             </div>
@@ -487,7 +389,7 @@ export default function EventsAdminPage() {
                 </Button>
               </div>
               <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-                Uploads are saved in this browser. Export JSON after major updates so the event data can be restored or moved to another machine.
+                Event edits are saved in this browser. Export JSON after major updates so the event data can be restored or moved to another machine.
               </p>
             </div>
 

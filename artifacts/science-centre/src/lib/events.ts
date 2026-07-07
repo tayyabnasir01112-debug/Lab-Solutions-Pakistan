@@ -13,23 +13,23 @@ export type EventMedia = {
 export type ScienceEvent = {
   id: string;
   title: string;
-  type: EventType;
+  type?: EventType;
   status: EventStatus;
   featured: boolean;
-  date: string;
+  date?: string;
   endDate?: string;
-  time: string;
-  venue: string;
-  city: string;
-  audience: string;
-  summary: string;
-  details: string;
-  agenda: string[];
-  speakers: string[];
+  time?: string;
+  venue?: string;
+  city?: string;
+  audience?: string;
+  summary?: string;
+  details?: string;
+  agenda?: string[];
+  speakers?: string[];
   registrationUrl?: string;
   contactEmail?: string;
-  coverImage: string;
-  media: EventMedia[];
+  coverImage?: string;
+  media?: EventMedia[];
   createdAt: string;
   updatedAt: string;
 };
@@ -63,10 +63,6 @@ export const defaultEvents: ScienceEvent[] = [
     speakers: ["Science Centre Applications Team", "Technical Service Lead"],
     registrationUrl: "/#contact",
     contactEmail: "info@sciencecentre.com.pk",
-    coverImage: "/images/events/event-clinical-systems.svg",
-    media: [
-      { id: "clinical-cover", type: "image", src: "/images/events/event-clinical-systems.svg", alt: "Clinical systems demonstration setup", caption: "Hands-on stations for clinical laboratory teams" },
-    ],
     createdAt: nowIso(),
     updatedAt: nowIso(),
   },
@@ -92,10 +88,6 @@ export const defaultEvents: ScienceEvent[] = [
     speakers: ["Water Purification Product Specialist", "Service Operations Team"],
     registrationUrl: "/#contact",
     contactEmail: "info@sciencecentre.com.pk",
-    coverImage: "/images/events/event-water-workshop.svg",
-    media: [
-      { id: "water-cover", type: "image", src: "/images/events/event-water-workshop.svg", alt: "Water purification workshop visual", caption: "Workshop focused on laboratory water quality planning" },
-    ],
     createdAt: nowIso(),
     updatedAt: nowIso(),
   },
@@ -121,10 +113,6 @@ export const defaultEvents: ScienceEvent[] = [
     speakers: ["Reagents Portfolio Team"],
     registrationUrl: "/#contact",
     contactEmail: "info@sciencecentre.com.pk",
-    coverImage: "/images/events/event-flow-demo.svg",
-    media: [
-      { id: "flow-cover", type: "image", src: "/images/events/event-flow-demo.svg", alt: "Flow cytometry event visual", caption: "Application clinic for flow cytometry reagent planning" },
-    ],
     createdAt: nowIso(),
     updatedAt: nowIso(),
   },
@@ -136,22 +124,20 @@ export function createBlankEvent(): ScienceEvent {
   return {
     id,
     title: "New Science Centre Event",
-    type: "seminar",
+    type: undefined,
     status: "draft",
     featured: false,
-    date: new Date().toISOString().slice(0, 10),
-    time: "10:00 AM - 12:00 PM",
-    venue: "Science Centre",
-    city: "Lahore",
-    audience: "Laboratory professionals",
-    summary: "Short event summary for the public events page.",
-    details: "Add full event details, what visitors will learn, and who should attend.",
-    agenda: ["Welcome and introductions", "Technical session", "Q&A and consultation"],
-    speakers: ["Science Centre Team"],
-    registrationUrl: "/#contact",
-    contactEmail: "info@sciencecentre.com.pk",
-    coverImage: "/images/events/event-clinical-systems.svg",
-    media: [],
+    date: "",
+    time: "",
+    venue: "",
+    city: "",
+    audience: "",
+    summary: "",
+    details: "",
+    agenda: [],
+    speakers: [],
+    registrationUrl: "",
+    contactEmail: "",
     createdAt: timestamp,
     updatedAt: timestamp,
   };
@@ -182,11 +168,14 @@ export function resetEvents() {
 export function sortEvents(events: ScienceEvent[]) {
   return [...events].sort((a, b) => {
     if (a.featured !== b.featured) return a.featured ? -1 : 1;
-    return new Date(a.date).getTime() - new Date(b.date).getTime();
+    const aDate = a.date ? new Date(a.date).getTime() : Number.MAX_SAFE_INTEGER;
+    const bDate = b.date ? new Date(b.date).getTime() : Number.MAX_SAFE_INTEGER;
+    return aDate - bDate;
   });
 }
 
 export function formatEventDate(event: Pick<ScienceEvent, "date" | "endDate">) {
+  if (!event.date) return "Date to be announced";
   const start = new Date(`${event.date}T12:00:00`);
   const fmt = new Intl.DateTimeFormat("en", { month: "short", day: "numeric", year: "numeric" });
   if (!event.endDate) return fmt.format(start);
@@ -195,6 +184,7 @@ export function formatEventDate(event: Pick<ScienceEvent, "date" | "endDate">) {
 }
 
 export function eventIsUpcoming(event: Pick<ScienceEvent, "date" | "endDate">) {
+  if (!event.date) return true;
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const comparable = new Date(`${event.endDate || event.date}T23:59:59`);
