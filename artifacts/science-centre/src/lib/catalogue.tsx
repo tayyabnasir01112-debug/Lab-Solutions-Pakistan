@@ -2315,7 +2315,7 @@ export const products: Product[] = [
       featured: true,
       subtitle: "One-Step Fully-Automated Immunoblot System",
       description: "S-Blot 3 is a one-step, fully automated immunoblot analyzer based on a 3-axis robotic system. It automates the entire testing workflow-from specimen dispensing and reagent handling to reaction and result analysis-ensuring high precision and consistency. The system features advanced liquid handling technology and a proprietary multi-band analysis algorithm for enhanced diagnostic performance.",
-      image: "https://www.sugentech.com/upload/prod/S-Blot%203_174d3.png",
+      image: "/images/sugentech/sug-s-blot-3.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2010&idx=57",
       detailSections: [
         {
@@ -2363,7 +2363,7 @@ export const products: Product[] = [
       subcategory: "Immunoblot Systems",
       subtitle: "A strip-based, semi-automated immunoblot system for analyzing antigen-antibody reactions",
       description: "S-Blot 2 Easy is Korea's first compact-sized, semi-automated immunoblot analyzer. It performs the entire testing process automatically-except for specimen dispensing-and delivers accurate, reproducible results using a proprietary multi-band analysis algorithm. Designed as a space-saving automation system, it can simultaneously process up to 12 strips. This product is certified as a medical device by regulatory authorities including MFDS (Korea).",
-      image: "https://www.sugentech.com/upload/prod/2ep_aae22.png",
+      image: "/images/sugentech/sug-s-blot-2-easy-plus.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2010&idx=58",
       detailSections: [
         {
@@ -2415,7 +2415,7 @@ export const products: Product[] = [
       featured: true,
       subtitle: "Multiple allergen simultaneous tests for the analysis of allergen-specific immunoglobulin E (IgE)",
       description: "SGTi-Allergy Screen is an in vitro diagnostic medical device designed to aid in the diagnosis of allergies by analyzing allergen-specific immunoglobulin E (IgE) in human serum or plasma samples (treated with Li-Heparin or Na-Citrate) using the enzyme immunoblotting method. The device includes two strips: one for an inhalant panel and one for a food panel. It enables semi-quantitative measurement of allergen-specific IgE concentrations for 103 different allergens.",
-      image: "https://www.sugentech.com/upload/prod/25.05.23_Allergy%20Screen_mockup3_e8192.png",
+      image: "/images/sugentech/sug-sgti-allergy-screen.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2011&idx=59",
       detailSections: [
         {
@@ -2475,7 +2475,7 @@ export const products: Product[] = [
       featured: true,
       subtitle: "Simultaneous multiple allergen testing for the analysis of allergen-specific IgE",
       description: "SGTi-Allergy Screen PLUS is an in vitro diagnostic medical device designed to aid in the diagnosis of allergic diseases by analyzing allergen-specific immunoglobulin E (IgE) in human serum or plasma (treated with Li-Heparin or Na-Citrate) using the enzyme immunoblotting method. The test panel includes 120 allergens-comprising both inhalants and food allergens-arranged on a single strip. It enables the semi-quantitative measurement of allergen-specific IgE concentrations for all 120 allergens.",
-      image: "https://www.sugentech.com/upload/prod/25.05.23_SGTi%20Allergy%20Screen%20Plus_mockup2_f1460.png",
+      image: "/images/sugentech/sug-sgti-allergy-screen-plus.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2011&idx=60",
       detailSections: [
         {
@@ -2536,7 +2536,7 @@ export const products: Product[] = [
       subcategory: "Immunoblot Test Items",
       subtitle: "This test analyzes food allergen-specific immunoglobulin G (IgG) to identify individual sensitivities to various foods and support healthier dietary choices.",
       description: "SGTi-Food Check IgG is an in vitro diagnostic medical device that analyzes food-specific immunoglobulin G (IgG) in human serum or plasma using the enzyme immunoblotting method. It quantitatively measures IgG concentrations for 90 food items commonly consumed in the Korean diet. The test helps identify foods that may be unsuitable for an individual's body, supporting the selection of alternative foods and promoting a healthier lifestyle.",
-      image: "https://www.sugentech.com/upload/prod/25.05.23_SGTi%20Food%20Check%20IgG_mockup2_e57cd.png",
+      image: "/images/sugentech/sug-sgti-food-check-igg.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2011&idx=61",
       detailSections: [
         {
@@ -2595,7 +2595,7 @@ export const products: Product[] = [
       subcategory: "Immunoblot Systems",
       subtitle: "Semi-automated Immunoblot system",
       description: "S-Blot 2 Easy is Korea's first compact semi-automated immunoblot analyzer. Excluding the sample dispensing step, the device automates the entire testing process-providing accurate and highly reproducible results through its proprietary multi-band analysis algorithm. This space-efficient system can simultaneously process up to 12 strips. S-Blot 2 Easy is certified as a Class I medical device by the MFDS (Korea) and has also obtained CE-IVDR (Europe) certification.",
-      image: "https://www.sugentech.com/upload/prod/s-blot%202%20easy_c2bd6.png",
+      image: "/images/sugentech/sug-s-blot-2-easy.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2010&idx=62",
       detailSections: [
         {
@@ -2643,7 +2643,7 @@ export const products: Product[] = [
       subcategory: "Immunoblot Systems",
       subtitle: "A strip-based, semi-automated immunoblot system for analyzing antigen-antibody reactions",
       description: "S-Blot 2 Easy is Korea's first compact semi-automated immunoblot analyzer. It fully automates the entire testing process-excluding specimen dispensing-and ensures accurate and reproducible results with its proprietary multi-band analysis algorithm. The compact system can simultaneously process up to 12 strips, offering both space efficiency and high throughput. S-Blot 2 Easy is certified as a medical device by regulatory bodies including MFDS (Korea) and CE-IVDR (Europe).",
-      image: "https://www.sugentech.com/upload/prod/S-Blot%202_91cc1.png",
+      image: "/images/sugentech/sug-s-blot-2.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2010&idx=63",
       detailSections: [
         {
@@ -2692,7 +2692,7 @@ export const products: Product[] = [
       featured: true,
       subtitle: "One-Step Fully-Automated Immunoblot System",
       description: "S-Blot 3 PLUS is a one-step, fully automated immunoblot analyzer powered by a 3-axis robotic system. It automates the entire testing workflow-from specimen dispensing and reagent processing to result analysis-ensuring high efficiency and consistency. The system incorporates advanced liquid handling technology and a multi-band analysis algorithm for precise immunoblot interpretation.",
-      image: "https://www.sugentech.com/upload/prod/s-blot3%20p_ffc08.png",
+      image: "/images/sugentech/sug-s-blot-3-plus.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2010&idx=64",
       detailSections: [
         {
@@ -2741,7 +2741,7 @@ export const products: Product[] = [
       featured: true,
       subtitle: "A POCT Immunochromatographic Analyzer Designed for Rapid, On-Site Diagnostics in Clinical Laboratories and Emergency Departments",
       description: "INCLIX F-100 is an immunofluorescence analyzer capable of both qualitative and quantitative measurement of immunofluorescence signals. It supports both Fluorescence Immunoassay (FIA) and Time-Resolved Fluorescence (TRF), enabling high-sensitivity and high-accuracy analysis of a wide range of biomarkers. Compact and lightweight, the INCLIX F-100 features a built-in rechargeable battery for enhanced portability. It also supports seamless integration with LIS/HIS systems.",
-      image: "https://www.sugentech.com/upload/prod/f%20100_60a60.png",
+      image: "/images/sugentech/sug-inclix-f-100.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2112&idx=72",
       detailSections: [
         {
@@ -2791,7 +2791,7 @@ export const products: Product[] = [
       featured: true,
       subtitle: "Digital Healthcare Platform for Women's Hormonal Health",
       description: "Surearly Smart is an in vitro diagnostic medical device integrated with a mobile app, designed for women seeking to manage their fertility and hormonal health. By analyzing five key female hormones-ovulation-related hormones, pregnancy hormone (hCG), menopause-related hormones, estrogen, and progesterone-it enables hormone trend monitoring, ovulation prediction, and early pregnancy detection.",
-      image: "https://www.sugentech.com/upload/prod/%EC%8A%88%EC%96%BC%EB%A6%AC%20%EC%8A%A4%EB%A7%88%ED%8A%B8%20(2)_8011b.png",
+      image: "/images/sugentech/sug-surearly-smart.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2210&idx=73",
       detailSections: [
         {
@@ -2851,7 +2851,7 @@ export const products: Product[] = [
       featured: true,
       subtitle: "A healthcare platform for chronic disease control",
       description: "This is a personal in vitro diagnostic medical device designed to support the monitoring of infections, blood glucose, kidney function, and cardiovascular health. Measurement data is synced with a mobile app, enabling users to track their health status and receive personalized healthcare insights.",
-      image: "https://www.sugentech.com/upload/prod/Surearly%20SMART%20Pro_f0ae9.png",
+      image: "/images/sugentech/sug-surearly-smart-pro.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2210&idx=74",
       detailSections: [
         {
@@ -2911,7 +2911,7 @@ export const products: Product[] = [
       subcategory: "Femtech Digital Tests",
       subtitle: "Digital Ovulation Self-test Device",
       description: "This is a smart digital system that qualitatively detects luteinizing hormone (LH) in urine and displays the result clearly on an easy-to-read screen. This test is intended to aid in identifying the ovulation period by detecting the LH surge.",
-      image: "https://www.sugentech.com/upload/prod/25.05.23_%EB%94%94%EC%A7%80%ED%84%B8_%EB%B0%B0%EB%9E%80(%EC%98%81%EB%AC%B8)_mockup2_7aea1.png",
+      image: "/images/sugentech/sug-surearly-digital-ovulation-test.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2213&idx=75",
       detailSections: [
         {
@@ -2969,7 +2969,7 @@ export const products: Product[] = [
       subcategory: "Femtech Digital Tests",
       subtitle: "Digital Pregnancy Self-test Device",
       description: "This is a rapid immunoassay for the qualitative detection of hCG in urine, with results displayed digitally. This test is intended to aid in the early detection of pregnancy.",
-      image: "https://www.sugentech.com/upload/prod/25.05.23_%EB%94%94%EC%A7%80%ED%84%B8_%EC%9E%84%EC%8B%A0(%EC%98%81%EB%AC%B8)_mockup2_95791.png",
+      image: "/images/sugentech/sug-surearly-digital-pregnancy-test.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2213&idx=76",
       detailSections: [
         {
@@ -3027,7 +3027,7 @@ export const products: Product[] = [
       subcategory: "Femtech Rapid Tests",
       subtitle: "Early Pregnancy Self-test Kit",
       description: "The Early Sign Pregnancy Test is an in vitro diagnostic medical device that qualitatively detects pregnancy hormone (hCG) in human urine samples via the immunochromatographic method for early pregnancy detection.",
-      image: "https://www.sugentech.com/upload/prod/25.05.23_Earlysign_mockuP2_25ea8.png",
+      image: "/images/sugentech/sug-surearly-early-sign-pregnancy-test.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2214&idx=77",
       detailSections: [
         {
@@ -3085,7 +3085,7 @@ export const products: Product[] = [
       subcategory: "Femtech Mobile Health",
       subtitle: "App-connected Ovulation Self-test Kit",
       description: "This is an in vitro diagnostic medical device that qualitatively detects luteinizing hormone (LH) in human urine samples via the immunochromatographic method to predict the timing of ovulation. It functions as a mobile healthcare platform by connecting the test device to a dedicated mobile application, allowing users to view results and manage their hormonal health intelligently through integrated features.",
-      image: "https://www.sugentech.com/upload/prod/ou_79e66.png",
+      image: "/images/sugentech/sug-surearly-smart-ovulation-test-self-test.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2210&idx=80",
       detailSections: [
         {
@@ -3145,7 +3145,7 @@ export const products: Product[] = [
       subcategory: "Femtech Mobile Health",
       subtitle: "App-connected Pregnancy Self-test Kit",
       description: "This is an in vitro diagnostic medical device that qualitatively detects pregnancy hormones in human urine samples via the immunochromatographic method, enabling the determination of pregnancy status. It functions as a mobile healthcare platform by connecting the testing device to a dedicated mobile application, allowing users to view test results and manage their hormonal health intelligently through integrated features.",
-      image: "https://www.sugentech.com/upload/prod/p1_2a14f.png",
+      image: "/images/sugentech/sug-surearly-smart-pregnancy-test-self-test.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2210&idx=81",
       detailSections: [
         {
@@ -3205,7 +3205,7 @@ export const products: Product[] = [
       subcategory: "Femtech Mobile Health",
       subtitle: "App-connected Menopause Self-test Kit",
       description: "This is an in vitro diagnostic medical device that qualitatively detects menopause-related hormones in human urine samples via the immunochromatographic method to assess menopausal status. It functions as a mobile healthcare platform by connecting the test device to a dedicated mobile application, allowing users to view results and manage their hormonal health intelligently through integrated features.",
-      image: "https://www.sugentech.com/upload/prod/fs_cc0f9.png",
+      image: "/images/sugentech/sug-surearly-smart-menopause-test-self-test.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2210&idx=82",
       detailSections: [
         {
@@ -3265,7 +3265,7 @@ export const products: Product[] = [
       subcategory: "Femtech Mobile Health",
       subtitle: "App-connected Self-test Kit for Two Key Female Hormones - Estrogen and Progesterone",
       description: "This is an in vitro diagnostic medical device that qualitatively detects the levels of two female hormones, E3G and PdG, in human urine samples using the immunochromatographic method. It functions as a mobile healthcare platform by connecting the test device to a mobile application, enabling users to view results and manage their hormonal health intelligently through integrated features.",
-      image: "https://www.sugentech.com/upload/prod/ho_e9aa1.png",
+      image: "/images/sugentech/sug-surearly-smart-hormone-duo-test-self-test.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2210&idx=83",
       detailSections: [
         {
@@ -3323,7 +3323,7 @@ export const products: Product[] = [
       subcategory: "Femtech Mobile Health",
       subtitle: "App-connected COVID-19 IgM/IgG Self-test Kit",
       description: "This is an in vitro diagnostic medical device that qualitatively detects the presence of COVID-19 IgG and IgM antibodies in fingertip (capillary) blood samples using the immunochromatographic method.",
-      image: "https://www.sugentech.com/upload/prod/Surearly%20SMART%20Pro_f0ae9.png",
+      image: "/images/sugentech/sug-surearly-smart-pro.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2210&idx=88",
       detailSections: [
         {
@@ -3381,7 +3381,7 @@ export const products: Product[] = [
       subcategory: "POCT Test Items",
       subtitle: "D-Dimer Test",
       description: "The D-Dimer test measures protein fragments produced during the formation and breakdown of blood clots. When a clot forms, fibrin is generated to stabilize it and is subsequently degraded by fibrinolysis. D-Dimer is a specific byproduct of this process. This test is used to assess the presence of abnormal clot formation and is particularly valuable in the diagnosis of thrombotic conditions such as deep vein thrombosis (DVT), pulmonary embolism (PE), and disseminated intravascular coagulation (DIC).",
-      image: "https://www.sugentech.com/upload/prod/D-dimer_f9e8d.png",
+      image: "/images/sugentech/sug-cardiovascular-disease-inclix-f-d-dimer.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=105",
       detailSections: [
         {
@@ -3442,7 +3442,7 @@ export const products: Product[] = [
       featured: true,
       subtitle: "C-reactive Protein (CRP) Test",
       description: "C-reactive protein (CRP) is an acute-phase protein produced by the liver, and its levels in the blood rise in response to inflammation caused by infection, trauma, or chronic disease. CRP testing allows clinicians to assess the presence and intensity of systemic inflammation.",
-      image: "https://www.sugentech.com/upload/prod/CRP_f116b.png",
+      image: "/images/sugentech/sug-inflammation-inclix-f-crp.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=109",
       detailSections: [
         {
@@ -3503,7 +3503,7 @@ export const products: Product[] = [
       featured: true,
       subtitle: "Procalcitonin (PCT) test",
       description: "The PCT test measures the concentration of procalcitonin (PCT) in the blood and is used to evaluate the presence and severity of bacterial infections. It plays a critical role in the diagnosis of sepsis and severe systemic infections, and is also useful for monitoring the effectiveness of antibiotic therapy.",
-      image: "https://www.sugentech.com/upload/prod/PCT_fce14.png",
+      image: "/images/sugentech/sug-inflammation-inclix-trf-pct.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=110",
       detailSections: [
         {
@@ -3561,7 +3561,7 @@ export const products: Product[] = [
       featured: true,
       subtitle: "Glycated Hemoglobin (HbA1c) Test",
       description: "Glycated hemoglobin (HbA1c) refers to hemoglobin that has glucose bound to it in the bloodstream. This test reflects the average blood glucose level over the past 2-3 months and serves as a key marker for the diagnosis, treatment, and long-term monitoring of diabetes, as well as for the management of individuals at risk of glycemic abnormalities.",
-      image: "https://www.sugentech.com/upload/prod/HbA1c_8cf04.png",
+      image: "/images/sugentech/sug-diabetes-inclix-f-hba1c.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=111",
       detailSections: [
         {
@@ -3620,7 +3620,7 @@ export const products: Product[] = [
       subcategory: "POCT Test Items",
       subtitle: "Microalbumin (µAlbumin) Quantification Test",
       description: "The µAlbumin test measures the concentration of microalbumin (µAlbumin) in urine to support the early detection of kidney damage. Albumin is the most abundant protein in the blood and is normally retained by healthy kidneys. However, when kidney function is impaired, small amounts of albumin are excreted in the urine, making it a valuable marker for early renal dysfunction-particularly in patients with diabetes or hypertension.",
-      image: "https://www.sugentech.com/upload/prod/Microalbumin_681d3.png",
+      image: "/images/sugentech/sug-renal-disease-inclix-f-albumin.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=112",
       detailSections: [
         {
@@ -3679,7 +3679,7 @@ export const products: Product[] = [
       subcategory: "POCT Test Items",
       subtitle: "Thyroid Stimulating Hormone (TSH) Quantification Test",
       description: "The TSH test measures the concentration of thyroid stimulating hormone (TSH) in the blood to assess thyroid dysfunction. TSH is secreted by the pituitary gland and plays a central role in regulating thyroid activity by stimulating the secretion of T3 and T4.",
-      image: "https://www.sugentech.com/upload/prod/TSH_39dd3.png",
+      image: "/images/sugentech/sug-hormone-inclix-trf-tsh.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=113",
       detailSections: [
         {
@@ -3738,7 +3738,7 @@ export const products: Product[] = [
       subcategory: "POCT Test Items",
       subtitle: "Triiodothyronine (T3) Quantification Test",
       description: "The T3 test quantitatively measures triiodothyronine (T3) levels in the blood to assess thyroid function. T3 is one of the primary hormones secreted by the thyroid gland and plays a key role in regulating the body's metabolic processes. Thyroid activity is regulated by thyroid-stimulating hormone (TSH), which is secreted by the pituitary gland and stimulates the thyroid to produce T3 and T4.",
-      image: "https://www.sugentech.com/upload/prod/T3_e8589.png",
+      image: "/images/sugentech/sug-hormone-inclix-f-t3.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=114",
       detailSections: [
         {
@@ -3797,7 +3797,7 @@ export const products: Product[] = [
       subcategory: "POCT Test Items",
       subtitle: "Thyroxine (T4) Quantification Test",
       description: "The T4 test quantitatively measures thyroxine (T4) levels in the blood to assess thyroid function. T4 is the main hormone secreted by the thyroid gland and plays a key role in regulating metabolism. It is converted into the biologically active hormone triiodothyronine (T3) in peripheral tissues.",
-      image: "https://www.sugentech.com/upload/prod/T4_5812f.png",
+      image: "/images/sugentech/sug-hormone-inclix-f-t4.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=115",
       detailSections: [
         {
@@ -3856,7 +3856,7 @@ export const products: Product[] = [
       subcategory: "POCT Test Items",
       subtitle: "β-human Chorionic Gonadotropin (β-hCG) Quantification Test",
       description: "The β-hCG test is one of the most commonly used assays for confirming pregnancy. Quantitative measurement of β-hCG levels in blood enables early detection of pregnancy, identification of abnormal pregnancies such as ectopic pregnancy, and supports the screening and management of germ cell tumors.",
-      image: "https://www.sugentech.com/upload/prod/%CE%B2-hCG_3a766.png",
+      image: "/images/sugentech/sug-hormone-inclix-trf-hcg.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=116",
       detailSections: [
         {
@@ -3915,7 +3915,7 @@ export const products: Product[] = [
       subcategory: "POCT Test Items",
       subtitle: "Total Immunoglobulin E (IgE) Quantification Test",
       description: "The Total Immunoglobulin E (IgE) Test quantitatively measures blood IgE levels to assess the likelihood of allergic responses and to aid in the differential diagnosis of allergic diseases. Total IgE is an antibody produced by the immune system upon exposure to allergens and serves as a reference marker in both diagnosis and monitoring of allergic conditions.",
-      image: "https://www.sugentech.com/upload/prod/Total%20IgE_c47a0.png",
+      image: "/images/sugentech/sug-inclix-f-total-ige.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=117",
       detailSections: [
         {
@@ -3974,7 +3974,7 @@ export const products: Product[] = [
       subcategory: "Health & Beauty",
       subtitle: "Smart skin diagnosis and personalized care synced to your hormonal cycle",
       description: "SureSkinLab's Cycling Beauty is a customized skincare solution based on a deep understanding of female hormones and scientific research data. A woman's body goes through cyclical changes each month, and the skin is no exception. SureSkinLab focuses on these changes, interpreting women's health and beauty through the lens of science. Cycling Beauty - skincare designed to support your skin through each phase of your hormonal cycle. Discover the rhythm of your body. Let your natural beauty shine with SureSkinLab.",
-      image: "https://www.sugentech.com/upload/prod/250318%20%EC%88%98%EC%A0%A0%ED%85%8D2675_6edce.jpg",
+      image: "/images/sugentech/sug-sureskinlab-cycling-beauty-serum.jpg",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2312&idx=122",
       detailSections: [
         {
@@ -4010,7 +4010,7 @@ export const products: Product[] = [
       subcategory: "Health Supplements",
       subtitle: "Energy & Vitality Up",
       description: "Features - Fast-absorbing liquid + tablet all-in-one formula - 23 nutrients: 13 vitamins + 9 minerals + beta-carotene - Formulated with 5 key B vitamins at 5,020% - Refreshing grapefruit-flavored 30ml",
-      image: "https://www.sugentech.com/upload/prod/1_585a0_333d4.png",
+      image: "/images/sugentech/sug-suremedy-surevita-multi-vitamin-immune.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2313&idx=123",
       detailSections: [
         {
@@ -4045,7 +4045,7 @@ export const products: Product[] = [
       subcategory: "Health Supplements",
       subtitle: "Film-type glutathione product with antioxidant support",
       description: "Features - Premium liposomal glutathione ingredient designed for higher absorption - 135 mg of 90% pure liposomal L-glutathione yeast per strip - Formula paired with synergistic ingredients (milk thistle extract, liposomal vitamin C, hyaluronic acid, fish collagen, etc.) - Easy and tasty lemon-flavored Orally Dissolving Film (ODF) - Manufactured in a HACCP-certified facility in Korea",
-      image: "https://www.sugentech.com/upload/prod/111_489d9_ed82d.png",
+      image: "/images/sugentech/sug-suremedy-liposome-glutathione-signature-9s.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2313&idx=125",
       detailSections: [
         {
@@ -4080,7 +4080,7 @@ export const products: Product[] = [
       subcategory: "Immunoblot Test Items",
       subtitle: "Simultaneous multiple allergen testing for the analysis of allergen-specific IgE 60",
       description: "SGTi-Allergy PLUS is an in vitro diagnostic medical device designed to aid in the diagnosis of allergic diseases by analyzing allergen-specific immunoglobulin E (IgE) in human serum or plasma (treated with Li-Heparin or Na-Citrate) using the enzyme immunoblotting method The test panel includes 60 allergens-comprising both inhalants and food allergens-arranged on a single strip. It enables the semi-quantitative measurement of allergen-specific IgE concentrations for all 60 allergens.",
-      image: "https://www.sugentech.com/upload/prod/60_17909.png",
+      image: "/images/sugentech/sug-sgti-allergy-plus-60.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2011&idx=127",
       detailSections: [
         {
@@ -4141,7 +4141,7 @@ export const products: Product[] = [
       subcategory: "Health Supplements",
       subtitle: "Eye Health Care (Helps maintain macular pigment density)",
       description: "Features - Lutein 10mg + total zeaxanthin 2mg = 12 mg (scientific 5:1 ratio) - Premium marigold flower extract individually recognized by MFDS (MFDS individually recognized ingredient No.",
-      image: "https://www.sugentech.com/upload/prod/111_d36c4_f6575.png",
+      image: "/images/sugentech/sug-suremedy-lutein-zeaxanthin.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2313&idx=136",
       detailSections: [
         {
@@ -4176,7 +4176,7 @@ export const products: Product[] = [
       subcategory: "Health Supplements",
       subtitle: "One solution for improving blood triglyceride levels, circulation, memory, and dry eyes",
       description: "Features - High-bioavailability, highly absorbable rTG Omega-3 - 70% omega-3 purity, EPA + DHA = 900 mg - MFDS-recognized 8-in-1 functional formula (Omega-3 + Vitamin D + Vitamin E) - Uses purified fish oil from Norway's GC Rieber, a specialized omega-3 manufacturer - Enteric mini capsule that dissolves in the intestine to reduce fishy aftertaste * Free from 10 additives Silicon dioxide, calcium carboxymethyl cellulose, artificial flavors, HPMC, sodium saccharin, aspartame, sodium caseinate, crystalline cellulose,",
-      image: "https://www.sugentech.com/upload/prod/111_5201a_97f26.png",
+      image: "/images/sugentech/sug-suremedy-rtg-omega-3.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2313&idx=137",
       detailSections: [
         {
@@ -4211,7 +4211,7 @@ export const products: Product[] = [
       subcategory: "Health Supplements",
       subtitle: "Dual care for blood pressure reduction & antioxidant support",
       description: "Features - Contains 100mg Coenzyme Q10 per daily serving - Premium ingredient with 98%+ purity obtained by microbial fermentation - Uses ingredient from Health Genesis, USA, certified by NSF - Mini plant-based soft capsule for easy swallowing and digestion * Free from 10 additives Silicon dioxide, calcium carboxymethyl cellulose, artificial flavors, HPMC, sodium saccharin, aspartame, sodium caseinate, crystalline cellulose, magnesium stearate, titanium dioxide * 8 supporting ingredients Pomegranate concentrate powd",
-      image: "https://www.sugentech.com/upload/prod/%E3%85%87%E3%85%81%E3%84%B4%E3%85%87_de633_c67a2.png",
+      image: "/images/sugentech/sug-suremedy-coenzyme-q10.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2313&idx=138",
       detailSections: [
         {
@@ -4246,7 +4246,7 @@ export const products: Product[] = [
       subcategory: "Health Supplements",
       subtitle: "4-in-1 formula for bones and muscles",
       description: "Features - Optimized Calcium:Magnesium ratio = 2:1 for ideal calcium absorption - Uses non-calcined marine algae calcium for easy digestion and absorption - Active Vitamin D3 with high calcium absorption and utilization - Vitamin K needed for bone composition * Free from 2 additives & excludes ingredients from Japan/China Artificial flavors, sweeteners * 8 supporting ingredients Pomegranate concentrate powder, fish collagen, hibiscus calyx extract powder, omija extract powder, vegetable blend concentrate, soy isofl",
-      image: "https://www.sugentech.com/upload/prod/4_f1abc_5f240.png",
+      image: "/images/sugentech/sug-suremedy-calmadi-k.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2313&idx=139",
       detailSections: [
         {
@@ -4281,7 +4281,7 @@ export const products: Product[] = [
       subcategory: "Health Supplements",
       subtitle: "Bone, Joint & Cartilage Care",
       description: "Features - Contains 1,200 mg mucopolysaccharide (chondroitin sulfate) and protein from bovine cartilage - 90%+ pure mucopolysaccharide (chondroitin sulfate) and protein ingredient - Recognized by MFDS as a functional health ingredient * Free from 2 additives & excludes ingredients from Japan/China Artificial flavors, colorants * 8 supporting ingredients Pomegranate concentrate powder, fish collagen, hibiscus calyx extract powder, omija extract powder, vegetable blend concentrate, soy isoflavone extract, turmeric ex",
-      image: "https://www.sugentech.com/upload/prod/6_58696_3eaea.png",
+      image: "/images/sugentech/sug-suremedy-chondroitin-mucopolysaccharide-protein-1200.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2313&idx=140",
       detailSections: [
         {
@@ -4316,7 +4316,7 @@ export const products: Product[] = [
       subcategory: "Health Supplements",
       subtitle: "Targeted Liver Care",
       description: "Features - Contains 130 mg silymarin from milk thistle extract (per daily serving) - Uses premium milk thistle ingredient from Botanic Healthcare, India - Certified ISO, HALAL INDIA, Food Chain ID Non-GMO, and NSF - Pure milk thistle design for focused liver care without excessive added vitamins or minerals * Free from 2 additives & excludes ingredients from Japan/China Artificial flavors, colorants * 8 supporting ingredients Pomegranate concentrate powder, fish collagen, hibiscus calyx extract powder, omija extrac",
-      image: "https://www.sugentech.com/upload/prod/%EB%B0%80%ED%81%AC%EC%94%A8%EC%8A%AC1_fc57a_cd8e6.png",
+      image: "/images/sugentech/sug-suremedy-milk-thistle.png",
       specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2313&idx=141",
       detailSections: [
         {
