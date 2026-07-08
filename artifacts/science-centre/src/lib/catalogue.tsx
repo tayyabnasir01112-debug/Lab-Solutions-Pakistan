@@ -156,7 +156,7 @@ export const brands: Brand[] = [
     name: "Sugentech",
     short: "Sugentech",
     accent: "#0057A8",
-    logo: "https://www.sugentech.com/skin/default/img/logo.png",
+    logo: "https://www.sugentech.com/img/svg/logo.svg",
     blurb: "Korean POCT innovator — INCLIX™ quantitative immunoassay analyzers and SGTi-flex rapid diagnostic tests.",
     longBlurb: "Sugentech is a Korean in vitro diagnostics company specialising in point-of-care testing. Their INCLIX™ and INCLIX F-100™ (TRF) analyzers deliver quantitative immunoassay results at the bedside, supported by a full menu of test cartridges for cardiovascular, infection, diabetes, and allergy biomarkers. CE-IVD and KMFDS approved.",
     founded: "2007",
@@ -195,6 +195,13 @@ export const categories: Category[] = [
   { id: "equipment",     name: "Lab Equipment",               icon: <Beaker className="h-4 w-4" /> },
   { id: "serological",   name: "Serological Typing",          icon: <Activity className="h-4 w-4" /> },
   { id: "posttransplant",name: "Post-Transplant Monitoring",  icon: <Layers className="h-4 w-4" /> },
+  /* -- Sugentech categories ------------------------------------------------ */
+  { id: "sug-immunoblot-systems", name: "Sugentech Immunoblot Systems", icon: <Layers className="h-4 w-4" /> },
+  { id: "sug-immunoblot-tests", name: "Sugentech Immunoblot Tests", icon: <ShieldCheck className="h-4 w-4" /> },
+  { id: "sug-poct-analyzers", name: "Sugentech POCT Analyzers", icon: <Cpu className="h-4 w-4" /> },
+  { id: "sug-poct-tests", name: "Sugentech POCT Test Kits", icon: <TestTube className="h-4 w-4" /> },
+  { id: "sug-femtech", name: "Sugentech Femtech", icon: <Activity className="h-4 w-4" /> },
+  { id: "sug-health-beauty", name: "Sugentech Health & Beauty", icon: <HeartPulse className="h-4 w-4" /> },
   /* ── REX / Electrochemical categories ─────────────────────── */
   { id: "benchtop-meters",     name: "Benchtop Meters", icon: <Gauge className="h-4 w-4" /> },
   { id: "portable-meters", name: "Portable Field Meters",     icon: <Waves className="h-4 w-4" /> },
@@ -2298,372 +2305,2044 @@ export const products: Product[] = [
     tags: ["software", "bioinformatics", "cloud", "NGS analysis", "clinical reporting", "CDx"],
     relatedProducts: ["ngene-brca", "ngene-heme", "ngene-onco"],
   },
-  /* ── Sugentech ─────────────────────────────────────────────── */
+    /* -- Sugentech -------------------------------------------------------------- */
   {
-    id: "sug-inclix",
-    name: "INCLIX™ POCT Immunoassay Analyzer",
-    brand: "sugentech",
-    category: "equipment",
-    featured: true,
-    subtitle: "Compact Multi-Parameter Quantitative POCT Analyzer",
-    description: "INCLIX™ is Sugentech's flagship immunochromatographic point-of-care testing analyzer, delivering immediate quantitative and qualitative results for a broad panel of biomarkers at the patient's bedside or in the clinical laboratory. Compact, easy-to-use, and cost-effective, it features a built-in thermal printer, touch screen interface, and LIS/HIS connectivity — making it a true all-in-one POCT solution.",
-    featureCards: [
-      { title: "Multi-Parameter POCT Platform", body: "A single INCLIX™ analyzer runs the full menu of test cartridges: cardiovascular (Troponin I, CRP, hsCRP), infection (PCT, Influenza A/B, TB), diabetes (HbA1c), hormones (βhCG, TSH), and more — all from one compact instrument." },
-      { title: "Quantitative & Qualitative Analysis", body: "Automatically calculates quantitative concentrations for analytes like CRP, PCT, and Troponin I, while also supporting qualitative yes/no readouts — giving clinicians the precision they need for accurate decision-making." },
-      { title: "Touch Screen & Built-in Printer", body: "Intuitive colour touch screen interface with a built-in thermal printer for immediate hardcopy results. Requires no external devices — results are ready in the room within minutes of sample collection." },
-      { title: "LIS/HIS Connectivity", body: "Seamlessly integrates with hospital Laboratory Information Systems (LIS) and Hospital Information Systems (HIS). Results export directly to the patient's digital record — no manual transcription required." },
-      { title: "10,000 Patient Data Storage", body: "On-board storage for up to 10,000 patient test records, searchable by patient ID, date, or test type. Data can be exported to Excel, SAM, or PDF formats for reporting and audit purposes." },
-      { title: "CE-IVD & KMFDS Certified", body: "All INCLIX™ cartridges and analyzer configurations carry CE-IVD certification for European clinical use and KMFDS (Korean Ministry of Food and Drug Safety) approval — ensuring regulatory compliance across key markets." },
-    ],
-    features: [
-      "Test method: Immunochromatographic (lateral flow) — gold nanoparticle-based sandwich immunoassay",
-      "Analysis: Quantitative + Qualitative (dual mode)",
-      "Display: Colour touch screen",
-      "Printer: Built-in thermal printer",
-      "Data storage: 10,000 patient records",
-      "Data export: LIS / Excel / SAM / PDF",
-      "Interface: USB 2.0 × 2, LIS/HIS compatible",
-      "Power: AC adapter + rechargeable internal battery option",
-      "Regulatory: CE-IVD, KMFDS (Korea)",
-    ],
-    applications: [
-      "Emergency department rapid biomarker testing",
-      "Point-of-care cardiac triage (Troponin I)",
-      "Infection and sepsis diagnosis (PCT, CRP)",
-      "Diabetes monitoring (HbA1c)",
-      "Respiratory infection screening (Influenza A/B)",
-      "Tuberculosis antigen testing (INCLIX™ Blood TB)",
-      "Hormone testing (βhCG, TSH)",
-      "Rural and resource-limited settings requiring portable diagnostics",
-    ],
-    specs: {
-      "Analyzer Type": "Immunochromatographic POCT analyzer",
-      "Analysis Mode": "Quantitative + Qualitative",
-      "Test Menu": "CRP, hsCRP, dualCRP, PCT, Troponin I, HbA1c, βhCG, TSH, Influenza A/B, TB Ag, Total IgE",
-      "Sample Types": "Whole blood, serum, plasma, nasopharyngeal swab (test-dependent)",
-      "Result Time": "5–15 minutes (test-dependent)",
-      "Data Storage": "10,000 patient records",
-      "Display": "Colour touch screen",
-      "Printer": "Built-in thermal printer",
-      "Connectivity": "LIS/HIS, USB 2.0 × 2, Excel/SAM/PDF export",
-      "Regulatory": "CE-IVD, KMFDS",
+      id: "sug-s-blot-3",
+      name: "S-Blot 3",
+      brand: "sugentech",
+      category: "sug-immunoblot-systems",
+      subcategory: "Immunoblot Systems",
+      featured: true,
+      subtitle: "One-Step Fully-Automated Immunoblot System",
+      description: "S-Blot 3 is a one-step, fully automated immunoblot analyzer based on a 3-axis robotic system. It automates the entire testing workflow-from specimen dispensing and reagent handling to reaction and result analysis-ensuring high precision and consistency. The system features advanced liquid handling technology and a proprietary multi-band analysis algorithm for enhanced diagnostic performance.",
+      image: "https://www.sugentech.com/upload/prod/S-Blot%203_174d3.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2010&idx=57",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "S-Blot 3 is a one-step, fully automated immunoblot analyzer based on a 3-axis robotic system. It automates the entire testing workflow-from specimen dispensing and reagent handling to reaction and result analysis-ensuring high precision and consistency. The system features advanced liquid handling technology and a proprietary multi-band analysis algorithm for enhanced diagnostic performance. Capable of processing up to 48 strips simultaneously, S-Blot 3 also includes user-friendly software and an automatic cleaning function for convenient post-test maintenance. This product is certified as a medical device by regulatory authorities including MFDS (Korea) and CE-IVDR (Europe)."
+        },
+        {
+          title: "Official product highlights",
+          body: "Product overview Fully-Automated Immunoblot System Key features Throughput: 48 strips Uses improved LLD (Liquid Level Detection) technology for accurate analysis Product specifications Dimensions: 968 mm (W) x 616 mm (D) x 609 mm (H) Weight: 80 kg Power: AC 100-240V, 50/60Hz(Max. 400VA) Application areas Various immunoblot tests, including allergy testing(MAST)"
+        }
+      ],
+      highlights: [
+        "Throughput: 48 strips Uses improved LLD (Liquid Level Detection) technology for accurate analysis Product specifications",
+        "One-Step Fully-Automated Immunoblot System"
+      ],
+      features: [
+        "Throughput: 48 strips Uses improved LLD (Liquid Level Detection) technology for accurate analysis Product specifications",
+        "One-Step Fully-Automated Immunoblot System"
+      ],
+      applications: [
+        "Automated immunoblot testing workflows",
+        "Allergy and MAST panel processing",
+        "Clinical laboratory immunodiagnostics"
+      ],
+      specs: {
+        Throughput: "48 strips Uses improved LLD (Liquid Level Detection) technology for accurate analysis Product specifications",
+        Dimensions: "968 mm (W) x 616 mm (D) x 609 mm (H)",
+        Weight: "80 kg",
+        Power: "AC 100-240V, 50/60Hz(Max. 400VA) Application areas Various immunoblot tests, including allergy testing(MAST)",
+        "Official category": "Immunoblot Systems",
+        "Sugentech product type": "System"
+      },
+      tags: [
+        "sugentech",
+        "immunoblot",
+        "system",
+        "allergy"
+      ]
     },
-    kits: [
-      { name: "INCLIX™ CRP / hsCRP / dualCRP Test", description: "Quantitative C-reactive protein cartridge for inflammation and cardiovascular risk assessment. 5-minute result from 5 µL whole blood.", catalogueNumber: "INC-CRP-001" },
-      { name: "INCLIX™ PCT Test", description: "Quantitative procalcitonin cartridge for bacterial infection and sepsis diagnosis. CE-marked." },
-      { name: "INCLIX™ Troponin I Test", description: "Quantitative cardiac troponin I cartridge for acute myocardial infarction rule-in/rule-out." },
-      { name: "INCLIX™ HbA1c Test", description: "Quantitative glycated haemoglobin cartridge for diabetes diagnosis and long-term glycaemic monitoring." },
-      { name: "INCLIX™ Influenza A/B Test", description: "Qualitative rapid detection of Influenza A and B antigens from nasopharyngeal swab." },
-      { name: "INCLIX™ Blood TB Test", description: "Tuberculosis antigen detection from blood sample using INCLIX™ — unique POCT blood-based TB test." },
-      { name: "INCLIX™ βhCG Test", description: "Quantitative beta-human chorionic gonadotropin for pregnancy confirmation and monitoring." },
-      { name: "INCLIX™ TSH Test", description: "Quantitative thyroid-stimulating hormone for thyroid function assessment." },
-      { name: "INCLIX™ Total IgE Test", description: "Quantitative total IgE measurement as part of allergy workup alongside the SGTi Allergy Screen panel." },
-    ],
-    tags: ["POCT", "analyzer", "immunoassay", "point-of-care", "CE-IVD", "multi-parameter"],
-    relatedProducts: ["sug-inclix-f100", "sug-crp", "sug-pct", "sug-troponin"],
-  },
   {
-    id: "sug-inclix-f100",
-    name: "INCLIX F-100™ TRF Immunoassay Analyzer",
-    brand: "sugentech",
-    category: "equipment",
-    featured: true,
-    subtitle: "Time-Resolved Fluorescence POCT Analyzer — High Sensitivity, Portable",
-    description: "The INCLIX F-100™ is Sugentech's advanced Time-Resolved Fluorescence (TRF) immunoassay analyzer, delivering high-sensitivity quantitative and qualitative POCT for a wide range of biomarkers. Supporting both standard FIA and TRF detection modes, its built-in rechargeable battery and ultra-compact 1 kg design make it ideal for bedside, emergency, and field use — without sacrificing laboratory-grade analytical accuracy.",
-    featureCards: [
-      { title: "Time-Resolved Fluorescence (TRF)", body: "TRF detection technology delivers significantly higher sensitivity and signal-to-noise ratio than conventional gold nanoparticle lateral flow methods — enabling precise quantification of low-abundance biomarkers like high-sensitivity CRP (hsCRP) and thyroid hormones." },
-      { title: "Dual Mode: FIA + TRF", body: "Supports both standard Fluorescence Immunoassay (FIA) and TRF modes — giving laboratories flexibility to run a broader menu with a single platform. Ideal for high-throughput labs that need both speed and sensitivity." },
-      { title: "Ultra-Compact & Portable (1.0 kg)", body: "At just 117 × 250 × 118 mm and 1.0 kg, the INCLIX F-100™ is one of the most portable clinical analyzers available. A built-in 5,200 mAh rechargeable lithium-ion battery enables fully cordless operation in ambulances, field clinics, or remote settings." },
-      { title: "5\" Colour Touch Screen", body: "Large, easy-to-read 5-inch colour LCD touch screen displays results, patient data, and QC graphs. The intuitive interface requires minimal training — ideal for nurses and non-specialist healthcare workers." },
-      { title: "Standard & Quick Dual Test Mode", body: "Offers Standard Mode for precise quantitative measurement and Quick Mode for faster screening results — giving operators the flexibility to choose between speed and analytical depth based on clinical urgency." },
-      { title: "LIS/HIS & WiFi Connectivity", body: "Supports wired LIS connectivity and optional WiFi dongle for wireless network integration. Results export to Excel, SAM, or PDF. Compatible with hospital information systems for seamless electronic patient record integration." },
-    ],
-    features: [
-      "Detection: Fluorescence Immunoassay (FIA) + Time-Resolved Fluorescence (TRF)",
-      "Analysis: Quantitative + Qualitative",
-      "Test modes: Standard + Quick (dual mode)",
-      "Display: 5\" colour LCD touch screen",
-      "Internal battery: Rechargeable Li-ion 5,200 mAh",
-      "Power: AC/DC adapter 12V, 3.3A, 40W",
-      "Dimensions: 117 × 250 × 118 mm",
-      "Weight: 1.0 kg",
-      "I/O: 2 × USB 2.0",
-      "Connectivity: LIS + optional USB-to-Ethernet / WiFi dongle",
-      "Data export: Excel, SAM, PDF",
-      "Data storage: 10,000 patient records",
-    ],
-    applications: [
-      "High-sensitivity CRP (hsCRP) cardiovascular risk assessment",
-      "Allergy (Total IgE) and autoimmune biomarker testing",
-      "Thyroid function — Free T3, Free T4, TSH",
-      "Cardiac marker quantification — Troponin I, CK-MB",
-      "Infection and sepsis — PCT, CRP",
-      "Diabetes — HbA1c",
-      "Respiratory — COVID-19 Ag + Flu A/B (INCLIX TRF)",
-      "Mobile, ambulatory, and field-based POCT programmes",
-    ],
-    specs: {
-      "Detection Method": "FIA + TRF (Time-Resolved Fluorescence)",
-      "Analysis": "Quantitative + Qualitative",
-      "Test Modes": "Standard + Quick",
-      "Display": "5\" Colour LCD touch screen",
-      "Data Storage": "10,000 patient records",
-      "Battery": "Rechargeable Li-ion 5,200 mAh",
-      "Power Supply": "AC/DC Adapter 12Vdc, 3.3A, 40W",
-      "Dimensions": "117 × 250 × 118 mm (4.60 × 9.84 × 4.65 in.)",
-      "Weight": "1.0 kg (35.3 oz)",
-      "Connectivity": "2 × USB 2.0, LIS/HIS, optional WiFi/Ethernet",
-      "Data Export": "LIS / Excel / SAM / PDF",
+      id: "sug-s-blot-2-easy-plus",
+      name: "S-Blot 2 Easy PLUS",
+      brand: "sugentech",
+      category: "sug-immunoblot-systems",
+      subcategory: "Immunoblot Systems",
+      subtitle: "A strip-based, semi-automated immunoblot system for analyzing antigen-antibody reactions",
+      description: "S-Blot 2 Easy is Korea's first compact-sized, semi-automated immunoblot analyzer. It performs the entire testing process automatically-except for specimen dispensing-and delivers accurate, reproducible results using a proprietary multi-band analysis algorithm. Designed as a space-saving automation system, it can simultaneously process up to 12 strips. This product is certified as a medical device by regulatory authorities including MFDS (Korea).",
+      image: "https://www.sugentech.com/upload/prod/2ep_aae22.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2010&idx=58",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "S-Blot 2 Easy is Korea's first compact-sized, semi-automated immunoblot analyzer. It performs the entire testing process automatically-except for specimen dispensing-and delivers accurate, reproducible results using a proprietary multi-band analysis algorithm. Designed as a space-saving automation system, it can simultaneously process up to 12 strips. This product is certified as a medical device by regulatory authorities including MFDS (Korea)."
+        },
+        {
+          title: "Official product highlights",
+          body: "Product overview A semi-automated system that automates all processes except specimen dispensing, including reagent handling, reaction, washing, and result interpretation. Key features Throughput: 12 strips Faster testing than medium-to-large automated devices Product specifications Dimensions: 424 mm (W) x 521 mm (D) x 442 mm (H) Weight: 23 kg Power: AC 100-240V, 50/60Hz (Max. 300VA) Application areas Various Immunoblot tests, including allergy testing (MAST)"
+        }
+      ],
+      highlights: [
+        "Throughput: 12 strips Faster testing than medium-to-large automated devices Product specifications",
+        "Specimen: dispensing, including reagent handling, reaction, washing, and result interpretation. Key features",
+        "A strip-based, semi-automated immunoblot system for analyzing antigen-antibody reactions"
+      ],
+      features: [
+        "Throughput: 12 strips Faster testing than medium-to-large automated devices Product specifications",
+        "Specimen: dispensing, including reagent handling, reaction, washing, and result interpretation. Key features",
+        "A strip-based, semi-automated immunoblot system for analyzing antigen-antibody reactions"
+      ],
+      applications: [
+        "Automated immunoblot testing workflows",
+        "Allergy and MAST panel processing",
+        "Clinical laboratory immunodiagnostics"
+      ],
+      specs: {
+        Throughput: "12 strips Faster testing than medium-to-large automated devices Product specifications",
+        Dimensions: "424 mm (W) x 521 mm (D) x 442 mm (H)",
+        Weight: "23 kg",
+        Power: "AC 100-240V, 50/60Hz (Max. 300VA) Application areas Various Immunoblot tests, including allergy testing (MAST)",
+        Specimen: "dispensing, including reagent handling, reaction, washing, and result interpretation. Key features",
+        "Official category": "Immunoblot Systems",
+        "Sugentech product type": "System"
+      },
+      tags: [
+        "sugentech",
+        "immunoblot",
+        "system",
+        "allergy"
+      ]
     },
-    kits: [
-      { name: "INCLIX TRF CRP / hsCRP Test", description: "Time-Resolved Fluorescence cartridge for high-sensitivity CRP — cardiovascular risk assessment and inflammation monitoring with superior analytical sensitivity." },
-      { name: "INCLIX TRF PCT Test", description: "TRF procalcitonin cartridge for quantitative sepsis biomarker detection with enhanced sensitivity vs. standard immunochromatography." },
-      { name: "INCLIX TRF Troponin I Test", description: "TRF cardiac troponin I cartridge — enhanced sensitivity for early AMI detection in the first hours after symptom onset." },
-      { name: "INCLIX TRF Adeno & Flu A/B Ag", description: "TRF multiplex cartridge for simultaneous qualitative detection of Adenovirus, Influenza A, and Influenza B." },
-      { name: "INCLIX F Free T3 / Free T4 Test", description: "Fluorescence immunoassay cartridges for thyroid hormone measurement — FT3 and FT4 for full thyroid panel." },
-      { name: "INCLIX F Total IgE Test", description: "Quantitative total IgE fluorescence cartridge for allergy screening — pair with the SGTi Allergy Screen panel for full allergen profiling." },
-      { name: "INCLIX TRF COVID-19 Ag + Flu", description: "TRF multiplex cartridge for simultaneous SARS-CoV-2 and Influenza A/B antigen detection on INCLIX F-100™." },
-    ],
-    tags: ["TRF", "fluorescence", "POCT", "portable", "CE-IVD", "analyzer", "hsCRP", "allergy"],
-    relatedProducts: ["sug-inclix", "sug-crp", "sug-pct", "sug-troponin"],
-  },
   {
-    id: "sug-crp",
-    name: "INCLIX™ CRP / hsCRP / dualCRP Test",
-    brand: "sugentech",
-    category: "serological",
-    subtitle: "Quantitative C-Reactive Protein — Inflammation & Cardiovascular Risk",
-    description: "The INCLIX™ CRP/hsCRP/dualCRP Test cartridge provides quantitative measurement of C-reactive protein in whole blood, serum, or plasma using the INCLIX™ analyzer. The dualCRP mode uniquely covers both the standard CRP range for inflammation detection (cutoff 10 mg/L) and the high-sensitivity hsCRP range for cardiovascular risk stratification (cutoff 1 mg/L) — in a single test cassette and 5-minute run.",
-    featureCards: [
-      { title: "Three Tests in One Cartridge", body: "The dualCRP cartridge covers both standard CRP (2.5–300 mg/L) for infection/inflammation monitoring AND high-sensitivity hsCRP (0.1–10 mg/L) for cardiovascular disease risk — eliminating the need for separate tests." },
-      { title: "5-Minute Result", body: "Quantitative CRP concentration reported in just 5 minutes from a 5 µL whole blood, serum, or plasma sample — enabling same-visit clinical decision-making without sending samples to a central laboratory." },
-      { title: "Precision < 10% CV", body: "Coefficient of variation below 10% across the working range, validated against the ADVIA 1800 reference analyser with correlation coefficient R = 0.991 — demonstrating clinical-grade precision equivalent to central laboratory methods." },
-      { title: "Broad Measuring Range", body: "CRP range: 2.5–300 mg/L. hsCRP range: 0.1–10 mg/L. dualCRP range: 0.5–200 mg/L covering both clinical cutoffs. Suitable for acute infection monitoring, post-operative CRP trending, and low-level cardiovascular risk assessment." },
-    ],
-    features: [
-      "Analyte: C-Reactive Protein (CRP, hsCRP, or dual)",
-      "Sample: Whole blood, serum, or plasma",
-      "Sample volume: 5 µL",
-      "CRP range: 2.5–300 mg/L (cutoff 10 mg/L)",
-      "hsCRP range: 0.1–10 mg/L (cutoff 1 mg/L)",
-      "dualCRP range: 0.5–200 mg/L",
-      "Precision: <10% CV",
-      "Result time: 5 minutes",
-      "Storage: 2–30°C, shelf life 24 months",
-    ],
-    applications: [
-      "Bacterial infection and inflammation monitoring",
-      "Cardiovascular disease risk stratification (hsCRP)",
-      "Post-operative infection detection",
-      "Sepsis screening and management",
-      "Autoimmune and inflammatory disease monitoring",
-    ],
-    specs: {
-      "Analyte": "CRP / hsCRP / dualCRP",
-      "Sample Types": "Whole blood, serum, plasma",
-      "Sample Volume": "5 µL",
-      "CRP Measuring Range": "2.5–300 mg/L (cutoff 10 mg/L)",
-      "hsCRP Measuring Range": "0.1–10 mg/L (cutoff 1 mg/L)",
-      "dualCRP Measuring Range": "0.5–200 mg/L",
-      "Precision": "<10% CV in working range",
-      "Result Time": "5 minutes",
-      "Storage": "2–30°C",
-      "Shelf Life": "24 months",
-      "Regulatory": "CE-IVD",
+      id: "sug-sgti-allergy-screen",
+      name: "SGTi-Allergy Screen",
+      brand: "sugentech",
+      category: "sug-immunoblot-tests",
+      subcategory: "Immunoblot Test Items",
+      featured: true,
+      subtitle: "Multiple allergen simultaneous tests for the analysis of allergen-specific immunoglobulin E (IgE)",
+      description: "SGTi-Allergy Screen is an in vitro diagnostic medical device designed to aid in the diagnosis of allergies by analyzing allergen-specific immunoglobulin E (IgE) in human serum or plasma samples (treated with Li-Heparin or Na-Citrate) using the enzyme immunoblotting method. The device includes two strips: one for an inhalant panel and one for a food panel. It enables semi-quantitative measurement of allergen-specific IgE concentrations for 103 different allergens.",
+      image: "https://www.sugentech.com/upload/prod/25.05.23_Allergy%20Screen_mockup3_e8192.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2011&idx=59",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "SGTi-Allergy Screen is an in vitro diagnostic medical device designed to aid in the diagnosis of allergies by analyzing allergen-specific immunoglobulin E (IgE) in human serum or plasma samples (treated with Li-Heparin or Na-Citrate) using the enzyme immunoblotting method. The device includes two strips: one for an inhalant panel and one for a food panel. It enables semi-quantitative measurement of allergen-specific IgE concentrations for 103 different allergens. SGTi-Allergy Screen is compatible with the S-Blot series, an automated immunoblot analyzer that allows fully automated testing."
+        },
+        {
+          title: "Official product highlights",
+          body: "Product overview MAST (Multiple Allergen Simultaneous Test) analyzes specific IgEs (sIgEs), including total IgE, for 103 different allergens Specimen type and specimen volume​ Serum, Plasma / 50 uL Storage conditions and expiration date Refrigerate (2-8 deg C), 24 months Product standards A single strip consists of 103 types of inhalants and a food panel Packaging unit 12, 24 tests/kit Applicable equipment S-Blot 3, S-Blot 2, S-Blot 2 Easy"
+        }
+      ],
+      highlights: [
+        "Specimen: type and specimen volume​ Serum, Plasma / 50 uL",
+        "Packaging: 12, 24 tests/kit",
+        "Compatible equipment: S-Blot 3, S-Blot 2, S-Blot 2 Easy",
+        "Multiplex allergen panel with automated S-Blot workflow compatibility"
+      ],
+      features: [
+        "Specimen: type and specimen volume​ Serum, Plasma / 50 uL",
+        "Packaging: 12, 24 tests/kit",
+        "Compatible equipment: S-Blot 3, S-Blot 2, S-Blot 2 Easy",
+        "Multiplex allergen panel with automated S-Blot workflow compatibility"
+      ],
+      applications: [
+        "Allergy screening and allergen-specific antibody analysis",
+        "Immunoblot test workflows on compatible S-Blot systems",
+        "Clinical diagnostic laboratory testing"
+      ],
+      specs: {
+        Specimen: "type and specimen volume​ Serum, Plasma / 50 uL",
+        "Storage conditions and expiration date": "Refrigerate (2-8 deg C), 24 months Product standards A single strip consists of 103 types of inhalants and a food panel",
+        "Packaging unit": "12, 24 tests/kit",
+        "Applicable equipment": "S-Blot 3, S-Blot 2, S-Blot 2 Easy",
+        "Official category": "Immunoblot Test Items",
+        "Sugentech product type": "Test Item"
+      },
+      kits: [
+        {
+          name: "SGTi-Allergy Screen",
+          description: "Multiple allergen simultaneous tests for the analysis of allergen-specific immunoglobulin E (IgE)",
+          catalogueNumber: "SUG-59"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "immunoblot",
+        "test-kit",
+        "allergy"
+      ]
     },
-    kits: [
-      { name: "INCLIX™ CRP Test Kit (Standard)", description: "Measuring range 2.5–300 mg/L. 25 cartridges per box. For standard clinical CRP monitoring.", catalogueNumber: "INC-CRP-25" },
-      { name: "INCLIX™ hsCRP Test Kit", description: "High-sensitivity CRP measuring range 0.1–10 mg/L (cutoff 1 mg/L). For cardiovascular risk stratification.", catalogueNumber: "INC-HSCRP-25" },
-      { name: "INCLIX™ dualCRP Test Kit", description: "Single cartridge covering both CRP (2.5–300 mg/L) and hsCRP (0.5–200 mg/L) ranges in one run.", catalogueNumber: "INC-DCRP-25" },
-      { name: "Control Set — CRP", description: "External positive and negative control solutions for CRP quality assurance. Required for ISO 15189 accredited laboratories." },
-    ],
-    tags: ["CRP", "hsCRP", "inflammation", "cardiovascular", "sepsis", "POCT", "CE-IVD"],
-    relatedProducts: ["sug-pct", "sug-troponin", "sug-inclix"],
-  },
   {
-    id: "sug-pct",
-    name: "INCLIX™ PCT Test",
-    brand: "sugentech",
-    category: "serological",
-    subtitle: "Quantitative Procalcitonin — Bacterial Infection & Sepsis Diagnosis",
-    description: "The INCLIX™ PCT Test provides quantitative determination of Procalcitonin (PCT) in human serum and plasma using the INCLIX™ analyzer. PCT is the gold-standard biomarker for distinguishing bacterial from viral infection and for guiding antibiotic therapy — rising rapidly (within 2–4 hours) in response to systemic bacterial infection and returning to normal with successful treatment.",
-    featureCards: [
-      { title: "Gold-Standard Sepsis Biomarker", body: "Procalcitonin (PCT) is the leading biomarker for early detection of bacterial sepsis. Unlike CRP, PCT rises and falls rapidly — enabling antibiotic stewardship decisions and therapy monitoring that CRP alone cannot support." },
-      { title: "Antibiotic Stewardship Support", body: "Serial PCT monitoring guides decisions on starting, continuing, or stopping antibiotic therapy — reducing unnecessary antibiotic use, treatment duration, and antimicrobial resistance pressure in critical care settings." },
-      { title: "Quantitative POCT Result", body: "The INCLIX™ PCT Test delivers a quantitative PCT concentration from serum or plasma in minutes at the point of care — matching the clinical utility of laboratory PCT tests without the central lab turnaround delay." },
-      { title: "CE Marked", body: "CE-IVD certified for clinical diagnostic use in Europe, validated against established reference methods. Suitable for emergency departments, ICUs, and clinical laboratories requiring rapid sepsis workup." },
-    ],
-    features: [
-      "Analyte: Procalcitonin (PCT)",
-      "Sample: Human serum or plasma",
-      "Method: Sandwich immunoassay, gold nanoparticle-based",
-      "Analysis: Quantitative",
-      "Regulatory: CE-IVD (CE marked)",
-      "Analyzer: INCLIX™ or INCLIX F-100™",
-    ],
-    applications: [
-      "Bacterial infection vs. viral infection differentiation",
-      "Sepsis and severe sepsis early detection",
-      "Antibiotic therapy initiation and monitoring",
-      "ICU and emergency department triage",
-      "Antibiotic stewardship programmes",
-      "Post-operative infection monitoring",
-    ],
-    specs: {
-      "Analyte": "Procalcitonin (PCT)",
-      "Sample Types": "Serum, plasma",
-      "Analysis": "Quantitative",
-      "Method": "Sandwich immunoassay (gold nanoparticle)",
-      "Clinical Utility": "Bacterial infection / sepsis diagnosis & antibiotic monitoring",
-      "Regulatory": "CE-IVD",
-      "Compatible Analyzer": "INCLIX™, INCLIX F-100™",
+      id: "sug-sgti-allergy-screen-plus",
+      name: "SGTi-Allergy Screen PLUS",
+      brand: "sugentech",
+      category: "sug-immunoblot-tests",
+      subcategory: "Immunoblot Test Items",
+      featured: true,
+      subtitle: "Simultaneous multiple allergen testing for the analysis of allergen-specific IgE",
+      description: "SGTi-Allergy Screen PLUS is an in vitro diagnostic medical device designed to aid in the diagnosis of allergic diseases by analyzing allergen-specific immunoglobulin E (IgE) in human serum or plasma (treated with Li-Heparin or Na-Citrate) using the enzyme immunoblotting method. The test panel includes 120 allergens-comprising both inhalants and food allergens-arranged on a single strip. It enables the semi-quantitative measurement of allergen-specific IgE concentrations for all 120 allergens.",
+      image: "https://www.sugentech.com/upload/prod/25.05.23_SGTi%20Allergy%20Screen%20Plus_mockup2_f1460.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2011&idx=60",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "SGTi-Allergy Screen PLUS is an in vitro diagnostic medical device designed to aid in the diagnosis of allergic diseases by analyzing allergen-specific immunoglobulin E (IgE) in human serum or plasma (treated with Li-Heparin or Na-Citrate) using the enzyme immunoblotting method. The test panel includes 120 allergens-comprising both inhalants and food allergens-arranged on a single strip. It enables the semi-quantitative measurement of allergen-specific IgE concentrations for all 120 allergens. SGTi-Allergy Screen PLUS is compatible with the S-Blot PLUS series, an automated immunoblot analyzer that allows for fully automated testing."
+        },
+        {
+          title: "Official product highlights",
+          body: "Product overview MAST (Multiple Allergen Simultaneous Test) A multiplex assay for the simultaneous detection of allergen-specific IgE to 120 allergens, including total IgE Specimen type and specimen volume Serum, Plasma / 150 uL Storage conditions and expiration date Refrigerate (2-8 deg C), 24 months Product standards A single strip consists of 120 types of inhalants and a food panel. Packaging unit 12, 24, 60 tests/kit Applicable equipment S-Blot 3 PLUS, S-Blot 2 Easy PLUS"
+        }
+      ],
+      highlights: [
+        "Specimen: type and",
+        "Packaging: 12, 24, 60 tests/kit",
+        "Compatible equipment: S-Blot 3 PLUS, S-Blot 2 Easy PLUS",
+        "Multiplex allergen panel with automated S-Blot workflow compatibility"
+      ],
+      features: [
+        "Specimen: type and",
+        "Packaging: 12, 24, 60 tests/kit",
+        "Compatible equipment: S-Blot 3 PLUS, S-Blot 2 Easy PLUS",
+        "Multiplex allergen panel with automated S-Blot workflow compatibility"
+      ],
+      applications: [
+        "Allergy screening and allergen-specific antibody analysis",
+        "Immunoblot test workflows on compatible S-Blot systems",
+        "Clinical diagnostic laboratory testing"
+      ],
+      specs: {
+        Specimen: "type and",
+        "Specimen type and specimen volume": "Serum, Plasma / 150 uL",
+        "Specimen volume": "Serum, Plasma / 150 uL",
+        "Storage conditions and expiration date": "Refrigerate (2-8 deg C), 24 months Product standards A single strip consists of 120 types of inhalants and a food panel.",
+        "Packaging unit": "12, 24, 60 tests/kit",
+        "Applicable equipment": "S-Blot 3 PLUS, S-Blot 2 Easy PLUS",
+        "Official category": "Immunoblot Test Items",
+        "Sugentech product type": "Test Item"
+      },
+      kits: [
+        {
+          name: "SGTi-Allergy Screen PLUS",
+          description: "Simultaneous multiple allergen testing for the analysis of allergen-specific IgE",
+          catalogueNumber: "SUG-60"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "immunoblot",
+        "test-kit",
+        "allergy"
+      ]
     },
-    kits: [
-      { name: "INCLIX™ PCT Test Kit", description: "25 PCT cartridges per box. For quantitative procalcitonin measurement in serum or plasma on INCLIX™ analyzer.", catalogueNumber: "INC-PCT-25" },
-      { name: "INCLIX TRF PCT Test Kit", description: "Time-Resolved Fluorescence PCT cartridges for INCLIX F-100™. Enhanced sensitivity for low-level PCT detection in early sepsis.", catalogueNumber: "INCTRF-PCT-25" },
-      { name: "Control Set — PCT", description: "Positive and negative controls for PCT QC. Covers standard and elevated ranges as per clinical decision thresholds (0.5 ng/mL, 2 ng/mL)." },
-    ],
-    tags: ["PCT", "procalcitonin", "sepsis", "infection", "antibiotic", "POCT", "CE-IVD"],
-    relatedProducts: ["sug-crp", "sug-troponin", "sug-inclix"],
-  },
   {
-    id: "sug-troponin",
-    name: "INCLIX™ Troponin I Test",
-    brand: "sugentech",
-    category: "serological",
-    subtitle: "Quantitative Cardiac Troponin I — Acute Myocardial Infarction Detection",
-    description: "The INCLIX™ Troponin I Test quantitatively measures cardiac Troponin I (TnI) concentration in whole blood, serum, or plasma using the INCLIX™ analyzer. Troponin I is the most sensitive and specific biomarker for acute myocardial infarction (AMI), rising within 4–6 hours of cardiac injury and remaining elevated for 3–10 days — enabling rapid rule-in or rule-out of heart attack at the point of care.",
-    featureCards: [
-      { title: "Most Sensitive AMI Biomarker", body: "Cardiac Troponin I is universally recognised as the gold-standard biomarker for acute myocardial infarction — more sensitive and cardiac-specific than CK-MB or myoglobin. It rises within 4–6 hours of onset and peaks at 8–28 hours." },
-      { title: "Rule-In / Rule-Out in Minutes", body: "Quantitative TnI result at the point of care enables emergency physicians to rapidly rule in or rule out AMI from a fingertip blood sample — reducing time-to-decision and enabling immediate triage and treatment." },
-      { title: "Whole Blood Testing", body: "Compatible with whole blood (including finger-prick capillary samples), serum, and plasma — enabling immediate bedside testing without centrifugation or sample preparation delays critical in emergency settings." },
-      { title: "Validated Clinical Performance", body: "Method comparison against i-CHROMA™ TnI (reference predicate device) using 105 specimens demonstrated strong correlation — confirming clinical-grade performance suitable for emergency and critical care decision-making." },
-    ],
-    features: [
-      "Analyte: Cardiac Troponin I (TnI)",
-      "Sample: Whole blood, serum, or plasma",
-      "Normal level: <0.5 ng/mL in healthy individuals",
-      "Rise time: Within 4–6 hours of cardiac injury",
-      "Peak: 8–28 hours post-AMI",
-      "Analysis: Quantitative",
-      "Regulatory: CE-IVD",
-      "Compatible Analyzer: INCLIX™",
-    ],
-    applications: [
-      "Acute myocardial infarction (AMI) rule-in / rule-out",
-      "Chest pain triage in emergency departments",
-      "Cardiac injury monitoring in ICU",
-      "Post-operative cardiac complication detection",
-      "Serial troponin monitoring for AMI management",
-    ],
-    specs: {
-      "Analyte": "Cardiac Troponin I (TnI)",
-      "Sample Types": "Whole blood, serum, plasma",
-      "Clinical Cutoff": "~0.5 ng/mL (healthy baseline)",
-      "Rise Post-Injury": "4–6 hours",
-      "Peak Post-AMI": "8–28 hours",
-      "Duration Elevated": "3–10 days post-AMI",
-      "Analysis": "Quantitative",
-      "Regulatory": "CE-IVD",
-      "Compatible Analyzer": "INCLIX™",
+      id: "sug-sgti-food-check-igg",
+      name: "SGTi-Food Check IgG",
+      brand: "sugentech",
+      category: "sug-immunoblot-tests",
+      subcategory: "Immunoblot Test Items",
+      subtitle: "This test analyzes food allergen-specific immunoglobulin G (IgG) to identify individual sensitivities to various foods and support healthier dietary choices.",
+      description: "SGTi-Food Check IgG is an in vitro diagnostic medical device that analyzes food-specific immunoglobulin G (IgG) in human serum or plasma using the enzyme immunoblotting method. It quantitatively measures IgG concentrations for 90 food items commonly consumed in the Korean diet. The test helps identify foods that may be unsuitable for an individual's body, supporting the selection of alternative foods and promoting a healthier lifestyle.",
+      image: "https://www.sugentech.com/upload/prod/25.05.23_SGTi%20Food%20Check%20IgG_mockup2_e57cd.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2011&idx=61",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "SGTi-Food Check IgG is an in vitro diagnostic medical device that analyzes food-specific immunoglobulin G (IgG) in human serum or plasma using the enzyme immunoblotting method. It quantitatively measures IgG concentrations for 90 food items commonly consumed in the Korean diet. The test helps identify foods that may be unsuitable for an individual's body, supporting the selection of alternative foods and promoting a healthier lifestyle."
+        },
+        {
+          title: "Official product highlights",
+          body: "Product overview Simultaneous quantitative analysis of food-specific IgG antibodies for 90 different food items Specimen type and specimen volume Serum, Plasma / 50 uL Storage conditions and expiration date Refrigerate (2-8 deg C), 24 months Product standards A single strip consists of 90 types of a food panel Packaging unit 24 tests/kit, 60 tests/kit Applicable equipment S-Blot 3 PLUS, S-Blot 2 Easy PLUS"
+        }
+      ],
+      highlights: [
+        "Specimen: type and",
+        "Packaging: 24 tests/kit, 60 tests/kit",
+        "Compatible equipment: S-Blot 3 PLUS, S-Blot 2 Easy PLUS"
+      ],
+      features: [
+        "Specimen: type and",
+        "Packaging: 24 tests/kit, 60 tests/kit",
+        "Compatible equipment: S-Blot 3 PLUS, S-Blot 2 Easy PLUS"
+      ],
+      applications: [
+        "Allergy screening and allergen-specific antibody analysis",
+        "Immunoblot test workflows on compatible S-Blot systems",
+        "Clinical diagnostic laboratory testing"
+      ],
+      specs: {
+        Specimen: "type and",
+        "Specimen type and specimen volume": "Serum, Plasma / 50 uL",
+        "Specimen volume": "Serum, Plasma / 50 uL",
+        "Storage conditions and expiration date": "Refrigerate (2-8 deg C), 24 months Product standards A single strip consists of 90 types of a food panel",
+        "Packaging unit": "24 tests/kit, 60 tests/kit",
+        "Applicable equipment": "S-Blot 3 PLUS, S-Blot 2 Easy PLUS",
+        "Official category": "Immunoblot Test Items",
+        "Sugentech product type": "Test Item"
+      },
+      kits: [
+        {
+          name: "SGTi-Food Check IgG",
+          description: "This test analyzes food allergen-specific immunoglobulin G (IgG) to identify individual sensitivities to various foods and support healthier dietary choices.",
+          catalogueNumber: "SUG-61"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "immunoblot",
+        "test-kit",
+        "allergy"
+      ]
     },
-    kits: [
-      { name: "INCLIX™ Troponin I Test Kit", description: "25 Troponin I cartridges per box for quantitative TnI measurement from whole blood, serum, or plasma on INCLIX™.", catalogueNumber: "INC-TNI-25" },
-      { name: "INCLIX TRF Troponin I Test Kit", description: "TRF-enhanced sensitivity Troponin I cartridges for INCLIX F-100™. For detection of cardiac injury at lower concentrations than standard FIA.", catalogueNumber: "INCTRF-TNI-25" },
-      { name: "Control Set — Troponin I", description: "Positive and negative controls for cardiac TnI assay QC. Validated against clinical decision limits." },
-    ],
-    tags: ["troponin", "cardiac", "AMI", "heart attack", "emergency", "POCT", "CE-IVD"],
-    relatedProducts: ["sug-crp", "sug-pct", "sug-inclix"],
-  },
   {
-    id: "sug-hba1c",
-    name: "INCLIX™ HbA1c Test",
-    brand: "sugentech",
-    category: "serological",
-    subtitle: "Quantitative Glycated Haemoglobin — Diabetes Diagnosis & Monitoring",
-    description: "The INCLIX™ HbA1c Test quantitatively determines Glycated Haemoglobin (HbA1c) in human blood using the INCLIX™ analyzer. HbA1c reflects average blood glucose over the preceding 2–3 months and is the primary tool for both diagnosis of diabetes and long-term glycaemic control monitoring — providing clinicians with a complete picture of a patient's glucose management in a single POCT measurement.",
-    features: [
-      "Analyte: Glycated Haemoglobin (HbA1c)",
-      "Sample: Human whole blood",
-      "Method: Immunochromatographic sandwich assay (gold nanoparticle)",
-      "Analysis: Quantitative",
-      "Clinical use: Diabetes diagnosis + long-term glycaemic monitoring",
-      "Regulatory: CE-IVD, KMFDS",
-      "Compatible Analyzer: INCLIX™",
-    ],
-    applications: [
-      "Type 2 diabetes diagnosis",
-      "Type 1 diabetes long-term glycaemic monitoring",
-      "HbA1c-guided treatment target setting",
-      "Diabetes clinic routine monitoring",
-      "Pre-diabetes screening",
-    ],
-    specs: {
-      "Analyte": "Glycated Haemoglobin (HbA1c)",
-      "Sample Type": "Whole blood",
-      "Clinical Significance": "Reflects 2–3 month average blood glucose",
-      "Analysis": "Quantitative",
-      "Regulatory": "CE-IVD, KMFDS",
-      "Compatible Analyzer": "INCLIX™",
+      id: "sug-s-blot-2-easy",
+      name: "S-Blot 2 Easy",
+      brand: "sugentech",
+      category: "sug-immunoblot-systems",
+      subcategory: "Immunoblot Systems",
+      subtitle: "Semi-automated Immunoblot system",
+      description: "S-Blot 2 Easy is Korea's first compact semi-automated immunoblot analyzer. Excluding the sample dispensing step, the device automates the entire testing process-providing accurate and highly reproducible results through its proprietary multi-band analysis algorithm. This space-efficient system can simultaneously process up to 12 strips. S-Blot 2 Easy is certified as a Class I medical device by the MFDS (Korea) and has also obtained CE-IVDR (Europe) certification.",
+      image: "https://www.sugentech.com/upload/prod/s-blot%202%20easy_c2bd6.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2010&idx=62",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "S-Blot 2 Easy is Korea's first compact semi-automated immunoblot analyzer. Excluding the sample dispensing step, the device automates the entire testing process-providing accurate and highly reproducible results through its proprietary multi-band analysis algorithm. This space-efficient system can simultaneously process up to 12 strips. S-Blot 2 Easy is certified as a Class I medical device by the MFDS (Korea) and has also obtained CE-IVDR (Europe) certification."
+        },
+        {
+          title: "Official product highlights",
+          body: "System description Semi-automated Immunoblot system Key features Throughput:12 strips Faster testing than medium-to-large automated devices Specification Dimensions: 424 mm (W) x 521 mm (D) x 442 mm (H) Weight: 23 kg Power: AC 100-240V, 50/60Hz (Max. 300VA) Application Various Immunoblot tests, including allergy testing(MAST)"
+        }
+      ],
+      highlights: [
+        "Throughput: 12 strips Faster testing than medium-to-large automated devices Specification",
+        "Semi-automated Immunoblot system"
+      ],
+      features: [
+        "Throughput: 12 strips Faster testing than medium-to-large automated devices Specification",
+        "Semi-automated Immunoblot system"
+      ],
+      applications: [
+        "Automated immunoblot testing workflows",
+        "Allergy and MAST panel processing",
+        "Clinical laboratory immunodiagnostics"
+      ],
+      specs: {
+        Throughput: "12 strips Faster testing than medium-to-large automated devices Specification",
+        Dimensions: "424 mm (W) x 521 mm (D) x 442 mm (H)",
+        Weight: "23 kg",
+        Power: "AC 100-240V, 50/60Hz (Max. 300VA) Application Various Immunoblot tests, including allergy testing(MAST)",
+        "Official category": "Immunoblot Systems",
+        "Sugentech product type": "System"
+      },
+      tags: [
+        "sugentech",
+        "immunoblot",
+        "system",
+        "allergy"
+      ]
     },
-    kits: [
-      { name: "INCLIX™ HbA1c Test Kit", description: "25 HbA1c cartridges per box. For quantitative glycated haemoglobin measurement from whole blood for diabetes diagnosis and monitoring.", catalogueNumber: "INC-HBA1C-25" },
-      { name: "HbA1c Diluent Buffer", description: "Sample diluent buffer for HbA1c cassette preparation. Supplied separately for high-volume laboratory use." },
-      { name: "Control Set — HbA1c", description: "HbA1c QC controls covering normal (<5.7%), pre-diabetes (5.7–6.4%), and diabetes (≥6.5%) ranges." },
-    ],
-    tags: ["HbA1c", "diabetes", "glycaemic", "POCT", "CE-IVD"],
-    relatedProducts: ["sug-crp", "sug-inclix", "sug-inclix-f100"],
-  },
   {
-    id: "sug-allergy",
-    name: "SGTi Allergy Screen Test",
-    brand: "sugentech",
-    category: "serological",
-    subtitle: "Multiplex Allergen-Specific IgE Panel — Human & Animal",
-    description: "The SGTi Allergy Screen Test is a comprehensive multiplex allergen-specific IgE immunoblot panel for the simultaneous detection of IgE antibodies against a broad range of human and animal allergens from a single 50 µL serum sample. Available for both human and veterinary panels, it combines the S-Blot Strip Reader with a semi-automated workflow — delivering 48 tests in approximately 3.5 hours with high sensitivity and reproducibility.",
-    featureCards: [
-      { title: "50+ Allergens from 50 µL", body: "A single 50 µL serum sample simultaneously screens for IgE antibodies against a comprehensive panel of environmental, food, and occupational allergens — far more efficient than individual allergen-specific RAST tests." },
-      { title: "Human & Animal Panels", body: "Available in both human allergen panels and veterinary animal panels — enabling the same diagnostic workflow in medical allergy clinics and veterinary dermatology practices." },
-      { title: "S-Blot Strip Reader Automation", body: "The S-Blot Reader automatically scans, quantifies, and reports allergen-specific IgE from the immunoblot strip — eliminating visual interpretation variability and delivering consistent, digitised results with each run." },
-      { title: "48 Tests in 3.5 Hours", body: "Optimised workflow processes 48 patient tests in approximately 3.5 hours with the automated system — delivering high-throughput allergy screening capacity comparable to ELISA platforms without the complexity." },
-    ],
-    features: [
-      "Method: Allergen-specific IgE immunoblot (lateral flow strip)",
-      "Sample: 50 µL serum per panel",
-      "Throughput: 48 tests per 3.5 hours",
-      "Panel types: Human allergens + Animal (veterinary) allergens",
-      "Reader: S-Blot Strip Reader (automated quantification)",
-      "Customisable: Customised allergen panel options available",
-      "Also compatible: INCLIX F-100™ (Total IgE quantification)",
-    ],
-    applications: [
-      "Allergic rhinitis (dust mites, pollen, moulds) diagnosis",
-      "Food allergy screening (peanut, wheat, milk, egg, shellfish)",
-      "Asthma and atopic dermatitis allergen profiling",
-      "Occupational allergy testing",
-      "Veterinary allergy testing (cats, dogs)",
-      "Allergen-specific immunotherapy (AIT) monitoring",
-    ],
-    specs: {
-      "Method": "Allergen-specific IgE immunoblot",
-      "Sample Volume": "50 µL serum per panel",
-      "Throughput": "48 tests per 3.5 hours (automated)",
-      "Allergen Panels": "Human (environmental + food) + Animal (veterinary)",
-      "Reader": "S-Blot Strip Reader (colour + fluorescence + TRF)",
-      "Customisation": "Custom allergen panel configuration available",
-      "Total IgE": "Quantifiable with INCLIX F-100™",
+      id: "sug-s-blot-2",
+      name: "S-Blot 2",
+      brand: "sugentech",
+      category: "sug-immunoblot-systems",
+      subcategory: "Immunoblot Systems",
+      subtitle: "A strip-based, semi-automated immunoblot system for analyzing antigen-antibody reactions",
+      description: "S-Blot 2 Easy is Korea's first compact semi-automated immunoblot analyzer. It fully automates the entire testing process-excluding specimen dispensing-and ensures accurate and reproducible results with its proprietary multi-band analysis algorithm. The compact system can simultaneously process up to 12 strips, offering both space efficiency and high throughput. S-Blot 2 Easy is certified as a medical device by regulatory bodies including MFDS (Korea) and CE-IVDR (Europe).",
+      image: "https://www.sugentech.com/upload/prod/S-Blot%202_91cc1.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2010&idx=63",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "S-Blot 2 Easy is Korea's first compact semi-automated immunoblot analyzer. It fully automates the entire testing process-excluding specimen dispensing-and ensures accurate and reproducible results with its proprietary multi-band analysis algorithm. The compact system can simultaneously process up to 12 strips, offering both space efficiency and high throughput. S-Blot 2 Easy is certified as a medical device by regulatory bodies including MFDS (Korea) and CE-IVDR (Europe)."
+        },
+        {
+          title: "Official product highlights",
+          body: "System description Semi-automated immunoblot system Key features Throughput:12 strips Faster testing than medium-to-large automated devices Specification Dimensions: 424 mm (W) x 521 mm (D) x 442 mm (H) Weight: 23 kg Power: AC 100-240V, 50/60Hz (Max. 300VA) Application Various Immunoblot tests, including allergy testing(MAST)"
+        }
+      ],
+      highlights: [
+        "Throughput: 12 strips Faster testing than medium-to-large automated devices Specification",
+        "A strip-based, semi-automated immunoblot system for analyzing antigen-antibody reactions"
+      ],
+      features: [
+        "Throughput: 12 strips Faster testing than medium-to-large automated devices Specification",
+        "A strip-based, semi-automated immunoblot system for analyzing antigen-antibody reactions"
+      ],
+      applications: [
+        "Automated immunoblot testing workflows",
+        "Allergy and MAST panel processing",
+        "Clinical laboratory immunodiagnostics"
+      ],
+      specs: {
+        Throughput: "12 strips Faster testing than medium-to-large automated devices Specification",
+        Dimensions: "424 mm (W) x 521 mm (D) x 442 mm (H)",
+        Weight: "23 kg",
+        Power: "AC 100-240V, 50/60Hz (Max. 300VA) Application Various Immunoblot tests, including allergy testing(MAST)",
+        "Official category": "Immunoblot Systems",
+        "Sugentech product type": "System"
+      },
+      tags: [
+        "sugentech",
+        "immunoblot",
+        "system",
+        "allergy"
+      ]
     },
-    kits: [
-      { name: "SGTi Allergy Screen — Human Panel", description: "Immunoblot strip covering environmental allergens (dust mites, grass pollen, tree pollen, moulds, pet dander) and food allergens (peanut, wheat, milk, egg, soy, shellfish). 50 µL serum per test.", catalogueNumber: "ALG-HUMAN-48" },
-      { name: "SGTi Allergy Screen — Animal (Veterinary) Panel", description: "Allergen-specific IgE immunoblot for canine and feline allergy testing — covers environmental, food, and storage mite allergens for veterinary dermatology applications.", catalogueNumber: "ALG-VET-48" },
-      { name: "S-Blot Strip Reader", description: "Automated colour, fluorescence, and TRF strip reader for the Allergy Screen immunoblot. Quantifies and reports allergen-specific IgE bands automatically — eliminating visual interpretation variability." },
-      { name: "Custom Allergen Panel", description: "Configurable allergen panel for specialised allergy clinics requiring region-specific or occupational allergen profiles. Contact Science Centre Pakistan for custom panel design." },
-    ],
-    tags: ["allergy", "IgE", "immunoblot", "multiplex", "allergen", "veterinary", "serology"],
-    relatedProducts: ["sug-inclix-f100", "sug-inclix", "sug-crp"],
-  },
-
-  /* ── INESA-REX ─────────────────────────────────────────────── */
+  {
+      id: "sug-s-blot-3-plus",
+      name: "S-Blot 3 PLUS",
+      brand: "sugentech",
+      category: "sug-immunoblot-systems",
+      subcategory: "Immunoblot Systems",
+      featured: true,
+      subtitle: "One-Step Fully-Automated Immunoblot System",
+      description: "S-Blot 3 PLUS is a one-step, fully automated immunoblot analyzer powered by a 3-axis robotic system. It automates the entire testing workflow-from specimen dispensing and reagent processing to result analysis-ensuring high efficiency and consistency. The system incorporates advanced liquid handling technology and a multi-band analysis algorithm for precise immunoblot interpretation.",
+      image: "https://www.sugentech.com/upload/prod/s-blot3%20p_ffc08.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2010&idx=64",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "S-Blot 3 PLUS is a one-step, fully automated immunoblot analyzer powered by a 3-axis robotic system. It automates the entire testing workflow-from specimen dispensing and reagent processing to result analysis-ensuring high efficiency and consistency. The system incorporates advanced liquid handling technology and a multi-band analysis algorithm for precise immunoblot interpretation. Capable of processing up to 60 strips simultaneously, S-Blot 3 PLUS also features intuitive, user-friendly software and an automatic cleaning function for post-run maintenance. The product is certified as a medical device by regulatory authorities including the MFDS (Korea)."
+        },
+        {
+          title: "Official product highlights",
+          body: "Product overview Fully - automated system Key features Throughput: 60 strips Uses improved LLD (Liquid Level Detection) technology for accurate analysis Product specifications Dimensions: 968 mm (W) x 616 mm (D) x 609 mm (H) Weight: 80 kg Power: AC 100-240V, 50/60Hz (Max. 400VA) Application areas Various immunoblot tests, including allergy testing (MAST)"
+        }
+      ],
+      highlights: [
+        "Throughput: 60 strips Uses improved LLD (Liquid Level Detection) technology for accurate analysis Product specifications",
+        "One-Step Fully-Automated Immunoblot System"
+      ],
+      features: [
+        "Throughput: 60 strips Uses improved LLD (Liquid Level Detection) technology for accurate analysis Product specifications",
+        "One-Step Fully-Automated Immunoblot System"
+      ],
+      applications: [
+        "Automated immunoblot testing workflows",
+        "Allergy and MAST panel processing",
+        "Clinical laboratory immunodiagnostics"
+      ],
+      specs: {
+        Throughput: "60 strips Uses improved LLD (Liquid Level Detection) technology for accurate analysis Product specifications",
+        Dimensions: "968 mm (W) x 616 mm (D) x 609 mm (H)",
+        Weight: "80 kg",
+        Power: "AC 100-240V, 50/60Hz (Max. 400VA) Application areas Various immunoblot tests, including allergy testing (MAST)",
+        "Official category": "Immunoblot Systems",
+        "Sugentech product type": "System"
+      },
+      tags: [
+        "sugentech",
+        "immunoblot",
+        "system",
+        "allergy"
+      ]
+    },
+  {
+      id: "sug-inclix-f-100",
+      name: "INCLIX F-100",
+      brand: "sugentech",
+      category: "sug-poct-analyzers",
+      subcategory: "POCT Analyzers",
+      featured: true,
+      subtitle: "A POCT Immunochromatographic Analyzer Designed for Rapid, On-Site Diagnostics in Clinical Laboratories and Emergency Departments",
+      description: "INCLIX F-100 is an immunofluorescence analyzer capable of both qualitative and quantitative measurement of immunofluorescence signals. It supports both Fluorescence Immunoassay (FIA) and Time-Resolved Fluorescence (TRF), enabling high-sensitivity and high-accuracy analysis of a wide range of biomarkers. Compact and lightweight, the INCLIX F-100 features a built-in rechargeable battery for enhanced portability. It also supports seamless integration with LIS/HIS systems.",
+      image: "https://www.sugentech.com/upload/prod/f%20100_60a60.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2112&idx=72",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "INCLIX F-100 is an immunofluorescence analyzer capable of both qualitative and quantitative measurement of immunofluorescence signals. It supports both Fluorescence Immunoassay (FIA) and Time-Resolved Fluorescence (TRF), enabling high-sensitivity and high-accuracy analysis of a wide range of biomarkers. Compact and lightweight, the INCLIX F-100 features a built-in rechargeable battery for enhanced portability. It also supports seamless integration with LIS/HIS systems."
+        },
+        {
+          title: "Official product highlights",
+          body: "Product overview Immunofluorescence Analyzer Analysis method Fluorescent Immunoassay (FIA), Time-Resolved Fluorescence (TRF) Product specifications Size: 117 mm(w) x 250 mm(d) x 118 mm(h) Weight: 1.0 kg Display: 5\" Color LCD touch screen Power: AC/DC Adapter, 12Vdc Power consumption: 3.3A, 40W Key features 5\" Color LCD touch screen Built-in printer USB 2.0, 2ea Rechargeable Lithium-Ion Battery 5,200mAh Data Transfer & Connectivity Supports Excel, SAM, PDF files / LIS net working"
+        }
+      ],
+      highlights: [
+        "5-inch color touch screen, built-in printer, USB connectivity, and rechargeable battery",
+        "A POCT Immunochromatographic Analyzer Designed for Rapid, On-Site Diagnostics in Clinical Laboratories and Emergency Departments"
+      ],
+      features: [
+        "5-inch color touch screen, built-in printer, USB connectivity, and rechargeable battery",
+        "A POCT Immunochromatographic Analyzer Designed for Rapid, On-Site Diagnostics in Clinical Laboratories and Emergency Departments"
+      ],
+      applications: [
+        "Point-of-care immunofluorescence testing",
+        "Emergency and clinical laboratory rapid diagnostics",
+        "Quantitative and qualitative biomarker testing"
+      ],
+      specs: {
+        Size: "117 mm(w) x 250 mm(d) x 118 mm(h)",
+        Weight: "1.0 kg",
+        Power: "AC/DC Adapter, 12Vdc",
+        Display: "5\" Color LCD touch screen",
+        "Power consumption": "3.3A, 40W Key features 5\" Color LCD touch screen Built-in printer USB 2.0, 2ea Rechargeable Lithium-Ion Battery 5,200mAh Data Transfer & Connectivity Supports Excel, SAM, PDF files / LIS net working",
+        "Official category": "POCT Analyzers",
+        "Sugentech product type": "Analyzer"
+      },
+      tags: [
+        "sugentech",
+        "poct",
+        "analyzer",
+        "immunofluorescence"
+      ]
+    },
+  {
+      id: "sug-surearly-smart",
+      name: "Surearly SMART",
+      brand: "sugentech",
+      category: "sug-femtech",
+      subcategory: "Femtech Mobile Health",
+      featured: true,
+      subtitle: "Digital Healthcare Platform for Women's Hormonal Health",
+      description: "Surearly Smart is an in vitro diagnostic medical device integrated with a mobile app, designed for women seeking to manage their fertility and hormonal health. By analyzing five key female hormones-ovulation-related hormones, pregnancy hormone (hCG), menopause-related hormones, estrogen, and progesterone-it enables hormone trend monitoring, ovulation prediction, and early pregnancy detection.",
+      image: "https://www.sugentech.com/upload/prod/%EC%8A%88%EC%96%BC%EB%A6%AC%20%EC%8A%A4%EB%A7%88%ED%8A%B8%20(2)_8011b.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2210&idx=73",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "Surearly Smart is an in vitro diagnostic medical device integrated with a mobile app, designed for women seeking to manage their fertility and hormonal health. By analyzing five key female hormones-ovulation-related hormones, pregnancy hormone (hCG), menopause-related hormones, estrogen, and progesterone-it enables hormone trend monitoring, ovulation prediction, and early pregnancy detection."
+        },
+        {
+          title: "Official product highlights",
+          body: "Category Personal pregnancy hormone test kit Intended use This in vitro diagnostic medical device helps in the diagnosis of pregnancy, ovulation, and menopause. It semi-quantitatively measures the degree of color development in the test results using absorption spectrometry, based on immunological reactions that measure human chorionic gonadotropin (hCG), luteinizing hormone (LH), or follicle-stimulating hormone (FSH) in human urine samples. Measurement method Semi-quantitative, Absorbance measurement method Test time 5 min Sample type Urine Power 3.0 V Lithium coin battery (CR2032) Dimensions 171.4 mm (L) X 28.4 mm (W) x 20.4 mm (H) Storage temperature 2-30 deg C"
+        }
+      ],
+      highlights: [
+        "Test time: 5 min",
+        "Sample type: Urine",
+        "Storage: 2-30 deg C"
+      ],
+      features: [
+        "Test time: 5 min",
+        "Sample type: Urine",
+        "Storage: 2-30 deg C"
+      ],
+      applications: [
+        "At-home female hormone tracking",
+        "Pregnancy, ovulation, and menopause self-testing",
+        "Mobile app-connected personal health monitoring"
+      ],
+      specs: {
+        Dimensions: "171.4 mm (L) X 28.4 mm (W) x 20.4 mm (H)",
+        Power: "3.0 V Lithium coin battery (CR2032)",
+        "Test time": "5 min",
+        "Sample type": "Urine",
+        "Storage temperature": "2-30 deg C",
+        "Measurement method": "Semi-quantitative, Absorbance measurement method",
+        "Official category": "Femtech Mobile Health",
+        "Sugentech product type": "Mobile health"
+      },
+      kits: [
+        {
+          name: "Surearly SMART",
+          description: "Digital Healthcare Platform for Women's Hormonal Health",
+          catalogueNumber: "SUG-73"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "femtech",
+        "mobile-health",
+        "self-test"
+      ]
+    },
+  {
+      id: "sug-surearly-smart-pro",
+      name: "Surearly SMART Pro",
+      brand: "sugentech",
+      category: "sug-femtech",
+      subcategory: "Femtech Mobile Health",
+      featured: true,
+      subtitle: "A healthcare platform for chronic disease control",
+      description: "This is a personal in vitro diagnostic medical device designed to support the monitoring of infections, blood glucose, kidney function, and cardiovascular health. Measurement data is synced with a mobile app, enabling users to track their health status and receive personalized healthcare insights.",
+      image: "https://www.sugentech.com/upload/prod/Surearly%20SMART%20Pro_f0ae9.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2210&idx=74",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "This is a personal in vitro diagnostic medical device designed to support the monitoring of infections, blood glucose, kidney function, and cardiovascular health. Measurement data is synced with a mobile app, enabling users to track their health status and receive personalized healthcare insights."
+        },
+        {
+          title: "Official product highlights",
+          body: "Category Medical Immunoassay Analyzer Intended use Initiates the reactions of specific components in body fluids or blood with antigens or antibodies. Measurement method Qualitative, Semi-quantitative Test time 5 min Sample type Urine, Whole blood (finger tip) Measurement method Absorbance measurement Power Battery (USB type-C chargeable) Dimensions 140.0 mm (L) X 45.0 mm (W) x 23.0 mm (H) Storage temperature 2-30 deg C"
+        }
+      ],
+      highlights: [
+        "Test time: 5 min",
+        "Sample type: Urine, Whole blood (finger tip)",
+        "Storage: 2-30 deg C"
+      ],
+      features: [
+        "Test time: 5 min",
+        "Sample type: Urine, Whole blood (finger tip)",
+        "Storage: 2-30 deg C"
+      ],
+      applications: [
+        "At-home female hormone tracking",
+        "Pregnancy, ovulation, and menopause self-testing",
+        "Mobile app-connected personal health monitoring"
+      ],
+      specs: {
+        Dimensions: "140.0 mm (L) X 45.0 mm (W) x 23.0 mm (H)",
+        Power: "Battery (USB type-C chargeable)",
+        "Test time": "5 min",
+        "Sample type": "Urine, Whole blood (finger tip)",
+        "Storage temperature": "2-30 deg C",
+        "Measurement method": "Qualitative, Semi-quantitative",
+        "Intended use": "Initiates the reactions of specific components in body fluids or blood with antigens or antibodies.",
+        "Official category": "Femtech Mobile Health",
+        "Sugentech product type": "Mobile health"
+      },
+      kits: [
+        {
+          name: "Surearly SMART Pro",
+          description: "A healthcare platform for chronic disease control",
+          catalogueNumber: "SUG-74"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "femtech",
+        "mobile-health",
+        "self-test"
+      ]
+    },
+  {
+      id: "sug-surearly-digital-ovulation-test",
+      name: "Surearly Digital Ovulation Test",
+      brand: "sugentech",
+      category: "sug-femtech",
+      subcategory: "Femtech Digital Tests",
+      subtitle: "Digital Ovulation Self-test Device",
+      description: "This is a smart digital system that qualitatively detects luteinizing hormone (LH) in urine and displays the result clearly on an easy-to-read screen. This test is intended to aid in identifying the ovulation period by detecting the LH surge.",
+      image: "https://www.sugentech.com/upload/prod/25.05.23_%EB%94%94%EC%A7%80%ED%84%B8_%EB%B0%B0%EB%9E%80(%EC%98%81%EB%AC%B8)_mockup2_7aea1.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2213&idx=75",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "This is a smart digital system that qualitatively detects luteinizing hormone (LH) in urine and displays the result clearly on an easy-to-read screen. This test is intended to aid in identifying the ovulation period by detecting the LH surge."
+        },
+        {
+          title: "Official product highlights",
+          body: "key feature Judgment of ovulation with YES / NO on the LCD screen No need to collect daily test results for comparison of hormones Detects user procedural errors during testing and displays error messages Test procedure Intended use Qualitatively detects LH in human urine samples immunochromatographic method to determine ovulation status Test time 3 min Sample type Urine Measurement method Immunochromatographic method Storage temperature 2-30 deg C"
+        }
+      ],
+      highlights: [
+        "Test time: 3 min",
+        "Sample type: Urine",
+        "Storage: 2-30 deg C"
+      ],
+      features: [
+        "Test time: 3 min",
+        "Sample type: Urine",
+        "Storage: 2-30 deg C"
+      ],
+      applications: [
+        "At-home female hormone tracking",
+        "Pregnancy, ovulation, and menopause self-testing",
+        "Mobile app-connected personal health monitoring"
+      ],
+      specs: {
+        "Test time": "3 min",
+        "Sample type": "Urine",
+        "Storage temperature": "2-30 deg C",
+        "Measurement method": "Immunochromatographic method",
+        "Intended use": "Qualitatively detects LH in human urine samples immunochromatographic method to determine ovulation status",
+        "Official category": "Femtech Digital Tests",
+        "Sugentech product type": "Digital test"
+      },
+      kits: [
+        {
+          name: "Surearly Digital Ovulation Test",
+          description: "Digital Ovulation Self-test Device",
+          catalogueNumber: "SUG-75"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "femtech",
+        "digital-test",
+        "self-test"
+      ]
+    },
+  {
+      id: "sug-surearly-digital-pregnancy-test",
+      name: "Surearly Digital Pregnancy Test",
+      brand: "sugentech",
+      category: "sug-femtech",
+      subcategory: "Femtech Digital Tests",
+      subtitle: "Digital Pregnancy Self-test Device",
+      description: "This is a rapid immunoassay for the qualitative detection of hCG in urine, with results displayed digitally. This test is intended to aid in the early detection of pregnancy.",
+      image: "https://www.sugentech.com/upload/prod/25.05.23_%EB%94%94%EC%A7%80%ED%84%B8_%EC%9E%84%EC%8B%A0(%EC%98%81%EB%AC%B8)_mockup2_95791.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2213&idx=76",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "This is a rapid immunoassay for the qualitative detection of hCG in urine, with results displayed digitally. This test is intended to aid in the early detection of pregnancy."
+        },
+        {
+          title: "Official product highlights",
+          body: "Function Judgment of pregnancy with YES / NO on the LCD screen Test multiple times with one device Detects user procedural errors during testing and displays error messages Test procedure Category Personal pregnancy hormone test kit Intended use Qualitatively detects HCG in human urine samples immunochromatographic method to determine pregnancy status Test time 3 min Sample type Urine Measurement method Immunochromatographic method Storage temperature 2-30 deg C"
+        }
+      ],
+      highlights: [
+        "Test time: 3 min",
+        "Sample type: Urine",
+        "Storage: 2-30 deg C"
+      ],
+      features: [
+        "Test time: 3 min",
+        "Sample type: Urine",
+        "Storage: 2-30 deg C"
+      ],
+      applications: [
+        "At-home female hormone tracking",
+        "Pregnancy, ovulation, and menopause self-testing",
+        "Mobile app-connected personal health monitoring"
+      ],
+      specs: {
+        "Test time": "3 min",
+        "Sample type": "Urine",
+        "Storage temperature": "2-30 deg C",
+        "Measurement method": "Immunochromatographic method",
+        "Intended use": "Qualitatively detects HCG in human urine samples immunochromatographic method to determine pregnancy status",
+        "Official category": "Femtech Digital Tests",
+        "Sugentech product type": "Digital test"
+      },
+      kits: [
+        {
+          name: "Surearly Digital Pregnancy Test",
+          description: "Digital Pregnancy Self-test Device",
+          catalogueNumber: "SUG-76"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "femtech",
+        "digital-test",
+        "self-test"
+      ]
+    },
+  {
+      id: "sug-surearly-early-sign-pregnancy-test",
+      name: "Surearly Early Sign Pregnancy Test",
+      brand: "sugentech",
+      category: "sug-femtech",
+      subcategory: "Femtech Rapid Tests",
+      subtitle: "Early Pregnancy Self-test Kit",
+      description: "The Early Sign Pregnancy Test is an in vitro diagnostic medical device that qualitatively detects pregnancy hormone (hCG) in human urine samples via the immunochromatographic method for early pregnancy detection.",
+      image: "https://www.sugentech.com/upload/prod/25.05.23_Earlysign_mockuP2_25ea8.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2214&idx=77",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "The Early Sign Pregnancy Test is an in vitro diagnostic medical device that qualitatively detects pregnancy hormone (hCG) in human urine samples via the immunochromatographic method for early pregnancy detection."
+        },
+        {
+          title: "Official product highlights",
+          body: "Key feature Easy to use midstream type Early detection of pregnancy High sensitivity level (10 mIU/mL) Quick test 4-5 days before the expected menstrual period Intended use Qualitatively detects hCG in human urine samples immunochromatographic method to determine pregnancy status Test time 3-5 min Sample type Urine Measurement method Immunochromatographic method Storage temperature 2-30 deg C"
+        }
+      ],
+      highlights: [
+        "Test time: 3-5 min",
+        "Sample type: Urine",
+        "Storage: 2-30 deg C"
+      ],
+      features: [
+        "Test time: 3-5 min",
+        "Sample type: Urine",
+        "Storage: 2-30 deg C"
+      ],
+      applications: [
+        "At-home female hormone tracking",
+        "Pregnancy, ovulation, and menopause self-testing",
+        "Mobile app-connected personal health monitoring"
+      ],
+      specs: {
+        "Test time": "3-5 min",
+        "Sample type": "Urine",
+        "Storage temperature": "2-30 deg C",
+        "Measurement method": "Immunochromatographic method",
+        "Intended use": "Qualitatively detects hCG in human urine samples immunochromatographic method to determine pregnancy status",
+        "Official category": "Femtech Rapid Tests",
+        "Sugentech product type": "Rapid test"
+      },
+      kits: [
+        {
+          name: "Surearly Early Sign Pregnancy Test",
+          description: "Early Pregnancy Self-test Kit",
+          catalogueNumber: "SUG-77"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "femtech",
+        "rapid-test",
+        "self-test"
+      ]
+    },
+  {
+      id: "sug-surearly-smart-ovulation-test-self-test",
+      name: "Surearly Smart Ovulation Test (Self-test)",
+      brand: "sugentech",
+      category: "sug-femtech",
+      subcategory: "Femtech Mobile Health",
+      subtitle: "App-connected Ovulation Self-test Kit",
+      description: "This is an in vitro diagnostic medical device that qualitatively detects luteinizing hormone (LH) in human urine samples via the immunochromatographic method to predict the timing of ovulation. It functions as a mobile healthcare platform by connecting the test device to a dedicated mobile application, allowing users to view results and manage their hormonal health intelligently through integrated features.",
+      image: "https://www.sugentech.com/upload/prod/ou_79e66.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2210&idx=80",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "This is an in vitro diagnostic medical device that qualitatively detects luteinizing hormone (LH) in human urine samples via the immunochromatographic method to predict the timing of ovulation. It functions as a mobile healthcare platform by connecting the test device to a dedicated mobile application, allowing users to view results and manage their hormonal health intelligently through integrated features."
+        },
+        {
+          title: "Official product highlights",
+          body: "Key features ; Accuracy of over 99% ; Replaceable stick type ; Integrated management with dedicated app Category Personal ovulation hormone test kit Intended use Qualitatively detects luteinizing hormone in human urine samples via the immunochromatographic method to determine the day of ovulation. Measurement method Semi-quantitative Test time 5 min Sample type Urine Measurement method Immunochromatographic method Storage temperature 2-30 deg C"
+        }
+      ],
+      highlights: [
+        "Test time: 5 min",
+        "Sample type: Urine",
+        "Storage: 2-30 deg C",
+        "Accuracy of over 99% with app-connected result management"
+      ],
+      features: [
+        "Test time: 5 min",
+        "Sample type: Urine",
+        "Storage: 2-30 deg C",
+        "Accuracy of over 99% with app-connected result management"
+      ],
+      applications: [
+        "At-home female hormone tracking",
+        "Pregnancy, ovulation, and menopause self-testing",
+        "Mobile app-connected personal health monitoring"
+      ],
+      specs: {
+        "Test time": "5 min",
+        "Sample type": "Urine",
+        "Storage temperature": "2-30 deg C",
+        "Measurement method": "Semi-quantitative",
+        "Intended use": "Qualitatively detects luteinizing hormone in human urine samples via the immunochromatographic method to determine the day of ovulation.",
+        "Official category": "Femtech Mobile Health",
+        "Sugentech product type": "Mobile health"
+      },
+      kits: [
+        {
+          name: "Surearly Smart Ovulation Test (Self-test)",
+          description: "App-connected Ovulation Self-test Kit",
+          catalogueNumber: "SUG-80"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "femtech",
+        "mobile-health",
+        "self-test"
+      ]
+    },
+  {
+      id: "sug-surearly-smart-pregnancy-test-self-test",
+      name: "Surearly Smart Pregnancy Test (Self-test)",
+      brand: "sugentech",
+      category: "sug-femtech",
+      subcategory: "Femtech Mobile Health",
+      subtitle: "App-connected Pregnancy Self-test Kit",
+      description: "This is an in vitro diagnostic medical device that qualitatively detects pregnancy hormones in human urine samples via the immunochromatographic method, enabling the determination of pregnancy status. It functions as a mobile healthcare platform by connecting the testing device to a dedicated mobile application, allowing users to view test results and manage their hormonal health intelligently through integrated features.",
+      image: "https://www.sugentech.com/upload/prod/p1_2a14f.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2210&idx=81",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "This is an in vitro diagnostic medical device that qualitatively detects pregnancy hormones in human urine samples via the immunochromatographic method, enabling the determination of pregnancy status. It functions as a mobile healthcare platform by connecting the testing device to a dedicated mobile application, allowing users to view test results and manage their hormonal health intelligently through integrated features."
+        },
+        {
+          title: "Official product highlights",
+          body: "Key features ; Accuracy of over 99% ; Replaceable stick type ; Integrated management with dedicated app Category Personal pregnancy hormone test kit Intended use Qualitatively detects hCG in human urine samples immunochromatographic method to determine pregnancy status. Measurement method Semi-quantitative Test time 5 min Sample type Urine Measurement method Immunochromatographic method Storage temperature 2-30 deg C"
+        }
+      ],
+      highlights: [
+        "Test time: 5 min",
+        "Sample type: Urine",
+        "Storage: 2-30 deg C",
+        "Accuracy of over 99% with app-connected result management"
+      ],
+      features: [
+        "Test time: 5 min",
+        "Sample type: Urine",
+        "Storage: 2-30 deg C",
+        "Accuracy of over 99% with app-connected result management"
+      ],
+      applications: [
+        "At-home female hormone tracking",
+        "Pregnancy, ovulation, and menopause self-testing",
+        "Mobile app-connected personal health monitoring"
+      ],
+      specs: {
+        "Test time": "5 min",
+        "Sample type": "Urine",
+        "Storage temperature": "2-30 deg C",
+        "Measurement method": "Semi-quantitative",
+        "Intended use": "Qualitatively detects hCG in human urine samples immunochromatographic method to determine pregnancy status.",
+        "Official category": "Femtech Mobile Health",
+        "Sugentech product type": "Mobile health"
+      },
+      kits: [
+        {
+          name: "Surearly Smart Pregnancy Test (Self-test)",
+          description: "App-connected Pregnancy Self-test Kit",
+          catalogueNumber: "SUG-81"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "femtech",
+        "mobile-health",
+        "self-test"
+      ]
+    },
+  {
+      id: "sug-surearly-smart-menopause-test-self-test",
+      name: "Surearly Smart Menopause Test (Self-test)",
+      brand: "sugentech",
+      category: "sug-femtech",
+      subcategory: "Femtech Mobile Health",
+      subtitle: "App-connected Menopause Self-test Kit",
+      description: "This is an in vitro diagnostic medical device that qualitatively detects menopause-related hormones in human urine samples via the immunochromatographic method to assess menopausal status. It functions as a mobile healthcare platform by connecting the test device to a dedicated mobile application, allowing users to view results and manage their hormonal health intelligently through integrated features.",
+      image: "https://www.sugentech.com/upload/prod/fs_cc0f9.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2210&idx=82",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "This is an in vitro diagnostic medical device that qualitatively detects menopause-related hormones in human urine samples via the immunochromatographic method to assess menopausal status. It functions as a mobile healthcare platform by connecting the test device to a dedicated mobile application, allowing users to view results and manage their hormonal health intelligently through integrated features."
+        },
+        {
+          title: "Official product highlights",
+          body: "Key features ; Accuracy of over 99% ; Replaceable stick type ; Integrated management with dedicated app Intended use Qualitatively detects Follicle Stimulating Hormone (FSH) in human urine samples via the immunochromatographic method to determine menopausal status. Measurement method Semi-quantitative Test time 5 min Sample type Urine Measurement method Immunochromatographic method Storage temperature 2-30 deg C"
+        }
+      ],
+      highlights: [
+        "Test time: 5 min",
+        "Sample type: Urine",
+        "Storage: 2-30 deg C",
+        "Accuracy of over 99% with app-connected result management"
+      ],
+      features: [
+        "Test time: 5 min",
+        "Sample type: Urine",
+        "Storage: 2-30 deg C",
+        "Accuracy of over 99% with app-connected result management"
+      ],
+      applications: [
+        "At-home female hormone tracking",
+        "Pregnancy, ovulation, and menopause self-testing",
+        "Mobile app-connected personal health monitoring"
+      ],
+      specs: {
+        "Test time": "5 min",
+        "Sample type": "Urine",
+        "Storage temperature": "2-30 deg C",
+        "Measurement method": "Semi-quantitative",
+        "Intended use": "Qualitatively detects Follicle Stimulating Hormone (FSH) in human urine samples via the immunochromatographic method to determine menopausal status.",
+        "Official category": "Femtech Mobile Health",
+        "Sugentech product type": "Mobile health"
+      },
+      kits: [
+        {
+          name: "Surearly Smart Menopause Test (Self-test)",
+          description: "App-connected Menopause Self-test Kit",
+          catalogueNumber: "SUG-82"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "femtech",
+        "mobile-health",
+        "self-test"
+      ]
+    },
+  {
+      id: "sug-surearly-smart-hormone-duo-test-self-test",
+      name: "Surearly Smart Hormone Duo Test (Self-test)",
+      brand: "sugentech",
+      category: "sug-femtech",
+      subcategory: "Femtech Mobile Health",
+      subtitle: "App-connected Self-test Kit for Two Key Female Hormones - Estrogen and Progesterone",
+      description: "This is an in vitro diagnostic medical device that qualitatively detects the levels of two female hormones, E3G and PdG, in human urine samples using the immunochromatographic method. It functions as a mobile healthcare platform by connecting the test device to a mobile application, enabling users to view results and manage their hormonal health intelligently through integrated features.",
+      image: "https://www.sugentech.com/upload/prod/ho_e9aa1.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2210&idx=83",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "This is an in vitro diagnostic medical device that qualitatively detects the levels of two female hormones, E3G and PdG, in human urine samples using the immunochromatographic method. It functions as a mobile healthcare platform by connecting the test device to a mobile application, enabling users to view results and manage their hormonal health intelligently through integrated features."
+        },
+        {
+          title: "Official product highlights",
+          body: "Key features ; Detects the levels of two female hormones, E3G and PdG ; Replaceable stick type ; Integrated management with dedicated app Intended use A device that qualitatively detects the levels of two female hormones, E3G and PdG, in human urine samples via the immunochromatographic method. Measurement method Semi-quantitative Test time 5 min Sample type Urine Measurement method Immunochromatographic method Storage temperature 2-30 deg C"
+        }
+      ],
+      highlights: [
+        "Test time: 5 min",
+        "Sample type: Urine",
+        "Storage: 2-30 deg C"
+      ],
+      features: [
+        "Test time: 5 min",
+        "Sample type: Urine",
+        "Storage: 2-30 deg C"
+      ],
+      applications: [
+        "At-home female hormone tracking",
+        "Pregnancy, ovulation, and menopause self-testing",
+        "Mobile app-connected personal health monitoring"
+      ],
+      specs: {
+        "Test time": "5 min",
+        "Sample type": "Urine",
+        "Storage temperature": "2-30 deg C",
+        "Measurement method": "Semi-quantitative",
+        "Intended use": "A device that qualitatively detects the levels of two female hormones, E3G and PdG, in human urine samples via the immunochromatographic method.",
+        "Official category": "Femtech Mobile Health",
+        "Sugentech product type": "Mobile health"
+      },
+      kits: [
+        {
+          name: "Surearly Smart Hormone Duo Test (Self-test)",
+          description: "App-connected Self-test Kit for Two Key Female Hormones - Estrogen and Progesterone",
+          catalogueNumber: "SUG-83"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "femtech",
+        "mobile-health",
+        "self-test"
+      ]
+    },
+  {
+      id: "sug-surearly-smart-pro-covid-19-igm-igg-self",
+      name: "Surearly SMART Pro COVID-19 IgM/IgG Self",
+      brand: "sugentech",
+      category: "sug-femtech",
+      subcategory: "Femtech Mobile Health",
+      subtitle: "App-connected COVID-19 IgM/IgG Self-test Kit",
+      description: "This is an in vitro diagnostic medical device that qualitatively detects the presence of COVID-19 IgG and IgM antibodies in fingertip (capillary) blood samples using the immunochromatographic method.",
+      image: "https://www.sugentech.com/upload/prod/Surearly%20SMART%20Pro_f0ae9.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2210&idx=88",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "This is an in vitro diagnostic medical device that qualitatively detects the presence of COVID-19 IgG and IgM antibodies in fingertip (capillary) blood samples using the immunochromatographic method."
+        },
+        {
+          title: "Official product highlights",
+          body: "Key features ; Detection of COVID-19 IgG/IgM antibodies ; Replaceable stick type ; Integrated management with dedicated app Intended use Uses the immunochromatographic method to qualitatively detect the presence of COVID-19 IgG/IgM antibodies in blood samples collected from the fingertip Measurement method Qualitatively Test time 10 min Sample type Whole blood (Fingertip) Measurement method Immunochromatographic method Storage temperature 2-30 deg C"
+        }
+      ],
+      highlights: [
+        "Test time: 10 min",
+        "Sample type: Whole blood (Fingertip)",
+        "Storage: 2-30 deg C"
+      ],
+      features: [
+        "Test time: 10 min",
+        "Sample type: Whole blood (Fingertip)",
+        "Storage: 2-30 deg C"
+      ],
+      applications: [
+        "At-home female hormone tracking",
+        "Pregnancy, ovulation, and menopause self-testing",
+        "Mobile app-connected personal health monitoring"
+      ],
+      specs: {
+        "Test time": "10 min",
+        "Sample type": "Whole blood (Fingertip)",
+        "Storage temperature": "2-30 deg C",
+        "Measurement method": "Qualitatively",
+        "Intended use": "Uses the immunochromatographic method to qualitatively detect the presence of COVID-19 IgG/IgM antibodies in blood samples collected from the fingertip",
+        "Official category": "Femtech Mobile Health",
+        "Sugentech product type": "Mobile health"
+      },
+      kits: [
+        {
+          name: "Surearly SMART Pro COVID-19 IgM/IgG Self",
+          description: "App-connected COVID-19 IgM/IgG Self-test Kit",
+          catalogueNumber: "SUG-88"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "femtech",
+        "mobile-health",
+        "self-test"
+      ]
+    },
+  {
+      id: "sug-cardiovascular-disease-inclix-f-d-dimer",
+      name: "[Cardiovascular disease] INCLIX F D-Dimer",
+      brand: "sugentech",
+      category: "sug-poct-tests",
+      subcategory: "POCT Test Items",
+      subtitle: "D-Dimer Test",
+      description: "The D-Dimer test measures protein fragments produced during the formation and breakdown of blood clots. When a clot forms, fibrin is generated to stabilize it and is subsequently degraded by fibrinolysis. D-Dimer is a specific byproduct of this process. This test is used to assess the presence of abnormal clot formation and is particularly valuable in the diagnosis of thrombotic conditions such as deep vein thrombosis (DVT), pulmonary embolism (PE), and disseminated intravascular coagulation (DIC).",
+      image: "https://www.sugentech.com/upload/prod/D-dimer_f9e8d.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=105",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "The D-Dimer test measures protein fragments produced during the formation and breakdown of blood clots. When a clot forms, fibrin is generated to stabilize it and is subsequently degraded by fibrinolysis. D-Dimer is a specific byproduct of this process. This test is used to assess the presence of abnormal clot formation and is particularly valuable in the diagnosis of thrombotic conditions such as deep vein thrombosis (DVT), pulmonary embolism (PE), and disseminated intravascular coagulation (DIC)."
+        },
+        {
+          title: "Official product highlights",
+          body: "Specimen Whole Blood, Plasma Test time 12 min Specimen volume 50 uL Measurable range 50-10,000 ng/mL Storage temperature 2-8°C"
+        }
+      ],
+      highlights: [
+        "Test time: 12 min",
+        "Specimen: Whole Blood, Plasma",
+        "Measurable range: 50-10,000 ng/mL",
+        "Storage: 2-8°C"
+      ],
+      features: [
+        "Test time: 12 min",
+        "Specimen: Whole Blood, Plasma",
+        "Measurable range: 50-10,000 ng/mL",
+        "Storage: 2-8°C"
+      ],
+      applications: [
+        "Thrombosis assessment support",
+        "DVT and pulmonary embolism diagnostic workflows",
+        "Point-of-care coagulation marker testing"
+      ],
+      specs: {
+        Specimen: "Whole Blood, Plasma",
+        "Specimen volume": "50 uL",
+        "Test time": "12 min",
+        "Measurable range": "50-10,000 ng/mL",
+        "Storage temperature": "2-8°C",
+        "Official category": "POCT Test Items",
+        "Sugentech product type": "Test Item"
+      },
+      kits: [
+        {
+          name: "[Cardiovascular disease] INCLIX F D-Dimer",
+          description: "D-Dimer Test",
+          catalogueNumber: "SUG-105"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "poct",
+        "test-kit",
+        "in-vitro-diagnostics"
+      ]
+    },
+  {
+      id: "sug-inflammation-inclix-f-crp",
+      name: "[Inflammation] INCLIX F CRP",
+      brand: "sugentech",
+      category: "sug-poct-tests",
+      subcategory: "POCT Test Items",
+      featured: true,
+      subtitle: "C-reactive Protein (CRP) Test",
+      description: "C-reactive protein (CRP) is an acute-phase protein produced by the liver, and its levels in the blood rise in response to inflammation caused by infection, trauma, or chronic disease. CRP testing allows clinicians to assess the presence and intensity of systemic inflammation.",
+      image: "https://www.sugentech.com/upload/prod/CRP_f116b.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=109",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "C-reactive protein (CRP) is an acute-phase protein produced by the liver, and its levels in the blood rise in response to inflammation caused by infection, trauma, or chronic disease. CRP testing allows clinicians to assess the presence and intensity of systemic inflammation."
+        },
+        {
+          title: "Official product highlights",
+          body: "Specimen Whole blood (fingertop), Serum, Plasma Test time 5 min Specimen volume 5 uL Measurable range 0.5-200 mg/L Storage temperature 2-8°C"
+        }
+      ],
+      highlights: [
+        "Test time: 5 min",
+        "Specimen: Whole blood (fingertop), Serum, Plasma",
+        "Measurable range: 0.5-200 mg/L",
+        "Storage: 2-8°C"
+      ],
+      features: [
+        "Test time: 5 min",
+        "Specimen: Whole blood (fingertop), Serum, Plasma",
+        "Measurable range: 0.5-200 mg/L",
+        "Storage: 2-8°C"
+      ],
+      applications: [
+        "Inflammation and infection assessment",
+        "Sepsis and antibiotic stewardship workflows",
+        "Rapid POCT biomarker testing"
+      ],
+      specs: {
+        Specimen: "Whole blood (fingertop), Serum, Plasma",
+        "Specimen volume": "5 uL",
+        "Test time": "5 min",
+        "Measurable range": "0.5-200 mg/L",
+        "Storage temperature": "2-8°C",
+        "Official category": "POCT Test Items",
+        "Sugentech product type": "Test Item"
+      },
+      kits: [
+        {
+          name: "[Inflammation] INCLIX F CRP",
+          description: "C-reactive Protein (CRP) Test",
+          catalogueNumber: "SUG-109"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "poct",
+        "test-kit",
+        "in-vitro-diagnostics"
+      ]
+    },
+  {
+      id: "sug-inflammation-inclix-trf-pct",
+      name: "[Inflammation] INCLIX TRF PCT",
+      brand: "sugentech",
+      category: "sug-poct-tests",
+      subcategory: "POCT Test Items",
+      featured: true,
+      subtitle: "Procalcitonin (PCT) test",
+      description: "The PCT test measures the concentration of procalcitonin (PCT) in the blood and is used to evaluate the presence and severity of bacterial infections. It plays a critical role in the diagnosis of sepsis and severe systemic infections, and is also useful for monitoring the effectiveness of antibiotic therapy.",
+      image: "https://www.sugentech.com/upload/prod/PCT_fce14.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=110",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "The PCT test measures the concentration of procalcitonin (PCT) in the blood and is used to evaluate the presence and severity of bacterial infections. It plays a critical role in the diagnosis of sepsis and severe systemic infections, and is also useful for monitoring the effectiveness of antibiotic therapy."
+        },
+        {
+          title: "Official product highlights",
+          body: "Specimen Serum, Plasma Test time 10 min Specimen volume 80 uL Measurable range 0.1-100 ng/mL Strorage temperature 2-30°C"
+        }
+      ],
+      highlights: [
+        "Test time: 10 min",
+        "Specimen: Serum, Plasma",
+        "Measurable range: 0.1-100 ng/mL Strorage temperature 2-30°C"
+      ],
+      features: [
+        "Test time: 10 min",
+        "Specimen: Serum, Plasma",
+        "Measurable range: 0.1-100 ng/mL Strorage temperature 2-30°C"
+      ],
+      applications: [
+        "Inflammation and infection assessment",
+        "Sepsis and antibiotic stewardship workflows",
+        "Rapid POCT biomarker testing"
+      ],
+      specs: {
+        Specimen: "Serum, Plasma",
+        "Specimen volume": "80 uL",
+        "Test time": "10 min",
+        "Measurable range": "0.1-100 ng/mL Strorage temperature 2-30°C",
+        "Official category": "POCT Test Items",
+        "Sugentech product type": "Test Item"
+      },
+      kits: [
+        {
+          name: "[Inflammation] INCLIX TRF PCT",
+          description: "Procalcitonin (PCT) test",
+          catalogueNumber: "SUG-110"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "poct",
+        "test-kit",
+        "in-vitro-diagnostics"
+      ]
+    },
+  {
+      id: "sug-diabetes-inclix-f-hba1c",
+      name: "[Diabetes] INCLIX F HbA1c",
+      brand: "sugentech",
+      category: "sug-poct-tests",
+      subcategory: "POCT Test Items",
+      featured: true,
+      subtitle: "Glycated Hemoglobin (HbA1c) Test",
+      description: "Glycated hemoglobin (HbA1c) refers to hemoglobin that has glucose bound to it in the bloodstream. This test reflects the average blood glucose level over the past 2-3 months and serves as a key marker for the diagnosis, treatment, and long-term monitoring of diabetes, as well as for the management of individuals at risk of glycemic abnormalities.",
+      image: "https://www.sugentech.com/upload/prod/HbA1c_8cf04.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=111",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "Glycated hemoglobin (HbA1c) refers to hemoglobin that has glucose bound to it in the bloodstream. This test reflects the average blood glucose level over the past 2-3 months and serves as a key marker for the diagnosis, treatment, and long-term monitoring of diabetes, as well as for the management of individuals at risk of glycemic abnormalities."
+        },
+        {
+          title: "Official product highlights",
+          body: "Specimen Whole blood (fingertip) Test time 12 min Specimen volume 5 uL Measurable range 4-14% Storage temperature 2-8°C"
+        }
+      ],
+      highlights: [
+        "Test time: 12 min",
+        "Specimen: Whole blood (fingertip)",
+        "Measurable range: 4-14%",
+        "Storage: 2-8°C"
+      ],
+      features: [
+        "Test time: 12 min",
+        "Specimen: Whole blood (fingertip)",
+        "Measurable range: 4-14%",
+        "Storage: 2-8°C"
+      ],
+      applications: [
+        "Diabetes diagnosis and long-term glycemic monitoring",
+        "Routine diabetes clinic testing"
+      ],
+      specs: {
+        Specimen: "Whole blood (fingertip)",
+        "Specimen volume": "5 uL",
+        "Test time": "12 min",
+        "Measurable range": "4-14%",
+        "Storage temperature": "2-8°C",
+        "Official category": "POCT Test Items",
+        "Sugentech product type": "Test Item"
+      },
+      kits: [
+        {
+          name: "[Diabetes] INCLIX F HbA1c",
+          description: "Glycated Hemoglobin (HbA1c) Test",
+          catalogueNumber: "SUG-111"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "poct",
+        "test-kit",
+        "in-vitro-diagnostics"
+      ]
+    },
+  {
+      id: "sug-renal-disease-inclix-f-albumin",
+      name: "[Renal disease] INCLIX F µAlbumin",
+      brand: "sugentech",
+      category: "sug-poct-tests",
+      subcategory: "POCT Test Items",
+      subtitle: "Microalbumin (µAlbumin) Quantification Test",
+      description: "The µAlbumin test measures the concentration of microalbumin (µAlbumin) in urine to support the early detection of kidney damage. Albumin is the most abundant protein in the blood and is normally retained by healthy kidneys. However, when kidney function is impaired, small amounts of albumin are excreted in the urine, making it a valuable marker for early renal dysfunction-particularly in patients with diabetes or hypertension.",
+      image: "https://www.sugentech.com/upload/prod/Microalbumin_681d3.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=112",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "The µAlbumin test measures the concentration of microalbumin (µAlbumin) in urine to support the early detection of kidney damage. Albumin is the most abundant protein in the blood and is normally retained by healthy kidneys. However, when kidney function is impaired, small amounts of albumin are excreted in the urine, making it a valuable marker for early renal dysfunction-particularly in patients with diabetes or hypertension."
+        },
+        {
+          title: "Official product highlights",
+          body: "Specimen Urine Test time 10 min Specimen volume 5 uL Measurable range 2-300 mg/L Storage temperature 2-8°C"
+        }
+      ],
+      highlights: [
+        "Test time: 10 min",
+        "Specimen: Urine",
+        "Measurable range: 2-300 mg/L",
+        "Storage: 2-8°C"
+      ],
+      features: [
+        "Test time: 10 min",
+        "Specimen: Urine",
+        "Measurable range: 2-300 mg/L",
+        "Storage: 2-8°C"
+      ],
+      applications: [
+        "Renal disease risk assessment",
+        "Early kidney damage screening"
+      ],
+      specs: {
+        Specimen: "Urine",
+        "Specimen volume": "5 uL",
+        "Test time": "10 min",
+        "Measurable range": "2-300 mg/L",
+        "Storage temperature": "2-8°C",
+        "Official category": "POCT Test Items",
+        "Sugentech product type": "Test Item"
+      },
+      kits: [
+        {
+          name: "[Renal disease] INCLIX F µAlbumin",
+          description: "Microalbumin (µAlbumin) Quantification Test",
+          catalogueNumber: "SUG-112"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "poct",
+        "test-kit",
+        "in-vitro-diagnostics"
+      ]
+    },
+  {
+      id: "sug-hormone-inclix-trf-tsh",
+      name: "[Hormone] INCLIX TRF TSH",
+      brand: "sugentech",
+      category: "sug-poct-tests",
+      subcategory: "POCT Test Items",
+      subtitle: "Thyroid Stimulating Hormone (TSH) Quantification Test",
+      description: "The TSH test measures the concentration of thyroid stimulating hormone (TSH) in the blood to assess thyroid dysfunction. TSH is secreted by the pituitary gland and plays a central role in regulating thyroid activity by stimulating the secretion of T3 and T4.",
+      image: "https://www.sugentech.com/upload/prod/TSH_39dd3.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=113",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "The TSH test measures the concentration of thyroid stimulating hormone (TSH) in the blood to assess thyroid dysfunction. TSH is secreted by the pituitary gland and plays a central role in regulating thyroid activity by stimulating the secretion of T3 and T4."
+        },
+        {
+          title: "Official product highlights",
+          body: "Specimen Serum, Plasma Test time 15 min Specimen volume 40 uL Measurable range 0.1-100 u lU/mL Storage temperature 2-30°C"
+        }
+      ],
+      highlights: [
+        "Test time: 15 min",
+        "Specimen: Serum, Plasma",
+        "Measurable range: 0.1-100 u lU/mL",
+        "Storage: 2-30°C"
+      ],
+      features: [
+        "Test time: 15 min",
+        "Specimen: Serum, Plasma",
+        "Measurable range: 0.1-100 u lU/mL",
+        "Storage: 2-30°C"
+      ],
+      applications: [
+        "Thyroid function assessment",
+        "Hormone testing on INCLIX platform"
+      ],
+      specs: {
+        Specimen: "Serum, Plasma",
+        "Specimen volume": "40 uL",
+        "Test time": "15 min",
+        "Measurable range": "0.1-100 u lU/mL",
+        "Storage temperature": "2-30°C",
+        "Official category": "POCT Test Items",
+        "Sugentech product type": "Test Item"
+      },
+      kits: [
+        {
+          name: "[Hormone] INCLIX TRF TSH",
+          description: "Thyroid Stimulating Hormone (TSH) Quantification Test",
+          catalogueNumber: "SUG-113"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "poct",
+        "test-kit",
+        "in-vitro-diagnostics"
+      ]
+    },
+  {
+      id: "sug-hormone-inclix-f-t3",
+      name: "[Hormone] INCLIX F T3",
+      brand: "sugentech",
+      category: "sug-poct-tests",
+      subcategory: "POCT Test Items",
+      subtitle: "Triiodothyronine (T3) Quantification Test",
+      description: "The T3 test quantitatively measures triiodothyronine (T3) levels in the blood to assess thyroid function. T3 is one of the primary hormones secreted by the thyroid gland and plays a key role in regulating the body's metabolic processes. Thyroid activity is regulated by thyroid-stimulating hormone (TSH), which is secreted by the pituitary gland and stimulates the thyroid to produce T3 and T4.",
+      image: "https://www.sugentech.com/upload/prod/T3_e8589.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=114",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "The T3 test quantitatively measures triiodothyronine (T3) levels in the blood to assess thyroid function. T3 is one of the primary hormones secreted by the thyroid gland and plays a key role in regulating the body's metabolic processes. Thyroid activity is regulated by thyroid-stimulating hormone (TSH), which is secreted by the pituitary gland and stimulates the thyroid to produce T3 and T4."
+        },
+        {
+          title: "Official product highlights",
+          body: "Specimen Serum, Plasma Test time 10 min Specimen volume 10 uL Measurable range 0.5-5.0 ng/mL Storage temperature 2-8°C"
+        }
+      ],
+      highlights: [
+        "Test time: 10 min",
+        "Specimen: Serum, Plasma",
+        "Measurable range: 0.5-5.0 ng/mL",
+        "Storage: 2-8°C"
+      ],
+      features: [
+        "Test time: 10 min",
+        "Specimen: Serum, Plasma",
+        "Measurable range: 0.5-5.0 ng/mL",
+        "Storage: 2-8°C"
+      ],
+      applications: [
+        "Thyroid function assessment",
+        "Hormone testing on INCLIX platform"
+      ],
+      specs: {
+        Specimen: "Serum, Plasma",
+        "Specimen volume": "10 uL",
+        "Test time": "10 min",
+        "Measurable range": "0.5-5.0 ng/mL",
+        "Storage temperature": "2-8°C",
+        "Official category": "POCT Test Items",
+        "Sugentech product type": "Test Item"
+      },
+      kits: [
+        {
+          name: "[Hormone] INCLIX F T3",
+          description: "Triiodothyronine (T3) Quantification Test",
+          catalogueNumber: "SUG-114"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "poct",
+        "test-kit",
+        "in-vitro-diagnostics"
+      ]
+    },
+  {
+      id: "sug-hormone-inclix-f-t4",
+      name: "[Hormone] INCLIX F T4",
+      brand: "sugentech",
+      category: "sug-poct-tests",
+      subcategory: "POCT Test Items",
+      subtitle: "Thyroxine (T4) Quantification Test",
+      description: "The T4 test quantitatively measures thyroxine (T4) levels in the blood to assess thyroid function. T4 is the main hormone secreted by the thyroid gland and plays a key role in regulating metabolism. It is converted into the biologically active hormone triiodothyronine (T3) in peripheral tissues.",
+      image: "https://www.sugentech.com/upload/prod/T4_5812f.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=115",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "The T4 test quantitatively measures thyroxine (T4) levels in the blood to assess thyroid function. T4 is the main hormone secreted by the thyroid gland and plays a key role in regulating metabolism. It is converted into the biologically active hormone triiodothyronine (T3) in peripheral tissues."
+        },
+        {
+          title: "Official product highlights",
+          body: "Specimen Serum, Plasma Test time 10 min Specimen volume 7 uL Measurable range 0.5-20 u g/dL Storage temperature 2-8°C"
+        }
+      ],
+      highlights: [
+        "Test time: 10 min",
+        "Specimen: Serum, Plasma",
+        "Measurable range: 0.5-20 u g/dL",
+        "Storage: 2-8°C"
+      ],
+      features: [
+        "Test time: 10 min",
+        "Specimen: Serum, Plasma",
+        "Measurable range: 0.5-20 u g/dL",
+        "Storage: 2-8°C"
+      ],
+      applications: [
+        "Thyroid function assessment",
+        "Hormone testing on INCLIX platform"
+      ],
+      specs: {
+        Specimen: "Serum, Plasma",
+        "Specimen volume": "7 uL",
+        "Test time": "10 min",
+        "Measurable range": "0.5-20 u g/dL",
+        "Storage temperature": "2-8°C",
+        "Official category": "POCT Test Items",
+        "Sugentech product type": "Test Item"
+      },
+      kits: [
+        {
+          name: "[Hormone] INCLIX F T4",
+          description: "Thyroxine (T4) Quantification Test",
+          catalogueNumber: "SUG-115"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "poct",
+        "test-kit",
+        "in-vitro-diagnostics"
+      ]
+    },
+  {
+      id: "sug-hormone-inclix-trf-hcg",
+      name: "[Hormone] INCLIX TRF β-hCG",
+      brand: "sugentech",
+      category: "sug-poct-tests",
+      subcategory: "POCT Test Items",
+      subtitle: "β-human Chorionic Gonadotropin (β-hCG) Quantification Test",
+      description: "The β-hCG test is one of the most commonly used assays for confirming pregnancy. Quantitative measurement of β-hCG levels in blood enables early detection of pregnancy, identification of abnormal pregnancies such as ectopic pregnancy, and supports the screening and management of germ cell tumors.",
+      image: "https://www.sugentech.com/upload/prod/%CE%B2-hCG_3a766.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=116",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "The β-hCG test is one of the most commonly used assays for confirming pregnancy. Quantitative measurement of β-hCG levels in blood enables early detection of pregnancy, identification of abnormal pregnancies such as ectopic pregnancy, and supports the screening and management of germ cell tumors."
+        },
+        {
+          title: "Official product highlights",
+          body: "Specimen Whole blood, Serum, Plasma Test time 15 min Specimen volume 40 uL Measurable range Whole blood: 10-10,000 mIU/mL Serum/Plasma: 10-20,000 mIU/mL Storage temperature 2-30°C"
+        }
+      ],
+      highlights: [
+        "Test time: 15 min",
+        "Specimen: Whole blood, Serum, Plasma",
+        "Measurable range: Whole blood: 10-10,000 mIU/mL Serum/Plasma: 10-20,000 mIU/mL",
+        "Storage: 2-30°C"
+      ],
+      features: [
+        "Test time: 15 min",
+        "Specimen: Whole blood, Serum, Plasma",
+        "Measurable range: Whole blood: 10-10,000 mIU/mL Serum/Plasma: 10-20,000 mIU/mL",
+        "Storage: 2-30°C"
+      ],
+      applications: [
+        "Pregnancy confirmation and monitoring",
+        "Hormone testing on INCLIX platform"
+      ],
+      specs: {
+        Specimen: "Whole blood, Serum, Plasma",
+        "Specimen volume": "40 uL",
+        "Test time": "15 min",
+        "Measurable range": "Whole blood: 10-10,000 mIU/mL Serum/Plasma: 10-20,000 mIU/mL",
+        "Storage temperature": "2-30°C",
+        "Official category": "POCT Test Items",
+        "Sugentech product type": "Test Item"
+      },
+      kits: [
+        {
+          name: "[Hormone] INCLIX TRF β-hCG",
+          description: "β-human Chorionic Gonadotropin (β-hCG) Quantification Test",
+          catalogueNumber: "SUG-116"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "poct",
+        "test-kit",
+        "in-vitro-diagnostics"
+      ]
+    },
+  {
+      id: "sug-inclix-f-total-ige",
+      name: "INCLIX F Total IgE",
+      brand: "sugentech",
+      category: "sug-poct-tests",
+      subcategory: "POCT Test Items",
+      subtitle: "Total Immunoglobulin E (IgE) Quantification Test",
+      description: "The Total Immunoglobulin E (IgE) Test quantitatively measures blood IgE levels to assess the likelihood of allergic responses and to aid in the differential diagnosis of allergic diseases. Total IgE is an antibody produced by the immune system upon exposure to allergens and serves as a reference marker in both diagnosis and monitoring of allergic conditions.",
+      image: "https://www.sugentech.com/upload/prod/Total%20IgE_c47a0.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2111&idx=117",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "The Total Immunoglobulin E (IgE) Test quantitatively measures blood IgE levels to assess the likelihood of allergic responses and to aid in the differential diagnosis of allergic diseases. Total IgE is an antibody produced by the immune system upon exposure to allergens and serves as a reference marker in both diagnosis and monitoring of allergic conditions."
+        },
+        {
+          title: "Official product highlights",
+          body: "Specimen Whole blood, Serum, Plasma Test time 12 min Specimen volume 25 uL Measurable range 5-2,000 IU/mL Storage temperature 2-8 deg C"
+        }
+      ],
+      highlights: [
+        "Test time: 12 min",
+        "Specimen: Whole blood, Serum, Plasma",
+        "Measurable range: 5-2,000 IU/mL",
+        "Storage: 2-8 deg C"
+      ],
+      features: [
+        "Test time: 12 min",
+        "Specimen: Whole blood, Serum, Plasma",
+        "Measurable range: 5-2,000 IU/mL",
+        "Storage: 2-8 deg C"
+      ],
+      applications: [
+        "Allergy workup support",
+        "Total IgE quantification"
+      ],
+      specs: {
+        Specimen: "Whole blood, Serum, Plasma",
+        "Specimen volume": "25 uL",
+        "Test time": "12 min",
+        "Measurable range": "5-2,000 IU/mL",
+        "Storage temperature": "2-8 deg C",
+        "Official category": "POCT Test Items",
+        "Sugentech product type": "Test Item"
+      },
+      kits: [
+        {
+          name: "INCLIX F Total IgE",
+          description: "Total Immunoglobulin E (IgE) Quantification Test",
+          catalogueNumber: "SUG-117"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "poct",
+        "test-kit",
+        "in-vitro-diagnostics"
+      ]
+    },
+  {
+      id: "sug-sureskinlab-cycling-beauty-serum",
+      name: "SureskinLAB Cycling beauty serum",
+      brand: "sugentech",
+      category: "sug-health-beauty",
+      subcategory: "Health & Beauty",
+      subtitle: "Smart skin diagnosis and personalized care synced to your hormonal cycle",
+      description: "SureSkinLab's Cycling Beauty is a customized skincare solution based on a deep understanding of female hormones and scientific research data. A woman's body goes through cyclical changes each month, and the skin is no exception. SureSkinLab focuses on these changes, interpreting women's health and beauty through the lens of science. Cycling Beauty - skincare designed to support your skin through each phase of your hormonal cycle. Discover the rhythm of your body. Let your natural beauty shine with SureSkinLab.",
+      image: "https://www.sugentech.com/upload/prod/250318%20%EC%88%98%EC%A0%A0%ED%85%8D2675_6edce.jpg",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2312&idx=122",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "SureSkinLab's Cycling Beauty is a customized skincare solution based on a deep understanding of female hormones and scientific research data. A woman's body goes through cyclical changes each month, and the skin is no exception. SureSkinLab focuses on these changes, interpreting women's health and beauty through the lens of science. Cycling Beauty - skincare designed to support your skin through each phase of your hormonal cycle. Discover the rhythm of your body. Let your natural beauty shine with SureSkinLab."
+        }
+      ],
+      highlights: [
+        "Smart skin diagnosis and personalized care synced to your hormonal cycle"
+      ],
+      features: [
+        "Smart skin diagnosis and personalized care synced to your hormonal cycle"
+      ],
+      applications: [
+        "Hormone-cycle-aware skin care routines",
+        "Personalized beauty and skin condition tracking"
+      ],
+      specs: {
+        "Official category": "Health & Beauty",
+        "Sugentech product type": "Diag Cosmetics"
+      },
+      tags: [
+        "sugentech",
+        "health-beauty",
+        "skincare"
+      ]
+    },
+  {
+      id: "sug-suremedy-surevita-multi-vitamin-immune",
+      name: "SUREMEDY Surevita Multi Vitamin Immune",
+      brand: "sugentech",
+      category: "sug-health-beauty",
+      subcategory: "Health Supplements",
+      subtitle: "Energy & Vitality Up",
+      description: "Features - Fast-absorbing liquid + tablet all-in-one formula - 23 nutrients: 13 vitamins + 9 minerals + beta-carotene - Formulated with 5 key B vitamins at 5,020% - Refreshing grapefruit-flavored 30ml",
+      image: "https://www.sugentech.com/upload/prod/1_585a0_333d4.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2313&idx=123",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "Features - Fast-absorbing liquid + tablet all-in-one formula - 23 nutrients: 13 vitamins + 9 minerals + beta-carotene - Formulated with 5 key B vitamins at 5,020% - Refreshing grapefruit-flavored 30ml"
+        }
+      ],
+      highlights: [
+        "Energy & Vitality Up"
+      ],
+      features: [
+        "Energy & Vitality Up"
+      ],
+      applications: [
+        "Consumer health supplement portfolio",
+        "Wellness and preventive health support"
+      ],
+      specs: {
+        "Official category": "Health Supplements",
+        "Sugentech product type": "Health Supplements"
+      },
+      tags: [
+        "sugentech",
+        "health-supplements"
+      ]
+    },
+  {
+      id: "sug-suremedy-liposome-glutathione-signature-9s",
+      name: "SUREMEDY Liposome Glutathione Signature 9S",
+      brand: "sugentech",
+      category: "sug-health-beauty",
+      subcategory: "Health Supplements",
+      subtitle: "Film-type glutathione product with antioxidant support",
+      description: "Features - Premium liposomal glutathione ingredient designed for higher absorption - 135 mg of 90% pure liposomal L-glutathione yeast per strip - Formula paired with synergistic ingredients (milk thistle extract, liposomal vitamin C, hyaluronic acid, fish collagen, etc.) - Easy and tasty lemon-flavored Orally Dissolving Film (ODF) - Manufactured in a HACCP-certified facility in Korea",
+      image: "https://www.sugentech.com/upload/prod/111_489d9_ed82d.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2313&idx=125",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "Features - Premium liposomal glutathione ingredient designed for higher absorption - 135 mg of 90% pure liposomal L-glutathione yeast per strip - Formula paired with synergistic ingredients (milk thistle extract, liposomal vitamin C, hyaluronic acid, fish collagen, etc.) - Easy and tasty lemon-flavored Orally Dissolving Film (ODF) - Manufactured in a HACCP-certified facility in Korea"
+        }
+      ],
+      highlights: [
+        "Film-type glutathione product with antioxidant support"
+      ],
+      features: [
+        "Film-type glutathione product with antioxidant support"
+      ],
+      applications: [
+        "Consumer health supplement portfolio",
+        "Wellness and preventive health support"
+      ],
+      specs: {
+        "Official category": "Health Supplements",
+        "Sugentech product type": "Health Supplements"
+      },
+      tags: [
+        "sugentech",
+        "health-supplements"
+      ]
+    },
+  {
+      id: "sug-sgti-allergy-plus-60",
+      name: "SGTi-Allergy PLUS 60",
+      brand: "sugentech",
+      category: "sug-immunoblot-tests",
+      subcategory: "Immunoblot Test Items",
+      subtitle: "Simultaneous multiple allergen testing for the analysis of allergen-specific IgE 60",
+      description: "SGTi-Allergy PLUS is an in vitro diagnostic medical device designed to aid in the diagnosis of allergic diseases by analyzing allergen-specific immunoglobulin E (IgE) in human serum or plasma (treated with Li-Heparin or Na-Citrate) using the enzyme immunoblotting method The test panel includes 60 allergens-comprising both inhalants and food allergens-arranged on a single strip. It enables the semi-quantitative measurement of allergen-specific IgE concentrations for all 60 allergens.",
+      image: "https://www.sugentech.com/upload/prod/60_17909.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2011&idx=127",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "SGTi-Allergy PLUS is an in vitro diagnostic medical device designed to aid in the diagnosis of allergic diseases by analyzing allergen-specific immunoglobulin E (IgE) in human serum or plasma (treated with Li-Heparin or Na-Citrate) using the enzyme immunoblotting method The test panel includes 60 allergens-comprising both inhalants and food allergens-arranged on a single strip. It enables the semi-quantitative measurement of allergen-specific IgE concentrations for all 60 allergens. SGTi-Allergy PLUS 60 is compatible with the S-Blot PLUS series, an automated immunoblot analyzer that allows for fully automated testing."
+        },
+        {
+          title: "Official product highlights",
+          body: "Product overview MAST (Multiple Allergen Simultaneous Test) A multiplex assay for the simultaneous detection of allergen-specific IgE to 60 allergens, including total IgE Specimen type and specimen volume Serum, Plasma / 150 uL Storage conditions and expiration date Refrigerate (2-8 deg C), 24 months Product standards A single strip consists of 60 types of inhalants and a food panel. Packaging unit 12, 24, 60 tests/kit Applicable equipment S-Blot 3 PLUS, S-Blot 2 Easy PLUS"
+        }
+      ],
+      highlights: [
+        "Specimen: type and",
+        "Packaging: 12, 24, 60 tests/kit",
+        "Compatible equipment: S-Blot 3 PLUS, S-Blot 2 Easy PLUS",
+        "Multiplex allergen panel with automated S-Blot workflow compatibility"
+      ],
+      features: [
+        "Specimen: type and",
+        "Packaging: 12, 24, 60 tests/kit",
+        "Compatible equipment: S-Blot 3 PLUS, S-Blot 2 Easy PLUS",
+        "Multiplex allergen panel with automated S-Blot workflow compatibility"
+      ],
+      applications: [
+        "Allergy screening and allergen-specific antibody analysis",
+        "Immunoblot test workflows on compatible S-Blot systems",
+        "Clinical diagnostic laboratory testing"
+      ],
+      specs: {
+        Specimen: "type and",
+        "Specimen type and specimen volume": "Serum, Plasma / 150 uL",
+        "Specimen volume": "Serum, Plasma / 150 uL",
+        "Storage conditions and expiration date": "Refrigerate (2-8 deg C), 24 months Product standards A single strip consists of 60 types of inhalants and a food panel.",
+        "Packaging unit": "12, 24, 60 tests/kit",
+        "Applicable equipment": "S-Blot 3 PLUS, S-Blot 2 Easy PLUS",
+        "Official category": "Immunoblot Test Items",
+        "Sugentech product type": "Test Item"
+      },
+      kits: [
+        {
+          name: "SGTi-Allergy PLUS 60",
+          description: "Simultaneous multiple allergen testing for the analysis of allergen-specific IgE 60",
+          catalogueNumber: "SUG-127"
+        }
+      ],
+      tags: [
+        "sugentech",
+        "immunoblot",
+        "test-kit",
+        "allergy"
+      ]
+    },
+  {
+      id: "sug-suremedy-lutein-zeaxanthin",
+      name: "SUREMEDY Lutein Zeaxanthin",
+      brand: "sugentech",
+      category: "sug-health-beauty",
+      subcategory: "Health Supplements",
+      subtitle: "Eye Health Care (Helps maintain macular pigment density)",
+      description: "Features - Lutein 10mg + total zeaxanthin 2mg = 12 mg (scientific 5:1 ratio) - Premium marigold flower extract individually recognized by MFDS (MFDS individually recognized ingredient No.",
+      image: "https://www.sugentech.com/upload/prod/111_d36c4_f6575.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2313&idx=136",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "Features - Lutein 10mg + total zeaxanthin 2mg = 12 mg (scientific 5:1 ratio) - Premium marigold flower extract individually recognized by MFDS (MFDS individually recognized ingredient No. 2025-7) - Uses ingredients from Bio-gen, a specialist manufacturer with international quality certifications (ISO 9001/14001/22000/45001) - 100% plant-based mini capsule for easy digestion * Free from 10 additives Silicon dioxide, calcium carboxymethyl cellulose, artificial flavors, HPMC, sodium saccharin, aspartame, sodium caseinate, crystalline cellulose, magnesium stearate, titanium dioxide * 8 supporting ingredients Pomegranate concentrate powder, low-molecular fish collagen, hibiscus extract powder, omija extract powder, vegetable concentrate powder, soy isoflavones, turmeric extract powder, red ginseng concentrate powder"
+        }
+      ],
+      highlights: [
+        "Eye Health Care (Helps maintain macular pigment density)"
+      ],
+      features: [
+        "Eye Health Care (Helps maintain macular pigment density)"
+      ],
+      applications: [
+        "Consumer health supplement portfolio",
+        "Wellness and preventive health support"
+      ],
+      specs: {
+        "Official category": "Health Supplements",
+        "Sugentech product type": "Health Supplements"
+      },
+      tags: [
+        "sugentech",
+        "health-supplements"
+      ]
+    },
+  {
+      id: "sug-suremedy-rtg-omega-3",
+      name: "SUREMEDY rTG Omega-3",
+      brand: "sugentech",
+      category: "sug-health-beauty",
+      subcategory: "Health Supplements",
+      subtitle: "One solution for improving blood triglyceride levels, circulation, memory, and dry eyes",
+      description: "Features - High-bioavailability, highly absorbable rTG Omega-3 - 70% omega-3 purity, EPA + DHA = 900 mg - MFDS-recognized 8-in-1 functional formula (Omega-3 + Vitamin D + Vitamin E) - Uses purified fish oil from Norway's GC Rieber, a specialized omega-3 manufacturer - Enteric mini capsule that dissolves in the intestine to reduce fishy aftertaste * Free from 10 additives Silicon dioxide, calcium carboxymethyl cellulose, artificial flavors, HPMC, sodium saccharin, aspartame, sodium caseinate, crystalline cellulose,",
+      image: "https://www.sugentech.com/upload/prod/111_5201a_97f26.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2313&idx=137",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "Features - High-bioavailability, highly absorbable rTG Omega-3 - 70% omega-3 purity, EPA + DHA = 900 mg - MFDS-recognized 8-in-1 functional formula (Omega-3 + Vitamin D + Vitamin E) - Uses purified fish oil from Norway's GC Rieber, a specialized omega-3 manufacturer - Enteric mini capsule that dissolves in the intestine to reduce fishy aftertaste * Free from 10 additives Silicon dioxide, calcium carboxymethyl cellulose, artificial flavors, HPMC, sodium saccharin, aspartame, sodium caseinate, crystalline cellulose, magnesium stearate, titanium dioxide * 8 supporting ingredients Pomegranate concentrate powder, low-molecular fish collagen, hibiscus extract powder, omija extract powder, vegetable concentrate powder, soy isoflavones, turmeric extract powder, red ginseng concentrate powder"
+        }
+      ],
+      highlights: [
+        "One solution for improving blood triglyceride levels, circulation, memory, and dry eyes"
+      ],
+      features: [
+        "One solution for improving blood triglyceride levels, circulation, memory, and dry eyes"
+      ],
+      applications: [
+        "Consumer health supplement portfolio",
+        "Wellness and preventive health support"
+      ],
+      specs: {
+        "Official category": "Health Supplements",
+        "Sugentech product type": "Health Supplements"
+      },
+      tags: [
+        "sugentech",
+        "health-supplements"
+      ]
+    },
+  {
+      id: "sug-suremedy-coenzyme-q10",
+      name: "SUREMEDY Coenzyme Q10",
+      brand: "sugentech",
+      category: "sug-health-beauty",
+      subcategory: "Health Supplements",
+      subtitle: "Dual care for blood pressure reduction & antioxidant support",
+      description: "Features - Contains 100mg Coenzyme Q10 per daily serving - Premium ingredient with 98%+ purity obtained by microbial fermentation - Uses ingredient from Health Genesis, USA, certified by NSF - Mini plant-based soft capsule for easy swallowing and digestion * Free from 10 additives Silicon dioxide, calcium carboxymethyl cellulose, artificial flavors, HPMC, sodium saccharin, aspartame, sodium caseinate, crystalline cellulose, magnesium stearate, titanium dioxide * 8 supporting ingredients Pomegranate concentrate powd",
+      image: "https://www.sugentech.com/upload/prod/%E3%85%87%E3%85%81%E3%84%B4%E3%85%87_de633_c67a2.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2313&idx=138",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "Features - Contains 100mg Coenzyme Q10 per daily serving - Premium ingredient with 98%+ purity obtained by microbial fermentation - Uses ingredient from Health Genesis, USA, certified by NSF - Mini plant-based soft capsule for easy swallowing and digestion * Free from 10 additives Silicon dioxide, calcium carboxymethyl cellulose, artificial flavors, HPMC, sodium saccharin, aspartame, sodium caseinate, crystalline cellulose, magnesium stearate, titanium dioxide * 8 supporting ingredients Pomegranate concentrate powder, low-molecular fish collagen, hibiscus extract powder, omija extract powder, vegetable concentrate powder, soy isoflavones, turmeric extract powder, red ginseng concentrate powder"
+        }
+      ],
+      highlights: [
+        "Dual care for blood pressure reduction & antioxidant support"
+      ],
+      features: [
+        "Dual care for blood pressure reduction & antioxidant support"
+      ],
+      applications: [
+        "Consumer health supplement portfolio",
+        "Wellness and preventive health support"
+      ],
+      specs: {
+        "Official category": "Health Supplements",
+        "Sugentech product type": "Health Supplements"
+      },
+      tags: [
+        "sugentech",
+        "health-supplements"
+      ]
+    },
+  {
+      id: "sug-suremedy-calmadi-k",
+      name: "SUREMEDY CalMaDi K",
+      brand: "sugentech",
+      category: "sug-health-beauty",
+      subcategory: "Health Supplements",
+      subtitle: "4-in-1 formula for bones and muscles",
+      description: "Features - Optimized Calcium:Magnesium ratio = 2:1 for ideal calcium absorption - Uses non-calcined marine algae calcium for easy digestion and absorption - Active Vitamin D3 with high calcium absorption and utilization - Vitamin K needed for bone composition * Free from 2 additives & excludes ingredients from Japan/China Artificial flavors, sweeteners * 8 supporting ingredients Pomegranate concentrate powder, fish collagen, hibiscus calyx extract powder, omija extract powder, vegetable blend concentrate, soy isofl",
+      image: "https://www.sugentech.com/upload/prod/4_f1abc_5f240.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2313&idx=139",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "Features - Optimized Calcium:Magnesium ratio = 2:1 for ideal calcium absorption - Uses non-calcined marine algae calcium for easy digestion and absorption - Active Vitamin D3 with high calcium absorption and utilization - Vitamin K needed for bone composition * Free from 2 additives & excludes ingredients from Japan/China Artificial flavors, sweeteners * 8 supporting ingredients Pomegranate concentrate powder, fish collagen, hibiscus calyx extract powder, omija extract powder, vegetable blend concentrate, soy isoflavone extract, turmeric extract powder, red ginseng concentrate powder"
+        }
+      ],
+      highlights: [
+        "4-in-1 formula for bones and muscles"
+      ],
+      features: [
+        "4-in-1 formula for bones and muscles"
+      ],
+      applications: [
+        "Consumer health supplement portfolio",
+        "Wellness and preventive health support"
+      ],
+      specs: {
+        "Official category": "Health Supplements",
+        "Sugentech product type": "Health Supplements"
+      },
+      tags: [
+        "sugentech",
+        "health-supplements"
+      ]
+    },
+  {
+      id: "sug-suremedy-chondroitin-mucopolysaccharide-protein-1200",
+      name: "SUREMEDY Chondroitin Mucopolysaccharide Protein 1200",
+      brand: "sugentech",
+      category: "sug-health-beauty",
+      subcategory: "Health Supplements",
+      subtitle: "Bone, Joint & Cartilage Care",
+      description: "Features - Contains 1,200 mg mucopolysaccharide (chondroitin sulfate) and protein from bovine cartilage - 90%+ pure mucopolysaccharide (chondroitin sulfate) and protein ingredient - Recognized by MFDS as a functional health ingredient * Free from 2 additives & excludes ingredients from Japan/China Artificial flavors, colorants * 8 supporting ingredients Pomegranate concentrate powder, fish collagen, hibiscus calyx extract powder, omija extract powder, vegetable blend concentrate, soy isoflavone extract, turmeric ex",
+      image: "https://www.sugentech.com/upload/prod/6_58696_3eaea.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2313&idx=140",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "Features - Contains 1,200 mg mucopolysaccharide (chondroitin sulfate) and protein from bovine cartilage - 90%+ pure mucopolysaccharide (chondroitin sulfate) and protein ingredient - Recognized by MFDS as a functional health ingredient * Free from 2 additives & excludes ingredients from Japan/China Artificial flavors, colorants * 8 supporting ingredients Pomegranate concentrate powder, fish collagen, hibiscus calyx extract powder, omija extract powder, vegetable blend concentrate, soy isoflavone extract, turmeric extract powder, red ginseng concentrate powder"
+        }
+      ],
+      highlights: [
+        "Bone, Joint & Cartilage Care"
+      ],
+      features: [
+        "Bone, Joint & Cartilage Care"
+      ],
+      applications: [
+        "Consumer health supplement portfolio",
+        "Wellness and preventive health support"
+      ],
+      specs: {
+        "Official category": "Health Supplements",
+        "Sugentech product type": "Health Supplements"
+      },
+      tags: [
+        "sugentech",
+        "health-supplements"
+      ]
+    },
+  {
+      id: "sug-suremedy-milk-thistle",
+      name: "SUREMEDY Milk Thistle",
+      brand: "sugentech",
+      category: "sug-health-beauty",
+      subcategory: "Health Supplements",
+      subtitle: "Targeted Liver Care",
+      description: "Features - Contains 130 mg silymarin from milk thistle extract (per daily serving) - Uses premium milk thistle ingredient from Botanic Healthcare, India - Certified ISO, HALAL INDIA, Food Chain ID Non-GMO, and NSF - Pure milk thistle design for focused liver care without excessive added vitamins or minerals * Free from 2 additives & excludes ingredients from Japan/China Artificial flavors, colorants * 8 supporting ingredients Pomegranate concentrate powder, fish collagen, hibiscus calyx extract powder, omija extrac",
+      image: "https://www.sugentech.com/upload/prod/%EB%B0%80%ED%81%AC%EC%94%A8%EC%8A%AC1_fc57a_cd8e6.png",
+      specSheet: "https://www.sugentech.com/en/sub/products/view.php?s_cate=2313&idx=141",
+      detailSections: [
+        {
+          title: "Overview",
+          body: "Features - Contains 130 mg silymarin from milk thistle extract (per daily serving) - Uses premium milk thistle ingredient from Botanic Healthcare, India - Certified ISO, HALAL INDIA, Food Chain ID Non-GMO, and NSF - Pure milk thistle design for focused liver care without excessive added vitamins or minerals * Free from 2 additives & excludes ingredients from Japan/China Artificial flavors, colorants * 8 supporting ingredients Pomegranate concentrate powder, fish collagen, hibiscus calyx extract powder, omija extract powder, vegetable blend concentrate, soy isoflavone extract, turmeric extract powder, red ginseng concentrate powder"
+        }
+      ],
+      highlights: [
+        "Targeted Liver Care"
+      ],
+      features: [
+        "Targeted Liver Care"
+      ],
+      applications: [
+        "Consumer health supplement portfolio",
+        "Wellness and preventive health support"
+      ],
+      specs: {
+        "Official category": "Health Supplements",
+        "Sugentech product type": "Health Supplements"
+      },
+      tags: [
+        "sugentech",
+        "health-supplements"
+      ]
+    },
 
   /* ─ Benchtop pH / Multi-Parameter Meters ─ */
   {
