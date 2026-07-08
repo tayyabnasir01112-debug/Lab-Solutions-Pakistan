@@ -439,7 +439,7 @@ function CytekProductDetail({ product }: { product: Product }) {
                 Related Instruments
               </h3>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {allRelated.map(p => <CytekRelatedCard key={p.id} product={p} />)}
+                {allRelated.map(p => <RelatedCard key={p.id} product={p} />)}
               </div>
             </div>
           </div>
