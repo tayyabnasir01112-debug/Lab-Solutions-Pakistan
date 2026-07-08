@@ -808,7 +808,7 @@ function SugentechProductDetail({ product }: { product: Product }) {
               <span className="text-[#0057A8] font-semibold truncate max-w-[200px]">{product.name}</span>
             </div>
 
-            <div className="grid lg:grid-cols-[1fr_320px] gap-12 items-center">
+            <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(320px,420px)] xl:grid-cols-[minmax(0,1fr)_minmax(340px,460px)_300px] gap-8 xl:gap-10 items-center">
               <div>
                 {/* Badges */}
                 <div className="flex flex-wrap gap-2 mb-5">
@@ -844,9 +844,32 @@ function SugentechProductDetail({ product }: { product: Product }) {
                 </div>
               </div>
 
+              {/* Product visual */}
+              <div className="order-first lg:order-none">
+                <div className="relative min-h-[260px] sm:min-h-[320px] flex items-center justify-center overflow-hidden bg-white/70 border border-[#dce8f5] shadow-sm">
+                  <div className="absolute inset-0 opacity-[0.08]"
+                    style={{ backgroundImage: "radial-gradient(circle at 25% 45%, #0057A8 1px, transparent 1px), radial-gradient(circle at 75% 55%, #0057A8 1px, transparent 1px)", backgroundSize: "26px 26px" }} />
+                  <div className="absolute -left-16 top-1/2 h-48 w-48 -translate-y-1/2 rounded-full bg-[#0057A8]/10 blur-2xl" />
+                  <div className="absolute -right-10 bottom-4 h-32 w-32 rounded-full bg-[#00a6a6]/10 blur-2xl" />
+                  {product.image ? (
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="relative z-10 max-h-[280px] sm:max-h-[340px] w-full object-contain px-6 py-8"
+                      style={{ filter: "drop-shadow(0 18px 35px rgba(0,87,168,0.18))" }}
+                    />
+                  ) : (
+                    <div className="relative z-10 flex flex-col items-center gap-3 text-center text-[#0057A8]/50">
+                      <ImageIcon className="h-14 w-14" />
+                      <span className="text-[10px] font-black tracking-[0.22em] uppercase">Product image unavailable</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
               {/* Quick specs panel */}
               {product.specs && (
-                <div className="hidden lg:block bg-white border border-[#dce8f5] shadow-sm overflow-hidden">
+                <div className="hidden xl:block bg-white border border-[#dce8f5] shadow-sm overflow-hidden">
                   <div className="px-5 py-3 bg-[#0057A8]">
                     <span className="text-[10px] font-black tracking-[0.2em] uppercase text-white">Key Specifications</span>
                   </div>
