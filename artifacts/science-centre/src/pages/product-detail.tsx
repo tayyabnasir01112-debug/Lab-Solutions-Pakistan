@@ -808,7 +808,7 @@ function SugentechProductDetail({ product }: { product: Product }) {
               <span className="text-[#0057A8] font-semibold truncate max-w-[200px]">{product.name}</span>
             </div>
 
-            <div className="grid lg:grid-cols-[minmax(0,1fr)_minmax(320px,420px)] xl:grid-cols-[minmax(0,1fr)_minmax(340px,460px)_300px] gap-8 xl:gap-10 items-center">
+            <div className="grid lg:grid-cols-[minmax(430px,1fr)_minmax(360px,520px)] xl:grid-cols-[minmax(430px,1fr)_minmax(360px,460px)_280px] gap-8 items-center">
               <div>
                 {/* Badges */}
                 <div className="flex flex-wrap gap-2 mb-5">
@@ -846,17 +846,15 @@ function SugentechProductDetail({ product }: { product: Product }) {
 
               {/* Product visual */}
               <div className="order-first lg:order-none">
-                <div className="relative min-h-[260px] sm:min-h-[320px] flex items-center justify-center overflow-hidden bg-white/70 border border-[#dce8f5] shadow-sm">
-                  <div className="absolute inset-0 opacity-[0.08]"
-                    style={{ backgroundImage: "radial-gradient(circle at 25% 45%, #0057A8 1px, transparent 1px), radial-gradient(circle at 75% 55%, #0057A8 1px, transparent 1px)", backgroundSize: "26px 26px" }} />
-                  <div className="absolute -left-16 top-1/2 h-48 w-48 -translate-y-1/2 rounded-full bg-[#0057A8]/10 blur-2xl" />
-                  <div className="absolute -right-10 bottom-4 h-32 w-32 rounded-full bg-[#00a6a6]/10 blur-2xl" />
+                <div className="relative min-h-[260px] sm:min-h-[330px] flex items-center justify-center overflow-visible">
+                  <div className="absolute inset-x-0 top-1/2 h-28 -translate-y-1/2 border-y border-white/60 bg-gradient-to-r from-transparent via-white/55 to-transparent" />
+                  <div className="absolute inset-x-8 top-1/2 h-px -translate-y-1/2 bg-[#0057A8]/10" />
                   {product.image ? (
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="relative z-10 max-h-[280px] sm:max-h-[340px] w-full object-contain px-6 py-8"
-                      style={{ filter: "drop-shadow(0 18px 35px rgba(0,87,168,0.18))" }}
+                      className="relative z-10 max-h-[285px] sm:max-h-[350px] w-full object-contain px-2 py-6"
+                      style={{ filter: "drop-shadow(0 22px 30px rgba(30,68,110,0.20))" }}
                     />
                   ) : (
                     <div className="relative z-10 flex flex-col items-center gap-3 text-center text-[#0057A8]/50">
