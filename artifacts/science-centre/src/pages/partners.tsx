@@ -4,13 +4,13 @@ import {
   ArrowRight,
   BadgeCheck,
   Boxes,
-  Building2,
   Globe2,
   Handshake,
   ShieldCheck,
   Truck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PageSlideDeck } from "@/components/page-slide-deck";
 import { SiteNavbar } from "@/components/site-navbar";
 import { SiteFooter } from "@/components/site-footer";
 import { brands, productsByBrand } from "@/lib/catalogue";
@@ -44,16 +44,26 @@ const capabilities = [
   },
 ];
 
+const textLogoBrands = new Set(["luminex", "diasorin", "sugentech"]);
+
+function PartnerWordmark({ name, dark = false }: { name: string; dark?: boolean }) {
+  return (
+    <span className={`font-[var(--app-font-heading)] text-xl font-black tracking-tight ${dark ? "text-white" : "text-foreground"}`}>
+      {name}
+    </span>
+  );
+}
+
 export default function PartnersPage() {
   const featured = brands.slice(0, 10);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="h-[100dvh] overflow-hidden bg-background text-foreground">
       <SiteNavbar forceSolid />
-      <main>
-        <section className="relative overflow-hidden bg-foreground pt-32 text-background">
+      <PageSlideDeck names={["Network", "Role", "Brands", "Scale", "Contact"]} accent="#2EA3F2">
+        <section className="relative min-h-[100dvh] overflow-hidden bg-foreground pt-28 text-background">
           <div className="absolute inset-0 opacity-[0.06]" style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "28px 28px" }} />
-          <div className="container relative mx-auto grid min-h-[86vh] items-center gap-12 px-6 py-16 md:px-12 lg:grid-cols-[0.95fr_1.05fr]">
+          <div className="container relative mx-auto grid min-h-[calc(100dvh-7rem)] items-center gap-10 px-6 pb-10 md:px-12 lg:grid-cols-[0.95fr_1.05fr]">
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65 }}>
               <div className="mb-5 inline-flex items-center gap-2 border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-black uppercase tracking-[0.18em] text-white/70">
                 <Handshake className="h-3.5 w-3.5 text-primary" /> Scientific sourcing network
@@ -81,10 +91,12 @@ export default function PartnersPage() {
                   className="group relative flex min-h-32 flex-col justify-between border border-white/12 bg-white/[0.06] p-4 transition-all hover:-translate-y-1 hover:bg-white/[0.1]"
                 >
                   <div className="flex h-12 items-center">
-                    {brand.logo ? (
-                      <img src={asset(brand.logo)} alt={brand.name} className="max-h-9 max-w-[130px] object-contain brightness-0 invert opacity-80 transition-opacity group-hover:opacity-100" />
+                    {brand.logo && !textLogoBrands.has(brand.id) ? (
+                      <span className="flex h-12 min-w-36 items-center justify-center border border-white/10 bg-white px-3">
+                        <img src={asset(brand.logo)} alt={brand.name} className="max-h-8 max-w-[120px] object-contain" />
+                      </span>
                     ) : (
-                      <span className="font-[var(--app-font-heading)] text-xl font-black">{brand.short}</span>
+                      <PartnerWordmark name={brand.short} dark />
                     )}
                   </div>
                   <div>
@@ -98,7 +110,7 @@ export default function PartnersPage() {
           </div>
         </section>
 
-        <section className="py-24">
+        <section className="min-h-[100dvh] py-28">
           <div className="container mx-auto px-6 md:px-12">
             <div className="mb-12 grid gap-6 md:grid-cols-[0.7fr_1fr] md:items-end">
               <div>
@@ -128,7 +140,7 @@ export default function PartnersPage() {
           </div>
         </section>
 
-        <section className="bg-muted/35 py-24">
+        <section className="min-h-[100dvh] bg-muted/35 py-28">
           <div className="container mx-auto px-6 md:px-12">
             <div className="grid gap-10 lg:grid-cols-[0.82fr_1fr]">
               <div>
@@ -142,7 +154,7 @@ export default function PartnersPage() {
                 {brands.map(brand => (
                   <Link key={brand.id} href={`/products?brand=${brand.id}`} className="group grid grid-cols-[86px_1fr_auto] items-center gap-4 border border-border bg-background p-4">
                     <div className="flex h-14 items-center justify-center border border-border bg-muted/30 p-2">
-                      {brand.logo ? <img src={asset(brand.logo)} alt={brand.name} className="max-h-9 max-w-full object-contain" /> : <Building2 className="h-5 w-5" />}
+                      {brand.logo && !textLogoBrands.has(brand.id) ? <img src={asset(brand.logo)} alt={brand.name} className="max-h-9 max-w-full object-contain" /> : <PartnerWordmark name={brand.short} />}
                     </div>
                     <div>
                       <div className="font-[var(--app-font-heading)] font-black">{brand.name}</div>
@@ -156,7 +168,7 @@ export default function PartnersPage() {
           </div>
         </section>
 
-        <section className="py-20">
+        <section className="flex min-h-[100dvh] items-center py-24">
           <div className="container mx-auto px-6 md:px-12">
             <div className="grid gap-5 md:grid-cols-3">
               {[
@@ -174,8 +186,10 @@ export default function PartnersPage() {
             </div>
           </div>
         </section>
-      </main>
-      <SiteFooter />
+        <section className="min-h-[100dvh] bg-background">
+          <SiteFooter />
+        </section>
+      </PageSlideDeck>
     </div>
   );
 }

@@ -14,6 +14,7 @@ import {
   Wrench,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { PageSlideDeck } from "@/components/page-slide-deck";
 import { SiteNavbar } from "@/components/site-navbar";
 import { SiteFooter } from "@/components/site-footer";
 
@@ -82,13 +83,13 @@ const workflow = [
 
 export default function SolutionsPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="h-[100dvh] overflow-hidden bg-background text-foreground">
       <SiteNavbar forceSolid />
-      <main>
-        <section className="relative min-h-[92vh] overflow-hidden pt-32">
+      <PageSlideDeck names={["Overview", "Focus Areas", "Process", "Next Step", "Contact"]} accent="#2EA3F2">
+        <section className="relative min-h-[100dvh] overflow-hidden pt-28">
           <img src={img("/images/sc-hero.png")} alt="" className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/20" />
-          <div className="container relative z-10 mx-auto grid min-h-[calc(92vh-8rem)] items-center gap-12 px-6 md:px-12 lg:grid-cols-[1fr_0.85fr]">
+          <div className="container relative z-10 mx-auto grid min-h-[calc(100dvh-7rem)] items-center gap-10 px-6 pb-10 md:px-12 lg:grid-cols-[1fr_0.85fr]">
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65 }}>
               <div className="mb-5 inline-flex items-center gap-2 border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-white/80">
                 <ShieldCheck className="h-3.5 w-3.5 text-primary" /> Solution design for modern labs
@@ -126,7 +127,7 @@ export default function SolutionsPage() {
           </div>
         </section>
 
-        <section className="py-24">
+        <section className="min-h-[100dvh] py-28">
           <div className="container mx-auto px-6 md:px-12">
             <div className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
               <div>
@@ -163,7 +164,7 @@ export default function SolutionsPage() {
           </div>
         </section>
 
-        <section className="bg-muted/35 py-24">
+        <section className="min-h-[100dvh] bg-muted/35 py-28">
           <div className="container mx-auto px-6 md:px-12">
             <div className="grid gap-10 lg:grid-cols-[0.72fr_1fr]">
               <div>
@@ -188,7 +189,7 @@ export default function SolutionsPage() {
           </div>
         </section>
 
-        <section className="py-20">
+        <section className="flex min-h-[100dvh] items-center py-24">
           <div className="container mx-auto px-6 md:px-12">
             <div className="border border-border bg-foreground p-8 text-background md:p-12">
               <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
@@ -203,8 +204,10 @@ export default function SolutionsPage() {
             </div>
           </div>
         </section>
-      </main>
-      <SiteFooter />
+        <section className="min-h-[100dvh] bg-background">
+          <SiteFooter />
+        </section>
+      </PageSlideDeck>
     </div>
   );
 }

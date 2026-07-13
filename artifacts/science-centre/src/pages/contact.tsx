@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { PageSlideDeck } from "@/components/page-slide-deck";
 import { SiteNavbar } from "@/components/site-navbar";
 import { SiteFooter } from "@/components/site-footer";
 
@@ -52,23 +53,23 @@ const responseSteps = [
 
 export default function ContactPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="h-[100dvh] overflow-hidden bg-background text-foreground">
       <SiteNavbar forceSolid />
-      <main>
-        <section className="relative overflow-hidden pt-32">
+      <PageSlideDeck names={["Enquiry", "Reach Us", "Response Flow", "Catalogue", "Footer"]} accent="#2EA3F2">
+        <section className="relative min-h-[100dvh] overflow-hidden pt-28">
           <div className="absolute inset-0 bg-[linear-gradient(120deg,#eef8ff_0%,#ffffff_45%,#f7fff8_100%)]" />
-          <div className="container relative mx-auto grid min-h-[82vh] items-center gap-12 px-6 py-16 md:px-12 lg:grid-cols-[0.88fr_1.12fr]">
+          <div className="container relative mx-auto grid min-h-[calc(100dvh-7rem)] items-center gap-8 px-6 pb-8 md:px-12 lg:grid-cols-[0.86fr_1.14fr]">
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65 }}>
               <div className="mb-5 inline-flex items-center gap-2 border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-black uppercase tracking-[0.18em] text-primary">
                 <MessageSquare className="h-3.5 w-3.5" /> Contact Science Centre
               </div>
-              <h1 className="font-[var(--app-font-heading)] text-5xl font-black leading-[0.98] md:text-7xl">
+              <h1 className="font-[var(--app-font-heading)] text-4xl font-black leading-[0.98] md:text-6xl">
                 Tell us what your lab needs next.
               </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+              <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
                 Send a product name, catalogue number, application, test menu or broad requirement. We will help route it to the right product family and commercial conversation.
               </p>
-              <div className="mt-8 grid gap-3 sm:grid-cols-3">
+              <div className="mt-7 grid gap-3 sm:grid-cols-3">
                 {["Fast product routing", "Variant guidance", "Local support"].map(item => (
                   <div key={item} className="flex items-center gap-2 border border-border bg-background/80 px-3 py-3 text-sm font-semibold">
                     <CheckCircle2 className="h-4 w-4 text-primary" /> {item}
@@ -77,13 +78,13 @@ export default function ContactPage() {
               </div>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 0.1 }} className="border border-border bg-background p-6 shadow-sm md:p-8">
-              <div className="mb-6">
+            <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65, delay: 0.1 }} className="border border-border bg-background p-5 shadow-sm md:p-6">
+              <div className="mb-5">
                 <div className="text-xs font-black uppercase tracking-[0.2em] text-primary">Start an enquiry</div>
-                <h2 className="mt-2 font-[var(--app-font-heading)] text-3xl font-black">Request a quote or technical call</h2>
+                <h2 className="mt-2 font-[var(--app-font-heading)] text-2xl font-black md:text-3xl">Request a quote or technical call</h2>
               </div>
-              <form className="grid gap-4" action="mailto:info@sciencecentre.com.pk" method="post" encType="text/plain">
-                <div className="grid gap-4 sm:grid-cols-2">
+              <form className="grid gap-3" action="mailto:info@sciencecentre.com.pk" method="post" encType="text/plain">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <div>
                     <Label htmlFor="name">Name</Label>
                     <Input id="name" name="Name" className="mt-2 rounded-none" placeholder="Your name" />
@@ -93,7 +94,7 @@ export default function ContactPage() {
                     <Input id="organization" name="Organization" className="mt-2 rounded-none" placeholder="Hospital, university, lab..." />
                   </div>
                 </div>
-                <div className="grid gap-4 sm:grid-cols-2">
+                <div className="grid gap-3 sm:grid-cols-2">
                   <div>
                     <Label htmlFor="email">Email</Label>
                     <Input id="email" name="Email" className="mt-2 rounded-none" placeholder="name@example.com" />
@@ -111,7 +112,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <Label htmlFor="message">Requirement</Label>
-                  <Textarea id="message" name="Requirement" className="mt-2 min-h-36 rounded-none" placeholder="Mention product, brand, catalogue number, application, quantity, test menu, or timeline." />
+                  <Textarea id="message" name="Requirement" className="mt-2 min-h-24 rounded-none" placeholder="Mention product, brand, catalogue number, application, quantity, test menu, or timeline." />
                 </div>
                 <Button type="submit" className="rounded-none">
                   Send Enquiry <Send className="ml-2 h-4 w-4" />
@@ -121,7 +122,7 @@ export default function ContactPage() {
           </div>
         </section>
 
-        <section className="py-20">
+        <section className="flex min-h-[100dvh] items-center py-28">
           <div className="container mx-auto px-6 md:px-12">
             <div className="grid gap-5 lg:grid-cols-[0.75fr_1fr]">
               <div className="border border-border bg-foreground p-8 text-background">
@@ -159,7 +160,7 @@ export default function ContactPage() {
           </div>
         </section>
 
-        <section className="bg-muted/35 py-20">
+        <section className="flex min-h-[100dvh] items-center bg-muted/35 py-28">
           <div className="container mx-auto px-6 md:px-12">
             <div className="mb-10 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
               <div>
@@ -182,7 +183,7 @@ export default function ContactPage() {
           </div>
         </section>
 
-        <section className="py-20">
+        <section className="flex min-h-[100dvh] items-center py-28">
           <div className="container mx-auto px-6 md:px-12">
             <div className="border border-border p-8 md:p-10">
               <div className="grid gap-8 md:grid-cols-[1fr_auto] md:items-center">
@@ -197,8 +198,10 @@ export default function ContactPage() {
             </div>
           </div>
         </section>
-      </main>
-      <SiteFooter />
+        <section className="min-h-[100dvh] bg-background">
+          <SiteFooter />
+        </section>
+      </PageSlideDeck>
     </div>
   );
 }
