@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 150" role="img" aria-label="Luminex">
+  <rect width="520" height="150" fill="#ffffff"/>
+  <g fill="none" stroke="#2ea3f2" stroke-linecap="round" stroke-width="11">
+    <path d="M58 91c20-38 45-54 77-54 23 0 40 8 58 26"/>
+    <path d="M80 107c22 19 50 25 79 14 18-7 31-18 43-35"/>
+  </g>
+  <g fill="#111827" font-family="Arial, Helvetica, sans-serif" font-weight="800">
+    <text x="228" y="93" font-size="58" letter-spacing="-2">Luminex</text>
+  </g>
+</svg>

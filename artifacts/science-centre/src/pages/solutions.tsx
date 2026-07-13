@@ -205,7 +205,7 @@ export default function SolutionsPage() {
           </div>
         </section>
         <section className="min-h-[100dvh] bg-background">
-          <SiteFooter />
+          <SiteFooter variant="slide" />
         </section>
       </PageSlideDeck>
     </div>

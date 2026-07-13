@@ -44,18 +44,8 @@ const capabilities = [
   },
 ];
 
-const textLogoBrands = new Set(["luminex", "diasorin", "sugentech"]);
-
-function PartnerWordmark({ name, dark = false }: { name: string; dark?: boolean }) {
-  return (
-    <span className={`font-[var(--app-font-heading)] text-xl font-black tracking-tight ${dark ? "text-white" : "text-foreground"}`}>
-      {name}
-    </span>
-  );
-}
-
 export default function PartnersPage() {
-  const featured = brands.slice(0, 10);
+  const featured = brands.slice(0, 9);
 
   return (
     <div className="h-[100dvh] overflow-hidden bg-background text-foreground">
@@ -91,13 +81,9 @@ export default function PartnersPage() {
                   className="group relative flex min-h-32 flex-col justify-between border border-white/12 bg-white/[0.06] p-4 transition-all hover:-translate-y-1 hover:bg-white/[0.1]"
                 >
                   <div className="flex h-12 items-center">
-                    {brand.logo && !textLogoBrands.has(brand.id) ? (
-                      <span className="flex h-12 min-w-36 items-center justify-center border border-white/10 bg-white px-3">
-                        <img src={asset(brand.logo)} alt={brand.name} className="max-h-8 max-w-[120px] object-contain" />
-                      </span>
-                    ) : (
-                      <PartnerWordmark name={brand.short} dark />
-                    )}
+                    <span className="flex h-12 min-w-36 items-center justify-center border border-white/10 bg-white px-3">
+                      <img src={asset(brand.logo)} alt={brand.name} className="max-h-8 max-w-[120px] object-contain" />
+                    </span>
                   </div>
                   <div>
                     <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-white/35">{productsByBrand(brand.id).length} catalogue entries</div>
@@ -154,7 +140,7 @@ export default function PartnersPage() {
                 {brands.map(brand => (
                   <Link key={brand.id} href={`/products?brand=${brand.id}`} className="group grid grid-cols-[86px_1fr_auto] items-center gap-4 border border-border bg-background p-4">
                     <div className="flex h-14 items-center justify-center border border-border bg-muted/30 p-2">
-                      {brand.logo && !textLogoBrands.has(brand.id) ? <img src={asset(brand.logo)} alt={brand.name} className="max-h-9 max-w-full object-contain" /> : <PartnerWordmark name={brand.short} />}
+                      <img src={asset(brand.logo)} alt={brand.name} className="max-h-9 max-w-full object-contain" />
                     </div>
                     <div>
                       <div className="font-[var(--app-font-heading)] font-black">{brand.name}</div>
@@ -173,7 +159,7 @@ export default function PartnersPage() {
             <div className="grid gap-5 md:grid-cols-3">
               {[
                 ["30+", "Years of market presence", "Long-term familiarity with hospital, academic and industrial procurement needs."],
-                ["10", "Global brand portfolios", "A broad scientific product mix organized for easy sourcing."],
+                ["9", "Global brand portfolios", "A broad scientific product mix organized for easy sourcing."],
                 ["500+", "Client conversations supported", "From routine consumables to major instrument workflows."],
               ].map(([value, label, body]) => (
                 <div key={label} className="border border-border p-7">
@@ -187,7 +173,7 @@ export default function PartnersPage() {
           </div>
         </section>
         <section className="min-h-[100dvh] bg-background">
-          <SiteFooter />
+          <SiteFooter variant="slide" />
         </section>
       </PageSlideDeck>
     </div>

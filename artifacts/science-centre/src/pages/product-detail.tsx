@@ -2057,7 +2057,7 @@ export default function ProductDetail() {
       featureTitle: "Features, benefits & uses",
       detailGrid: "lg:grid-cols-2",
     } :
-    product.brand === "luminex" || product.brand === "diasorin" ? {
+    product.brand === "luminex" ? {
       overview: "bg-[#f4fbfb]",
       grid: "lg:grid-cols-[minmax(0,0.85fr)_minmax(440px,1.05fr)] items-center",
       media: "bg-white border-[#cfe6e6]",

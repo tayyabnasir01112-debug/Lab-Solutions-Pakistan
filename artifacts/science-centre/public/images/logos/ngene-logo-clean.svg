@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 150" role="img" aria-label="NGeneBio">
+  <rect width="620" height="150" fill="#ffffff"/>
+  <g font-family="Arial, Helvetica, sans-serif" font-weight="300" letter-spacing="-4">
+    <text x="36" y="95" font-size="64" fill="#1f2937">N</text>
+    <text x="83" y="95" font-size="64" fill="#1f2937">Gene</text>
+    <text x="273" y="95" font-size="64" fill="#c8002d" font-weight="500">Bio</text>
+  </g>
+  <text x="39" y="123" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#4b5563" letter-spacing=".8">
+    Innovative &amp; Next Generation Biotechnology
+  </text>
+</svg>
