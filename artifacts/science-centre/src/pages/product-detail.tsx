@@ -230,6 +230,57 @@ function ProductMedia({ product }: { product: Product }) {
   );
 }
 
+function SpecGrid({ specs, accent, limit }: { specs?: Record<string, string>; accent: string; limit?: number }) {
+  const entries = Object.entries(specs || {}).filter(([, value]) => Boolean(value)).slice(0, limit);
+  if (!entries.length) return null;
+  return (
+    <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+      {entries.map(([key, value]) => (
+        <div key={key} className="border border-border bg-background p-4">
+          <div className="mb-2 text-[10px] font-black uppercase tracking-[0.18em]" style={{ color: accent }}>{key}</div>
+          <div className="text-sm font-semibold leading-relaxed text-foreground break-words">{value}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function FeatureBullets({ items, accent }: { items?: string[]; accent: string }) {
+  if (!items?.length) return null;
+  return (
+    <ul className="space-y-3">
+      {items.map((item, index) => (
+        <li key={index} className="flex gap-3 text-sm leading-relaxed text-muted-foreground">
+          <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{ background: accent }} />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function RelatedSlideContent({ products, accent }: { products: Product[]; accent: string }) {
+  return (
+    <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+      <div className="mb-8">
+        <div className="mb-2 text-xs font-bold uppercase tracking-wide" style={{ color: accent }}>More from this brand</div>
+        <h2 className="text-3xl md:text-4xl font-[var(--app-font-heading)] font-black text-foreground">Related products</h2>
+      </div>
+      <div className="grid gap-4 md:grid-cols-3">
+        {products.map(product => <RelatedCard key={product.id} product={product} />)}
+      </div>
+      <div className="mt-10 flex flex-wrap gap-3">
+        <Button asChild className="rounded-none" style={{ backgroundColor: accent }}>
+          <a href="/#contact">Request a Quote <ArrowRight className="ml-2 h-4 w-4" /></a>
+        </Button>
+        <Button asChild variant="outline" className="rounded-none">
+          <Link href="/products"><ArrowLeft className="mr-2 h-4 w-4" /> All Products</Link>
+        </Button>
+      </div>
+    </div>
+  );
+}
+
 function CytekProductDetail({ product }: { product: Product }) {
   const category = categoryById(product.category);
   const related = (product.relatedProducts || []).map(rid => productById(rid)).filter(Boolean) as Product[];
@@ -259,6 +310,109 @@ function CytekProductDetail({ product }: { product: Product }) {
 
   // Feature card icons (mapping index to icon)
   const cardIcons = [<Zap className="h-8 w-8" />, <Activity className="h-8 w-8" />, <Target className="h-8 w-8" />, <FlaskConical className="h-8 w-8" />, <Settings2 className="h-8 w-8" />, <Layers className="h-8 w-8" />];
+
+  const cytekSlides = [
+    (
+      <section key="hero" className="min-h-[100dvh] flex items-center overflow-hidden bg-[#203c3c] text-white relative">
+        {product.heroBg && <img src={product.heroBg} alt="" className="absolute inset-0 h-full w-full object-cover opacity-70" />}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/20" />
+        <div className="container relative z-10 mx-auto grid items-center gap-10 px-6 pt-28 pb-16 md:px-12 lg:grid-cols-[0.95fr_1.05fr]">
+          <div>
+            <div className="mb-4 text-[12px] font-bold text-white/65">Science Centre Pakistan / Cytek Biosciences</div>
+            <h1 className="font-[var(--app-font-heading)] text-4xl font-black leading-none md:text-6xl">{product.name}</h1>
+            {product.subtitle && <p className="mt-6 max-w-xl text-2xl font-light leading-snug text-white/90">{product.subtitle}</p>}
+            <div className="mt-8 flex flex-wrap gap-3">
+              {product.brochure && <a href={product.brochure} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 border-2 border-white px-7 py-3 text-[12px] font-black uppercase tracking-wide hover:bg-white hover:text-[#203c3c]"><FileText className="h-4 w-4" /> Product Brochure</a>}
+              <a href="/#contact" className="inline-flex items-center gap-2 px-7 py-3 text-[12px] font-black uppercase tracking-wide text-[#E99E2A]">Request More Information <ArrowRight className="h-4 w-4" /></a>
+            </div>
+          </div>
+          <div className="hidden lg:flex justify-center">
+            {product.image && <img src={product.image} alt={product.name} className="max-h-[520px] w-full object-contain drop-shadow-2xl" />}
+          </div>
+        </div>
+      </section>
+    ),
+    (
+      <section key="performance" className="min-h-[100dvh] bg-white">
+        <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+          <div className="mb-8 max-w-3xl">
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-[#2c5f5f]">Full spectrum profiling</div>
+            <h2 className="font-[var(--app-font-heading)] text-3xl md:text-5xl font-black text-[#111]">Performance at a glance</h2>
+            <p className="mt-4 text-muted-foreground leading-relaxed">{product.description}</p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-4">
+            {displayStats.map(stat => (
+              <div key={stat.label} className="border border-[#d8e5e5] bg-[#f7fbfb] p-6">
+                <div className="text-[11px] font-black uppercase tracking-wide text-[#2c5f5f]">{stat.label}</div>
+                <div className="mt-3 text-2xl font-black text-[#111]">{stat.value}</div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8">
+            <SpecGrid specs={product.specs} accent="#2c5f5f" limit={9} />
+          </div>
+        </div>
+      </section>
+    ),
+    product.featureCards?.length && (
+      <section key="features" className="min-h-[100dvh] bg-[#f4f8f8]">
+        <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+          <div className="mb-8 flex items-end justify-between gap-6">
+            <div>
+              <div className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-[#2c5f5f]">Technology</div>
+              <h2 className="font-[var(--app-font-heading)] text-3xl md:text-5xl font-black text-[#111]">Technology &amp; features</h2>
+            </div>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {product.featureCards.map((card, index) => (
+              <div key={card.title} className="border border-[#d8e5e5] bg-white p-6">
+                <div className="mb-4 text-[#2c5f5f]">{cardIcons[index % cardIcons.length]}</div>
+                <h3 className="font-[var(--app-font-heading)] text-xl font-black text-[#111]">{card.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{card.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    ),
+    product.kits?.length && (
+      <section key="kits" className="min-h-[100dvh] bg-white">
+        <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+          <div className="mb-8">
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-[#2c5f5f]">Configurations</div>
+            <h2 className="font-[var(--app-font-heading)] text-3xl md:text-5xl font-black text-[#111]">Kits &amp; options</h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            {product.kits.map((kit, index) => (
+              <div key={index} className="border border-border p-5">
+                <div className="font-bold text-foreground">{kit.name}</div>
+                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{kit.description}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    ),
+    allRelated.length > 0 && (
+      <section key="related" className="min-h-[100dvh] bg-[#f4f8f8]">
+        <RelatedSlideContent products={allRelated} accent="#2c5f5f" />
+      </section>
+    ),
+  ].filter(Boolean) as React.ReactNode[];
+  const cytekSlideNames = [
+    "Overview",
+    "Performance",
+    ...(product.featureCards?.length ? ["Technology"] : []),
+    ...(product.kits?.length ? ["Options"] : []),
+    ...(allRelated.length ? ["Related"] : []),
+  ];
+
+  return (
+    <div className="h-[100dvh] overflow-hidden bg-white text-[#333]">
+      <SiteNavbar forceSolid />
+      <ProductSlideDeck sections={cytekSlides} names={cytekSlideNames} accent="#2c5f5f" />
+    </div>
+  );
 
   return (
     <div className="min-h-[100dvh] bg-white text-[#333]">
@@ -640,6 +794,93 @@ function NgeneBioProductDetail({ product }: { product: Product }) {
     ...(product.applications?.length ? [{ key: "applications" as const, label: "Applications" }] : []),
   ];
 
+  const ngeneSlides = [
+    (
+      <section key="hero" className="min-h-[100dvh] bg-white">
+        <div className="h-1.5 bg-[#C8002D]" />
+        <div className="container mx-auto grid min-h-[calc(100dvh-6px)] items-center gap-10 px-6 pb-16 pt-28 md:px-12 lg:grid-cols-[1fr_380px]">
+          <div>
+            <div className="mb-5 flex flex-wrap gap-2">
+              <span className="bg-[#C8002D] px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.18em] text-white">NgeneBio</span>
+              <span className="border border-[#007a52]/40 px-3 py-1.5 text-[11px] font-bold text-[#007a52]">CE-IVD Certified</span>
+              {category && <span className="border border-border px-3 py-1.5 text-[11px] text-muted-foreground">{category.name}</span>}
+            </div>
+            <h1 className="font-[var(--app-font-heading)] text-4xl md:text-6xl font-black leading-tight text-[#111]">{product.name}</h1>
+            {product.subtitle && <p className="mt-5 text-sm font-bold tracking-wide text-[#C8002D]">{product.subtitle}</p>}
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">{product.description}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href="/#contact" className="inline-flex items-center gap-2 bg-[#C8002D] px-7 py-3 text-[12px] font-black uppercase tracking-[0.15em] text-white">Request a Quote <ArrowRight className="h-4 w-4" /></a>
+              <Link href="/products" className="inline-flex items-center gap-2 border border-border px-7 py-3 text-[12px] font-bold uppercase tracking-[0.1em]"><ArrowLeft className="h-4 w-4" /> All Products</Link>
+            </div>
+          </div>
+          <div className="bg-[#C8002D] p-8 text-white">
+            <div className="mb-6 text-[11px] font-black uppercase tracking-[0.3em] text-white/50">Precision diagnostics</div>
+            <div className="space-y-5">
+              {Object.entries(product.specs || {}).slice(0, 5).map(([key, value]) => (
+                <div key={key} className="border-b border-white/15 pb-4">
+                  <div className="mb-1 text-[10px] font-black uppercase tracking-[0.2em] text-white/45">{key}</div>
+                  <div className="text-sm font-bold leading-relaxed">{value}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    ),
+    product.featureCards?.length && (
+      <section key="capabilities" className="min-h-[100dvh] bg-[#fff7f8]">
+        <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+          <div className="mb-8">
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-[#C8002D]">Clinical workflow</div>
+            <h2 className="font-[var(--app-font-heading)] text-3xl md:text-5xl font-black text-[#111]">Key capabilities</h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {product.featureCards.map(card => (
+              <div key={card.title} className="border border-[#ffd5dc] bg-white p-6">
+                <h3 className="font-[var(--app-font-heading)] text-lg font-black text-[#111]">{card.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{card.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    ),
+    product.specs && (
+      <section key="specs" className="min-h-[100dvh] bg-white">
+        <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+          <div className="mb-8">
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-[#C8002D]">Assay profile</div>
+            <h2 className="font-[var(--app-font-heading)] text-3xl md:text-5xl font-black text-[#111]">Specifications</h2>
+          </div>
+          <SpecGrid specs={product.specs} accent="#C8002D" />
+        </div>
+      </section>
+    ),
+    (product.applications?.length || allRelated.length) && (
+      <section key="applications" className="min-h-[100dvh] bg-[#fff7f8]">
+        <div className="container mx-auto grid gap-10 px-6 md:px-12 pt-28 pb-14 lg:grid-cols-[1fr_1fr]">
+          <div>
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-[#C8002D]">Use cases</div>
+            <h2 className="mb-6 font-[var(--app-font-heading)] text-3xl font-black text-[#111]">Applications</h2>
+            <FeatureBullets items={product.applications} accent="#C8002D" />
+          </div>
+          <div>
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-[#C8002D]">Related</div>
+            <h2 className="mb-6 font-[var(--app-font-heading)] text-3xl font-black text-[#111]">Panels &amp; software</h2>
+            <div className="grid gap-4">{allRelated.map(p => <RelatedCard key={p.id} product={p} />)}</div>
+          </div>
+        </div>
+      </section>
+    ),
+  ].filter(Boolean) as React.ReactNode[];
+
+  return (
+    <div className="h-[100dvh] overflow-hidden bg-white text-[#111]">
+      <SiteNavbar forceSolid />
+      <ProductSlideDeck sections={ngeneSlides} names={["Overview", ...(product.featureCards?.length ? ["Capabilities"] : []), ...(product.specs ? ["Specs"] : []), ...((product.applications?.length || allRelated.length) ? ["Applications"] : [])]} accent="#C8002D" />
+    </div>
+  );
+
   return (
     <div className="min-h-[100dvh] bg-white text-[#111]">
       <SiteNavbar forceSolid />
@@ -960,6 +1201,93 @@ function SugentechProductDetail({ product }: { product: Product }) {
     ...(product.applications?.length ? [{ key: "applications" as const, label: "Applications" }] : []),
     ...(product.kits?.length ? [{ key: "kits" as const, label: "Kits & Reagents" }] : []),
   ];
+
+  const sugSlides = [
+    (
+      <section key="hero" className="min-h-[100dvh] bg-[#eaf4ff]">
+        <div className="h-1.5 bg-[#0057A8]" />
+        <div className="container mx-auto grid min-h-[calc(100dvh-6px)] items-center gap-8 px-6 pb-16 pt-28 md:px-12 xl:grid-cols-[0.9fr_1fr_280px]">
+          <div>
+            <div className="mb-5 flex flex-wrap gap-2">
+              <span className="bg-[#0057A8] px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.15em] text-white">Sugentech</span>
+              <span className="border border-[#007a52]/40 bg-white px-3 py-1.5 text-[11px] font-bold text-[#007a52]">CE-IVD</span>
+              {category && <span className="border border-[#dce8f5] bg-white px-3 py-1.5 text-[11px] text-muted-foreground">{category.name}</span>}
+            </div>
+            <h1 className="font-[var(--app-font-heading)] text-4xl md:text-6xl font-black leading-tight text-[#0a1628]">{product.name}</h1>
+            {product.subtitle && <p className="mt-4 text-sm font-bold tracking-wide text-[#0057A8]">{product.subtitle}</p>}
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-[#4d5d70]">{product.description}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href="/#contact" className="inline-flex items-center gap-2 bg-[#0057A8] px-7 py-3 text-[12px] font-black uppercase tracking-[0.15em] text-white">Request a Quote <ArrowRight className="h-4 w-4" /></a>
+              <a href="/#contact" className="inline-flex items-center gap-2 border-2 border-[#0057A8] px-7 py-3 text-[12px] font-bold uppercase tracking-[0.1em] text-[#0057A8]">Speak to a Specialist</a>
+            </div>
+          </div>
+          <div className="flex min-h-[300px] items-center justify-center">
+            {product.image ? <img src={product.image} alt={product.name} className="max-h-[430px] w-full object-contain drop-shadow-xl" /> : <ProductMedia product={product} />}
+          </div>
+          <div className="hidden xl:block border border-[#dce8f5] bg-white">
+            <div className="bg-[#0057A8] px-5 py-3 text-[10px] font-black uppercase tracking-[0.2em] text-white">Key specifications</div>
+            <div className="divide-y divide-[#edf3fa]">{Object.entries(product.specs || {}).slice(0, 6).map(([k, v]) => <div key={k} className="p-4"><div className="mb-1 text-[9px] font-black uppercase tracking-[0.18em] text-[#0057A8]/60">{k}</div><div className="text-sm font-semibold leading-snug">{v}</div></div>)}</div>
+          </div>
+        </div>
+      </section>
+    ),
+    (
+      <section key="features" className="min-h-[100dvh] bg-white">
+        <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+          <div className="mb-8">
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-[#0057A8]">POCT workflow</div>
+            <h2 className="font-[var(--app-font-heading)] text-3xl md:text-5xl font-black text-[#0a1628]">Features &amp; certifications</h2>
+          </div>
+          <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr]">
+            <FeatureBullets items={product.features} accent="#0057A8" />
+            <div className="grid gap-3">
+              {["CE-IVD", "KMFDS", "POCT", "LIS/HIS"].map(label => (
+                <div key={label} className="border border-[#dce8f5] bg-[#f8fbff] p-4">
+                  <span className="bg-[#0057A8] px-2.5 py-1 text-[9px] font-black text-white">{label}</span>
+                  <p className="mt-3 text-sm text-muted-foreground">Validated for clinical point-of-care workflows with Science Centre Pakistan support.</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    ),
+    product.specs && (
+      <section key="specs" className="min-h-[100dvh] bg-[#f0f6ff]">
+        <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+          <div className="mb-8">
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-[#0057A8]">Technical profile</div>
+            <h2 className="font-[var(--app-font-heading)] text-3xl md:text-5xl font-black text-[#0a1628]">Specifications</h2>
+          </div>
+          <SpecGrid specs={product.specs} accent="#0057A8" />
+        </div>
+      </section>
+    ),
+    (product.applications?.length || product.kits?.length) && (
+      <section key="clinical" className="min-h-[100dvh] bg-white">
+        <div className="container mx-auto grid gap-10 px-6 md:px-12 pt-28 pb-14 lg:grid-cols-2">
+          <div>
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-[#0057A8]">Clinical use</div>
+            <h2 className="mb-6 font-[var(--app-font-heading)] text-3xl font-black text-[#0a1628]">Applications</h2>
+            <FeatureBullets items={product.applications} accent="#0057A8" />
+          </div>
+          <div>
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.2em] text-[#0057A8]">Compatible menu</div>
+            <h2 className="mb-6 font-[var(--app-font-heading)] text-3xl font-black text-[#0a1628]">Kits &amp; reagents</h2>
+            <div className="grid gap-4">{product.kits?.map((kit, i) => <div key={i} className="border border-[#dce8f5] p-4"><div className="font-bold">{kit.name}</div><p className="mt-2 text-sm text-muted-foreground">{kit.description}</p></div>)}</div>
+          </div>
+        </div>
+      </section>
+    ),
+    allRelated.length > 0 && <section key="related" className="min-h-[100dvh] bg-[#f0f6ff]"><RelatedSlideContent products={allRelated} accent="#0057A8" /></section>,
+  ].filter(Boolean) as React.ReactNode[];
+
+  return (
+    <div className="h-[100dvh] overflow-hidden bg-white text-[#111]">
+      <SiteNavbar forceSolid />
+      <ProductSlideDeck sections={sugSlides} names={["Overview", "Features", ...(product.specs ? ["Specs"] : []), ...((product.applications?.length || product.kits?.length) ? ["Clinical"] : []), ...(allRelated.length ? ["Related"] : [])]} accent="#0057A8" />
+    </div>
+  );
 
   return (
     <div className="min-h-[100dvh] bg-white text-[#111]">
@@ -1285,6 +1613,87 @@ function RexProductDetail({ product }: { product: Product }) {
     ...(product.applications?.length ? [{ key: "applications" as const, label: "Applications" }] : []),
   ];
 
+  const rexSlides = [
+    (
+      <section key="hero" className="min-h-[100dvh] bg-[#f5f8fc]">
+        <div className="container mx-auto grid min-h-[100dvh] items-center gap-10 px-6 pb-16 pt-28 md:px-12 lg:grid-cols-[1fr_420px]">
+          <div>
+            <div className="mb-5 flex flex-wrap gap-2">
+              <span className="px-3 py-1.5 text-[11px] font-black uppercase tracking-[0.15em] text-white" style={{ background: BLUE }}>INESA-REX</span>
+              {category && <span className="border border-[#dce8f5] bg-white px-3 py-1.5 text-[11px] text-muted-foreground">{category.name}</span>}
+              {product.featured && <span className="border border-amber-300 bg-amber-50 px-3 py-1.5 text-[11px] font-bold text-amber-600">Featured</span>}
+            </div>
+            <h1 className="font-[var(--app-font-heading)] text-4xl md:text-6xl font-black leading-tight text-[#0a1628]">{product.name}</h1>
+            {product.subtitle && <p className="mt-4 text-sm font-bold" style={{ color: BLUE }}>{product.subtitle}</p>}
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">{product.description}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a href="/#contact" className="inline-flex items-center gap-2 px-7 py-3 text-[12px] font-black uppercase tracking-[0.14em] text-white" style={{ background: BLUE }}>Request a Quote <ArrowRight className="h-4 w-4" /></a>
+              <Link href="/products" className="inline-flex items-center gap-2 border border-border bg-white px-7 py-3 text-[12px] font-bold uppercase tracking-[0.1em]"><ArrowLeft className="h-4 w-4" /> All Products</Link>
+            </div>
+          </div>
+          <div className="border border-[#dce8f5] bg-white p-8 min-h-[320px] flex items-center justify-center">
+            {product.image ? <img src={product.image} alt={product.name} className="max-h-[420px] w-full object-contain" /> : <ProductMedia product={product} />}
+          </div>
+        </div>
+      </section>
+    ),
+    (
+      <section key="features" className="min-h-[100dvh] bg-white">
+        <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+          <div className="mb-8">
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.2em]" style={{ color: BLUE }}>Laboratory measurement</div>
+            <h2 className="font-[var(--app-font-heading)] text-3xl md:text-5xl font-black text-[#0a1628]">Features</h2>
+          </div>
+          <div className="grid gap-10 lg:grid-cols-[1fr_0.9fr]">
+            <FeatureBullets items={product.features} accent={BLUE} />
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-1">
+              {Object.entries(product.specs || {}).slice(0, 4).map(([key, value]) => (
+                <div key={key} className="border border-[#dce8f5] bg-[#f5f8fc] p-5">
+                  <div className="mb-2 text-[10px] font-black uppercase tracking-[0.18em]" style={{ color: BLUE }}>{key}</div>
+                  <div className="text-lg font-black text-[#0a1628]">{value}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    ),
+    product.specs && (
+      <section key="specs" className="min-h-[100dvh] bg-[#f5f8fc]">
+        <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+          <div className="mb-8">
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.2em]" style={{ color: BLUE }}>Instrument data</div>
+            <h2 className="font-[var(--app-font-heading)] text-3xl md:text-5xl font-black text-[#0a1628]">Specifications</h2>
+          </div>
+          <SpecGrid specs={product.specs} accent={BLUE} />
+        </div>
+      </section>
+    ),
+    (product.applications?.length || allRelated.length) && (
+      <section key="applications" className="min-h-[100dvh] bg-white">
+        <div className="container mx-auto grid gap-10 px-6 md:px-12 pt-28 pb-14 lg:grid-cols-2">
+          <div>
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.2em]" style={{ color: BLUE }}>Lab workflows</div>
+            <h2 className="mb-6 font-[var(--app-font-heading)] text-3xl font-black text-[#0a1628]">Applications</h2>
+            <FeatureBullets items={product.applications} accent={ORANGE} />
+          </div>
+          <div>
+            <div className="mb-2 text-xs font-black uppercase tracking-[0.2em]" style={{ color: BLUE }}>More instruments</div>
+            <h2 className="mb-6 font-[var(--app-font-heading)] text-3xl font-black text-[#0a1628]">Related products</h2>
+            <div className="grid gap-4">{allRelated.map(p => <RelatedCard key={p.id} product={p} />)}</div>
+          </div>
+        </div>
+      </section>
+    ),
+  ].filter(Boolean) as React.ReactNode[];
+
+  return (
+    <div className="h-[100dvh] overflow-hidden bg-white text-[#111]">
+      <SiteNavbar forceSolid />
+      <ProductSlideDeck sections={rexSlides} names={["Overview", "Features", ...(product.specs ? ["Specs"] : []), ...((product.applications?.length || allRelated.length) ? ["Applications"] : [])]} accent={BLUE} />
+    </div>
+  );
+
   return (
     <div className="min-h-[100dvh] bg-white text-[#111]">
       <SiteNavbar forceSolid />
@@ -1608,7 +2017,13 @@ export default function ProductDetail() {
   const moreBrand = productsByBrand(product.brand).filter(p => p.id !== product.id && !product.relatedProducts?.includes(p.id)).slice(0, 3 - related.length);
   const allRelated = [...related, ...moreBrand].slice(0, 3);
   const specEntries = product.specs ? Object.entries(product.specs).filter(([, value]) => Boolean(value)) : [];
-  const preferredQuickSpecKeys = ["Output", "Operating parameters", "Resistivity", "Dimensions"];
+  const preferredQuickSpecKeys =
+    product.brand === "merck" ? ["Output", "Operating parameters", "Resistivity", "Dimensions"] :
+    product.brand === "luminex" ? ["Technology", "Portfolio area", "Catalogue approach", "Throughput"] :
+    product.brand === "onelambda" ? ["HLA loci", "Specificities", "Detection method", "Sample type"] :
+    product.brand === "hkm" ? ["Code", "Specification", "Official category", "Product family"] :
+    product.brand === "biolegend" ? ["Portfolio group", "Catalogue approach", "Source", "Application"] :
+    ["Output", "Operating parameters", "Technology", "Dimensions"];
   const quickSpecs = [
     ...preferredQuickSpecKeys
       .map(key => specEntries.find(([specKey]) => specKey === key))
@@ -1618,9 +2033,89 @@ export default function ProductDetail() {
   const documentUrl = product.brochure || product.specSheet;
   const hasApplicationDetailSection = product.detailSections?.some(section => section.title.trim().toLowerCase() === "application");
   const displayedApplications = hasApplicationDetailSection ? [] : (product.applications || []);
+  const brandAccent = brand?.accent || "hsl(var(--primary))";
+  const fallbackTone =
+    product.brand === "merck" ? {
+      overview: "bg-[#f6fbff]",
+      grid: "lg:grid-cols-[minmax(0,0.95fr)_minmax(380px,0.8fr)] items-start",
+      media: "bg-white border-[#d7e5f2]",
+      image: "aspect-[4/3]",
+      technicalLabel: "Water system properties",
+      technicalTitle: "Purification specifications",
+      detailLabel: "Merck source detail",
+      detailTitle: "Description & applications",
+      featureLabel: "Operational notes",
+      featureTitle: "Features, benefits & uses",
+      detailGrid: "lg:grid-cols-2",
+    } :
+    product.brand === "luminex" || product.brand === "diasorin" ? {
+      overview: "bg-[#f4fbfb]",
+      grid: "lg:grid-cols-[minmax(0,0.85fr)_minmax(440px,1.05fr)] items-center",
+      media: "bg-white border-[#cfe6e6]",
+      image: "aspect-[16/10]",
+      technicalLabel: "Multiplex platform",
+      technicalTitle: "Platform profile",
+      detailLabel: "xMAP workflow",
+      detailTitle: "Technology & instrument detail",
+      featureLabel: "Assay development",
+      featureTitle: "Features & applications",
+      detailGrid: "lg:grid-cols-[0.9fr_1.1fr]",
+    } :
+    product.brand === "onelambda" ? {
+      overview: "bg-[#fbf8ff]",
+      grid: "lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.85fr)] items-start",
+      media: "bg-white border-[#e2d8f4]",
+      image: "aspect-[3/2]",
+      technicalLabel: "Transplant assay profile",
+      technicalTitle: "Assay specifications",
+      detailLabel: "Clinical lab use",
+      detailTitle: "Transplant diagnostics detail",
+      featureLabel: "HLA workflow",
+      featureTitle: "Features & clinical applications",
+      detailGrid: "lg:grid-cols-[1.1fr_0.9fr]",
+    } :
+    product.brand === "hkm" ? {
+      overview: "bg-[#f8fff7]",
+      grid: "lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.72fr)] items-start",
+      media: "bg-white border-[#d9ead5]",
+      image: "aspect-square",
+      technicalLabel: "Catalogue profile",
+      technicalTitle: "Media specifications",
+      detailLabel: "Preparation & principle",
+      detailTitle: "Culture media detail",
+      featureLabel: "Lab use",
+      featureTitle: "Features & applications",
+      detailGrid: "lg:grid-cols-1",
+    } :
+    product.brand === "biolegend" ? {
+      overview: "bg-[#fff7fb]",
+      grid: "lg:grid-cols-[minmax(0,1.08fr)_minmax(340px,0.72fr)] items-start",
+      media: "bg-white border-[#f1cfe1]",
+      image: "aspect-[4/3]",
+      technicalLabel: "Research reagent family",
+      technicalTitle: "Representative catalogue profile",
+      detailLabel: "Sourcing scope",
+      detailTitle: "Family detail & source reference",
+      featureLabel: "Variant sourcing",
+      featureTitle: "Features & application scope",
+      detailGrid: "lg:grid-cols-2",
+    } :
+    {
+      overview: "bg-gradient-to-b from-muted/40 via-background to-background",
+      grid: "lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] items-start",
+      media: "bg-background border-border",
+      image: "aspect-[4/3]",
+      technicalLabel: "Technical profile",
+      technicalTitle: "Specifications at a glance",
+      detailLabel: "Product detail",
+      detailTitle: "Description & use cases",
+      featureLabel: "Performance notes",
+      featureTitle: "Features & applications",
+      detailGrid: "lg:grid-cols-2",
+    };
   const productSlides = [
     (
-      <section key="overview" className="min-h-[100dvh] border-b border-border bg-gradient-to-b from-muted/40 via-background to-background">
+      <section key="overview" className={`min-h-[100dvh] border-b border-border ${fallbackTone.overview}`}>
           <div className="container mx-auto px-6 md:px-12 pt-28 pb-24">
             <nav className="flex items-center gap-2 text-xs text-muted-foreground mb-8 flex-wrap">
               <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
@@ -1629,7 +2124,7 @@ export default function ProductDetail() {
               <ChevronRight className="h-3 w-3 flex-shrink-0" />
               <span className="text-foreground font-medium truncate max-w-[200px]">{product.name}</span>
             </nav>
-            <div className="grid lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)] gap-10 xl:gap-14 items-start min-w-0">
+            <div className={`grid ${fallbackTone.grid} gap-10 xl:gap-14 min-w-0`}>
               <div className="min-w-0">
                 <div className="flex flex-wrap gap-2 mb-5">
                   {brand && <span className="px-3 py-1.5 text-xs font-bold text-white rounded-sm" style={{ background: brand.accent }}>{brand.short}</span>}
@@ -1653,8 +2148,8 @@ export default function ProductDetail() {
                   <Button asChild variant="outline" size="lg" className="rounded-none w-full sm:w-auto"><Link href="/products"><ArrowLeft className="mr-2 h-4 w-4" /> All Products</Link></Button>
                 </div>
               </div>
-              <div className="border border-border bg-background p-5 md:p-6 shadow-sm min-w-0 w-full">
-                <div className="aspect-[4/3] bg-muted/50 border border-border/60 flex items-center justify-center mb-5 overflow-hidden">
+              <div className={`border ${fallbackTone.media} p-5 md:p-6 shadow-sm min-w-0 w-full`}>
+                <div className={`${fallbackTone.image} bg-muted/50 border border-border/60 flex items-center justify-center mb-5 overflow-hidden`}>
                   <ProductMedia product={product} />
                 </div>
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
@@ -1691,8 +2186,8 @@ export default function ProductDetail() {
         <div className="container mx-auto px-6 md:px-12 pt-28 pb-14 min-w-0">
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-7">
               <div>
-                <div className="text-xs font-bold uppercase tracking-wide text-primary mb-2">Technical profile</div>
-                <h2 className="text-2xl md:text-3xl font-[var(--app-font-heading)] font-black text-foreground">Specifications at a glance</h2>
+                <div className="text-xs font-bold uppercase tracking-wide mb-2" style={{ color: brandAccent }}>{fallbackTone.technicalLabel}</div>
+                <h2 className="text-2xl md:text-3xl font-[var(--app-font-heading)] font-black text-foreground">{fallbackTone.technicalTitle}</h2>
                 <p className="text-muted-foreground text-sm md:text-base leading-relaxed mt-2 max-w-2xl">The full product specification set is grouped here so the page stays balanced while every important property remains easy to scan.</p>
               </div>
               {documentUrl && (
@@ -1716,10 +2211,10 @@ export default function ProductDetail() {
       <section key="details" className="min-h-[100dvh] border-b border-border bg-muted/20">
           <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
             <div className="mb-8">
-              <div className="text-xs font-bold uppercase tracking-wide text-primary mb-2">Product detail</div>
-              <h2 className="text-2xl md:text-3xl font-[var(--app-font-heading)] font-black text-foreground">Description &amp; use cases</h2>
+              <div className="text-xs font-bold uppercase tracking-wide mb-2" style={{ color: brandAccent }}>{fallbackTone.detailLabel}</div>
+              <h2 className="text-2xl md:text-3xl font-[var(--app-font-heading)] font-black text-foreground">{fallbackTone.detailTitle}</h2>
             </div>
-            <div className="grid lg:grid-cols-2 gap-5">
+            <div className={`grid ${fallbackTone.detailGrid} gap-5`}>
               {product.detailSections.map((section, i) => (
                 <section key={`${section.title}-${i}`} className="border border-border bg-background p-6 md:p-7">
                   <h2 className="text-2xl font-bold mb-4">{section.title}</h2>
@@ -1746,8 +2241,8 @@ export default function ProductDetail() {
       <section key="features" className="min-h-[100dvh] border-b border-border bg-background">
           <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
             <div className="mb-8">
-              <div className="text-xs font-bold uppercase tracking-wide text-primary mb-2">Performance notes</div>
-              <h2 className="text-2xl md:text-3xl font-[var(--app-font-heading)] font-black text-foreground">Features &amp; applications</h2>
+              <div className="text-xs font-bold uppercase tracking-wide mb-2" style={{ color: brandAccent }}>{fallbackTone.featureLabel}</div>
+              <h2 className="text-2xl md:text-3xl font-[var(--app-font-heading)] font-black text-foreground">{fallbackTone.featureTitle}</h2>
             </div>
             <div className="grid lg:grid-cols-2 gap-12">
               {(product.highlights || product.features) && <div><h3 className="text-xl font-bold mb-5">Features &amp; Benefits</h3><ul className="space-y-3">{[...(product.highlights || []), ...(product.features || [])].map((f,i) => <li key={i} className="flex gap-3 text-sm text-muted-foreground"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />{f}</li>)}</ul></div>}
@@ -1785,7 +2280,7 @@ export default function ProductDetail() {
   return (
     <div className="h-[100dvh] bg-background overflow-hidden">
       <SiteNavbar forceSolid />
-      <ProductSlideDeck sections={productSlides} names={productSlideNames} accent={brand?.accent || "hsl(var(--primary))"} />
+      <ProductSlideDeck sections={productSlides} names={productSlideNames} accent={brandAccent} />
     </div>
   );
 }
