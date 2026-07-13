@@ -146,10 +146,13 @@ export const brands: Brand[] = [
     id: "hkm",
     name: "HKM Bio",
     short: "HKM",
-    accent: "#7A8B99",
-    blurb: "Reliable laboratory equipment — centrifuges, incubators, and safety cabinets.",
-    longBlurb: "HKM Bio supplies a comprehensive range of laboratory equipment for clinical and research laboratories — from high-speed refrigerated centrifuges and CO₂ incubators to biosafety cabinets and analytical balances. Known for reliable performance, competitive pricing, and long-term support.",
-    hq: "Korea",
+    accent: "#26715A",
+    logo: "/images/logos/hkm-logo.png",
+    blurb: "Microbial detection and control products - culture media, water testing, rapid kits, lab instruments, glassware, and consumables.",
+    longBlurb: "HKM Bio / Guangdong Huankai Microbial Sci. & Tech. Co., Ltd. has focused on microbial detection and control since 1993. Its portfolio spans dehydrated, granular, chromogenic, and ready-to-use culture media, raw materials, biochemical and latex identification kits, count plates, water testing products, detergents and disinfectants, laboratory instruments, glassware, and consumables.",
+    founded: "1993",
+    hq: "Guangdong, China",
+    website: "https://www.hkmbio.com",
   },
   {
     id: "sugentech",
@@ -195,6 +198,16 @@ export const categories: Category[] = [
   { id: "equipment",     name: "Lab Equipment",               icon: <Beaker className="h-4 w-4" /> },
   { id: "serological",   name: "Serological Typing",          icon: <Activity className="h-4 w-4" /> },
   { id: "posttransplant",name: "Post-Transplant Monitoring",  icon: <Layers className="h-4 w-4" /> },
+  /* -- HKM Bio categories --------------------------------------------------- */
+  { id: "hkm-culture-media", name: "HKM Culture Media", icon: <TestTube className="h-4 w-4" /> },
+  { id: "hkm-raw-materials", name: "HKM Raw Materials", icon: <FlaskConical className="h-4 w-4" /> },
+  { id: "hkm-detection-kits", name: "HKM Detection Kits", icon: <ShieldCheck className="h-4 w-4" /> },
+  { id: "hkm-count-cards", name: "HKM Count Cards", icon: <Layers className="h-4 w-4" /> },
+  { id: "hkm-water-testing", name: "HKM Water Testing", icon: <Droplets className="h-4 w-4" /> },
+  { id: "hkm-disinfectants", name: "HKM Detergents & Disinfectants", icon: <ShieldCheck className="h-4 w-4" /> },
+  { id: "hkm-lab-instruments", name: "HKM Laboratory Instruments", icon: <Beaker className="h-4 w-4" /> },
+  { id: "hkm-labware", name: "HKM Laboratory Glassware", icon: <Scale className="h-4 w-4" /> },
+  { id: "hkm-consumables", name: "HKM Laboratory Consumables", icon: <Layers className="h-4 w-4" /> },
   /* -- Sugentech categories ------------------------------------------------ */
   { id: "sug-immunoblot-systems", name: "Sugentech Immunoblot Systems", icon: <Layers className="h-4 w-4" /> },
   { id: "sug-immunoblot-tests", name: "Sugentech Immunoblot Tests", icon: <ShieldCheck className="h-4 w-4" /> },
@@ -2305,7 +2318,3130 @@ export const products: Product[] = [
     tags: ["software", "bioinformatics", "cloud", "NGS analysis", "clinical reporting", "CDx"],
     relatedProducts: ["ngene-brca", "ngene-heme", "ngene-onco"],
   },
-    /* -- Sugentech -------------------------------------------------------------- */
+    /* -- HKM Bio --------------------------------------------------------------- */
+  {
+      id: "hkm-hcm045-mannitol-salt-agar",
+      name: "HCM045 Mannitol Salt Agar",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Dehydrated Culture Media",
+      featured: true,
+      subtitle: "For selective isolation and culture of Staphylococcus aureus.",
+      description: "For selective isolation and culture of Staphylococcus aureus. HCM045 Mannitol Salt Agar Usages: For selective isolation and culture of Staphylococcus aureus. Principle: Peptone and beef extract powder provides carbon, nitrogen, vitamins and minerals; D- mannitol to fermentable sugars; higher levels of sodium chloride to provide a higher osmotic pressure, suppress most non-staphylococcal microorganisms ; phenolsulfonphthalein as pH indicator; agar is medium coagulant.",
+      image: "/images/hkm/hkm-hcm045-mannitol-salt-agar.png",
+      specSheet: "https://www.hkmbio.com/DCMedia/107.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "HCM045 Mannitol Salt Agar Usages: For selective isolation and culture of Staphylococcus aureus. Principle: Peptone and beef extract powder provides carbon, nitrogen, vitamins and minerals; D- mannitol to fermentable sugars; higher levels of sodium chloride to provide a higher osmotic pressure, suppress most non-staphylococcal microorganisms ; phenolsulfonphthalein as pH indicator; agar is medium coagulant. Typical pathogenic staphylococci (coagulase positive) D- mannitol produce acid fermentation and produce yellow colonies with a yellow halo, typically non-pathogenic Staphylococcus unfermented D- mannitol to form red colonies."
+        }
+      ],
+      highlights: [
+        "Use: For selective isolation and culture of Staphylococcus aureus.",
+        "Specification: 500g/bottle",
+        "HKM code: HCM045",
+        "Official family: Dehydrated Culture Media"
+      ],
+      features: [
+        "Use: For selective isolation and culture of Staphylococcus aureus.",
+        "Specification: 500g/bottle",
+        "HKM code: HCM045",
+        "Official family: Dehydrated Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "HCM045",
+        Specification: "500g/bottle",
+        "Official category": "Dehydrated Culture Media",
+        "Product family": "Dehydrated Culture Media",
+        Usage: "For selective isolation and culture of Staphylococcus aureus."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "dehydrated-culture-media"
+      ]
+    },
+  {
+      id: "hkm-hcm001-plate-count-agar-pca",
+      name: "HCM001 Plate Count Agar(PCA)",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Dehydrated Culture Media",
+      subtitle: "For determination and count of total bacterial.",
+      description: "For determination and count of total bacterial. HCM 001 Plate Count Agar (PCA) Usages: For determination of total bacterial count . Principle: Tryptone provide carbon and nitrogen; yeast extract powder provides B vitamins; glucose to provide energy, agar is the solidifying agent.",
+      image: "/images/hkm/hkm-hcm001-plate-count-agar-pca.jpg",
+      specSheet: "https://www.hkmbio.com/DCMedia/38.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "HCM 001 Plate Count Agar (PCA) Usages: For determination of total bacterial count . Principle: Tryptone provide carbon and nitrogen; yeast extract powder provides B vitamins; glucose to provide energy, agar is the solidifying agent. Formulation(per liter): Tryptone 5.0g Yeast extract powder 2.5g Glucose 1.0g Agar 15.0g Final pH 7.0 +/- 0.2 How to use： 1.Suspend 23.5g in 1 L of distilled water , stirring heated to boiling until completely dissolved, dispensing flask, 121 degrees C autoclave for 15min. 2.Diluted and treated samples. Storage: Keep container tightly closed, store in a cool, dry place, away from bright light. Storage period of 3 years. Specifications: 500g/bottle MSDS of HCM001 Plate Count Agar"
+        }
+      ],
+      highlights: [
+        "Use: For determination and count of total bacterial.",
+        "Specification: 500g/bottle",
+        "HKM code: HCM001",
+        "Official family: Dehydrated Culture Media"
+      ],
+      features: [
+        "Use: For determination and count of total bacterial.",
+        "Specification: 500g/bottle",
+        "HKM code: HCM001",
+        "Official family: Dehydrated Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "HCM001",
+        Specification: "500g/bottle",
+        "Official category": "Dehydrated Culture Media",
+        "Product family": "Dehydrated Culture Media",
+        Usage: "For determination and count of total bacterial."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "dehydrated-culture-media"
+      ]
+    },
+  {
+      id: "hkm-hcm127-endo-agar",
+      name: "HCM127 Endo Agar",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Dehydrated Culture Media",
+      subtitle: "For confirmatory test of colifrom in water.",
+      description: "For confirmatory test of colifrom in water. HCM127 Endo Agar Usages: For confirmatory test of colifrom in water. Principle: Peptone, yeast extract powder, beef extract powder provides carbon and nitrogen sources, vitamins and minerals; lactose as fermentable sugars; agar as medium coagulant; potassium hydrogen phosphate as buffer.",
+      image: "/images/hkm/hkm-hcm127-endo-agar.jpg",
+      specSheet: "https://www.hkmbio.com/DCMedia/175.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "HCM127 Endo Agar Usages: For confirmatory test of colifrom in water. Principle: Peptone, yeast extract powder, beef extract powder provides carbon and nitrogen sources, vitamins and minerals; lactose as fermentable sugars; agar as medium coagulant; potassium hydrogen phosphate as buffer. Formulation(per liter): Peptone 10g Yeast extract powder 5g Beef extract powder 5g Lactose 10g Agar 15g Dipotassium hydrogen phosphate 3.5g Sodium sulphite 5g Fuchsin 1g Final pH 7.2 +/- 0.2 How to use： 1.Suspend 54.5g in 1 L of distilled water , stirring heated to boiling until completely dissolved, dispensing flask, autoclave at 115 degrees C for 20min. Cool to 50 degrees C and pour into petri dishes. 2.Diluted and treated samples. Storage: Keep container tightly closed, store in a cool, dry place, away from bright light. Storage period of 3 years. Specifications: 500g/bottle"
+        }
+      ],
+      highlights: [
+        "Use: For confirmatory test of colifrom in water.",
+        "Specification: 500g/bottle",
+        "HKM code: HCM127",
+        "Official family: Dehydrated Culture Media"
+      ],
+      features: [
+        "Use: For confirmatory test of colifrom in water.",
+        "Specification: 500g/bottle",
+        "HKM code: HCM127",
+        "Official family: Dehydrated Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "HCM127",
+        Specification: "500g/bottle",
+        "Official category": "Dehydrated Culture Media",
+        "Product family": "Dehydrated Culture Media",
+        Usage: "For confirmatory test of colifrom in water."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "dehydrated-culture-media"
+      ]
+    },
+  {
+      id: "hkm-hcm057-tryptic-soy-broth-tsb",
+      name: "HCM057 Tryptic Soy Broth (TSB)",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Dehydrated Culture Media",
+      subtitle: "For cultivating of bacteria.And sterility test of drugs and biological products.",
+      description: "For cultivating of bacteria.And sterility test of drugs and biological products. HCM057 Tryptic Soy Broth (TSB) Usages: For cultivating of bacteria.And sterility test of drugs and biological products. Principle: Tryptone, peptone and yeast extract multivalent powder provides a nitrogen source, vitamins, and growth factors; sodium chloride to maintain osmotic balance; glucose carbon source; dipotassium hydrogen phosphate as a buffering agent.",
+      image: "/images/hkm/hkm-hcm057-tryptic-soy-broth-tsb.jpg",
+      specSheet: "https://www.hkmbio.com/DCMedia/115.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "HCM057 Tryptic Soy Broth (TSB) Usages: For cultivating of bacteria.And sterility test of drugs and biological products. Principle: Tryptone, peptone and yeast extract multivalent powder provides a nitrogen source, vitamins, and growth factors; sodium chloride to maintain osmotic balance; glucose carbon source; dipotassium hydrogen phosphate as a buffering agent. Formulation(per liter): Pancreatic Digest of Casein 17g Papaic Digest of Soybean 3g Sodium chloride 5g Dipotassium hydrogen phosphate 2.5g Glucose Monohydrate 2.5g Final pH 7.3+/-0.2 How to use： 1.Suspend 30g in 1L of distilled water , stirring heated to boiling to completely dissolve ,autoclave at 121 degrees C for 15 minutes. 2.Diluted and treated samples. Storage: Keep container tightly closed, store in a cool, dry place, away from bright light. Storage period of 3 years. Specifications: 500g/bottle"
+        }
+      ],
+      highlights: [
+        "Use: For cultivating of bacteria.And sterility test of drugs and biological products.",
+        "Specification: 500g/bottle",
+        "HKM code: HCM057",
+        "Official family: Dehydrated Culture Media"
+      ],
+      features: [
+        "Use: For cultivating of bacteria.And sterility test of drugs and biological products.",
+        "Specification: 500g/bottle",
+        "HKM code: HCM057",
+        "Official family: Dehydrated Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "HCM057",
+        Specification: "500g/bottle",
+        "Official category": "Dehydrated Culture Media",
+        "Product family": "Dehydrated Culture Media",
+        Usage: "For cultivating of bacteria.And sterility test of drugs and biological products."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "dehydrated-culture-media"
+      ]
+    },
+  {
+      id: "hkm-hcm015-urea-agar-base",
+      name: "HCM015 Urea Agar Base",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Dehydrated Culture Media",
+      subtitle: "For differentiating enteric bacteria based on urease activity by adding 40% sterile urea solution.",
+      description: "For differentiating enteric bacteria based on urease activity by adding 40% sterile urea solution. HCM015 Urea Agar Base Usages: For differentiating enteric bacteria based on urease activity by adding 40% sterile urea solution. Principle: Peptone provides the carbon and nitrogen; maintain a balanced osmotic sodium chloride; potassium dihydrogen phosphate is buffers; decomposing bacteria urease urea medium, produce large amounts of ammonia, agar as medium coagulant.",
+      image: "/images/hkm/hkm-hcm015-urea-agar-base.jpg",
+      specSheet: "https://www.hkmbio.com/DCMedia/73.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "HCM015 Urea Agar Base Usages: For differentiating enteric bacteria based on urease activity by adding 40% sterile urea solution. Principle: Peptone provides the carbon and nitrogen; maintain a balanced osmotic sodium chloride; potassium dihydrogen phosphate is buffers; decomposing bacteria urease urea medium, produce large amounts of ammonia, agar as medium coagulant. Formulation (per liter): Peptone 1g Sodium chloride 5g Glucose 1g Ppotassium dihydrogen phosphate 2g Phenol red 0.012g Agar 12g Final pH7.2 +/- 0.2 How to use: 1.Suspend 21g in 1L of distilled or deionized water. Heat with frequent agitation and boil to completely dissolve the powder. Distribute into flasks. Autoclave at 121 degrees C for 15 minutes. cooling to 50-55 degrees C and adding 40% urea solution. 2.Diluted and treated samples. Storage: Store in a dark, cool and dry place, tighten the cap immediately after use."
+        }
+      ],
+      highlights: [
+        "Use: For differentiating enteric bacteria based on urease activity by adding 40% sterile urea solution.",
+        "Specification: 500g/bottle",
+        "HKM code: HCM015",
+        "Official family: Dehydrated Culture Media"
+      ],
+      features: [
+        "Use: For differentiating enteric bacteria based on urease activity by adding 40% sterile urea solution.",
+        "Specification: 500g/bottle",
+        "HKM code: HCM015",
+        "Official family: Dehydrated Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "HCM015",
+        Specification: "500g/bottle",
+        "Official category": "Dehydrated Culture Media",
+        "Product family": "Dehydrated Culture Media",
+        Usage: "For differentiating enteric bacteria based on urease activity by adding 40% sterile urea solution."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "dehydrated-culture-media"
+      ]
+    },
+  {
+      id: "hkm-024048p1-tryptic-soy-broth-granular-culture-media",
+      name: "024048P1 Tryptic Soy Broth (Granular Culture Media)",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Granular Culture Media",
+      subtitle: "For cultivating of bacteria.And sterility test of drugs and biological products.",
+      description: "For cultivating of bacteria.And sterility test of drugs and biological products. 024048P1 Tryptic Soy Broth ( Granular Culture Media) Culture Media Usages: For cultivating of bacteria.And sterility test of drugs and biological products. Principle: Tryptone, peptone and yeast extract multivalent powder provides a nitrogen source, vitamins, and growth factors; sodium chloride to maintain osmotic balance; glucose carbon source; dipotassium hydrogen phosphate as a buffering agent.",
+      image: "/images/hkm/hkm-024048p1-tryptic-soy-broth-granular-culture-media.jpg",
+      specSheet: "https://www.hkmbio.com/GCMedia/236.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "024048P1 Tryptic Soy Broth ( Granular Culture Media) Culture Media Usages: For cultivating of bacteria.And sterility test of drugs and biological products. Principle: Tryptone, peptone and yeast extract multivalent powder provides a nitrogen source, vitamins, and growth factors; sodium chloride to maintain osmotic balance; glucose carbon source; dipotassium hydrogen phosphate as a buffering agent. Formulation(per liter): Pancreatic Digest of Casein 17g Papaic Digest of Soybean 3g Sodium chloride 5g Dipotassium hydrogen phosphate 2.5g Glucose Monohydrate 2.5g Final pH 7.3+/-0.2 How to use： 1.Suspend 30g in 1L of distilled water , stirring heated to boiling to completely dissolve ,autoclave at 121 degrees C for 15 minutes. 2.Diluted and treated samples. Storage: Keep container tightly closed, store in a cool, dry place, away from bright light. Storage period of 3 years. Specifications: 250g/bottle"
+        }
+      ],
+      highlights: [
+        "Use: For cultivating of bacteria.And sterility test of drugs and biological products.",
+        "Specification: 250g/bottle",
+        "HKM code: 024048P1",
+        "Official family: Granular Culture Media"
+      ],
+      features: [
+        "Use: For cultivating of bacteria.And sterility test of drugs and biological products.",
+        "Specification: 250g/bottle",
+        "HKM code: 024048P1",
+        "Official family: Granular Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "024048P1",
+        Specification: "250g/bottle",
+        "Official category": "Granular Culture Media",
+        "Product family": "Granular Culture Media",
+        Usage: "For cultivating of bacteria.And sterility test of drugs and biological products."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "granular-culture-media"
+      ]
+    },
+  {
+      id: "hkm-023130p1-buffered-peptone-water-granular-culture-media",
+      name: "023130P1 Buffered Peptone Water(Granular Culture Media)",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Granular Culture Media",
+      subtitle: "For pre-enrichment of Salmonella spp.",
+      description: "For pre-enrichment of Salmonella spp. 023130P1 Buffered Peptone Water ( Granular Culture Media) Culture Media Usages: For pre-enrichment of Salmonella spp. Principle: Peptone provide carbon and nitrogen sources to meet the needs of bacterial growth; sodium chloride maintains osmotic equilibrium; potassium dihydrogen phosphate and disodium hydrogen phosphate as buffer.",
+      image: "/images/hkm/hkm-023130p1-buffered-peptone-water-granular-culture-media.jpg",
+      specSheet: "https://www.hkmbio.com/GCMedia/235.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "023130P1 Buffered Peptone Water ( Granular Culture Media) Culture Media Usages: For pre-enrichment of Salmonella spp. Principle: Peptone provide carbon and nitrogen sources to meet the needs of bacterial growth; sodium chloride maintains osmotic equilibrium; potassium dihydrogen phosphate and disodium hydrogen phosphate as buffer. Formulation(per liter): Peptone: 10g Sodium chloride:5g Disodium hydrogen phosphate:3.5g Potassium dihydrogen phosphate: 1.5g Final pH7.2 +/- 0.2 How to use: 1. Suspend 20g of product, adding 1L of distilled or deionized water, heated to boiling stirring until completely dissolved, dispensing into flask, autoclave at 121 degrees C for 15min, set aside. 2.Diluted and treated samples."
+        }
+      ],
+      highlights: [
+        "Use: For pre-enrichment of Salmonella spp.",
+        "Specification: 250g/bottle",
+        "HKM code: 023130P1",
+        "Official family: Granular Culture Media"
+      ],
+      features: [
+        "Use: For pre-enrichment of Salmonella spp.",
+        "Specification: 250g/bottle",
+        "HKM code: 023130P1",
+        "Official family: Granular Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "023130P1",
+        Specification: "250g/bottle",
+        "Official category": "Granular Culture Media",
+        "Product family": "Granular Culture Media",
+        Usage: "For pre-enrichment of Salmonella spp."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "granular-culture-media"
+      ]
+    },
+  {
+      id: "hkm-022230p1-ec-medium-granular-culture-media",
+      name: "022230P1 EC Medium (Granular Culture Media)",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Granular Culture Media",
+      subtitle: "For determination of fecal coliforms and E. coli confirmatory testing.",
+      description: "For determination of fecal coliforms and E. coli confirmatory testing. 022230P1 EC Medium (Granular Culture Media) Culture Media Usages： For determination of fecal coliforms and E. coli confirmatory testing. Principle: Tryptone provide carbon and nitrogen sources; the 3rd bile suppress gram-positive bacteria, especially against Gram-positive bacteria and fecal streptococci; lactose is fermentable sugars; potassium hydrogen phosphate and potassium dihydrogen phosphate as buffer ;",
+      image: "/images/hkm/hkm-022230p1-ec-medium-granular-culture-media.jpg",
+      specSheet: "https://www.hkmbio.com/GCMedia/237.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "022230P1 EC Medium (Granular Culture Media) Culture Media Usages： For determination of fecal coliforms and E. coli confirmatory testing. Principle: Tryptone provide carbon and nitrogen sources; the 3rd bile suppress gram-positive bacteria, especially against Gram-positive bacteria and fecal streptococci; lactose is fermentable sugars; potassium hydrogen phosphate and potassium dihydrogen phosphate as buffer ; sodium chloride maintains osmotic equilibrium. Formulation (per liter): Tryptone: 20.0g The 3rd bile: 1.5g Lactose: 5.0g Dipotassium hydrogen: 4.0g Potassium dihydrogen phosphate: 1.5g Sodium chloride:5.0g Final pH 6.9 +/- 0.2 How to use: 1.Suspend 37g in 1 L of distilled water or deionized water, stirring heated to boiling until completely dissolved, packed in with a small test tube inverted tube, and autoclave at 121 degrees C for 15min, leave to cool to room temperature and set aside."
+        }
+      ],
+      highlights: [
+        "Use: For determination of fecal coliforms and E. coli confirmatory testing.",
+        "Specification: 250g/bottle",
+        "HKM code: 022230P1",
+        "Official family: Granular Culture Media"
+      ],
+      features: [
+        "Use: For determination of fecal coliforms and E. coli confirmatory testing.",
+        "Specification: 250g/bottle",
+        "HKM code: 022230P1",
+        "Official family: Granular Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "022230P1",
+        Specification: "250g/bottle",
+        "Official category": "Granular Culture Media",
+        "Product family": "Granular Culture Media",
+        Usage: "For determination of fecal coliforms and E. coli confirmatory testing."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "granular-culture-media"
+      ]
+    },
+  {
+      id: "hkm-022210p1-lauryl-sulfate-tryptose-broth-granular-culture-medium",
+      name: "022210P1 Lauryl Sulfate Tryptose Broth (Granular Culture Medium)",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Granular Culture Media",
+      subtitle: "Determination of coliform and fecal coliform for multiple tube fermentation.",
+      description: "Determination of coliform and fecal coliform for multiple tube fermentation. 022210P1 Lauryl Sulfate Tryptose Broth (Granular Culture Media) Culture Medium Usages： Determination of coliform and fecal coliform for multiple tube fermentation. Principle: Tryptone provide carbon and nitrogen sources to meet the needs of bacterial growth; sodium chloride osmotic pressure balance can be maintained; Lactose is a coliform fermentable sugars; potassium dihydrogen phosphate and dipotassium phosphate is a buffer;",
+      image: "/images/hkm/hkm-022210p1-lauryl-sulfate-tryptose-broth-granular-culture-medium.jpg",
+      specSheet: "https://www.hkmbio.com/GCMedia/238.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "022210P1 Lauryl Sulfate Tryptose Broth (Granular Culture Media) Culture Medium Usages： Determination of coliform and fecal coliform for multiple tube fermentation. Principle: Tryptone provide carbon and nitrogen sources to meet the needs of bacterial growth; sodium chloride osmotic pressure balance can be maintained; Lactose is a coliform fermentable sugars; potassium dihydrogen phosphate and dipotassium phosphate is a buffer; lauryl sodium can inhibit the growth of non-coliform bacteria. Formulation (per liter): Trypticase:20g Sodium chloride: 5g Lactose:5g Potassium dihydrogen phosphate: 2.75g Dipotassium hydrogen phosphate :2.75g Sodium lauryl sulfate 0.1g Final pH6.8 +/- 0.2 How to use: 1."
+        }
+      ],
+      highlights: [
+        "Use: Determination of coliform and fecal coliform for multiple tube fermentation.",
+        "Specification: 250g/bottle",
+        "HKM code: 022210P1",
+        "Official family: Granular Culture Media"
+      ],
+      features: [
+        "Use: Determination of coliform and fecal coliform for multiple tube fermentation.",
+        "Specification: 250g/bottle",
+        "HKM code: 022210P1",
+        "Official family: Granular Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "022210P1",
+        Specification: "250g/bottle",
+        "Official category": "Granular Culture Media",
+        "Product family": "Granular Culture Media",
+        Usage: "Determination of coliform and fecal coliform for multiple tube fermentation."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "granular-culture-media"
+      ]
+    },
+  {
+      id: "hkm-crm001-coliform-chromogenic-medium",
+      name: "CRM001 Coliform Chromogenic Medium",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Chromogenic Culture Media",
+      featured: true,
+      subtitle: "For the rapid detection and enumeration of coliform bacteria.",
+      description: "For the rapid detection and enumeration of coliform bacteria. CRM001 Coliform Chromogenic Medium (Chromogenic Coliform Agar) Usages: For the rapid detection and enumeration of coliform bacteria. Principle: Peptone and yeast extract powder provides carbon and nitrogen sources and trace elements; sodium chloride maintains osmotic equilibrium; agar as medium coagulant; dodecyl sulfate inhibit Gram-positive bacteria;",
+      image: "/images/hkm/hkm-crm001-coliform-chromogenic-medium.jpg",
+      specSheet: "https://www.hkmbio.com/CCMedia/223.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "CRM001 Coliform Chromogenic Medium (Chromogenic Coliform Agar) Usages: For the rapid detection and enumeration of coliform bacteria. Principle: Peptone and yeast extract powder provides carbon and nitrogen sources and trace elements; sodium chloride maintains osmotic equilibrium; agar as medium coagulant; dodecyl sulfate inhibit Gram-positive bacteria; chromogenic substrate and large intestine flora beta- galactosidase-glucosidase specific reaction, hydrolysis of the substrate, the release of the color groups produce green colonies on the light yellow plate. Formulation (per liter): Peptone :10g Yeast extract powder: 3g sodium chloride:5g sodium lauryl sulfate:0.1g Agar :12g Chromogenic substrate 2.7g Final pH 7.0 +/- 0.2 How to use: 1."
+        }
+      ],
+      highlights: [
+        "Use: For the rapid detection and enumeration of coliform bacteria.",
+        "Specification: 1L",
+        "HKM code: CRM001",
+        "Official family: Chromogenic Culture Media"
+      ],
+      features: [
+        "Use: For the rapid detection and enumeration of coliform bacteria.",
+        "Specification: 1L",
+        "HKM code: CRM001",
+        "Official family: Chromogenic Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "CRM001",
+        Specification: "1L",
+        "Official category": "Chromegenic Culture Media",
+        "Product family": "Chromogenic Culture Media",
+        Usage: "For the rapid detection and enumeration of coliform bacteria."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "chromogenic-culture-media"
+      ]
+    },
+  {
+      id: "hkm-crm002-e-coli-chromogenic-medium-chromogenic-e-coli-agar",
+      name: "CRM002 E.coli Chromogenic Medium (Chromogenic E.coli Agar)",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Chromogenic Culture Media",
+      subtitle: "For the rapid detection and enumeration of Escherichia coli.",
+      description: "For the rapid detection and enumeration of Escherichia coli. CRM002 E.coli Chromogenic Medium (Chromogenic E.coli Agar) Usages: For the rapid detection and enumeration of Escherichia coli. Principle: Peptone and yeast extract powder provides carbon and nitrogen sources and trace elements; sodium chloride maintains osmotic equilibrium; agar as medium coagulant; dodecyl sulfate inhibit Gram-positive bacteria;",
+      image: "/images/hkm/hkm-crm002-e-coli-chromogenic-medium-chromogenic-e-coli-agar.jpg",
+      specSheet: "https://www.hkmbio.com/CCMedia/224.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "CRM002 E.coli Chromogenic Medium (Chromogenic E.coli Agar) Usages: For the rapid detection and enumeration of Escherichia coli. Principle: Peptone and yeast extract powder provides carbon and nitrogen sources and trace elements; sodium chloride maintains osmotic equilibrium; agar as medium coagulant; dodecyl sulfate inhibit Gram-positive bacteria; chromogenic substrate and large intestine coli beta- glucuronidase enzyme specific reaction, hydrolysis of the substrate, the release of the color groups produce green colonies on the light yellow plate."
+        }
+      ],
+      highlights: [
+        "Use: For the rapid detection and enumeration of Escherichia coli.",
+        "Specification: 1L",
+        "HKM code: CRM002",
+        "Official family: Chromogenic Culture Media"
+      ],
+      features: [
+        "Use: For the rapid detection and enumeration of Escherichia coli.",
+        "Specification: 1L",
+        "HKM code: CRM002",
+        "Official family: Chromogenic Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "CRM002",
+        Specification: "1L",
+        "Official category": "Chromegenic Culture Media",
+        "Product family": "Chromogenic Culture Media",
+        Usage: "For the rapid detection and enumeration of Escherichia coli."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "chromogenic-culture-media"
+      ]
+    },
+  {
+      id: "hkm-crm003-e-coli-coliform-chromogenic-medium-ecc",
+      name: "CRM003 E.coli & Coliform Chromogenic Medium (ECC)",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Chromogenic Culture Media",
+      subtitle: "For the rapid detection and of coliforms and E. coli.",
+      description: "For the rapid detection and of coliforms and E. coli. CRM003 E.coli & Coliform Chromogenic Medium (ECC) (Chromogenic Coliform & E.coli Agar) Usages: For the rapid detection and of coliforms and E. coli. Principle: Peptone and yeast extract powder provides carbon and nitrogen sources and trace elements; sodium chloride maintains osmotic equilibrium; agar as medium coagulant; dodecyl sulfate inhibit Gram-positive bacteria; chromogenic substrate were mixed occurrence of coliforms and E.",
+      image: "/images/hkm/hkm-crm003-e-coli-coliform-chromogenic-medium-ecc.jpg",
+      specSheet: "https://www.hkmbio.com/CCMedia/225.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "CRM003 E.coli & Coliform Chromogenic Medium (ECC) (Chromogenic Coliform & E.coli Agar) Usages: For the rapid detection and of coliforms and E. coli. Principle: Peptone and yeast extract powder provides carbon and nitrogen sources and trace elements; sodium chloride maintains osmotic equilibrium; agar as medium coagulant; dodecyl sulfate inhibit Gram-positive bacteria; chromogenic substrate were mixed occurrence of coliforms and E. coli enzyme corresponding specific reactions, hydrolysis of the substrate, the release of the color groups, in a pale yellow plates coliforms appears orange-red colonies while E.coli appears blue-green colonies."
+        }
+      ],
+      highlights: [
+        "Use: For the rapid detection and of coliforms and E. coli.",
+        "Specification: 1L",
+        "HKM code: CRM003",
+        "Official family: Chromogenic Culture Media"
+      ],
+      features: [
+        "Use: For the rapid detection and of coliforms and E. coli.",
+        "Specification: 1L",
+        "HKM code: CRM003",
+        "Official family: Chromogenic Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "CRM003",
+        Specification: "1L",
+        "Official category": "Chromegenic Culture Media",
+        "Product family": "Chromogenic Culture Media",
+        Usage: "For the rapid detection and of coliforms and E. coli."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "chromogenic-culture-media"
+      ]
+    },
+  {
+      id: "hkm-crm004-salmonella-chromogenic-medium-chromogenic-salmonella-agar",
+      name: "CRM004 Salmonella Chromogenic Medium (Chromogenic Salmonella Agar)",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Chromogenic Culture Media",
+      subtitle: "For rapid isolation and identification of Salmonella.",
+      description: "For rapid isolation and identification of Salmonella. CRM004 Salmonella Chromogenic Medium (Chromogenic Salmonella Agar) Usages: For rapid isolation and identification of Salmonella. Principle: Ability antibacterial agents against Gram-positive bacteria, and enhance the medium inhibit bacteria; peptone and yeast extract powder provides carbon and nitrogen sources and trace elements; sodium chloride maintains osmotic equilibrium; agar as culture medium coagulant ;",
+      image: "/images/hkm/hkm-crm004-salmonella-chromogenic-medium-chromogenic-salmonella-agar.jpg",
+      specSheet: "https://www.hkmbio.com/CCMedia/226.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "CRM004 Salmonella Chromogenic Medium (Chromogenic Salmonella Agar) Usages: For rapid isolation and identification of Salmonella. Principle: Ability antibacterial agents against Gram-positive bacteria, and enhance the medium inhibit bacteria; peptone and yeast extract powder provides carbon and nitrogen sources and trace elements; sodium chloride maintains osmotic equilibrium; agar as culture medium coagulant ; mixing pigment with Salmonella and coliforms, respectively corresponding to the occurrence of a specific enzyme reaction, hydrolysis of the substrate, the release of the color groups in the pale yellow tablet Salmonella produce magenta colonies, coliform produce blue-green colonies ."
+        }
+      ],
+      highlights: [
+        "Use: For rapid isolation and identification of Salmonella.",
+        "Specification: 1L",
+        "HKM code: CRM004",
+        "Official family: Chromogenic Culture Media"
+      ],
+      features: [
+        "Use: For rapid isolation and identification of Salmonella.",
+        "Specification: 1L",
+        "HKM code: CRM004",
+        "Official family: Chromogenic Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "CRM004",
+        Specification: "1L",
+        "Official category": "Chromegenic Culture Media",
+        "Product family": "Chromogenic Culture Media",
+        Usage: "For rapid isolation and identification of Salmonella."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "chromogenic-culture-media"
+      ]
+    },
+  {
+      id: "hkm-xb03-rpmi1640-g-max",
+      name: "XB03 RPMI1640, G-MAX",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Ready to Use Culture Media",
+      featured: true,
+      subtitle: "For cell culture.",
+      description: "For cell culture. XB03 RPMI1640, G-MAX RPMI1640, G-MAX with 2 mM Alanyl-Glutamine/L-Alanyl-Glutamine 2.0 g/L glucose/D-Glucose Sodium Bicarbonate Phenol Red without Sodium Pyruvate more relative products for RPMI1640 series : Code Name & Description Specification Storage XB03 RPMI1640, G-MAX 500 mL 2~8 degrees C XB03-01 RPMI1640, G-MAX , HEPES 500 mL 2~8 degrees C XB03-02 RPMI1640, G-MAX, without phenol red 500 mL 2~8 degrees C XB03-03 RPMI1640, G-MAX, pyruvate, HEPES 500 mL 2~8 degrees C XB03-04 RPMI1640, without",
+      image: "/images/hkm/hkm-xb03-rpmi1640-g-max.jpg",
+      specSheet: "https://www.hkmbio.com/RtUMedia/397.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "XB03 RPMI1640, G-MAX RPMI1640, G-MAX with 2 mM Alanyl-Glutamine/L-Alanyl-Glutamine 2.0 g/L glucose/D-Glucose Sodium Bicarbonate Phenol Red without Sodium Pyruvate more relative products for RPMI1640 series : Code Name & Description Specification Storage XB03 RPMI1640, G-MAX 500 mL 2~8 degrees C XB03-01 RPMI1640, G-MAX , HEPES 500 mL 2~8 degrees C XB03-02 RPMI1640, G-MAX, without phenol red 500 mL 2~8 degrees C XB03-03 RPMI1640, G-MAX, pyruvate, HEPES 500 mL 2~8 degrees C XB03-04 RPMI1640, without glucose,G-MAX 500 mL 2~8 degrees C"
+        }
+      ],
+      highlights: [
+        "Use: For cell culture.",
+        "Specification: 500 mL",
+        "HKM code: XB03",
+        "Official family: Ready to Use Culture Media"
+      ],
+      features: [
+        "Use: For cell culture.",
+        "Specification: 500 mL",
+        "HKM code: XB03",
+        "Official family: Ready to Use Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "XB03",
+        Specification: "500 mL",
+        "Official category": "Cell Culture Media",
+        "Product family": "Ready to Use Culture Media",
+        Usage: "For cell culture."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "ready-to-use-culture-media"
+      ]
+    },
+  {
+      id: "hkm-cell-culture-media-dmem-high-glucose",
+      name: "Cell Culture Media, DMEM high glucose",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Ready to Use Culture Media",
+      subtitle: "For Cell Culture",
+      description: "For Cell Culture XB01 DMEM, high glucose with 4.5 g/L glucose/D-Glucose Sodium Bicarbonate Phenol Red without L-Glutamine/L-Glutamine Sodium Pyruvate more relative products for DMEM series : Code Name & Description Specification Storage XB01 DMEM,high glucose 500 mL 2~8 degrees C XB01-01 DMEM,high glucose, G-MAX,pyruvate 500 mL 2~8 degrees C XB01-02 DMEM,high glucose, glutamine 500 mL 2~8 degrees C XB01-03 DMEM,high glucose, G-MAX,HEPES 500 mL 2~8 degrees C XB01-04 DMEM,high glucose, G-MAX,pyruvate,without phenol r",
+      image: "/images/hkm/hkm-cell-culture-media-dmem-high-glucose.jpg",
+      specSheet: "https://www.hkmbio.com/RtUMedia/396.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "XB01 DMEM, high glucose with 4.5 g/L glucose/D-Glucose Sodium Bicarbonate Phenol Red without L-Glutamine/L-Glutamine Sodium Pyruvate more relative products for DMEM series : Code Name & Description Specification Storage XB01 DMEM,high glucose 500 mL 2~8 degrees C XB01-01 DMEM,high glucose, G-MAX,pyruvate 500 mL 2~8 degrees C XB01-02 DMEM,high glucose, glutamine 500 mL 2~8 degrees C XB01-03 DMEM,high glucose, G-MAX,HEPES 500 mL 2~8 degrees C XB01-04 DMEM,high glucose, G-MAX,pyruvate,without phenol red 500 mL 2~8 degrees C XB01-05 DMEM,high glucose, glutamine,HEPES 500 mL 2~8 degrees C XB01-06 DMEM,high glucose, glutamine,pyruvate 500 mL 2~8 degrees C XB01-07 DMEM,high glucose, HEPES,without phenol red 500 mL 2~8 degrees C XB01-08 DMEM,low glucose, G-MAX,pyruvate 500 mL 2~8 degrees C XB01-09 DMEM,low glucose, glutamine,pyruvate,HEPES 500 mL 2~8 degrees C XB01-10 DMEM,without glucose,glutamine 500 mL 2~8 degrees C"
+        }
+      ],
+      highlights: [
+        "Use: For Cell Culture",
+        "Specification: 500 mL",
+        "HKM code: XB01",
+        "Official family: Ready to Use Culture Media"
+      ],
+      features: [
+        "Use: For Cell Culture",
+        "Specification: 500 mL",
+        "HKM code: XB01",
+        "Official family: Ready to Use Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "XB01",
+        Specification: "500 mL",
+        "Official category": "Cell Culture Media",
+        "Product family": "Ready to Use Culture Media",
+        Usage: "For Cell Culture"
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "ready-to-use-culture-media"
+      ]
+    },
+  {
+      id: "hkm-buffered-peptone-water-swab",
+      name: "Buffered Peptone Water Swab",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Ready to Use Culture Media",
+      subtitle: "To collect, store and transfer food, environmental and clinical specimens to microbiology laboratori",
+      description: "To collect, store and transfer food, environmental and clinical specimens to microbiology laboratori Usage: To collect, store and transfer food, environmental and clinical specimens to microbiology laboratories. Principle:The swab kit consists of a sterile swab, transfer medium and cannula, providing a complete ready-to-use system for collecting, storing and transferring food, environmental and clinical specimens to the microbiology laboratory. The swab can be easily removed without touching the swab head.",
+      image: "/images/hkm/hkm-buffered-peptone-water-swab.jpg",
+      specSheet: "https://www.hkmbio.com/RtUMedia/394.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Usage: To collect, store and transfer food, environmental and clinical specimens to microbiology laboratories. Principle:The swab kit consists of a sterile swab, transfer medium and cannula, providing a complete ready-to-use system for collecting, storing and transferring food, environmental and clinical specimens to the microbiology laboratory. The swab can be easily removed without touching the swab head. With nutrient-free, agar-free modified Stuart&#39;s or Cary-Blair, PBS, BPW and other media to provide a moist and inert protective environment for specimens to ensure specimen integrity and to minimize the inhibition of other microorganisms."
+        }
+      ],
+      highlights: [
+        "Use: To collect, store and transfer food, environmental and clinical specimens to microbiology laboratori",
+        "Specification: 50 pcs / box",
+        "HKM code: HK-BPW",
+        "Official family: Ready to Use Culture Media"
+      ],
+      features: [
+        "Use: To collect, store and transfer food, environmental and clinical specimens to microbiology laboratori",
+        "Specification: 50 pcs / box",
+        "HKM code: HK-BPW",
+        "Official family: Ready to Use Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "HK-BPW",
+        Specification: "50 pcs / box",
+        "Official category": "Buffered Peptone Water Swab",
+        "Product family": "Ready to Use Culture Media",
+        Usage: "To collect, store and transfer food, environmental and clinical specimens to microbiology laboratori"
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "ready-to-use-culture-media"
+      ]
+    },
+  {
+      id: "hkm-collecting-and-transportation-swab-saline-swab",
+      name: "Collecting and Transportation Swab , Saline Swab",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Ready to Use Culture Media",
+      subtitle: "Collecting and Transportation Swab for sample.",
+      description: "Collecting and Transportation Swab for sample. Usage: To collect, store and transfer food, environmental and clinical specimens to microbiology laboratories. Principle:The swab kit consists of a sterile swab, transfer medium and cannula, providing a complete ready-to-use system for collecting, storing and transferring food, environmental and clinical specimens to the microbiology laboratory. The swab can be easily removed without touching the swab head.",
+      image: "/images/hkm/hkm-collecting-and-transportation-swab-saline-swab.jpg",
+      specSheet: "https://www.hkmbio.com/RtUMedia/393.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Usage: To collect, store and transfer food, environmental and clinical specimens to microbiology laboratories. Principle:The swab kit consists of a sterile swab, transfer medium and cannula, providing a complete ready-to-use system for collecting, storing and transferring food, environmental and clinical specimens to the microbiology laboratory. The swab can be easily removed without touching the swab head. With nutrient-free, agar-free modified Stuart&#39;s or Cary-Blair, PBS, BPW and other media to provide a moist and inert protective environment for specimens to ensure specimen integrity and to minimize the inhibition of other microorganisms."
+        }
+      ],
+      highlights: [
+        "Use: Collecting and Transportation Swab for sample.",
+        "Specification: 50 pcs / box",
+        "HKM code: HK-PS",
+        "Official family: Ready to Use Culture Media"
+      ],
+      features: [
+        "Use: Collecting and Transportation Swab for sample.",
+        "Specification: 50 pcs / box",
+        "HKM code: HK-PS",
+        "Official family: Ready to Use Culture Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "HK-PS",
+        Specification: "50 pcs / box",
+        "Official category": "Collecting and Transportation Swab , Saline Swab",
+        "Product family": "Ready to Use Culture Media",
+        Usage: "Collecting and Transportation Swab for sample."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "ready-to-use-culture-media"
+      ]
+    },
+  {
+      id: "hkm-cp0201c-tryptic-soy-agar-ready-to-use-plate",
+      name: "CP0201C Tryptic Soy Agar(Ready to Use Plate)",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Prepared Triple Packing Media",
+      subtitle: "For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical indust",
+      description: "For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical indust CP0201C Tryptic Soy Agar (Ready to Use Plate) Settlement Plate Usages: For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical industry & clean room. Advantage: 1.This series of products was filling at A level of environment, and final sterilization by Gamma ray irradiation, triple packaging insure sterility and long shelf life.",
+      image: "/images/hkm/hkm-cp0201c-tryptic-soy-agar-ready-to-use-plate.jpg",
+      specSheet: "https://www.hkmbio.com/CMedia/ptpm/265.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "CP0201C Tryptic Soy Agar (Ready to Use Plate) Settlement Plate Usages: For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical industry & clean room. Advantage: 1.This series of products was filling at A level of environment, and final sterilization by Gamma ray irradiation, triple packaging insure sterility and long shelf life. 2.Each dish was marking label product name, batch number, expiration date .Information is available of traceability. 3.Inner additional desiccant, reducing formation of condensation water, while inner additional sterile paper and plastic bags for easier transfer and cultivation. 4.Triple packing dense bags to avoid the penetration of hydrogen peroxide; clean gas was filled as a buffer to reduce broken bags and dish in transit."
+        }
+      ],
+      highlights: [
+        "Use: For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical indust",
+        "Specification: 90mm*10 plates / bag",
+        "HKM code: CP0201C",
+        "Official family: Prepared Triple Packing Media"
+      ],
+      features: [
+        "Use: For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical indust",
+        "Specification: 90mm*10 plates / bag",
+        "HKM code: CP0201C",
+        "Official family: Prepared Triple Packing Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "CP0201C",
+        Specification: "90mm*10 plates / bag",
+        "Official category": "Prepared Culture Media",
+        "Product family": "Prepared Triple Packing Media",
+        Usage: "For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical indust"
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "prepared-triple-packing-media"
+      ]
+    },
+  {
+      id: "hkm-cp0101c-nutrient-agar-ready-to-use-plate",
+      name: "CP0101C Nutrient Agar (Ready to Use Plate)",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Prepared Triple Packing Media",
+      subtitle: "For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical indust",
+      description: "For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical indust CP0101C Nutrient Agar ( Ready to Use Plate ) Settlement Plate Usages: For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical industry & clean room. Advantage: 1.This series of products was filling at A level of environment, and final sterilization by Gamma ray irradiation, triple packaging insure sterility and long shelf life.",
+      image: "/images/hkm/hkm-cp0101c-nutrient-agar-ready-to-use-plate.jpg",
+      specSheet: "https://www.hkmbio.com/CMedia/ptpm/264.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "CP0101C Nutrient Agar ( Ready to Use Plate ) Settlement Plate Usages: For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical industry & clean room. Advantage: 1.This series of products was filling at A level of environment, and final sterilization by Gamma ray irradiation, triple packaging insure sterility and long shelf life. 2.Each dish was marking label product name, batch number, expiration date .Information is available of traceability. 3.Inner additional desiccant, reducing formation of condensation water, while inner additional sterile paper and plastic bags for easier transfer and cultivation. 4.Triple packing dense bags to avoid the penetration of hydrogen peroxide; clean gas was filled as a buffer to reduce broken bags and dish in transit."
+        }
+      ],
+      highlights: [
+        "Use: For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical indust",
+        "Specification: 90mm*10 plates / bag",
+        "HKM code: CP0101C",
+        "Official family: Prepared Triple Packing Media"
+      ],
+      features: [
+        "Use: For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical indust",
+        "Specification: 90mm*10 plates / bag",
+        "HKM code: CP0101C",
+        "Official family: Prepared Triple Packing Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "CP0101C",
+        Specification: "90mm*10 plates / bag",
+        "Official category": "Prepared Culture Media",
+        "Product family": "Prepared Triple Packing Media",
+        Usage: "For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical indust"
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "prepared-triple-packing-media"
+      ]
+    },
+  {
+      id: "hkm-cp0301c-sabouraud-dextrose-agar-ready-to-use-culture-media",
+      name: "CP0301C Sabouraud Dextrose Agar (Ready to Use Culture Media)",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Prepared Triple Packing Media",
+      subtitle: "For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical indust",
+      description: "For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical indust CP0301C Sabouraud Dextrose Agar (Ready to Use Plate) Culture Media Usage: For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical industry & clean room. Advantage: 1.This series of products was filling at A level of environment, and final sterilization by Gamma ray irradiation, triple packaging insure sterility and long shelf life.",
+      image: "/images/hkm/hkm-cp0301c-sabouraud-dextrose-agar-ready-to-use-culture-media.jpg",
+      specSheet: "https://www.hkmbio.com/CMedia/ptpm/266.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "CP0301C Sabouraud Dextrose Agar (Ready to Use Plate) Culture Media Usage: For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical industry & clean room. Advantage: 1.This series of products was filling at A level of environment, and final sterilization by Gamma ray irradiation, triple packaging insure sterility and long shelf life. 2.Each dish was marking label product name, batch number, expiration date .Information is available of traceability. 3.Inner additional desiccant, reducing formation of condensation water, while inner additional sterile paper and plastic bags for easier transfer and cultivation. 4.Triple packing dense bags to avoid the penetration of hydrogen peroxide; clean gas was filled as a buffer to reduce broken bags and dish in transit."
+        }
+      ],
+      highlights: [
+        "Use: For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical indust",
+        "Specification: 90mm*10 plates / bag",
+        "HKM code: CP0301C",
+        "Official family: Prepared Triple Packing Media"
+      ],
+      features: [
+        "Use: For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical indust",
+        "Specification: 90mm*10 plates / bag",
+        "HKM code: CP0301C",
+        "Official family: Prepared Triple Packing Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "CP0301C",
+        Specification: "90mm*10 plates / bag",
+        "Official category": "Prepared Culture Media",
+        "Product family": "Prepared Triple Packing Media",
+        Usage: "For monitoring and detection of planktonic bacteria and settlement bacteria in pharmaceutical indust"
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "prepared-triple-packing-media"
+      ]
+    },
+  {
+      id: "hkm-cp0101j-nutrient-agar-ready-to-use-culture-media",
+      name: "CP0101J Nutrient Agar (Ready to Use Culture Media)",
+      brand: "hkm",
+      category: "hkm-culture-media",
+      subcategory: "Prepared Triple Packing Media",
+      subtitle: "For monitoring and detection of surface of equipment and personnel hygiene.",
+      description: "For monitoring and detection of surface of equipment and personnel hygiene. CP0101J Nutrient Agar (Ready to Use Plate) Contact Plate Usages: For monitoring and detection of surface of equipment and personnel hygiene. Advantage: 1.This series of products was filling at A level of environment, and final sterilization by Gamma ray irradiation, triple packaging insure sterility and long shelf life. 2.Each dish was marking label product name, batch number, expiration date .Information is available of traceability.",
+      image: "/images/hkm/hkm-cp0101j-nutrient-agar-ready-to-use-culture-media.jpg",
+      specSheet: "https://www.hkmbio.com/CMedia/ptpm/267.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "CP0101J Nutrient Agar (Ready to Use Plate) Contact Plate Usages: For monitoring and detection of surface of equipment and personnel hygiene. Advantage: 1.This series of products was filling at A level of environment, and final sterilization by Gamma ray irradiation, triple packaging insure sterility and long shelf life. 2.Each dish was marking label product name, batch number, expiration date .Information is available of traceability. 3.Inner additional desiccant, reducing formation of condensation water, while inner additional sterile paper and plastic bags for easier transfer and cultivation. 4.Triple packing dense bags to avoid the penetration of hydrogen peroxide; clean gas was filled as a buffer to reduce broken bags and dish in transit.. 5.This series of products is available to store at (2-25 degrees C), shelf life of up to 6 months."
+        }
+      ],
+      highlights: [
+        "Use: For monitoring and detection of surface of equipment and personnel hygiene.",
+        "Specification: 55mm*10 plates / bag",
+        "HKM code: CP0101J",
+        "Official family: Prepared Triple Packing Media"
+      ],
+      features: [
+        "Use: For monitoring and detection of surface of equipment and personnel hygiene.",
+        "Specification: 55mm*10 plates / bag",
+        "HKM code: CP0101J",
+        "Official family: Prepared Triple Packing Media"
+      ],
+      applications: [
+        "Food, beverage, water, and pharmaceutical microbiology testing",
+        "Selective enrichment, enumeration, isolation, or confirmation workflows",
+        "Routine QC and environmental monitoring laboratories"
+      ],
+      specs: {
+        Code: "CP0101J",
+        Specification: "55mm*10 plates / bag",
+        "Official category": "Prepared Culture Media",
+        "Product family": "Prepared Triple Packing Media",
+        Usage: "For monitoring and detection of surface of equipment and personnel hygiene."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "prepared-triple-packing-media"
+      ]
+    },
+  {
+      id: "hkm-ham003-beef-extract-powder",
+      name: "HAM003 Beef Extract Powder",
+      brand: "hkm",
+      category: "hkm-raw-materials",
+      subcategory: "Raw Material",
+      subtitle: "Beef extract powder is a purified extract of beef .Used with meat and casein peptones as a source of",
+      description: "Beef extract powder is a purified extract of beef .Used with meat and casein peptones as a source of HAM003 Beef Extract Powder Usages: Beef extract powder is a purified extract of beef .Used with meat and casein peptones as a source of nutrients in culture media .",
+      image: "/images/hkm/hkm-ham003-beef-extract-powder.png",
+      specSheet: "https://www.hkmbio.com/RMaterial/105.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "HAM003 Beef Extract Powder Usages: Beef extract powder is a purified extract of beef .Used with meat and casein peptones as a source of nutrients in culture media . Technical specification: Total nitrogen(TN)---------------------------&ge;12.0% Amino nitrogen(AN) ------------------------&le;2.7% Chlorides--------------------------------------＜6% Moisture---------------------------------------&le;5.0% PH-----------------------------------------------6-7 Storage: Keep container tightly closed, store in a cool, dry place, away from bright light. Specifications: 500g/bottle; 10kg /bag"
+        }
+      ],
+      highlights: [
+        "Use: Beef extract powder is a purified extract of beef .Used with meat and casein peptones as a source of",
+        "Specification: 500g/bottle;10KG/bag",
+        "HKM code: HAM003",
+        "Official family: Raw Material"
+      ],
+      features: [
+        "Use: Beef extract powder is a purified extract of beef .Used with meat and casein peptones as a source of",
+        "Specification: 500g/bottle;10KG/bag",
+        "HKM code: HAM003",
+        "Official family: Raw Material"
+      ],
+      applications: [
+        "Culture media formulation",
+        "Microbiology reagent manufacturing",
+        "Laboratory media preparation workflows"
+      ],
+      specs: {
+        Code: "HAM003",
+        Specification: "500g/bottle;10KG/bag",
+        "Official category": "Raw Material",
+        "Product family": "Raw Material",
+        Usage: "Beef extract powder is a purified extract of beef .Used with meat and casein peptones as a source of"
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "raw-material"
+      ]
+    },
+  {
+      id: "hkm-ham010-soy-peptone-soytone",
+      name: "HAM010 Soy Peptone (Soytone)",
+      brand: "hkm",
+      category: "hkm-raw-materials",
+      subcategory: "Raw Material",
+      subtitle: "Soytone is an enzyme digest of soy, widely used in culture media.",
+      description: "Soytone is an enzyme digest of soy, widely used in culture media. HAM010 Soy Peptone (Soytone) Usages: Soytone is an enzyme digest of soy, widely used in culture media. Technical specification: Total nitrogen(TN)---------------------------&ge;8.0% Amino nitrogen(AN) ------------------------&ge;2.0% Moisture---------------------------------------&le;6.0% Ash---------------------------------------------&le;12.5% Storage: Keep container tightly closed, store in a cool, dry place, away from bright light.",
+      image: "/images/hkm/hkm-ham010-soy-peptone-soytone.png",
+      specSheet: "https://www.hkmbio.com/RMaterial/94.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "HAM010 Soy Peptone (Soytone) Usages: Soytone is an enzyme digest of soy, widely used in culture media. Technical specification: Total nitrogen(TN)---------------------------&ge;8.0% Amino nitrogen(AN) ------------------------&ge;2.0% Moisture---------------------------------------&le;6.0% Ash---------------------------------------------&le;12.5% Storage: Keep container tightly closed, store in a cool, dry place, away from bright light. Specifications: 500g/bottle; 10kg/bag"
+        }
+      ],
+      highlights: [
+        "Use: Soytone is an enzyme digest of soy, widely used in culture media.",
+        "Specification: 500g/bottle;10KG/bag",
+        "HKM code: HAM010",
+        "Official family: Raw Material"
+      ],
+      features: [
+        "Use: Soytone is an enzyme digest of soy, widely used in culture media.",
+        "Specification: 500g/bottle;10KG/bag",
+        "HKM code: HAM010",
+        "Official family: Raw Material"
+      ],
+      applications: [
+        "Culture media formulation",
+        "Microbiology reagent manufacturing",
+        "Laboratory media preparation workflows"
+      ],
+      specs: {
+        Code: "HAM010",
+        Specification: "500g/bottle;10KG/bag",
+        "Official category": "Raw Material",
+        "Product family": "Raw Material",
+        Usage: "Soytone is an enzyme digest of soy, widely used in culture media."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "raw-material"
+      ]
+    },
+  {
+      id: "hkm-ham008-yeast-extract-powder-technical",
+      name: "HAM008 Yeast Extract Powder, Technical",
+      brand: "hkm",
+      category: "hkm-raw-materials",
+      subcategory: "Raw Material",
+      subtitle: "Yeast extract promotes growth of a wide variety of microorganisms, including yeasts and moulds.",
+      description: "Yeast extract promotes growth of a wide variety of microorganisms, including yeasts and moulds. HAM008 Yeast Extract Powde r, Technical Usages: Yeast extract promotes growth of a wide variety of microorganisms, including yeasts and moulds.",
+      image: "/images/hkm/hkm-ham008-yeast-extract-powder-technical.png",
+      specSheet: "https://www.hkmbio.com/RMaterial/92.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "HAM008 Yeast Extract Powde r, Technical Usages: Yeast extract promotes growth of a wide variety of microorganisms, including yeasts and moulds. Technical specification: Total nitrogen(TN)---------------------------&ge;10.0% Amino nitrogen(AN) ------------------------&ge;4.5% Sulphuric ash----------------------------------&le;15.0% Loss on drying--------------------------------&le;6.0% Chlorides--------------------------------------&le;0.5% PH(5% solution)------------------------------7.0+/-0.5 Proteoses---------------------------------------positive Tryptophan------------------------------------ positive Nitrites-----------------------------------------negative Storage: Keep container tightly closed, store in a cool, dry place, away from bright light. Specifications: 500g/bottle; 10kg /bag"
+        }
+      ],
+      highlights: [
+        "Use: Yeast extract promotes growth of a wide variety of microorganisms, including yeasts and moulds.",
+        "Specification: 500g/bottle;10KG/bag",
+        "HKM code: HAM008",
+        "Official family: Raw Material"
+      ],
+      features: [
+        "Use: Yeast extract promotes growth of a wide variety of microorganisms, including yeasts and moulds.",
+        "Specification: 500g/bottle;10KG/bag",
+        "HKM code: HAM008",
+        "Official family: Raw Material"
+      ],
+      applications: [
+        "Culture media formulation",
+        "Microbiology reagent manufacturing",
+        "Laboratory media preparation workflows"
+      ],
+      specs: {
+        Code: "HAM008",
+        Specification: "500g/bottle;10KG/bag",
+        "Official category": "Raw Material",
+        "Product family": "Raw Material",
+        Usage: "Yeast extract promotes growth of a wide variety of microorganisms, including yeasts and moulds."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "raw-material"
+      ]
+    },
+  {
+      id: "hkm-ham007-tryptone",
+      name: "HAM007 Tryptone",
+      brand: "hkm",
+      category: "hkm-raw-materials",
+      subcategory: "Raw Material",
+      subtitle: "Tryptone is a pancreatic digest of casein, used in preparing of microbiological culture media.",
+      description: "Tryptone is a pancreatic digest of casein, used in preparing of microbiological culture media. HAM007 Tryptone Usages: Tryptone is a pancreatic digest of casein, used in preparing of microbiological culture media.",
+      image: "/images/hkm/hkm-ham007-tryptone.png",
+      specSheet: "https://www.hkmbio.com/RMaterial/91.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "HAM007 Tryptone Usages: Tryptone is a pancreatic digest of casein, used in preparing of microbiological culture media. Technical specification: Total nitrogen(TN)---------------------------&ge;12.0% Amino nitrogen(AN) ------------------------&ge;3.0% Tryptophan------------------------------------&ge;0.8% Moisture---------------------------------------&le;6.0% Ash---------------------------------------------&le;10.0% PH(2% solution)------------------------------6-7 Storage: Keep container tightly closed, store in a cool, dry place, away from bright light. Specifications: 500g/bottle; 10kg/bag"
+        }
+      ],
+      highlights: [
+        "Use: Tryptone is a pancreatic digest of casein, used in preparing of microbiological culture media.",
+        "Specification: 500g/bottle;10KG/bag",
+        "HKM code: HAM007",
+        "Official family: Raw Material"
+      ],
+      features: [
+        "Use: Tryptone is a pancreatic digest of casein, used in preparing of microbiological culture media.",
+        "Specification: 500g/bottle;10KG/bag",
+        "HKM code: HAM007",
+        "Official family: Raw Material"
+      ],
+      applications: [
+        "Culture media formulation",
+        "Microbiology reagent manufacturing",
+        "Laboratory media preparation workflows"
+      ],
+      specs: {
+        Code: "HAM007",
+        Specification: "500g/bottle;10KG/bag",
+        "Official category": "Raw Material",
+        "Product family": "Raw Material",
+        Usage: "Tryptone is a pancreatic digest of casein, used in preparing of microbiological culture media."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "raw-material"
+      ]
+    },
+  {
+      id: "hkm-hm42-salmonella-rapid-latex-test-kit",
+      name: "HM42 Salmonella Rapid Latex Test Kit",
+      brand: "hkm",
+      category: "hkm-detection-kits",
+      subcategory: "Latex Slide Agglutination Test",
+      featured: true,
+      subtitle: "For confirmatory identification of Salmonella.",
+      description: "For confirmatory identification of Salmonella. HM42 Salmo nella Rapid Latex Test Kit Usage:A latex slide agglutination test for the confirmatory identification of presumptive Salmonella colonies cultivated on selective agar plates. Advantages: Latex test result within 2 minutes, high sensitivity and specificity, accurate and reliable. Relative Products: Code Name Size HM42 Salmonella latex identification kit 50 tests HM43 Staphylococcus latex identification kit 50 tests HM44 E.",
+      image: "/images/hkm/hkm-hm42-salmonella-rapid-latex-test-kit.jpg",
+      specSheet: "https://www.hkmbio.com/MDProducts/lsatkit/311.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "HM42 Salmo nella Rapid Latex Test Kit Usage:A latex slide agglutination test for the confirmatory identification of presumptive Salmonella colonies cultivated on selective agar plates. Advantages: Latex test result within 2 minutes, high sensitivity and specificity, accurate and reliable. Relative Products: Code Name Size HM42 Salmonella latex identification kit 50 tests HM43 Staphylococcus latex identification kit 50 tests HM44 E. coli O157 latex identification kit 50 tests HM45 Legionella latex identification kit 50 tests HM47 Streptococcus latex identification kit 50 tests HM47-1 D Group Streptococcus latex identification kit 50 tests HM48 Listeria latex identification kit 50 tests"
+        }
+      ],
+      highlights: [
+        "Use: For confirmatory identification of Salmonella.",
+        "Specification: 50tests",
+        "HKM code: HM42",
+        "Official family: Latex Slide Agglutination Test"
+      ],
+      features: [
+        "Use: For confirmatory identification of Salmonella.",
+        "Specification: 50tests",
+        "HKM code: HM42",
+        "Official family: Latex Slide Agglutination Test"
+      ],
+      applications: [
+        "Rapid microorganism confirmation",
+        "Food safety and hygiene testing",
+        "Clinical or industrial microbiology screening workflows"
+      ],
+      specs: {
+        Code: "HM42",
+        Specification: "50tests",
+        "Official category": "Latex Test Kit",
+        "Product family": "Latex Slide Agglutination Test",
+        Usage: "For confirmatory identification of Salmonella."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "latex-slide-agglutination-test"
+      ]
+    },
+  {
+      id: "hkm-hm48-listeria-latex-slide-agglutination-kit",
+      name: "HM48 Listeria Latex Slide Agglutination Kit",
+      brand: "hkm",
+      category: "hkm-detection-kits",
+      subcategory: "Latex Slide Agglutination Test",
+      subtitle: "For rapid identificaiton of Listeria from seletive agar plates.",
+      description: "For rapid identificaiton of Listeria from seletive agar plates. HM48 Listeria Latex Slide Agglutination Kit Usage: For rapid identificaiton of Listeria from seletive agar plates. Advantages: Latex test result within 2 minutes, high sensitivity and specificity, accurate and reliable. Relative Products: Code Name Size HM42 Salmonella latex identification kit 50 tests HM43 Staphylococcus latex identification kit 50 tests HM44 E.",
+      image: "/images/hkm/hkm-hm48-listeria-latex-slide-agglutination-kit.jpg",
+      specSheet: "https://www.hkmbio.com/MDProducts/lsatkit/317.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "HM48 Listeria Latex Slide Agglutination Kit Usage: For rapid identificaiton of Listeria from seletive agar plates. Advantages: Latex test result within 2 minutes, high sensitivity and specificity, accurate and reliable. Relative Products: Code Name Size HM42 Salmonella latex identification kit 50 tests HM43 Staphylococcus latex identification kit 50 tests HM44 E. coli O157 latex identification kit 50 tests HM45 Legionella latex identification kit 50 tests HM47 Streptococcus latex identification kit 50 tests HM47-1 D Group Streptococcus latex identification kit 50 tests HM48 Listeria latex identification kit 50 tests"
+        }
+      ],
+      highlights: [
+        "Use: For rapid identificaiton of Listeria from seletive agar plates.",
+        "Specification: 50tests",
+        "HKM code: HM48",
+        "Official family: Latex Slide Agglutination Test"
+      ],
+      features: [
+        "Use: For rapid identificaiton of Listeria from seletive agar plates.",
+        "Specification: 50tests",
+        "HKM code: HM48",
+        "Official family: Latex Slide Agglutination Test"
+      ],
+      applications: [
+        "Rapid microorganism confirmation",
+        "Food safety and hygiene testing",
+        "Clinical or industrial microbiology screening workflows"
+      ],
+      specs: {
+        Code: "HM48",
+        Specification: "50tests",
+        "Official category": "Latex Test Kit",
+        "Product family": "Latex Slide Agglutination Test",
+        Usage: "For rapid identificaiton of Listeria from seletive agar plates."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "latex-slide-agglutination-test"
+      ]
+    },
+  {
+      id: "hkm-hm43-staphylococcus-latex-slide-agglutination-rapid-test-kit",
+      name: "HM43 Staphylococcus Latex Slide Agglutination Rapid Test Kit",
+      brand: "hkm",
+      category: "hkm-detection-kits",
+      subcategory: "Latex Slide Agglutination Test",
+      subtitle: "For confirmatory identification of Staphylococcus.",
+      description: "For confirmatory identification of Staphylococcus. HM43 Staphylococcus Latex Slide Agglutination Rapid Test Kit Usage: A latex slide agglutination tes for the confirmatory identification of Staphylococcus colonies cultivated on selective agar plates. Advantages: Latex test result within 2 minutes, high sensitivity and specificity, accurate and reliable. Relative Products: Code Name Size HM42 Salmonella latex identification kit 50 tests HM43 Staphylococcus latex identification kit 50 tests HM44 E.",
+      image: "/images/hkm/hkm-hm43-staphylococcus-latex-slide-agglutination-rapid-test-kit.jpg",
+      specSheet: "https://www.hkmbio.com/MDProducts/lsatkit/312.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "HM43 Staphylococcus Latex Slide Agglutination Rapid Test Kit Usage: A latex slide agglutination tes for the confirmatory identification of Staphylococcus colonies cultivated on selective agar plates. Advantages: Latex test result within 2 minutes, high sensitivity and specificity, accurate and reliable. Relative Products: Code Name Size HM42 Salmonella latex identification kit 50 tests HM43 Staphylococcus latex identification kit 50 tests HM44 E. coli O157 latex identification kit 50 tests HM45 Legionella latex identification kit 50 tests HM47 Streptococcus latex identification kit 50 tests HM47-1 D Group Streptococcus latex identification kit 50 tests HM48 Listeria latex identification kit 50 tests"
+        }
+      ],
+      highlights: [
+        "Use: For confirmatory identification of Staphylococcus.",
+        "Specification: 50tests",
+        "HKM code: HM43",
+        "Official family: Latex Slide Agglutination Test"
+      ],
+      features: [
+        "Use: For confirmatory identification of Staphylococcus.",
+        "Specification: 50tests",
+        "HKM code: HM43",
+        "Official family: Latex Slide Agglutination Test"
+      ],
+      applications: [
+        "Rapid microorganism confirmation",
+        "Food safety and hygiene testing",
+        "Clinical or industrial microbiology screening workflows"
+      ],
+      specs: {
+        Code: "HM43",
+        Specification: "50tests",
+        "Official category": "Latex Test Kit",
+        "Product family": "Latex Slide Agglutination Test",
+        Usage: "For confirmatory identification of Staphylococcus."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "latex-slide-agglutination-test"
+      ]
+    },
+  {
+      id: "hkm-hm44-e-coli-o157-latex-slide-confirmatory-identification-kit",
+      name: "HM44 E.coli O157 Latex Slide Confirmatory Identification Kit",
+      brand: "hkm",
+      category: "hkm-detection-kits",
+      subcategory: "Latex Slide Agglutination Test",
+      subtitle: "For confirmatory identification of E.coli O157.",
+      description: "For confirmatory identification of E.coli O157. HM44 E.coli O157 Latex Slide Confirmatory Identification Kit Usage:A latex slide agglutination test for the confirmatory identification of E.coli O157 colonies cultivated on selective agar plates. Advantages: Latex test result within 2 minutes, high sensitivity and specificity, accurate and reliable. Relative Products: Code Name Size HM42 Salmonella latex identification kit 50 tests HM43 Staphylococcus latex identification kit 50 tests HM44 E.",
+      image: "/images/hkm/hkm-hm44-e-coli-o157-latex-slide-confirmatory-identification-kit.jpg",
+      specSheet: "https://www.hkmbio.com/MDProducts/lsatkit/313.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "HM44 E.coli O157 Latex Slide Confirmatory Identification Kit Usage:A latex slide agglutination test for the confirmatory identification of E.coli O157 colonies cultivated on selective agar plates. Advantages: Latex test result within 2 minutes, high sensitivity and specificity, accurate and reliable. Relative Products: Code Name Size HM42 Salmonella latex identification kit 50 tests HM43 Staphylococcus latex identification kit 50 tests HM44 E. coli O157 latex identification kit 50 tests HM45 Legionella latex identification kit 50 tests HM47 Streptococcus latex identification kit 50 tests HM47-1 D Group Streptococcus latex identification kit 50 tests HM48 Listeria latex identification kit 50 tests"
+        }
+      ],
+      highlights: [
+        "Use: For confirmatory identification of E.coli O157.",
+        "Specification: 50tests",
+        "HKM code: HM44",
+        "Official family: Latex Slide Agglutination Test"
+      ],
+      features: [
+        "Use: For confirmatory identification of E.coli O157.",
+        "Specification: 50tests",
+        "HKM code: HM44",
+        "Official family: Latex Slide Agglutination Test"
+      ],
+      applications: [
+        "Rapid microorganism confirmation",
+        "Food safety and hygiene testing",
+        "Clinical or industrial microbiology screening workflows"
+      ],
+      specs: {
+        Code: "HM44",
+        Specification: "50tests",
+        "Official category": "Latex Test Kit",
+        "Product family": "Latex Slide Agglutination Test",
+        Usage: "For confirmatory identification of E.coli O157."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "latex-slide-agglutination-test"
+      ]
+    },
+  {
+      id: "hkm-070040-e-colio157-identification-kit",
+      name: "070040 E.coliO157 Identification Kit",
+      brand: "hkm",
+      category: "hkm-detection-kits",
+      subcategory: "Biochemical Identification Kit",
+      subtitle: "For E.coliO157 biochemical identification.",
+      description: "For E.coliO157 biochemical identification. 070040 E.coliO157 Identification Kit Usage: For E.coliO157 biochemical identification. Specification:12types*10tests / box",
+      image: "/images/hkm/hkm-070040-e-colio157-identification-kit.jpg",
+      specSheet: "https://www.hkmbio.com/BIKit/309.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "070040 E.coliO157 Identification Kit Usage: For E.coliO157 biochemical identification. Specification:12types*10tests / box"
+        }
+      ],
+      highlights: [
+        "Use: For E.coliO157 biochemical identification.",
+        "Specification: 12types*10tests/ box",
+        "HKM code: 070040",
+        "Official family: Biochemical Identification Kit"
+      ],
+      features: [
+        "Use: For E.coliO157 biochemical identification.",
+        "Specification: 12types*10tests/ box",
+        "HKM code: 070040",
+        "Official family: Biochemical Identification Kit"
+      ],
+      applications: [
+        "Rapid microorganism confirmation",
+        "Food safety and hygiene testing",
+        "Clinical or industrial microbiology screening workflows"
+      ],
+      specs: {
+        Code: "070040",
+        Specification: "12types*10tests/ box",
+        "Official category": "Biochemical Identification Kit",
+        "Product family": "Biochemical Identification Kit",
+        Usage: "For E.coliO157 biochemical identification."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "biochemical-identification-kit"
+      ]
+    },
+  {
+      id: "hkm-075270-ornithine-decarboxylase-biochemical-identification-kit",
+      name: "075270 Ornithine decarboxylase biochemical identification Kit",
+      brand: "hkm",
+      category: "hkm-detection-kits",
+      subcategory: "Biochemical Identification Kit",
+      subtitle: "For biochemical identification of microorganisms.",
+      description: "For biochemical identification of microorganisms. Usages: For biochemical identification of microorganisms. Code Name Code Name 075050 Sucrose biochemical identification tube 075370 Glucose gas 075040 Mannitol biochemical identification tube 075610 Acetamide 075030 Maltose biochemical identification tube 075600 Arginine double hydrolase control 075020 Lactose biochemical identification tube 075590 Arginine double hydrolase 075010 Glucose biochemical identification tube 075580 Arginine decarboxylase 075150 Urea bioc",
+      image: "/images/hkm/hkm-075270-ornithine-decarboxylase-biochemical-identification-kit.jpg",
+      specSheet: "https://www.hkmbio.com/BIKit/304.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Usages: For biochemical identification of microorganisms. Code Name Code Name 075050 Sucrose biochemical identification tube 075370 Glucose gas 075040 Mannitol biochemical identification tube 075610 Acetamide 075030 Maltose biochemical identification tube 075600 Arginine double hydrolase control 075020 Lactose biochemical identification tube 075590 Arginine double hydrolase 075010 Glucose biochemical identification tube 075580 Arginine decarboxylase 075150 Urea biochemical identification tube 075570 Cellobiose 075130 Adonis Aging identification tube 075560 Melibiose 075140 Salicin biochemical identification tube 075550 Fructose 075120 Inositol biochemical identification tube 075540 Inulin 075110 Rhamnose biochemical identification tube 075530 Mushroom sugar 075100 Dulcitol biochemical identification tube 075522 Mucate QC broth 075090 Sorbitol biochemical identification tube 075720 Meilan"
+        }
+      ],
+      highlights: [
+        "Use: For biochemical identification of microorganisms.",
+        "Specification: 20 Vials/ Box",
+        "HKM code: 075270",
+        "Official family: Biochemical Identification Kit"
+      ],
+      features: [
+        "Use: For biochemical identification of microorganisms.",
+        "Specification: 20 Vials/ Box",
+        "HKM code: 075270",
+        "Official family: Biochemical Identification Kit"
+      ],
+      applications: [
+        "Rapid microorganism confirmation",
+        "Food safety and hygiene testing",
+        "Clinical or industrial microbiology screening workflows"
+      ],
+      specs: {
+        Code: "075270",
+        Specification: "20 Vials/ Box",
+        "Official category": "Biochemical Identification Kit",
+        "Product family": "Biochemical Identification Kit",
+        Usage: "For biochemical identification of microorganisms."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "biochemical-identification-kit"
+      ]
+    },
+  {
+      id: "hkm-075050-sucrose-biochemical-identification-kit",
+      name: "075050 Sucrose biochemical identification kit",
+      brand: "hkm",
+      category: "hkm-detection-kits",
+      subcategory: "Biochemical Identification Kit",
+      subtitle: "For biochemical identification of microorganisms.",
+      description: "For biochemical identification of microorganisms. Usages: For biochemical identification of microorganisms. Code Name Code Name 075050 Sucrose biochemical identification tube 075370 Glucose gas 075040 Mannitol biochemical identification tube 075610 Acetamide 075030 Maltose biochemical identification tube 075600 Arginine double hydrolase control 075020 Lactose biochemical identification tube 075590 Arginine double hydrolase 075010 Glucose biochemical identification tube 075580 Arginine decarboxylase 075150 Urea bioc",
+      image: "/images/hkm/hkm-075050-sucrose-biochemical-identification-kit.jpg",
+      specSheet: "https://www.hkmbio.com/BIKit/272.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Usages: For biochemical identification of microorganisms. Code Name Code Name 075050 Sucrose biochemical identification tube 075370 Glucose gas 075040 Mannitol biochemical identification tube 075610 Acetamide 075030 Maltose biochemical identification tube 075600 Arginine double hydrolase control 075020 Lactose biochemical identification tube 075590 Arginine double hydrolase 075010 Glucose biochemical identification tube 075580 Arginine decarboxylase 075150 Urea biochemical identification tube 075570 Cellobiose 075130 Adonis Aging identification tube 075560 Melibiose 075140 Salicin biochemical identification tube 075550 Fructose 075120 Inositol biochemical identification tube 075540 Inulin 075110 Rhamnose biochemical identification tube 075530 Mushroom sugar 075100 Dulcitol biochemical identification tube 075522 Mucate QC broth 075090 Sorbitol biochemical identification tube 075720 Meilan"
+        }
+      ],
+      highlights: [
+        "Use: For biochemical identification of microorganisms.",
+        "Specification: 20 Vials/ Box",
+        "HKM code: 075050",
+        "Official family: Biochemical Identification Kit"
+      ],
+      features: [
+        "Use: For biochemical identification of microorganisms.",
+        "Specification: 20 Vials/ Box",
+        "HKM code: 075050",
+        "Official family: Biochemical Identification Kit"
+      ],
+      applications: [
+        "Rapid microorganism confirmation",
+        "Food safety and hygiene testing",
+        "Clinical or industrial microbiology screening workflows"
+      ],
+      specs: {
+        Code: "075050",
+        Specification: "20 Vials/ Box",
+        "Official category": "Biochemical Identification Kit",
+        "Product family": "Biochemical Identification Kit",
+        Usage: "For biochemical identification of microorganisms."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "biochemical-identification-kit"
+      ]
+    },
+  {
+      id: "hkm-075030-maltose-biochemical-identification-kit",
+      name: "075030 Maltose biochemical identification kit",
+      brand: "hkm",
+      category: "hkm-detection-kits",
+      subcategory: "Biochemical Identification Kit",
+      subtitle: "For biochemical identification of microorganisms.",
+      description: "For biochemical identification of microorganisms. Usages: For biochemical identification of microorganisms. Code Name Code Name 075050 Sucrose biochemical identification tube 075370 Glucose gas 075040 Mannitol biochemical identification tube 075610 Acetamide 075030 Maltose biochemical identification tube 075600 Arginine double hydrolase control 075020 Lactose biochemical identification tube 075590 Arginine double hydrolase 075010 Glucose biochemical identification tube 075580 Arginine decarboxylase 075150 Urea bioc",
+      image: "/images/hkm/hkm-075030-maltose-biochemical-identification-kit.jpg",
+      specSheet: "https://www.hkmbio.com/BIKit/273.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Usages: For biochemical identification of microorganisms. Code Name Code Name 075050 Sucrose biochemical identification tube 075370 Glucose gas 075040 Mannitol biochemical identification tube 075610 Acetamide 075030 Maltose biochemical identification tube 075600 Arginine double hydrolase control 075020 Lactose biochemical identification tube 075590 Arginine double hydrolase 075010 Glucose biochemical identification tube 075580 Arginine decarboxylase 075150 Urea biochemical identification tube 075570 Cellobiose 075130 Adonis Aging identification tube 075560 Melibiose 075140 Salicin biochemical identification tube 075550 Fructose 075120 Inositol biochemical identification tube 075540 Inulin 075110 Rhamnose biochemical identification tube 075530 Mushroom sugar 075100 Dulcitol biochemical identification tube 075522 Mucate QC broth 075090 Sorbitol biochemical identification tube 075720 Meilan"
+        }
+      ],
+      highlights: [
+        "Use: For biochemical identification of microorganisms.",
+        "Specification: 20 Vials/ Box",
+        "HKM code: 075030",
+        "Official family: Biochemical Identification Kit"
+      ],
+      features: [
+        "Use: For biochemical identification of microorganisms.",
+        "Specification: 20 Vials/ Box",
+        "HKM code: 075030",
+        "Official family: Biochemical Identification Kit"
+      ],
+      applications: [
+        "Rapid microorganism confirmation",
+        "Food safety and hygiene testing",
+        "Clinical or industrial microbiology screening workflows"
+      ],
+      specs: {
+        Code: "075030",
+        Specification: "20 Vials/ Box",
+        "Official category": "Biochemical Identification Kit",
+        "Product family": "Biochemical Identification Kit",
+        Usage: "For biochemical identification of microorganisms."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "biochemical-identification-kit"
+      ]
+    },
+  {
+      id: "hkm-075180-onpg-biochemical-identification-kit",
+      name: "075180 ONPG biochemical identification kit",
+      brand: "hkm",
+      category: "hkm-detection-kits",
+      subcategory: "Biochemical Identification Kit",
+      subtitle: "For colony confirmation test of microorganisms.",
+      description: "For colony confirmation test of microorganisms. Usages: For colony confirmation test of microorganisms. Code Name Code Name 075050 Sucrose biochemical identification tube 075370 Glucose gas 075040 Mannitol biochemical identification tube 075610 Acetamide 075030 Maltose biochemical identification tube 075600 Arginine double hydrolase control 075020 Lactose biochemical identification tube 075590 Arginine double hydrolase 075010 Glucose biochemical identification tube 075580 Arginine decarboxylase 075150 Urea biochemi",
+      image: "/images/hkm/hkm-075180-onpg-biochemical-identification-kit.jpg",
+      specSheet: "https://www.hkmbio.com/BIKit/276.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Usages: For colony confirmation test of microorganisms. Code Name Code Name 075050 Sucrose biochemical identification tube 075370 Glucose gas 075040 Mannitol biochemical identification tube 075610 Acetamide 075030 Maltose biochemical identification tube 075600 Arginine double hydrolase control 075020 Lactose biochemical identification tube 075590 Arginine double hydrolase 075010 Glucose biochemical identification tube 075580 Arginine decarboxylase 075150 Urea biochemical identification tube 075570 Cellobiose 075130 Adonis Aging identification tube 075560 Melibiose 075140 Salicin biochemical identification tube 075550 Fructose 075120 Inositol biochemical identification tube 075540 Inulin 075110 Rhamnose biochemical identification tube 075530 Mushroom sugar 075100 Dulcitol biochemical identification tube 075522 Mucate QC broth 075090 Sorbitol biochemical identification tube 075720 Meilan m"
+        }
+      ],
+      highlights: [
+        "Use: For colony confirmation test of microorganisms.",
+        "Specification: 20 Vials/ Box",
+        "HKM code: 075180",
+        "Official family: Biochemical Identification Kit"
+      ],
+      features: [
+        "Use: For colony confirmation test of microorganisms.",
+        "Specification: 20 Vials/ Box",
+        "HKM code: 075180",
+        "Official family: Biochemical Identification Kit"
+      ],
+      applications: [
+        "Rapid microorganism confirmation",
+        "Food safety and hygiene testing",
+        "Clinical or industrial microbiology screening workflows"
+      ],
+      specs: {
+        Code: "075180",
+        Specification: "20 Vials/ Box",
+        "Official category": "Biochemical Identification Kit",
+        "Product family": "Biochemical Identification Kit",
+        Usage: "For colony confirmation test of microorganisms."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "biochemical-identification-kit"
+      ]
+    },
+  {
+      id: "hkm-hp002-coliform-count-plate",
+      name: "HP002 Coliform Count Plate",
+      brand: "hkm",
+      category: "hkm-count-cards",
+      subcategory: "Count Cards for Mold & Coliform",
+      featured: true,
+      subtitle: "for Coliform count",
+      description: "for Coliform count Coliform Count Plate is used for coliform count for sample from food / berverage etc.",
+      image: "/images/hkm/hkm-hp002-coliform-count-plate.jpg",
+      specSheet: "https://www.hkmbio.com/MDProducts/ccfmc/391.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Coliform Count Plate is used for coliform count for sample from food / berverage etc."
+        }
+      ],
+      highlights: [
+        "Use: for Coliform count",
+        "Specification: 20 plates / box",
+        "HKM code: HP002",
+        "Official family: Count Cards for Mold & Coliform"
+      ],
+      features: [
+        "Use: for Coliform count",
+        "Specification: 20 plates / box",
+        "HKM code: HP002",
+        "Official family: Count Cards for Mold & Coliform"
+      ],
+      applications: [
+        "Fast microbial count workflows",
+        "Food and beverage quality control",
+        "Environmental hygiene monitoring"
+      ],
+      specs: {
+        Code: "HP002",
+        Specification: "20 plates / box",
+        "Official category": "Coliform Count Plate",
+        "Product family": "Count Cards for Mold & Coliform",
+        Usage: "for Coliform count"
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "count-cards-for-mold-coliform"
+      ]
+    },
+  {
+      id: "hkm-060020-mold-count-plate-mold-testing-strip",
+      name: "060020 Mold Count Plate (Mold Testing Strip)",
+      brand: "hkm",
+      category: "hkm-count-cards",
+      subcategory: "Count Cards for Mold & Coliform",
+      subtitle: "For testing and counting of mold & yeast in water .",
+      description: "For testing and counting of mold & yeast in water . 060020 Mold Count Plate (Mold Testing Strip) Specifications: 20 Pieces/ box (2 Slices / Piece) Application: Widely used in food, drinks, mineral water, drinking water, drinking mineral water, water and health products in the amount of mold detection, wherein the anti-type preservatives, anti-ozone disinfectant type and anti-type examination paper that can be used separately containing sorbic acid, benzoic acid and its salts and other preservatives, or residual dis",
+      image: "/images/hkm/hkm-060020-mold-count-plate-mold-testing-strip.jpg",
+      specSheet: "https://www.hkmbio.com/MDProducts/ccfmc/258.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "060020 Mold Count Plate (Mold Testing Strip) Specifications: 20 Pieces/ box (2 Slices / Piece) Application: Widely used in food, drinks, mineral water, drinking water, drinking mineral water, water and health products in the amount of mold detection, wherein the anti-type preservatives, anti-ozone disinfectant type and anti-type examination paper that can be used separately containing sorbic acid, benzoic acid and its salts and other preservatives, or residual disinfectant residual ozone in the sample or the detection of molds. How to use: 1.Sample: Take 25g of crushed sample, adding 25mL of sterile saline or other diluents to mix. 2. Inoculation and culture: After appropriate dilution of the sample, open the lid counting cards, drop 1ml of sample on each paper then close the lid;"
+        }
+      ],
+      highlights: [
+        "Use: For testing and counting of mold & yeast in water .",
+        "Specification: 20 Pieces/ box (2 Slices / Piece)",
+        "HKM code: 060020",
+        "Official family: Count Cards for Mold & Coliform"
+      ],
+      features: [
+        "Use: For testing and counting of mold & yeast in water .",
+        "Specification: 20 Pieces/ box (2 Slices / Piece)",
+        "HKM code: 060020",
+        "Official family: Count Cards for Mold & Coliform"
+      ],
+      applications: [
+        "Fast microbial count workflows",
+        "Food and beverage quality control",
+        "Environmental hygiene monitoring"
+      ],
+      specs: {
+        Code: "060020",
+        Specification: "20 Pieces/ box (2 Slices / Piece)",
+        "Official category": "Microbiological Count Plate",
+        "Product family": "Count Cards for Mold & Coliform",
+        Usage: "For testing and counting of mold & yeast in water ."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "count-cards-for-mold-coliform"
+      ]
+    },
+  {
+      id: "hkm-060040-coliforms-count-plate-ii-coliforms-testing-strip",
+      name: "060040 Coliforms Count Plate II (Coliforms Testing Strip)",
+      brand: "hkm",
+      category: "hkm-count-cards",
+      subcategory: "Count Cards for Mold & Coliform",
+      subtitle: "For testing and counting of coliforms in water.",
+      description: "For testing and counting of coliforms in water. 060040 Coliforms Count Plate II ( Coliforms Testing Strip ) Specifications: 10 Pieces/ box (5 Slices / Piece) Application: Widely used in drinking water, natural mineral water for coliforma detection of source water. How to use: 1.Inoculation: Draw 5 pcs of 10 mL sample and applied to the 5 pcs of paper.Then gently flatten the bag, place in an incubator vertically upward and culture for 18 ~ 24h (35 ~ 37 degrees C) , observe the results.",
+      image: "/images/hkm/hkm-060040-coliforms-count-plate-ii-coliforms-testing-strip.jpg",
+      specSheet: "https://www.hkmbio.com/MDProducts/ccfmc/260.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "060040 Coliforms Count Plate II ( Coliforms Testing Strip ) Specifications: 10 Pieces/ box (5 Slices / Piece) Application: Widely used in drinking water, natural mineral water for coliforma detection of source water. How to use: 1.Inoculation: Draw 5 pcs of 10 mL sample and applied to the 5 pcs of paper.Then gently flatten the bag, place in an incubator vertically upward and culture for 18 ~ 24h (35 ~ 37 degrees C) , observe the results. 2.Results to determine: Negative results: violet blue paper unchanged, regardless of flush or red spots which is judged as coliform negative. Positive results: showing red spots or flush on the paper, and its surrounding show yellow or yellow throughout the paper which is judged as positive for coliform bacteria. 3.Result report: Check with Coliform MPN Table to do the report."
+        }
+      ],
+      highlights: [
+        "Use: For testing and counting of coliforms in water.",
+        "Specification: 10 Pieces/ box (5 Slices / Piece)",
+        "HKM code: 060040",
+        "Official family: Count Cards for Mold & Coliform"
+      ],
+      features: [
+        "Use: For testing and counting of coliforms in water.",
+        "Specification: 10 Pieces/ box (5 Slices / Piece)",
+        "HKM code: 060040",
+        "Official family: Count Cards for Mold & Coliform"
+      ],
+      applications: [
+        "Fast microbial count workflows",
+        "Food and beverage quality control",
+        "Environmental hygiene monitoring"
+      ],
+      specs: {
+        Code: "060040",
+        Specification: "10 Pieces/ box (5 Slices / Piece)",
+        "Official category": "Microbiological Count Plate",
+        "Product family": "Count Cards for Mold & Coliform",
+        Usage: "For testing and counting of coliforms in water."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "count-cards-for-mold-coliform"
+      ]
+    },
+  {
+      id: "hkm-060050-coliforms-count-plate-iii-microbiological-testing-strip",
+      name: "060050 Coliforms Count Plate III (Microbiological Testing Strip)",
+      brand: "hkm",
+      category: "hkm-count-cards",
+      subcategory: "Count Cards for Mold & Coliform",
+      subtitle: "For detection and counting of coliforms in water.",
+      description: "For detection and counting of coliforms in water. 060050 Coliforms Count Plate III ( Microbiological Testing Strip ) Specifications: 10 Pieces/ box (9 Slices / Piece) Application: Widely used in drinking water, natural mineral water for coliforma detection of source water. How to use: 1.Inoculation: According to contamination of samples, elect the appropriate dilution, draw 3 pcs of 10 mL sample and applied to the 3 pcs of paper; then draw 3 pcs of 1 mL sample applied to 3 pcs of smaller paper;",
+      image: "/images/hkm/hkm-060050-coliforms-count-plate-iii-microbiological-testing-strip.jpg",
+      specSheet: "https://www.hkmbio.com/MDProducts/ccfmc/261.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "060050 Coliforms Count Plate III ( Microbiological Testing Strip ) Specifications: 10 Pieces/ box (9 Slices / Piece) Application: Widely used in drinking water, natural mineral water for coliforma detection of source water. How to use: 1.Inoculation: According to contamination of samples, elect the appropriate dilution, draw 3 pcs of 10 mL sample and applied to the 3 pcs of paper; then draw 3 pcs of 1 mL sample applied to 3 pcs of smaller paper; then another 1 mL aliquot diluted 10-fold, draw 3 pcs of 1 mL and applied to 3 pcs of smallest paper. Then gently flatten the bag, place in an incubator vertically upward and culture for 18 ~ 24h (35 ~ 37 degrees C) , observe the results. 2.Results to determine: Negative results: violet blue paper unchanged, regardless of flush or red spots which is judged as coliform negative."
+        }
+      ],
+      highlights: [
+        "Use: For detection and counting of coliforms in water.",
+        "Specification: 10 Pieces/ box (9 Slices / Piece)",
+        "HKM code: 060050",
+        "Official family: Count Cards for Mold & Coliform"
+      ],
+      features: [
+        "Use: For detection and counting of coliforms in water.",
+        "Specification: 10 Pieces/ box (9 Slices / Piece)",
+        "HKM code: 060050",
+        "Official family: Count Cards for Mold & Coliform"
+      ],
+      applications: [
+        "Fast microbial count workflows",
+        "Food and beverage quality control",
+        "Environmental hygiene monitoring"
+      ],
+      specs: {
+        Code: "060050",
+        Specification: "10 Pieces/ box (9 Slices / Piece)",
+        "Official category": "Microbiological Count Plate",
+        "Product family": "Count Cards for Mold & Coliform",
+        Usage: "For detection and counting of coliforms in water."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "count-cards-for-mold-coliform"
+      ]
+    },
+  {
+      id: "hkm-060030-coliforms-count-plate-i-coliforms-testing-strip",
+      name: "060030 Coliforms Count Plate I (Coliforms Testing Strip)",
+      brand: "hkm",
+      category: "hkm-count-cards",
+      subcategory: "Count Cards for Mold & Coliform",
+      subtitle: "For testing and counting of Coliforms in water.",
+      description: "For testing and counting of Coliforms in water. 060030 Coliforms Count Plate I (Coliforms Testing Strip) Specifications: 10 Pieces/ box (15 Slices / Piece) Application: Widely used in drinking water, natural mineral water for coliforma detection of source water. How to use: 1.Inoculation: According to contamination of samples, not diluted or select the appropriate dilution, draw 5 pcs of 10 mL sample and applied to the 5 pcs of paper; then draw 5 pcs of 1 mL sample applied to 5 pcs of smaller paper;",
+      image: "/images/hkm/hkm-060030-coliforms-count-plate-i-coliforms-testing-strip.jpg",
+      specSheet: "https://www.hkmbio.com/MDProducts/ccfmc/259.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "060030 Coliforms Count Plate I (Coliforms Testing Strip) Specifications: 10 Pieces/ box (15 Slices / Piece) Application: Widely used in drinking water, natural mineral water for coliforma detection of source water. How to use: 1.Inoculation: According to contamination of samples, not diluted or select the appropriate dilution, draw 5 pcs of 10 mL sample and applied to the 5 pcs of paper; then draw 5 pcs of 1 mL sample applied to 5 pcs of smaller paper; then another 1 mL aliquot diluted 10-fold, draw 5 pcs of 1 mL and applied to 5 pcs of smallest paper. Then gently flatten the bag, place in an incubator vertically upward and culture for 18 ~ 24h (35 ~ 37 degrees C) , observe the results. 2.Results to determine: Negative results: violet blue paper unchanged, regardless of flush or red spots which is judged as coliform negative."
+        }
+      ],
+      highlights: [
+        "Use: For testing and counting of Coliforms in water.",
+        "Specification: 10 Pieces/ box (15 Slices / Piece)",
+        "HKM code: 060030",
+        "Official family: Count Cards for Mold & Coliform"
+      ],
+      features: [
+        "Use: For testing and counting of Coliforms in water.",
+        "Specification: 10 Pieces/ box (15 Slices / Piece)",
+        "HKM code: 060030",
+        "Official family: Count Cards for Mold & Coliform"
+      ],
+      applications: [
+        "Fast microbial count workflows",
+        "Food and beverage quality control",
+        "Environmental hygiene monitoring"
+      ],
+      specs: {
+        Code: "060030",
+        Specification: "10 Pieces/ box (15 Slices / Piece)",
+        "Official category": "Microbiological Count Plate",
+        "Product family": "Count Cards for Mold & Coliform",
+        Usage: "For testing and counting of Coliforms in water."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "count-cards-for-mold-coliform"
+      ]
+    },
+  {
+      id: "hkm-cod-test-kit",
+      name: "COD Test Kit",
+      brand: "hkm",
+      category: "hkm-water-testing",
+      subcategory: "Water Test Kit",
+      featured: true,
+      subtitle: "For COD testing in water .",
+      description: "For COD testing in water . COD TEST KIT SPECIFICATION 1. INTRODUCTION Chemical oxygen demand(COD) reflects the pollution degree of water caused by reducing substances. The reducing substances in water include organic matters, nitrites, ferrous salts, sulfides,etc. The potassium permanganate method is simple and quick and can be easily used to the rapid determination of COD. 2. PRINCIPLE Based on basic potassium permanganate method.",
+      image: "/images/hkm/hkm-cod-test-kit.png",
+      specSheet: "https://www.hkmbio.com/WTKit/368.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "COD TEST KIT SPECIFICATION 1. INTRODUCTION Chemical oxygen demand(COD) reflects the pollution degree of water caused by reducing substances. The reducing substances in water include organic matters, nitrites, ferrous salts, sulfides,etc. The potassium permanganate method is simple and quick and can be easily used to the rapid determination of COD. 2. PRINCIPLE Based on basic potassium permanganate method. Under alkaline condition, oxidize the reducing substances (except for nitrites) by potassium permanganate. The color depth is proportional to the concentration of chemical oxygen demand(COD) 3. TEST RANGE 0~8 mg/L 4. APPLICATIONS This test kit can be used to measure COD in water sample with relatively low concentration of organic matters such as irrigation water, drinking water, boiler water, surface water and ground water,etc. 5 . T EST P ROCEDURE S I."
+        }
+      ],
+      highlights: [
+        "Use: For COD testing in water .",
+        "Specification: 0~8 mg/L , 50 tests / box",
+        "HKM code: 090801",
+        "Official family: Water Test Kit"
+      ],
+      features: [
+        "Use: For COD testing in water .",
+        "Specification: 0~8 mg/L , 50 tests / box",
+        "HKM code: 090801",
+        "Official family: Water Test Kit"
+      ],
+      applications: [
+        "Drinking water and process water testing",
+        "Field water quality screening",
+        "Pool, boiler, surface, and groundwater checks"
+      ],
+      specs: {
+        Code: "090801",
+        Specification: "0~8 mg/L , 50 tests / box",
+        "Official category": "COD Test Kit",
+        "Product family": "Water Test Kit",
+        Usage: "For COD testing in water ."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "water-test-kit"
+      ]
+    },
+  {
+      id: "hkm-ozone-test-kit-dpd-method",
+      name: "Ozone Test Kit (DPD Method)",
+      brand: "hkm",
+      category: "hkm-water-testing",
+      subcategory: "Water Test Kit",
+      subtitle: "For Ozone detection",
+      description: "For Ozone detection Ozone Test Kit (DPD Method) Easy to Operate : Suitable for detection on site, and minimize the errors caused by long transportation; Standardized operation, and minimized manual errors; Real-time monitoring of ozone concentration in production process, and effective controlling of ozone concentration. Accurate Measuring : Scientific formulation, special techniques, and strict quality control; Research and development conducted under international standards and methods;",
+      image: "/images/hkm/hkm-ozone-test-kit-dpd-method.jpg",
+      specSheet: "https://www.hkmbio.com/WTKit/48.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Ozone Test Kit (DPD Method) Easy to Operate : Suitable for detection on site, and minimize the errors caused by long transportation; Standardized operation, and minimized manual errors; Real-time monitoring of ozone concentration in production process, and effective controlling of ozone concentration. Accurate Measuring : Scientific formulation, special techniques, and strict quality control; Research and development conducted under international standards and methods; Produced from imported materials, including color agent, buffer agent, spiking agent, and covering agent, etc; Standardized precise colorimetric cards, specialized for colorimetric tubes; Double layer aluminum foil, preventing moisture and light. Reliable Quality : Guangzhou Patent Product of Excellence; Guangdong Important New Product; ISO9001;"
+        }
+      ],
+      highlights: [
+        "Use: For Ozone detection",
+        "Specification: 100 tests/box",
+        "HKM code: 090012",
+        "Official family: Water Test Kit"
+      ],
+      features: [
+        "Use: For Ozone detection",
+        "Specification: 100 tests/box",
+        "HKM code: 090012",
+        "Official family: Water Test Kit"
+      ],
+      applications: [
+        "Drinking water and process water testing",
+        "Field water quality screening",
+        "Pool, boiler, surface, and groundwater checks"
+      ],
+      specs: {
+        Code: "090012",
+        Specification: "100 tests/box",
+        "Official category": "water test",
+        "Product family": "Water Test Kit",
+        Usage: "For Ozone detection"
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "water-test-kit"
+      ]
+    },
+  {
+      id: "hkm-low-hardness-test-kit",
+      name: "Low Hardness Test Kit",
+      brand: "hkm",
+      category: "hkm-water-testing",
+      subcategory: "Water Test Kit",
+      subtitle: "For Hardness Test",
+      description: "For Hardness Test Low Hardness Test Kit Sources of hardness: Water hardness originally refers to the precipitation of calcium and magnesium salt to soap. Different countries have different definitions to the hardness such as total hardness, carbonate hardness and non-carbonate hardness. Total hardness refers to the total concentration of calcium and magnesium.",
+      image: "/images/hkm/hkm-low-hardness-test-kit.jpg",
+      specSheet: "https://www.hkmbio.com/WTKit/57.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Low Hardness Test Kit Sources of hardness: Water hardness originally refers to the precipitation of calcium and magnesium salt to soap. Different countries have different definitions to the hardness such as total hardness, carbonate hardness and non-carbonate hardness. Total hardness refers to the total concentration of calcium and magnesium. Carbonate hardness, which is equal to the hardness of calcium and magnesium combined with carbonate and bicarbonate in the water, is a part of the total hardness. Non-carbonate hardness is also a part of the total hardness. When the content of the calcium ion and magnesium ion in the water exceeds the content of carbonate and bicarbonate, the redundant ions will combine with the chloride ions, sulfate radicals and nitrate radicals in the water, then the non-carbonate hardness forms."
+        }
+      ],
+      highlights: [
+        "Use: For Hardness Test",
+        "Specification: 50 tests/box",
+        "HKM code: 090043",
+        "Official family: Water Test Kit"
+      ],
+      features: [
+        "Use: For Hardness Test",
+        "Specification: 50 tests/box",
+        "HKM code: 090043",
+        "Official family: Water Test Kit"
+      ],
+      applications: [
+        "Drinking water and process water testing",
+        "Field water quality screening",
+        "Pool, boiler, surface, and groundwater checks"
+      ],
+      specs: {
+        Code: "090043",
+        Specification: "50 tests/box",
+        "Official category": "Water Test",
+        "Product family": "Water Test Kit",
+        Usage: "For Hardness Test"
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "water-test-kit"
+      ]
+    },
+  {
+      id: "hkm-sulfide-test-kit-dpd-method",
+      name: "Sulfide Test Kit(DPD Method)",
+      brand: "hkm",
+      category: "hkm-water-testing",
+      subcategory: "Water Test Kit",
+      subtitle: "For Sulfide Test",
+      description: "For Sulfide Test Sulfide Test Kit(DPD Method) Background of development Sources of sulfide Ground water (especially hot spring water) and domestic sewage usually contain sulfides, some of which are produced by decomposition of sulfur-containing organic compounds or sulfate reducing due to the role of bacteria under anaerobic condition. Industrial wastewater coming from industrial and mining enterprises, such as coking, gas, ore dressing, dyeing, tanning and etc., also contain sulfides.",
+      image: "/images/hkm/hkm-sulfide-test-kit-dpd-method.jpg",
+      specSheet: "https://www.hkmbio.com/WTKit/86.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Sulfide Test Kit(DPD Method) Background of development Sources of sulfide Ground water (especially hot spring water) and domestic sewage usually contain sulfides, some of which are produced by decomposition of sulfur-containing organic compounds or sulfate reducing due to the role of bacteria under anaerobic condition. Industrial wastewater coming from industrial and mining enterprises, such as coking, gas, ore dressing, dyeing, tanning and etc., also contain sulfides. Sulfides in water mainly include H2S, HS- and S2-. Sulfides existing in suspensions are soluble sulfides, acid-soluble metal sulfides and the non-ionized organic, inorganic sulfides. Significance of sulfide test Hydrogen sulfide can easily dissipate from the water into the air, producing the stink smell and with high toxicity."
+        }
+      ],
+      highlights: [
+        "Use: For Sulfide Test",
+        "Specification: 50 tests/box",
+        "HKM code: 090200",
+        "Official family: Water Test Kit"
+      ],
+      features: [
+        "Use: For Sulfide Test",
+        "Specification: 50 tests/box",
+        "HKM code: 090200",
+        "Official family: Water Test Kit"
+      ],
+      applications: [
+        "Drinking water and process water testing",
+        "Field water quality screening",
+        "Pool, boiler, surface, and groundwater checks"
+      ],
+      specs: {
+        Code: "090200",
+        Specification: "50 tests/box",
+        "Official category": "water test",
+        "Product family": "Water Test Kit",
+        Usage: "For Sulfide Test"
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "water-test-kit"
+      ]
+    },
+  {
+      id: "hkm-total-alkalinity-test-kit-hr",
+      name: "Total Alkalinity Test Kit(HR)",
+      brand: "hkm",
+      category: "hkm-water-testing",
+      subcategory: "Water Test Kit",
+      subtitle: "For total alkalinity test",
+      description: "For total alkalinity test Total Alkalinity Test Kit Background of development Sources of alkalinity: The water alkalinity refers to the amount of substances containing in water which could receive hydrogen ions. There are a variety of sources such as hydroxide, carbonate, bicarbonate, phosphate, silicate, sulfite and nitrogen, etc., which are common alkaline substances exist in water and can react with the acid.",
+      image: "/images/hkm/hkm-total-alkalinity-test-kit-hr.jpg",
+      specSheet: "https://www.hkmbio.com/WTKit/123.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Total Alkalinity Test Kit Background of development Sources of alkalinity: The water alkalinity refers to the amount of substances containing in water which could receive hydrogen ions. There are a variety of sources such as hydroxide, carbonate, bicarbonate, phosphate, silicate, sulfite and nitrogen, etc., which are common alkaline substances exist in water and can react with the acid. The significance of alkalinity test Alkalinity is a kind of comprehensive characteristic index of water, which represents the total amount of substances that can be titrated by strong acid. Alkalinity index commonly used in the evaluation of the buffering capacity of water and in which the solubility and toxicity of metal. It is an indicator to judge the controlling in process of water and wastewater treatment."
+        }
+      ],
+      highlights: [
+        "Use: For total alkalinity test",
+        "Specification: 50 tests/box",
+        "HKM code: 090151",
+        "Official family: Water Test Kit"
+      ],
+      features: [
+        "Use: For total alkalinity test",
+        "Specification: 50 tests/box",
+        "HKM code: 090151",
+        "Official family: Water Test Kit"
+      ],
+      applications: [
+        "Drinking water and process water testing",
+        "Field water quality screening",
+        "Pool, boiler, surface, and groundwater checks"
+      ],
+      specs: {
+        Code: "090151",
+        Specification: "50 tests/box",
+        "Official category": "water test",
+        "Product family": "Water Test Kit",
+        Usage: "For total alkalinity test"
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "water-test-kit"
+      ]
+    },
+  {
+      id: "hkm-portable-ozone-meter",
+      name: "Portable Ozone Meter",
+      brand: "hkm",
+      category: "hkm-water-testing",
+      subcategory: "Portable Water Detector",
+      subtitle: "For ozone testing in water.",
+      description: "For ozone testing in water. 1.Product Introduction 1.1 Test Principle In the presence of potassium iodide, ozone can react with DPD (N,N-diethyl -p-phenylenediamine) indicator to form a pink color, which is proportional to the ozone concentration. 1.2 Applied Range The colorimeter can be used to measure the concentration of ozone in all kinds of water disinfected by ozone. The LCD display the concentration of ozone directly, the unit is mg/L.",
+      image: "/images/hkm/hkm-portable-ozone-meter.jpg",
+      specSheet: "https://www.hkmbio.com/PWDetector/366.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "1.Product Introduction 1.1 Test Principle In the presence of potassium iodide, ozone can react with DPD (N,N-diethyl -p-phenylenediamine) indicator to form a pink color, which is proportional to the ozone concentration. 1.2 Applied Range The colorimeter can be used to measure the concentration of ozone in all kinds of water disinfected by ozone. The LCD display the concentration of ozone directly, the unit is mg/L. 1.3 Executive Standard: Q/HK 080315 1.4 Instrument Specification Test Range： 0～2.50 mg/L Light source： Light Emitting Diode(LED) Detection Wavelength : 525nm Reading accuracy：0.01mg/L Detection precision： &le; +/-5% Power Source： 4&times;1.5V Battery Life： &ge; 40 working hours Size： 159&times;68&times;35mm Weight： About 220g(including batteries) Working Environment：0~40 degrees C；Relative Humidity within 0~90% (No Condensed Water) 2.Attentions 1."
+        }
+      ],
+      highlights: [
+        "Use: For ozone testing in water.",
+        "Specification: 0 - 2.50 mg/L",
+        "HKM code: 090091",
+        "Official family: Portable Water Detector"
+      ],
+      features: [
+        "Use: For ozone testing in water.",
+        "Specification: 0 - 2.50 mg/L",
+        "HKM code: 090091",
+        "Official family: Portable Water Detector"
+      ],
+      applications: [
+        "Drinking water and process water testing",
+        "Field water quality screening",
+        "Pool, boiler, surface, and groundwater checks"
+      ],
+      specs: {
+        Code: "090091",
+        Specification: "0 - 2.50 mg/L",
+        "Official category": "Portable Ozone Meter",
+        "Product family": "Portable Water Detector",
+        Usage: "For ozone testing in water."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "portable-water-detector"
+      ]
+    },
+  {
+      id: "hkm-portable-chlorine-meter",
+      name: "Portable Chlorine Meter",
+      brand: "hkm",
+      category: "hkm-water-testing",
+      subcategory: "Portable Water Detector",
+      featured: true,
+      subtitle: "For free / total chlorine testing.",
+      description: "For free / total chlorine testing. 1.Product Introduction 1.1 Test Principle Free Chlorine in the sample as hypochlorous acid or hypochlorite ion immediately reacts with DPD (N,N-diethyl -p-phenylenediamine) indicator to form a pink color, which is proportional to the free chlorine concentration. Combined chlorine oxidizes iodide in the reagent to iodine. The iodine and free chlorine in the sample react with the DPD indicator to form a pink color, which is proportional to the total chlorine concentration.",
+      image: "/images/hkm/hkm-portable-chlorine-meter.png",
+      specSheet: "https://www.hkmbio.com/PWDetector/59.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "1.Product Introduction 1.1 Test Principle Free Chlorine in the sample as hypochlorous acid or hypochlorite ion immediately reacts with DPD (N,N-diethyl -p-phenylenediamine) indicator to form a pink color, which is proportional to the free chlorine concentration. Combined chlorine oxidizes iodide in the reagent to iodine. The iodine and free chlorine in the sample react with the DPD indicator to form a pink color, which is proportional to the total chlorine concentration. 1.2 Applied Range The colorimeter can be used to measure the concentration of free chlorine or total chlorine in all kinds of water disinfected by chlorination. The LCD display the concentration of chlorine directly, the unit is mg/L. 1.3 Instrument Specification Test Range： 0～3.00 mg/L Light source： Light Emitting Diode(LED) Wavelength : 525nm Reading accuracy： 0.01mg/L Detection precision： &le;"
+        }
+      ],
+      highlights: [
+        "Use: For free / total chlorine testing.",
+        "Specification: 0 - 3.00 mg/L",
+        "HKM code: 090100",
+        "Official family: Portable Water Detector"
+      ],
+      features: [
+        "Use: For free / total chlorine testing.",
+        "Specification: 0 - 3.00 mg/L",
+        "HKM code: 090100",
+        "Official family: Portable Water Detector"
+      ],
+      applications: [
+        "Drinking water and process water testing",
+        "Field water quality screening",
+        "Pool, boiler, surface, and groundwater checks"
+      ],
+      specs: {
+        Code: "090100",
+        Specification: "0 - 3.00 mg/L",
+        "Official category": "Portable Chlorine Meter",
+        "Product family": "Portable Water Detector",
+        Usage: "For free / total chlorine testing."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "portable-water-detector"
+      ]
+    },
+  {
+      id: "hkm-portable-chlorine-dioxide-meter-lr",
+      name: "Portable Chlorine Dioxide Meter (LR)",
+      brand: "hkm",
+      category: "hkm-water-testing",
+      subcategory: "Portable Water Detector",
+      subtitle: "For chlorine dioxide testing in water.",
+      description: "For chlorine dioxide testing in water. 1.1 Test Principle The detection of chlorine dioxide is based on DPD method, meeting the requirements of national standards for drinking water quality (GB/5750.11-2006) and 20th edition of Standard Methods for the Examination of Water and Wastewater (America). 1.2 Applied Range The pocket colorimeter can be used to measure the residual concentration of chlorine dioxide in all kinds of water disinfected by chlorine dioxide.",
+      image: "/images/hkm/hkm-portable-chlorine-dioxide-meter-lr.jpg",
+      specSheet: "https://www.hkmbio.com/PWDetector/367.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "1.1 Test Principle The detection of chlorine dioxide is based on DPD method, meeting the requirements of national standards for drinking water quality (GB/5750.11-2006) and 20th edition of Standard Methods for the Examination of Water and Wastewater (America). 1.2 Applied Range The pocket colorimeter can be used to measure the residual concentration of chlorine dioxide in all kinds of water disinfected by chlorine dioxide. The unit of numerical value on screen is &ldquo;mg/L&rdquo;. 1.3 Instrument Specification Test Range： 0～5.00 mg/L Light source： Light Emitting Diode(LED) Detection Wavelength : 525nm Reading accuracy： 0.01mg/L Detection precision： &le; +/-5% Power Source： 4&times;1.5V Battery Life： &ge;"
+        }
+      ],
+      highlights: [
+        "Use: For chlorine dioxide testing in water.",
+        "Specification: 0 - 5.00 mg/L",
+        "HKM code: 090104",
+        "Official family: Portable Water Detector"
+      ],
+      features: [
+        "Use: For chlorine dioxide testing in water.",
+        "Specification: 0 - 5.00 mg/L",
+        "HKM code: 090104",
+        "Official family: Portable Water Detector"
+      ],
+      applications: [
+        "Drinking water and process water testing",
+        "Field water quality screening",
+        "Pool, boiler, surface, and groundwater checks"
+      ],
+      specs: {
+        Code: "090104",
+        Specification: "0 - 5.00 mg/L",
+        "Official category": "Portable Chlorine Dioxide Meter",
+        "Product family": "Portable Water Detector",
+        Usage: "For chlorine dioxide testing in water."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "portable-water-detector"
+      ]
+    },
+  {
+      id: "hkm-nitrite-test-paper",
+      name: "Nitrite Test Paper",
+      brand: "hkm",
+      category: "hkm-water-testing",
+      subcategory: "Water Test Strips",
+      subtitle: "For Nitrite Test in Water Sample.",
+      description: "For Nitrite Test in Water Sample. Nitrite Test Paper Test Range: 1-5-10-20-40-80-150mg/L Packing: 100 pcs / box Features of product: Quick and easy According to the instructions, users can complete the nickel analysis independently without specialized training. Accurate and reliable Determination results with this method are in accordance with the results with the standard method. It can be used as an alternative method to the standard method. Quantitative packing The kit can be used for100 times.",
+      image: "/images/hkm/hkm-nitrite-test-paper.jpg",
+      specSheet: "https://www.hkmbio.com/WTStrips/386.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Nitrite Test Paper Test Range: 1-5-10-20-40-80-150mg/L Packing: 100 pcs / box Features of product: Quick and easy According to the instructions, users can complete the nickel analysis independently without specialized training. Accurate and reliable Determination results with this method are in accordance with the results with the standard method. It can be used as an alternative method to the standard method. Quantitative packing The kit can be used for100 times. It is small, light and easy to carry. Packaging & Shipping Packing : 100 Tests / Box Unique aluminum tube packing for inner packing ,plating antioxidation film and outer packing with tray box ."
+        }
+      ],
+      highlights: [
+        "Use: For Nitrite Test in Water Sample.",
+        "Specification: 100 tests / box,1-5-10-20-40-80-150mg/L",
+        "HKM code: 090520",
+        "Official family: Water Test Strips"
+      ],
+      features: [
+        "Use: For Nitrite Test in Water Sample.",
+        "Specification: 100 tests / box,1-5-10-20-40-80-150mg/L",
+        "HKM code: 090520",
+        "Official family: Water Test Strips"
+      ],
+      applications: [
+        "Drinking water and process water testing",
+        "Field water quality screening",
+        "Pool, boiler, surface, and groundwater checks"
+      ],
+      specs: {
+        Code: "090520",
+        Specification: "100 tests / box,1-5-10-20-40-80-150mg/L",
+        "Official category": "Nitrite Test Paper",
+        "Product family": "Water Test Strips",
+        Usage: "For Nitrite Test in Water Sample."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "water-test-strips"
+      ]
+    },
+  {
+      id: "hkm-quaternary-ammonium-salt-test-paper",
+      name: "Quaternary Ammonium Salt Test Paper",
+      brand: "hkm",
+      category: "hkm-water-testing",
+      subcategory: "Water Test Strips",
+      subtitle: "For Quaternary Ammonium Salt Test.",
+      description: "For Quaternary Ammonium Salt Test. Quaternary Ammonium Salt Test Paper Test Range: 25-50-100-250-500-1000 mg/L Packing: 100 pcs / box Features of product: Quick and easy According to the instructions, users can complete the nickel analysis independently without specialized training. Accurate and reliable Determination results with this method are in accordance with the results with the standard method. It can be used as an alternative method to the standard method.",
+      image: "/images/hkm/hkm-quaternary-ammonium-salt-test-paper.png",
+      specSheet: "https://www.hkmbio.com/WTStrips/385.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Quaternary Ammonium Salt Test Paper Test Range: 25-50-100-250-500-1000 mg/L Packing: 100 pcs / box Features of product: Quick and easy According to the instructions, users can complete the nickel analysis independently without specialized training. Accurate and reliable Determination results with this method are in accordance with the results with the standard method. It can be used as an alternative method to the standard method. Quantitative packing The kit can be used for 50 times. It is small, light and easy to carry. Packaging & Shipping Packing : 50 Tests / Box Unique aluminum tube packing for inner packing ,plating antioxidation film and outer packing with tray box ."
+        }
+      ],
+      highlights: [
+        "Use: For Quaternary Ammonium Salt Test.",
+        "Specification: 50 tests / box,25-50-100-250-500-1000 mg/L",
+        "HKM code: 090700",
+        "Official family: Water Test Strips"
+      ],
+      features: [
+        "Use: For Quaternary Ammonium Salt Test.",
+        "Specification: 50 tests / box,25-50-100-250-500-1000 mg/L",
+        "HKM code: 090700",
+        "Official family: Water Test Strips"
+      ],
+      applications: [
+        "Drinking water and process water testing",
+        "Field water quality screening",
+        "Pool, boiler, surface, and groundwater checks"
+      ],
+      specs: {
+        Code: "090700",
+        Specification: "50 tests / box,25-50-100-250-500-1000 mg/L",
+        "Official category": "Quaternary Ammonium Salt Test Paper",
+        "Product family": "Water Test Strips",
+        Usage: "For Quaternary Ammonium Salt Test."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "water-test-strips"
+      ]
+    },
+  {
+      id: "hkm-chlorine-dioxide-test-paper-high-range",
+      name: "Chlorine Dioxide Test Paper,High Range",
+      brand: "hkm",
+      category: "hkm-water-testing",
+      subcategory: "Water Test Strips",
+      subtitle: "For Chlorine Dioxide Test in Water.",
+      description: "For Chlorine Dioxide Test in Water. Chlorine Dioxide Test Paper Test Range: 10-50-100-200-300-400-500 mg/L Packing: 100 pcs / box Features of product: Quick and easy According to the instructions, users can complete the nickel analysis independently without specialized training. Accurate and reliable Determination results with this method are in accordance with the results with the standard method. It can be used as an alternative method to the standard method.",
+      image: "/images/hkm/hkm-chlorine-dioxide-test-paper-high-range.jpg",
+      specSheet: "https://www.hkmbio.com/WTStrips/384.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Chlorine Dioxide Test Paper Test Range: 10-50-100-200-300-400-500 mg/L Packing: 100 pcs / box Features of product: Quick and easy According to the instructions, users can complete the nickel analysis independently without specialized training. Accurate and reliable Determination results with this method are in accordance with the results with the standard method. It can be used as an alternative method to the standard method. Quantitative packing The kit can be used for100 times. It is small, light and easy to carry. Packaging & Shipping Packing : 100 Tests / Box Unique aluminum tube packing for inner packing ,plating antioxidation film and outer packing with tray box ."
+        }
+      ],
+      highlights: [
+        "Use: For Chlorine Dioxide Test in Water.",
+        "Specification: 100 tests / box,10-50-100-200-300-400-500 mg/L",
+        "HKM code: 090020",
+        "Official family: Water Test Strips"
+      ],
+      features: [
+        "Use: For Chlorine Dioxide Test in Water.",
+        "Specification: 100 tests / box,10-50-100-200-300-400-500 mg/L",
+        "HKM code: 090020",
+        "Official family: Water Test Strips"
+      ],
+      applications: [
+        "Drinking water and process water testing",
+        "Field water quality screening",
+        "Pool, boiler, surface, and groundwater checks"
+      ],
+      specs: {
+        Code: "090020",
+        Specification: "100 tests / box,10-50-100-200-300-400-500 mg/L",
+        "Official category": "Chlorine Dioxide Test Paper,High Range",
+        "Product family": "Water Test Strips",
+        Usage: "For Chlorine Dioxide Test in Water."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "water-test-strips"
+      ]
+    },
+  {
+      id: "hkm-ammonia-nitrogen-test-paper-high-range",
+      name: "Ammonia Nitrogen Test Paper, High Range",
+      brand: "hkm",
+      category: "hkm-water-testing",
+      subcategory: "Water Test Strips",
+      subtitle: "For Ammonia Nitrogen Test in Water.",
+      description: "For Ammonia Nitrogen Test in Water. Ammonia Nitrogen Test Paper Test Range: 5-10-25-50-100-200-400 mg/L Packing: 100 pcs / box Features of product: Quick and easy According to the instructions, users can complete the nickel analysis independently without specialized training. Accurate and reliable Determination results with this method are in accordance with the results with the standard method. It can be used as an alternative method to the standard method. Quantitative packing The kit can be used for100 times.",
+      image: "/images/hkm/hkm-ammonia-nitrogen-test-paper-high-range.jpg",
+      specSheet: "https://www.hkmbio.com/WTStrips/383.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Ammonia Nitrogen Test Paper Test Range: 5-10-25-50-100-200-400 mg/L Packing: 100 pcs / box Features of product: Quick and easy According to the instructions, users can complete the nickel analysis independently without specialized training. Accurate and reliable Determination results with this method are in accordance with the results with the standard method. It can be used as an alternative method to the standard method. Quantitative packing The kit can be used for100 times. It is small, light and easy to carry. Packaging & Shipping Packing : 100 Tests / Box Unique aluminum tube packing for inner packing ,plating antioxidation film and outer packing with tray box ."
+        }
+      ],
+      highlights: [
+        "Use: For Ammonia Nitrogen Test in Water.",
+        "Specification: 100 tests / box,5-10-25-50-100-200-400 mg/L",
+        "HKM code: 090440",
+        "Official family: Water Test Strips"
+      ],
+      features: [
+        "Use: For Ammonia Nitrogen Test in Water.",
+        "Specification: 100 tests / box,5-10-25-50-100-200-400 mg/L",
+        "HKM code: 090440",
+        "Official family: Water Test Strips"
+      ],
+      applications: [
+        "Drinking water and process water testing",
+        "Field water quality screening",
+        "Pool, boiler, surface, and groundwater checks"
+      ],
+      specs: {
+        Code: "090440",
+        Specification: "100 tests / box,5-10-25-50-100-200-400 mg/L",
+        "Official category": "Ammonia Nitrogen Test Paper, High Range",
+        "Product family": "Water Test Strips",
+        Usage: "For Ammonia Nitrogen Test in Water."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "water-test-strips"
+      ]
+    },
+  {
+      id: "hkm-multi-branch-manifold-membrane-filtration-system",
+      name: "Multi-branch Manifold Membrane Filtration System",
+      brand: "hkm",
+      category: "hkm-lab-instruments",
+      subcategory: "Laboratory Instrument",
+      featured: true,
+      subtitle: "For filtration of microbial in liquid.",
+      description: "For filtration of microbial in liquid. Application: HKM Stainless Steel Multi-branch Manifold Filtration System is a safe, reliable, beautiful, environmental-friendly, high efficient and source saving product. It is one of the necessary equipments in microbiological laboratory. The Filter System is applied in areas of scientific research, inspection, quality supervision, drinking water, medicine and beverages, etc..",
+      image: "/images/hkm/hkm-multi-branch-manifold-membrane-filtration-system.jpg",
+      specSheet: "https://www.hkmbio.com/Laboratory/58.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Application: HKM Stainless Steel Multi-branch Manifold Filtration System is a safe, reliable, beautiful, environmental-friendly, high efficient and source saving product. It is one of the necessary equipments in microbiological laboratory. The Filter System is applied in areas of scientific research, inspection, quality supervision, drinking water, medicine and beverages, etc.. Principle: Negative pressure generated by vacuum pump draws the liquid sample pass through membrane, filtering microbial particles smaller than the pore size on membrane, and those deposited on the membrane then will be sent for further analysis. How to use: 1: Place disinfected membrane on sterilized filter bolster. 2: Put on disinfected funnel and fill in liquid sample. 3: Start vacuum pump and adjust to -0.5 atmospheric pressure, and open corresponding valve to begin leaching."
+        }
+      ],
+      highlights: [
+        "Use: For filtration of microbial in liquid.",
+        "Specification: Membrane filtration",
+        "HKM code: MFS Series",
+        "Official family: Laboratory Instrument"
+      ],
+      features: [
+        "Use: For filtration of microbial in liquid.",
+        "Specification: Membrane filtration",
+        "HKM code: MFS Series",
+        "Official family: Laboratory Instrument"
+      ],
+      applications: [
+        "Microbiology laboratory sample preparation",
+        "Quality control and inspection laboratories",
+        "Water, food, pharmaceutical, and environmental testing labs"
+      ],
+      specs: {
+        Code: "MFS Series",
+        Specification: "Membrane filtration",
+        "Official category": "lab instrument",
+        "Product family": "Laboratory Instrument",
+        Usage: "For filtration of microbial in liquid."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "laboratory-instrument"
+      ]
+    },
+  {
+      id: "hkm-microbial-air-sampler",
+      name: "Microbial Air Sampler",
+      brand: "hkm",
+      category: "hkm-lab-instruments",
+      subcategory: "Laboratory Instrument",
+      subtitle: "For sampling of microbial in the air.",
+      description: "For sampling of microbial in the air. Application: Widely used in pharmaceutical company, milk product plant, clinical operation room, fermentation industry et al, where microbial contamination need to be strictly monitored and controlled. Also it is applicable in institutes that need study the air microbial condition. Principle: This microbial air sampler works based on Andersen collision principle. Air is aspirated (at a fixed speed for variable times) through small holes in the instrument&#39;s head.",
+      image: "/images/hkm/hkm-microbial-air-sampler.jpg",
+      specSheet: "https://www.hkmbio.com/Laboratory/131.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Application: Widely used in pharmaceutical company, milk product plant, clinical operation room, fermentation industry et al, where microbial contamination need to be strictly monitored and controlled. Also it is applicable in institutes that need study the air microbial condition. Principle: This microbial air sampler works based on Andersen collision principle. Air is aspirated (at a fixed speed for variable times) through small holes in the instrument&#39;s head. The resulting laminar air flow is directed onto the surface of an agar plate. At the end of the sampling cycle, the plate is removed and incubated and the visible colonies are then counted for an assessment of the level of contamination. How to use: 1: Soak medical absorbent cotton in 75% ethanol, and use it to swab air sampler surface, Petri dish pedestal and sampling head et al."
+        }
+      ],
+      highlights: [
+        "Use: For sampling of microbial in the air.",
+        "Specification: Sampling speed:100L/min",
+        "HKM code: hkm series",
+        "Official family: Laboratory Instrument"
+      ],
+      features: [
+        "Use: For sampling of microbial in the air.",
+        "Specification: Sampling speed:100L/min",
+        "HKM code: hkm series",
+        "Official family: Laboratory Instrument"
+      ],
+      applications: [
+        "Microbiology laboratory sample preparation",
+        "Quality control and inspection laboratories",
+        "Water, food, pharmaceutical, and environmental testing labs"
+      ],
+      specs: {
+        Code: "hkm series",
+        Specification: "Sampling speed:100L/min",
+        "Official category": "Lab instrument",
+        "Product family": "Laboratory Instrument",
+        Usage: "For sampling of microbial in the air."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "laboratory-instrument"
+      ]
+    },
+  {
+      id: "hkm-high-frequency-vibration-homogenizer",
+      name: "High Frequency Vibration Homogenizer",
+      brand: "hkm",
+      category: "hkm-lab-instruments",
+      subcategory: "Laboratory Instrument",
+      subtitle: "To shake down micriobial from sample.",
+      description: "To shake down micriobial from sample. Application: It employs a novel technology, to prepare microbial suspension by means of high frequency vibration. A standard way described in ISO7218:2007. It is wildly applied in animal tissue, dairy products, cosmetics homogenization, and more comprehensively used in microbial sample preparation of medicine, disposable medical products and food.",
+      image: "/images/hkm/hkm-high-frequency-vibration-homogenizer.jpg",
+      specSheet: "https://www.hkmbio.com/Laboratory/147.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Application: It employs a novel technology, to prepare microbial suspension by means of high frequency vibration. A standard way described in ISO7218:2007. It is wildly applied in animal tissue, dairy products, cosmetics homogenization, and more comprehensively used in microbial sample preparation of medicine, disposable medical products and food. This is the first step of microbial analysis, in homogenization, microbial in handling sample shall get released and not get killed, and at the same time avoid outside microbial comes inside, our ShockMixer can well meet these requirements. Principle: The ShockMixer-1 high frequency vibration homogenizer produces high frequency shock waves to vibrate sample bag, developing intense mixing effect which rapidly detaches trapped microbial on the surface and inside of sample, releasing them into suspension."
+        }
+      ],
+      highlights: [
+        "Use: To shake down micriobial from sample.",
+        "Specification: 93/sec",
+        "HKM code: ShockMixer-1",
+        "Official family: Laboratory Instrument"
+      ],
+      features: [
+        "Use: To shake down micriobial from sample.",
+        "Specification: 93/sec",
+        "HKM code: ShockMixer-1",
+        "Official family: Laboratory Instrument"
+      ],
+      applications: [
+        "Microbiology laboratory sample preparation",
+        "Quality control and inspection laboratories",
+        "Water, food, pharmaceutical, and environmental testing labs"
+      ],
+      specs: {
+        Code: "ShockMixer-1",
+        Specification: "93/sec",
+        "Official category": "lab instrument",
+        "Product family": "Laboratory Instrument",
+        Usage: "To shake down micriobial from sample."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "laboratory-instrument"
+      ]
+    },
+  {
+      id: "hkm-wireless-temperature-and-humidity-monitoring-system",
+      name: "Wireless Temperature and Humidity Monitoring System",
+      brand: "hkm",
+      category: "hkm-lab-instruments",
+      subcategory: "Laboratory Instrument",
+      subtitle: "For monitor temperature and humidity.",
+      description: "For monitor temperature and humidity. Introduction: The wireless monitoring system is independently designed and developed by",
+      image: "/images/hkm/hkm-wireless-temperature-and-humidity-monitoring-system.jpg",
+      specSheet: "https://www.hkmbio.com/Laboratory/186.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Introduction: The wireless monitoring system is independently designed and developed by"
+        }
+      ],
+      highlights: [
+        "Use: For monitor temperature and humidity.",
+        "Specification: Wireless monitor",
+        "HKM code: wireless",
+        "Official family: Laboratory Instrument"
+      ],
+      features: [
+        "Use: For monitor temperature and humidity.",
+        "Specification: Wireless monitor",
+        "HKM code: wireless",
+        "Official family: Laboratory Instrument"
+      ],
+      applications: [
+        "Microbiology laboratory sample preparation",
+        "Quality control and inspection laboratories",
+        "Water, food, pharmaceutical, and environmental testing labs"
+      ],
+      specs: {
+        Code: "wireless",
+        Specification: "Wireless monitor",
+        "Official category": "lab instrument",
+        "Product family": "Laboratory Instrument",
+        Usage: "For monitor temperature and humidity."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "laboratory-instrument"
+      ]
+    },
+  {
+      id: "hkm-soil-tester",
+      name: "Soil Tester",
+      brand: "hkm",
+      category: "hkm-lab-instruments",
+      subcategory: "Laboratory Instrument",
+      subtitle: "For soil moisture and temperature test.",
+      description: "For soil moisture and temperature test. Introduction: Soil moisture and temperature plays an important role in crops growth, and according to which people can decide when and how much water needed for irrigation. Scientific plan in irrigation can save water and increase yield and quality.",
+      image: "/images/hkm/hkm-soil-tester.jpg",
+      specSheet: "https://www.hkmbio.com/Laboratory/203.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Introduction: Soil moisture and temperature plays an important role in crops growth, and according to which people can decide when and how much water needed for irrigation. Scientific plan in irrigation can save water and increase yield and quality. SMT Series Soil Tester can meet the test needs like soil monitoring, water-saving irrigation, greenhouse control, precision agriculture research, production, teaching in agricultural, forest, environment protection, water conservancy, weather et al. Features: 1. Portable, easy to carry, with convenient touch keys and large LCD display. 2. Can set the measurement parameters according to specific needs, the sampling time of the sensor can be set independently, and the record is saved automatically. 3. With automatic sleep function, when not in use, it will go dormant state, save energy. 4. Without data lost when powered off. 5."
+        }
+      ],
+      highlights: [
+        "Use: For soil moisture and temperature test.",
+        "Specification: Moisture and temperature test",
+        "HKM code: SMT Series",
+        "Official family: Laboratory Instrument"
+      ],
+      features: [
+        "Use: For soil moisture and temperature test.",
+        "Specification: Moisture and temperature test",
+        "HKM code: SMT Series",
+        "Official family: Laboratory Instrument"
+      ],
+      applications: [
+        "Microbiology laboratory sample preparation",
+        "Quality control and inspection laboratories",
+        "Water, food, pharmaceutical, and environmental testing labs"
+      ],
+      specs: {
+        Code: "SMT Series",
+        Specification: "Moisture and temperature test",
+        "Official category": "lab instrument",
+        "Product family": "Laboratory Instrument",
+        Usage: "For soil moisture and temperature test."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "laboratory-instrument"
+      ]
+    },
+  {
+      id: "hkm-numeric-intelligence-electric-thermostatic-incubator",
+      name: "Numeric Intelligence Electric Thermostatic Incubator",
+      brand: "hkm",
+      category: "hkm-lab-instruments",
+      subcategory: "Laboratory Instrument",
+      subtitle: "For microbial incubation.",
+      description: "For microbial incubation. Features: 1. LCD PID control and record system The LCD-PID control and record system includes the function of record and curve vision. PID Self-tuning control ensures the chamber temperature keep precise and stable in working. The equipment records the temperature of the whole incubation process. It can record 180 days if recording temperature once per minute and will record 900 days if once per 5 minutes.",
+      image: "/images/hkm/hkm-numeric-intelligence-electric-thermostatic-incubator.jpg",
+      specSheet: "https://www.hkmbio.com/Laboratory/199.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Features: 1. LCD PID control and record system The LCD-PID control and record system includes the function of record and curve vision. PID Self-tuning control ensures the chamber temperature keep precise and stable in working. The equipment records the temperature of the whole incubation process. It can record 180 days if recording temperature once per minute and will record 900 days if once per 5 minutes. Using high precision temperature sensor, making equipment has less error, high temperature accuracy. Self-tuning function ensures equipment can automatically adjust chamber parameters based on ambient temperature. 2. Convenient data processing Freely retrieve recorded temperature and display its variations curve on LCD screen, and data can also saved in USB flash disk and transfer to PC to show temperature curve and print records, which supplying excellent traceability."
+        }
+      ],
+      highlights: [
+        "Use: For microbial incubation.",
+        "Specification: Room temperature+5°C~65°C",
+        "HKM code: 9062",
+        "Official family: Laboratory Instrument"
+      ],
+      features: [
+        "Use: For microbial incubation.",
+        "Specification: Room temperature+5°C~65°C",
+        "HKM code: 9062",
+        "Official family: Laboratory Instrument"
+      ],
+      applications: [
+        "Microbiology laboratory sample preparation",
+        "Quality control and inspection laboratories",
+        "Water, food, pharmaceutical, and environmental testing labs"
+      ],
+      specs: {
+        Code: "9062",
+        Specification: "Room temperature+5°C~65°C",
+        "Official category": "Lab instrument",
+        "Product family": "Laboratory Instrument",
+        Usage: "For microbial incubation."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "laboratory-instrument"
+      ]
+    },
+  {
+      id: "hkm-white-narrow-mouth-reagent-bottle",
+      name: "White Narrow Mouth Reagent Bottle",
+      brand: "hkm",
+      category: "hkm-labware",
+      subcategory: "Laboratory Glassware",
+      subtitle: "For storage of reagent.",
+      description: "For storage of reagent. Specifications: Product 60ml 125ml 250ml 500ml 1000ml 2500ml 5000ml 10000ml Packing 144/box 80/box 60/box 48/box 24/box 6/box 6/box 2/box",
+      image: "/images/hkm/hkm-white-narrow-mouth-reagent-bottle.jpg",
+      specSheet: "https://www.hkmbio.com/iLaboratory/217.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Specifications: Product 60ml 125ml 250ml 500ml 1000ml 2500ml 5000ml 10000ml Packing 144/box 80/box 60/box 48/box 24/box 6/box 6/box 2/box"
+        }
+      ],
+      highlights: [
+        "Use: For storage of reagent.",
+        "Specification: 60ml-10000ml",
+        "HKM code: 00500060",
+        "Official family: Laboratory Glassware"
+      ],
+      features: [
+        "Use: For storage of reagent.",
+        "Specification: 60ml-10000ml",
+        "HKM code: 00500060",
+        "Official family: Laboratory Glassware"
+      ],
+      applications: [
+        "General laboratory measuring and handling workflows",
+        "Microbiology and analytical laboratory support"
+      ],
+      specs: {
+        Code: "00500060",
+        Specification: "60ml-10000ml",
+        "Official category": "lab galsswares",
+        "Product family": "Laboratory Glassware",
+        Usage: "For storage of reagent."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "laboratory-glassware"
+      ]
+    },
+  {
+      id: "hkm-glass-pipette",
+      name: "Glass Pipette",
+      brand: "hkm",
+      category: "hkm-labware",
+      subcategory: "Laboratory Glassware",
+      subtitle: "For accurate pipetting.",
+      description: "For accurate pipetting. Specifications: Product 0.2ml 0.5ml 1ml 2ml 5ml 10ml 20ml 25ml Accuracy 0.002ml 0.005ml 0.01ml 0.02ml 0.05ml 0.1ml 0.1ml 0.1ml Packing 480/box 480/box 480/box 480/box 480/box 480/box 310/box 310/box",
+      image: "/images/hkm/hkm-glass-pipette.jpg",
+      specSheet: "https://www.hkmbio.com/iLaboratory/222.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Specifications: Product 0.2ml 0.5ml 1ml 2ml 5ml 10ml 20ml 25ml Accuracy 0.002ml 0.005ml 0.01ml 0.02ml 0.05ml 0.1ml 0.1ml 0.1ml Packing 480/box 480/box 480/box 480/box 480/box 480/box 310/box 310/box"
+        }
+      ],
+      highlights: [
+        "Use: For accurate pipetting.",
+        "Specification: 0.2ml-25ml",
+        "HKM code: 00120",
+        "Official family: Laboratory Glassware"
+      ],
+      features: [
+        "Use: For accurate pipetting.",
+        "Specification: 0.2ml-25ml",
+        "HKM code: 00120",
+        "Official family: Laboratory Glassware"
+      ],
+      applications: [
+        "General laboratory measuring and handling workflows",
+        "Microbiology and analytical laboratory support"
+      ],
+      specs: {
+        Code: "00120",
+        Specification: "0.2ml-25ml",
+        "Official category": "lab glasswares",
+        "Product family": "Laboratory Glassware",
+        Usage: "For accurate pipetting."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "laboratory-glassware"
+      ]
+    },
+  {
+      id: "hkm-white-volumetric-flask",
+      name: "White Volumetric Flask",
+      brand: "hkm",
+      category: "hkm-labware",
+      subcategory: "Laboratory Glassware",
+      subtitle: "For preparing solution with accurate concentration.",
+      description: "For preparing solution with accurate concentration. Specifications: Product 25ml 50ml 100ml 200ml 250ml 500ml 1000ml 2000ml Packing 300/box 280/box 200/box 48/box 72/box 32/box 24/box 12/box",
+      image: "/images/hkm/hkm-white-volumetric-flask.jpg",
+      specSheet: "https://www.hkmbio.com/iLaboratory/221.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Specifications: Product 25ml 50ml 100ml 200ml 250ml 500ml 1000ml 2000ml Packing 300/box 280/box 200/box 48/box 72/box 32/box 24/box 12/box"
+        }
+      ],
+      highlights: [
+        "Use: For preparing solution with accurate concentration.",
+        "Specification: 25-2000ml",
+        "HKM code: 00200025",
+        "Official family: Laboratory Glassware"
+      ],
+      features: [
+        "Use: For preparing solution with accurate concentration.",
+        "Specification: 25-2000ml",
+        "HKM code: 00200025",
+        "Official family: Laboratory Glassware"
+      ],
+      applications: [
+        "General laboratory measuring and handling workflows",
+        "Microbiology and analytical laboratory support"
+      ],
+      specs: {
+        Code: "00200025",
+        Specification: "25-2000ml",
+        "Official category": "lab glasswares",
+        "Product family": "Laboratory Glassware",
+        Usage: "For preparing solution with accurate concentration."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "laboratory-glassware"
+      ]
+    },
+  {
+      id: "hkm-glass-colorimetric-color-comparison-tube-with-stopper",
+      name: "Glass Colorimetric (Color Comparison) Tube With Stopper",
+      brand: "hkm",
+      category: "hkm-labware",
+      subcategory: "Laboratory Glassware",
+      subtitle: "For color comparison.",
+      description: "For color comparison. Specifications: 10ml, 12/box; 25ml, 12/box; 50ml, 12/box; 100ml, 12/box",
+      image: "/images/hkm/hkm-glass-colorimetric-color-comparison-tube-with-stopper.jpg",
+      specSheet: "https://www.hkmbio.com/iLaboratory/220.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Specifications: 10ml, 12/box; 25ml, 12/box; 50ml, 12/box; 100ml, 12/box"
+        }
+      ],
+      highlights: [
+        "Use: For color comparison.",
+        "Specification: 10ml-100ml",
+        "HKM code: 03041231",
+        "Official family: Laboratory Glassware"
+      ],
+      features: [
+        "Use: For color comparison.",
+        "Specification: 10ml-100ml",
+        "HKM code: 03041231",
+        "Official family: Laboratory Glassware"
+      ],
+      applications: [
+        "General laboratory measuring and handling workflows",
+        "Microbiology and analytical laboratory support"
+      ],
+      specs: {
+        Code: "03041231",
+        Specification: "10ml-100ml",
+        "Official category": "lab glasswares",
+        "Product family": "Laboratory Glassware",
+        Usage: "For color comparison."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "laboratory-glassware"
+      ]
+    },
+  {
+      id: "hkm-plastic-conway-dish",
+      name: "Plastic Conway Dish",
+      brand: "hkm",
+      category: "hkm-consumables",
+      subcategory: "Laboratory Consumable",
+      subtitle: "Widely used in agricultural institutes.",
+      description: "Widely used in agricultural institutes. Introduction: With excellent quality and convenient to use features, our Conway dish has widely used in agricultural institutes, soils study organizations etc. Compared to glass Conway dish, our plastic Conway dish is more modulized and uniform, which minimize experiment error. And the plastic shell is thick enough to avoid rupture. Specifications: 110mm",
+      image: "/images/hkm/hkm-plastic-conway-dish.jpg",
+      specSheet: "https://www.hkmbio.com/gL160consumable/213.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Introduction: With excellent quality and convenient to use features, our Conway dish has widely used in agricultural institutes, soils study organizations etc. Compared to glass Conway dish, our plastic Conway dish is more modulized and uniform, which minimize experiment error. And the plastic shell is thick enough to avoid rupture. Specifications: 110mm"
+        }
+      ],
+      highlights: [
+        "Use: Widely used in agricultural institutes.",
+        "Specification: 110mm",
+        "HKM code: 00556000",
+        "Official family: Laboratory Consumable"
+      ],
+      features: [
+        "Use: Widely used in agricultural institutes.",
+        "Specification: 110mm",
+        "HKM code: 00556000",
+        "Official family: Laboratory Consumable"
+      ],
+      applications: [
+        "Routine lab consumable replenishment",
+        "Microbiology sample handling and filtration workflows"
+      ],
+      specs: {
+        Code: "00556000",
+        Specification: "110mm",
+        "Official category": "consumables",
+        "Product family": "Laboratory Consumable",
+        Usage: "Widely used in agricultural institutes."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "laboratory-consumable"
+      ]
+    },
+  {
+      id: "hkm-disposable-pipette",
+      name: "Disposable Pipette",
+      brand: "hkm",
+      category: "hkm-consumables",
+      subcategory: "Laboratory Consumable",
+      subtitle: "For accurate pipetting of liquid.",
+      description: "For accurate pipetting of liquid. Features: 1. Easy to tear sterilized individual paper packing 2. Designed with different color on pipette and packing for different capacity, easy to distinguish 3. No leakage on suction head 4. Clear scale allows accurate pipetting 5. Excellent transparency Specifications: Product Accuracy Packing 1ml 0.01ml 500/bag 2ml 0.01ml 500/bag 10ml 0.1ml 500/bag",
+      image: "/images/hkm/hkm-disposable-pipette.jpg",
+      specSheet: "https://www.hkmbio.com/gL160consumable/210.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Features: 1. Easy to tear sterilized individual paper packing 2. Designed with different color on pipette and packing for different capacity, easy to distinguish 3. No leakage on suction head 4. Clear scale allows accurate pipetting 5. Excellent transparency Specifications: Product Accuracy Packing 1ml 0.01ml 500/bag 2ml 0.01ml 500/bag 10ml 0.1ml 500/bag"
+        }
+      ],
+      highlights: [
+        "Use: For accurate pipetting of liquid.",
+        "Specification: 1ml,2ml,10ml",
+        "HKM code: 00413316",
+        "Official family: Laboratory Consumable"
+      ],
+      features: [
+        "Use: For accurate pipetting of liquid.",
+        "Specification: 1ml,2ml,10ml",
+        "HKM code: 00413316",
+        "Official family: Laboratory Consumable"
+      ],
+      applications: [
+        "Routine lab consumable replenishment",
+        "Microbiology sample handling and filtration workflows"
+      ],
+      specs: {
+        Code: "00413316",
+        Specification: "1ml,2ml,10ml",
+        "Official category": "consumables",
+        "Product family": "Laboratory Consumable",
+        Usage: "For accurate pipetting of liquid."
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "laboratory-consumable"
+      ]
+    },
+  {
+      id: "hkm-disposable-petri-dish",
+      name: "Disposable Petri Dish",
+      brand: "hkm",
+      category: "hkm-consumables",
+      subcategory: "Laboratory Consumable",
+      subtitle: "For microbial (bacteria etc.) incubation",
+      description: "For microbial (bacteria etc.) incubation Features: Huankai brand disposable Petri dish is made of brand new PS (polystyrene) material, never use renovate or shoddy material. The Petri dish has nice rigidity and good light transmittance performance, which won many clients positive comment. Specifications: Size Packing Remark &Phi;90mm*13mm 500/box Sterilized &Phi;90mm*15mm 500/box &Phi;90mm*20mm 500/box",
+      image: "/images/hkm/hkm-disposable-petri-dish.jpg",
+      specSheet: "https://www.hkmbio.com/gL160consumable/207.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Features: Huankai brand disposable Petri dish is made of brand new PS (polystyrene) material, never use renovate or shoddy material. The Petri dish has nice rigidity and good light transmittance performance, which won many clients positive comment. Specifications: Size Packing Remark &Phi;90mm*13mm 500/box Sterilized &Phi;90mm*15mm 500/box &Phi;90mm*20mm 500/box"
+        }
+      ],
+      highlights: [
+        "Use: For microbial (bacteria etc.) incubation",
+        "Specification: 90mm",
+        "HKM code: 20221300",
+        "Official family: Laboratory Consumable"
+      ],
+      features: [
+        "Use: For microbial (bacteria etc.) incubation",
+        "Specification: 90mm",
+        "HKM code: 20221300",
+        "Official family: Laboratory Consumable"
+      ],
+      applications: [
+        "Routine lab consumable replenishment",
+        "Microbiology sample handling and filtration workflows"
+      ],
+      specs: {
+        Code: "20221300",
+        Specification: "90mm",
+        "Official category": "consumables",
+        "Product family": "Laboratory Consumable",
+        Usage: "For microbial (bacteria etc.) incubation"
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "laboratory-consumable"
+      ]
+    },
+  {
+      id: "hkm-sterilized-filtration-membrane",
+      name: "Sterilized Filtration Membrane",
+      brand: "hkm",
+      category: "hkm-consumables",
+      subcategory: "Laboratory Consumable",
+      subtitle: "For filtration of microbial in liquid",
+      description: "For filtration of microbial in liquid Type 1: Mixed cellulose (CN-CA) filtration membrane This membrane has nice pore-forming quality, excellent hydrophilic performance and is cost effective, it can be used in a wide temperature span and is anti dilute acid corrosion (not suitable for filtration of ketone, ester, strong acid and alkaline etc.).",
+      image: "/images/hkm/hkm-sterilized-filtration-membrane.jpg",
+      specSheet: "https://www.hkmbio.com/gL160consumable/206.html",
+      detailSections: [
+        {
+          title: "Official product detail",
+          body: "Type 1: Mixed cellulose (CN-CA) filtration membrane This membrane has nice pore-forming quality, excellent hydrophilic performance and is cost effective, it can be used in a wide temperature span and is anti dilute acid corrosion (not suitable for filtration of ketone, ester, strong acid and alkaline etc.). In microbial filtration membrane method, there is nice nutrient osmosis between filter membrane and culture media, colony can grow well under such condition and will not spread obviously during their growth. Type 2: Polyether sulfone (PES) filtration membrane This type membrane has nice chemical and thermo stability, and is applicable for dilute acid, alkaline, arene and most water-soluble alcohols, some esters and ketones. High mechanical strength of it making it not easily got damaged during usage."
+        }
+      ],
+      highlights: [
+        "Use: For filtration of microbial in liquid",
+        "Specification: 0.45um/0.22um",
+        "HKM code: CN-CA",
+        "Official family: Laboratory Consumable"
+      ],
+      features: [
+        "Use: For filtration of microbial in liquid",
+        "Specification: 0.45um/0.22um",
+        "HKM code: CN-CA",
+        "Official family: Laboratory Consumable"
+      ],
+      applications: [
+        "Routine lab consumable replenishment",
+        "Microbiology sample handling and filtration workflows"
+      ],
+      specs: {
+        Code: "CN-CA",
+        Specification: "0.45um/0.22um",
+        "Official category": "consumables",
+        "Product family": "Laboratory Consumable",
+        Usage: "For filtration of microbial in liquid"
+      },
+      tags: [
+        "hkm",
+        "hkmbio",
+        "huankai",
+        "microbiology",
+        "laboratory-consumable"
+      ]
+    },
+
+
+  /* -- Sugentech -------------------------------------------------------------- */
   {
       id: "sug-s-blot-3",
       name: "S-Blot 3",
