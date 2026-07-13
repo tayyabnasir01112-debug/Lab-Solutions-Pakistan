@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, Link } from "wouter";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { SiteNavbar } from "@/components/site-navbar";
 import { SiteFooter } from "@/components/site-footer";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,176 @@ import { productById, brandById, categoryById, productsByBrand, type Product, ty
 
 function Reveal({ children }: { children: React.ReactNode; delay?: number }) {
   return <div>{children}</div>;
+}
+
+const productSlideVariants = {
+  enter: (dir: number) => ({ y: dir > 0 ? "100%" : "-100%", opacity: 0 }),
+  center: {
+    y: "0%",
+    opacity: 1,
+    transition: { duration: 0.72, ease: [0.76, 0, 0.24, 1] },
+  },
+  exit: (dir: number) => ({
+    y: dir > 0 ? "-100%" : "100%",
+    opacity: 0,
+    transition: { duration: 0.72, ease: [0.76, 0, 0.24, 1] },
+  }),
+};
+
+function ProductSlideDeck({
+  sections,
+  names,
+  accent = "hsl(var(--primary))",
+}: {
+  sections: React.ReactNode[];
+  names: string[];
+  accent?: string;
+}) {
+  const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const cooldown = useRef(false);
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    document.body.style.height = "100dvh";
+    return () => {
+      document.body.style.overflow = "";
+      document.body.style.height = "";
+    };
+  }, []);
+
+  const goTo = (index: number) => {
+    if (cooldown.current || index === current || index < 0 || index >= sections.length) return;
+    cooldown.current = true;
+    setDirection(index > current ? 1 : -1);
+    setCurrent(index);
+    setTimeout(() => {
+      cooldown.current = false;
+    }, 820);
+  };
+
+  useEffect(() => {
+    const active = slideRefs.current[current];
+    if (active) active.scrollTo({ top: 0, behavior: "instant" });
+  }, [current]);
+
+  useEffect(() => {
+    const onWheel = (e: WheelEvent) => {
+      const active = slideRefs.current[current];
+      if (!active || Math.abs(e.deltaY) < 20) return;
+
+      const canScrollDown = active.scrollTop + active.clientHeight < active.scrollHeight - 8;
+      const canScrollUp = active.scrollTop > 8;
+      if ((e.deltaY > 0 && canScrollDown) || (e.deltaY < 0 && canScrollUp)) return;
+
+      e.preventDefault();
+      if (cooldown.current) return;
+      goTo(e.deltaY > 0 ? current + 1 : current - 1);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (["ArrowDown", "PageDown", " "].includes(e.key)) {
+        e.preventDefault();
+        goTo(current + 1);
+      }
+      if (["ArrowUp", "PageUp"].includes(e.key)) {
+        e.preventDefault();
+        goTo(current - 1);
+      }
+    };
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [current, sections.length]);
+
+  useEffect(() => {
+    let startY = 0;
+    const onTouchStart = (e: TouchEvent) => {
+      startY = e.touches[0].clientY;
+    };
+    const onTouchEnd = (e: TouchEvent) => {
+      const diff = startY - e.changedTouches[0].clientY;
+      if (Math.abs(diff) < 65) return;
+      goTo(diff > 0 ? current + 1 : current - 1);
+    };
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
+    return () => {
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [current, sections.length]);
+
+  return (
+    <div className="relative h-[100dvh] w-full overflow-hidden bg-background">
+      <AnimatePresence custom={direction} mode="sync">
+        <motion.div
+          key={current}
+          custom={direction}
+          variants={productSlideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          ref={node => {
+            slideRefs.current[current] = node;
+          }}
+          className="absolute inset-0 w-full overflow-y-auto overscroll-contain"
+          style={{ height: "100dvh" }}
+        >
+          {sections[current]}
+        </motion.div>
+      </AnimatePresence>
+
+      {sections.length > 1 && (
+        <>
+          <div className="fixed right-5 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-3 lg:flex">
+            {names.map((name, i) => (
+              <button key={name} onClick={() => goTo(i)} className="group flex items-center justify-end gap-2" title={name}>
+                <span className="whitespace-nowrap border border-border bg-background/95 px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-foreground opacity-0 shadow-sm transition-all duration-200 group-hover:opacity-100">
+                  {name}
+                </span>
+                <motion.div
+                  className="rounded-full"
+                  animate={{
+                    width: i === current ? 10 : 5,
+                    height: i === current ? 10 : 5,
+                    backgroundColor: i === current ? accent : "hsl(var(--border))",
+                    boxShadow: i === current ? `0 0 8px ${accent}` : "none",
+                  }}
+                  transition={{ duration: 0.3 }}
+                />
+              </button>
+            ))}
+          </div>
+          <div className="fixed bottom-0 left-0 right-0 z-40 h-[2px] bg-border/50">
+            <motion.div
+              className="h-full"
+              style={{ backgroundColor: accent }}
+              animate={{ width: `${(current / (sections.length - 1)) * 100}%` }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            />
+          </div>
+          <div className="fixed bottom-4 left-6 z-40 hidden lg:block">
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={current}
+                className="text-[10px] font-bold uppercase tracking-[0.25em] text-muted-foreground"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }}
+                transition={{ duration: 0.3 }}
+              >
+                {String(current + 1).padStart(2, "0")} / {String(sections.length).padStart(2, "0")} - {names[current]}
+              </motion.span>
+            </AnimatePresence>
+          </div>
+        </>
+      )}
+    </div>
+  );
 }
 
 /* ─── Cytek-style Related Card ─────────────────────────────────── */
@@ -95,7 +265,7 @@ function CytekProductDetail({ product }: { product: Product }) {
       {/* Teal navbar to match Cytek brand */}
       <SiteNavbar forceSolid />
 
-      <main>
+      <main className="product-scroll-snap">
         {/* ═══════════════════════════════════════════════════════
             HERO — full bleed, background image, instrument photo
         ════════════════════════════════════════════════════════ */}
@@ -473,7 +643,7 @@ function NgeneBioProductDetail({ product }: { product: Product }) {
   return (
     <div className="min-h-[100dvh] bg-white text-[#111]">
       <SiteNavbar forceSolid />
-      <main>
+      <main className="product-scroll-snap">
 
         {/* ═══ HERO — white with bold red left panel ════════════ */}
         <div className="pt-20 border-b border-[#e8e8e8]">
@@ -794,7 +964,7 @@ function SugentechProductDetail({ product }: { product: Product }) {
   return (
     <div className="min-h-[100dvh] bg-white text-[#111]">
       <SiteNavbar forceSolid />
-      <main>
+      <main className="product-scroll-snap">
         {/* ── Hero ─────────────────────────────────────────────── */}
         <div className="border-b border-[#dce8f5]" style={{ background: "linear-gradient(135deg, #f0f6ff 0%, #e8f1fb 50%, #f8fbff 100%)" }}>
           <div className="h-1.5 bg-[#0057A8]" />
@@ -1118,7 +1288,7 @@ function RexProductDetail({ product }: { product: Product }) {
   return (
     <div className="min-h-[100dvh] bg-white text-[#111]">
       <SiteNavbar forceSolid />
-      <main>
+      <main className="product-scroll-snap">
 
         {/* ── Hero ───────────────────────────────────────────── */}
         <div className="bg-[#f5f8fc] border-b border-[#dce8f5] pt-24 pb-10">
@@ -1448,12 +1618,9 @@ export default function ProductDetail() {
   const documentUrl = product.brochure || product.specSheet;
   const hasApplicationDetailSection = product.detailSections?.some(section => section.title.trim().toLowerCase() === "application");
   const displayedApplications = hasApplicationDetailSection ? [] : (product.applications || []);
-
-  return (
-    <div className="min-h-[100dvh] bg-background">
-      <SiteNavbar />
-      <main className="pb-20">
-        <div className="border-b border-border bg-gradient-to-b from-muted/40 via-background to-background">
+  const productSlides = [
+    (
+      <section key="overview" className="min-h-[100dvh] border-b border-border bg-gradient-to-b from-muted/40 via-background to-background">
           <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
             <nav className="flex items-center gap-2 text-xs text-muted-foreground mb-8 flex-wrap">
               <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
@@ -1527,9 +1694,11 @@ export default function ProductDetail() {
               </div>
             </div>
           </div>
-        </div>
-        {specEntries.length > 0 && (
-          <section id="technical-profile" className="container mx-auto px-6 md:px-12 py-12 border-b border-border scroll-mt-28 min-w-0">
+      </section>
+    ),
+    specEntries.length > 0 && (
+      <section key="technical-profile" id="technical-profile" className="min-h-[100dvh] border-b border-border bg-background">
+        <div className="container mx-auto px-6 md:px-12 pt-28 pb-14 min-w-0">
             <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-7">
               <div>
                 <div className="text-xs font-bold uppercase tracking-wide text-primary mb-2">Technical profile</div>
@@ -1550,10 +1719,16 @@ export default function ProductDetail() {
                 </div>
               ))}
             </div>
-          </section>
-        )}
-        {product.detailSections && product.detailSections.length > 0 && (
-          <div className="container mx-auto px-6 md:px-12 py-14 border-b border-border">
+          </div>
+      </section>
+    ),
+    product.detailSections && product.detailSections.length > 0 && (
+      <section key="details" className="min-h-[100dvh] border-b border-border bg-muted/20">
+          <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+            <div className="mb-8">
+              <div className="text-xs font-bold uppercase tracking-wide text-primary mb-2">Product detail</div>
+              <h2 className="text-2xl md:text-3xl font-[var(--app-font-heading)] font-black text-foreground">Description &amp; use cases</h2>
+            </div>
             <div className="grid lg:grid-cols-2 gap-5">
               {product.detailSections.map((section, i) => (
                 <section key={`${section.title}-${i}`} className="border border-border bg-background p-6 md:p-7">
@@ -1575,23 +1750,52 @@ export default function ProductDetail() {
               ))}
             </div>
           </div>
-        )}
-        {(product.features || displayedApplications.length > 0) && (
-          <div className="container mx-auto px-6 md:px-12 py-14 grid lg:grid-cols-2 gap-12">
-            {product.features && <div><h2 className="text-xl font-bold mb-5">Features &amp; Benefits</h2><ul className="space-y-3">{product.features.map((f,i) => <li key={i} className="flex gap-3 text-sm text-muted-foreground"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />{f}</li>)}</ul></div>}
-            {displayedApplications.length > 0 && <div><h2 className="text-xl font-bold mb-5">Applications</h2><ul className="space-y-3">{displayedApplications.map((a,i) => <li key={i} className="flex gap-3 text-sm text-muted-foreground"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />{a}</li>)}</ul></div>}
+      </section>
+    ),
+    (product.features || displayedApplications.length > 0) && (
+      <section key="features" className="min-h-[100dvh] border-b border-border bg-background">
+          <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+            <div className="mb-8">
+              <div className="text-xs font-bold uppercase tracking-wide text-primary mb-2">Performance notes</div>
+              <h2 className="text-2xl md:text-3xl font-[var(--app-font-heading)] font-black text-foreground">Features &amp; applications</h2>
+            </div>
+            <div className="grid lg:grid-cols-2 gap-12">
+              {product.features && <div><h3 className="text-xl font-bold mb-5">Features &amp; Benefits</h3><ul className="space-y-3">{product.features.map((f,i) => <li key={i} className="flex gap-3 text-sm text-muted-foreground"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />{f}</li>)}</ul></div>}
+              {displayedApplications.length > 0 && <div><h3 className="text-xl font-bold mb-5">Applications</h3><ul className="space-y-3">{displayedApplications.map((a,i) => <li key={i} className="flex gap-3 text-sm text-muted-foreground"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />{a}</li>)}</ul></div>}
+            </div>
           </div>
-        )}
-        {allRelated.length > 0 && (
-          <div className="container mx-auto px-6 md:px-12 pt-4">
+      </section>
+    ),
+    allRelated.length > 0 && (
+      <section key="related" className="min-h-[100dvh] border-b border-border bg-muted/20">
+          <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
             <h3 className="text-xl font-bold mb-6">Related Products</h3>
             <div className="grid md:grid-cols-3 gap-4">
               {allRelated.map(p => <RelatedCard key={p.id} product={p} />)}
             </div>
           </div>
-        )}
-      </main>
-      <SiteFooter />
+      </section>
+    ),
+    (
+      <section key="footer" className="min-h-[100dvh] bg-foreground text-background">
+        <SiteFooter />
+      </section>
+    ),
+  ].filter(Boolean) as React.ReactNode[];
+
+  const productSlideNames = [
+    "Overview",
+    specEntries.length > 0 && "Specifications",
+    product.detailSections && product.detailSections.length > 0 && "Details",
+    (product.features || displayedApplications.length > 0) && "Features",
+    allRelated.length > 0 && "Related",
+    "Contact",
+  ].filter(Boolean) as string[];
+
+  return (
+    <div className="h-[100dvh] bg-background overflow-hidden">
+      <SiteNavbar forceSolid />
+      <ProductSlideDeck sections={productSlides} names={productSlideNames} accent={brand?.accent || "hsl(var(--primary))"} />
     </div>
   );
 }

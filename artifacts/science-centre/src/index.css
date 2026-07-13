@@ -168,6 +168,25 @@
 }
 
 @layer utilities {
+  .product-scroll-snap {
+    height: 100dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+  }
+
+  .product-scroll-snap > * {
+    min-height: 100dvh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  .product-scroll-snap > .sticky {
+    min-height: auto;
+    scroll-snap-align: none;
+  }
+
   input[type="search"]::-webkit-search-cancel-button {
     @apply hidden;
   }
