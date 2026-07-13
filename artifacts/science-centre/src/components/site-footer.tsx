@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useLocation } from "wouter";
+import { Link } from "wouter";
 import { MapPin, Phone, Mail, Linkedin, Twitter, Globe } from "lucide-react";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
@@ -8,10 +8,6 @@ function img(path: string) {
 }
 
 export function SiteFooter() {
-  const [location] = useLocation();
-  const isHome = location === "/";
-  const a = (id: string) => (isHome ? `#${id}` : `/#${id}`);
-
   return (
     <footer className="bg-background pt-24 pb-12">
       <div className="container mx-auto px-6 md:px-12">
@@ -54,19 +50,19 @@ export function SiteFooter() {
             </h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
               {[
-                ["About Us", a("about")],
-                ["Global Partners", a("partners")],
-                ["Focus Areas", a("solutions")],
+                ["About Us", "/about"],
+                ["Global Partners", "/partners"],
+                ["Focus Areas", "/solutions"],
                 ["Product Catalogue", "/products"],
-                ["Contact", a("contact")],
+                ["Contact", "/contact"],
               ].map(([label, href]) => (
                 <li key={label}>
-                  <a
+                  <Link
                     href={href}
                     className="hover:text-primary transition-colors hover:translate-x-1 inline-block transition-transform"
                   >
                     {label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -85,9 +81,9 @@ export function SiteFooter() {
                 "Analytical Chemistry",
               ].map((item) => (
                 <li key={item}>
-                  <a href={a("solutions")} className="hover:text-primary transition-colors">
+                  <Link href="/solutions" className="hover:text-primary transition-colors">
                     {item}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

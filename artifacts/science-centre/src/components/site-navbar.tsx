@@ -65,12 +65,12 @@ function BrandMark({ brand, active = false, panel = false }: { brand: Brand; act
 }
 
 const NAV_LINKS = [
-  { label: "Solutions", anchor: "solutions", isPage: false, hasMega: false },
+  { label: "Solutions", anchor: "solutions", isPage: true, href: "/solutions", hasMega: false },
   { label: "Products",  anchor: "products",  isPage: true,  href: "/products", hasMega: true },
   { label: "Events",    anchor: "events",    isPage: true,  href: "/events", hasMega: false },
-  { label: "Partners",  anchor: "partners",  isPage: false, hasMega: false },
+  { label: "Partners",  anchor: "partners",  isPage: true, href: "/partners", hasMega: false },
   { label: "About",     anchor: "about",     isPage: true,  href: "/about",    hasMega: false },
-  { label: "Contact",   anchor: "contact",   isPage: false, hasMega: false },
+  { label: "Contact",   anchor: "contact",   isPage: true, href: "/contact", hasMega: false },
 ] as const;
 
 // ─── Application Groups ────────────────────────────────────────────────────
@@ -285,7 +285,16 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
     >
       <div className="container mx-auto px-6 md:px-12 h-24 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center">
+        <Link
+          href="/"
+          onClick={() => {
+            if (location === "/") {
+              window.dispatchEvent(new CustomEvent("science-centre:home-top"));
+              window.scrollTo({ top: 0, behavior: "smooth" });
+            }
+          }}
+          className="flex items-center"
+        >
           <img src={img("/images/sc-logo-full.png")} alt="Science Centre Logo" className="h-14 w-auto object-contain" />
         </Link>
 
@@ -336,7 +345,7 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
         {/* CTA + hamburger */}
         <motion.div initial={{ opacity: 0 }} animate={visible ? { opacity: 1 } : {}} transition={{ delay: 0.5 }} className="flex items-center gap-3">
           <Button asChild className="hidden lg:flex bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-none px-6">
-            <a href={isHome ? "#contact" : "/#contact"}>Request a Quote</a>
+            <Link href="/contact">Request a Quote</Link>
           </Button>
           <button className="lg:hidden p-2" aria-label="Toggle menu" onClick={() => setMenuOpen(!menuOpen)}>
             <motion.div animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} className="w-5 h-0.5 bg-foreground mb-1.5 origin-center" />
@@ -888,7 +897,7 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
                   : <a key={link.label} href={href} onClick={onClose} className="block py-3 text-sm font-medium text-foreground hover:text-primary">{link.label}</a>;
               })}
               <Button asChild className="w-full rounded-none bg-primary text-primary-foreground mt-4">
-                <a href={isHome ? "#contact" : "/#contact"} onClick={() => setMenuOpen(false)}>Request a Quote</a>
+                <Link href="/contact" onClick={() => setMenuOpen(false)}>Request a Quote</Link>
               </Button>
             </div>
           </motion.div>

@@ -1416,6 +1416,16 @@ export default function Home() {
   };
 
   useEffect(() => {
+    const onHomeTop = () => {
+      cooldown.current = false;
+      setDirection(-1);
+      setCurrent(0);
+    };
+    window.addEventListener("science-centre:home-top", onHomeTop);
+    return () => window.removeEventListener("science-centre:home-top", onHomeTop);
+  }, []);
+
+  useEffect(() => {
     if (!splashDone) return;
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();

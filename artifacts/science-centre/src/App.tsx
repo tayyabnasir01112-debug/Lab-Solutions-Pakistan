@@ -6,6 +6,9 @@ import Home from "@/pages/home";
 import Products from "@/pages/products";
 import ProductDetail from "@/pages/product-detail";
 import About from "@/pages/about";
+import SolutionsPage from "@/pages/solutions";
+import PartnersPage from "@/pages/partners";
+import ContactPage from "@/pages/contact";
 import EventsPage from "@/pages/events";
 import EventsAdminPage from "@/pages/events-admin";
 import NotFound from "@/pages/not-found";
@@ -20,6 +23,9 @@ function Router() {
       <Route path="/products/:id" component={ProductDetail} />
       <Route path="/events" component={EventsPage} />
       <Route path="/admin/events" component={EventsAdminPage} />
+      <Route path="/solutions" component={SolutionsPage} />
+      <Route path="/partners" component={PartnersPage} />
+      <Route path="/contact" component={ContactPage} />
       <Route path="/about" component={About} />
       <Route component={NotFound} />
     </Switch>
