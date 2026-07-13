@@ -713,11 +713,13 @@ export default function Products() {
   );
 
   return (
-    <div className="min-h-[100dvh] w-full bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
+    <div className="h-[100dvh] w-full overflow-hidden bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
       <SiteNavbar visible={splashDone} />
 
+      <div className="product-scroll-snap">
+        <section className="product-slide-section flex h-[100dvh] flex-col bg-background">
       {/* Compact title bar */}
-      <section className="pt-28 pb-6 border-b border-border bg-background">
+      <section className="shrink-0 pt-24 pb-4 border-b border-border bg-background">
         <div className="px-6 md:px-10 lg:px-12">
           <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground mb-3">
             <Link href="/" className="hover:text-foreground transition-colors">
@@ -813,7 +815,7 @@ export default function Products() {
       </section>
 
       {/* Sticky toolbar */}
-      <div className="sticky top-[64px] z-30 bg-background/95 backdrop-blur border-b border-border">
+      <div className="z-30 shrink-0 bg-background/95 backdrop-blur border-b border-border">
         <div className="px-6 md:px-10 lg:px-12 py-3 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <button
@@ -890,15 +892,15 @@ export default function Products() {
       </div>
 
       {/* Main split layout */}
-      <main className="px-6 md:px-10 lg:px-12 py-8">
-        <div className="flex gap-10">
+      <main className="min-h-0 flex-1 overflow-hidden px-6 py-5 md:px-10 lg:px-12">
+        <div className="flex h-full gap-10">
           {/* Desktop sidebar */}
           <aside className="hidden lg:block w-[260px] flex-shrink-0">
-            <div className="sticky top-[160px]">{Sidebar}</div>
+            <div className="h-full overflow-y-auto pr-2">{Sidebar}</div>
           </aside>
 
           {/* Product grid */}
-          <div className="flex-1 min-w-0">
+          <div className="min-w-0 flex-1 overflow-y-auto pr-2">
             {filtered.length === 0 ? (
               <div className="border border-border p-16 text-center">
                 <h3 className="font-[var(--app-font-heading)] text-2xl font-bold mb-3">
@@ -938,10 +940,11 @@ export default function Products() {
           </div>
         </div>
       </main>
+      </section>
 
       {/* Bottom CTA */}
-      <section className="border-t border-border bg-foreground text-background mt-12">
-        <div className="px-6 md:px-10 lg:px-12 py-16 grid md:grid-cols-2 gap-10 items-center">
+      <section className="product-slide-section flex min-h-[100dvh] flex-col border-t border-border bg-foreground text-background">
+        <div className="grid flex-1 items-center gap-10 px-6 py-28 md:grid-cols-2 md:px-10 lg:px-12">
           <div>
             <div className="text-[11px] uppercase tracking-[0.18em] text-background/60 mb-3 flex items-center gap-2">
               <CheckCircle2 className="h-3.5 w-3.5" />
@@ -966,7 +969,9 @@ export default function Products() {
             </Button>
           </div>
         </div>
+        <SiteFooter />
       </section>
+      </div>
 
       {/* Mobile filter drawer */}
       <AnimatePresence>
@@ -1001,8 +1006,6 @@ export default function Products() {
           </>
         )}
       </AnimatePresence>
-
-      <SiteFooter />
     </div>
   );
 }

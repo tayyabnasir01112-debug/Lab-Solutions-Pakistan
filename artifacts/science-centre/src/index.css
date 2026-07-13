@@ -176,15 +176,21 @@
     scroll-snap-type: y mandatory;
   }
 
-  .product-scroll-snap > * {
+  .product-scroll-snap > .product-slide-section {
     min-height: 100dvh;
     scroll-snap-align: start;
     scroll-snap-stop: always;
   }
 
-  .product-scroll-snap > .sticky {
+  .product-scroll-snap > .sticky,
+  .product-scroll-snap > :not(.product-slide-section) {
     min-height: auto;
     scroll-snap-align: none;
+  }
+
+  .catalogue-workspace {
+    height: 100dvh;
+    overflow: hidden;
   }
 
   input[type="search"]::-webkit-search-cancel-button {

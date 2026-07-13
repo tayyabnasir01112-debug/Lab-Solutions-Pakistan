@@ -269,7 +269,7 @@ function CytekProductDetail({ product }: { product: Product }) {
         {/* ═══════════════════════════════════════════════════════
             HERO — full bleed, background image, instrument photo
         ════════════════════════════════════════════════════════ */}
-        <div className="relative min-h-[580px] flex items-center overflow-hidden"
+        <div className="product-slide-section relative min-h-[100dvh] flex items-center overflow-hidden"
           style={{
             backgroundImage: product.heroBg ? `url(${product.heroBg})` : undefined,
             backgroundSize: "cover",
@@ -646,7 +646,7 @@ function NgeneBioProductDetail({ product }: { product: Product }) {
       <main className="product-scroll-snap">
 
         {/* ═══ HERO — white with bold red left panel ════════════ */}
-        <div className="pt-20 border-b border-[#e8e8e8]">
+        <div className="product-slide-section pt-20 border-b border-[#e8e8e8]">
           {/* Top red band */}
           <div className="h-1.5 bg-[#C8002D]" />
           <div className="max-w-[1400px] mx-auto px-8 md:px-16">
@@ -966,7 +966,7 @@ function SugentechProductDetail({ product }: { product: Product }) {
       <SiteNavbar forceSolid />
       <main className="product-scroll-snap">
         {/* ── Hero ─────────────────────────────────────────────── */}
-        <div className="border-b border-[#dce8f5]" style={{ background: "linear-gradient(135deg, #f0f6ff 0%, #e8f1fb 50%, #f8fbff 100%)" }}>
+        <div className="product-slide-section border-b border-[#dce8f5]" style={{ background: "linear-gradient(135deg, #f0f6ff 0%, #e8f1fb 50%, #f8fbff 100%)" }}>
           <div className="h-1.5 bg-[#0057A8]" />
           <div className="max-w-[1400px] mx-auto px-8 md:px-16 pt-16 pb-14">
             {/* Breadcrumb */}
@@ -1291,7 +1291,7 @@ function RexProductDetail({ product }: { product: Product }) {
       <main className="product-scroll-snap">
 
         {/* ── Hero ───────────────────────────────────────────── */}
-        <div className="bg-[#f5f8fc] border-b border-[#dce8f5] pt-24 pb-10">
+        <div className="product-slide-section bg-[#f5f8fc] border-b border-[#dce8f5] pt-24 pb-10">
           <div className="max-w-[1400px] mx-auto px-8 md:px-16">
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-[11px] text-[#aaa] mb-6">
@@ -1621,7 +1621,7 @@ export default function ProductDetail() {
   const productSlides = [
     (
       <section key="overview" className="min-h-[100dvh] border-b border-border bg-gradient-to-b from-muted/40 via-background to-background">
-          <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+          <div className="container mx-auto px-6 md:px-12 pt-28 pb-24">
             <nav className="flex items-center gap-2 text-xs text-muted-foreground mb-8 flex-wrap">
               <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
               <ChevronRight className="h-3 w-3 flex-shrink-0" />
@@ -1636,8 +1636,8 @@ export default function ProductDetail() {
                   {category && <span className="px-3 py-1.5 text-xs text-muted-foreground border border-border flex items-center gap-1.5 rounded-sm">{category.icon}{category.name}</span>}
                   {product.featured && <span className="px-3 py-1.5 text-xs font-bold text-amber-600 border border-amber-200 bg-amber-50 rounded-sm">★ Featured</span>}
                 </div>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-[var(--app-font-heading)] font-black text-foreground leading-tight tracking-tight mb-6 max-w-4xl break-words [overflow-wrap:anywhere] min-w-0">{product.name}</h1>
-                <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-7 max-w-3xl break-words [overflow-wrap:anywhere] min-w-0">{product.description}</p>
+                <h1 className="text-3xl sm:text-4xl md:text-[44px] font-[var(--app-font-heading)] font-black text-foreground leading-[1.04] tracking-tight mb-5 max-w-4xl break-words [overflow-wrap:anywhere] min-w-0">{product.name}</h1>
+                <p className="text-muted-foreground text-base leading-relaxed mb-6 max-w-3xl break-words [overflow-wrap:anywhere] min-w-0">{product.description}</p>
                 {quickSpecs.length > 0 && (
                   <div className="grid sm:grid-cols-2 gap-3 mb-7">
                     {quickSpecs.map(([k, v]) => (
@@ -1645,16 +1645,6 @@ export default function ProductDetail() {
                         <div className="text-[11px] uppercase tracking-wide font-bold text-muted-foreground mb-2">{k}</div>
                         <div className="text-sm font-semibold text-foreground leading-snug line-clamp-3 group-hover:text-primary transition-colors break-words [overflow-wrap:anywhere]">{v}</div>
                       </a>
-                    ))}
-                  </div>
-                )}
-                {product.highlights && (
-                  <div className="grid sm:grid-cols-2 gap-x-5 gap-y-3 mb-2">
-                    {product.highlights.slice(0, 4).map((h, i) => (
-                      <div key={i} className="flex items-start gap-3">
-                        <CheckCircle2 className="h-4 w-4 text-primary flex-shrink-0 mt-1" />
-                        <span className="text-muted-foreground text-sm leading-relaxed break-words [overflow-wrap:anywhere] min-w-0">{h}</span>
-                      </div>
                     ))}
                   </div>
                 )}
@@ -1752,7 +1742,7 @@ export default function ProductDetail() {
           </div>
       </section>
     ),
-    (product.features || displayedApplications.length > 0) && (
+    (product.highlights || product.features || displayedApplications.length > 0) && (
       <section key="features" className="min-h-[100dvh] border-b border-border bg-background">
           <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
             <div className="mb-8">
@@ -1760,7 +1750,7 @@ export default function ProductDetail() {
               <h2 className="text-2xl md:text-3xl font-[var(--app-font-heading)] font-black text-foreground">Features &amp; applications</h2>
             </div>
             <div className="grid lg:grid-cols-2 gap-12">
-              {product.features && <div><h3 className="text-xl font-bold mb-5">Features &amp; Benefits</h3><ul className="space-y-3">{product.features.map((f,i) => <li key={i} className="flex gap-3 text-sm text-muted-foreground"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />{f}</li>)}</ul></div>}
+              {(product.highlights || product.features) && <div><h3 className="text-xl font-bold mb-5">Features &amp; Benefits</h3><ul className="space-y-3">{[...(product.highlights || []), ...(product.features || [])].map((f,i) => <li key={i} className="flex gap-3 text-sm text-muted-foreground"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />{f}</li>)}</ul></div>}
               {displayedApplications.length > 0 && <div><h3 className="text-xl font-bold mb-5">Applications</h3><ul className="space-y-3">{displayedApplications.map((a,i) => <li key={i} className="flex gap-3 text-sm text-muted-foreground"><div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />{a}</li>)}</ul></div>}
             </div>
           </div>
@@ -1787,7 +1777,7 @@ export default function ProductDetail() {
     "Overview",
     specEntries.length > 0 && "Specifications",
     product.detailSections && product.detailSections.length > 0 && "Details",
-    (product.features || displayedApplications.length > 0) && "Features",
+    (product.highlights || product.features || displayedApplications.length > 0) && "Features",
     allRelated.length > 0 && "Related",
     "Contact",
   ].filter(Boolean) as string[];

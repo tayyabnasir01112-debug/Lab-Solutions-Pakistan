@@ -151,13 +151,13 @@ export default function EventsPage() {
   }, [activeType, events, mode, query]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="h-[100dvh] overflow-hidden bg-background text-foreground">
       <SiteNavbar forceSolid />
 
-      <main className="pt-24">
-        <section className="relative overflow-hidden border-b border-border bg-[#f8fbfc]">
+      <main className="product-scroll-snap">
+        <section className="product-slide-section relative overflow-hidden border-b border-border bg-[#f8fbfc]">
           <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: "linear-gradient(#0b4a72 1px, transparent 1px), linear-gradient(90deg, #0b4a72 1px, transparent 1px)", backgroundSize: "44px 44px" }} />
-          <div className="container relative mx-auto grid min-h-[620px] gap-10 px-6 py-16 md:px-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+          <div className="container relative mx-auto grid min-h-[100dvh] gap-10 px-6 pb-16 pt-32 md:px-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
             <div>
               <div className="mb-5 inline-flex items-center gap-2 border border-[#1f9fd0]/25 bg-white px-3 py-2 text-[11px] font-black uppercase tracking-[0.2em] text-[#1f9fd0]">
                 <CalendarDays className="h-4 w-4" /> Science Centre Events
@@ -201,7 +201,8 @@ export default function EventsPage() {
           </div>
         </section>
 
-        <section id="upcoming" className="container mx-auto px-6 py-12 md:px-12">
+        <section id="upcoming" className="product-slide-section bg-background">
+          <div className="container mx-auto px-6 pb-12 pt-28 md:px-12">
           <div className="mb-8 grid gap-4 lg:grid-cols-[1fr_auto] lg:items-end">
             <div>
               <div className="mb-2 text-[11px] font-black uppercase tracking-[0.22em] text-muted-foreground">Programme</div>
@@ -229,7 +230,7 @@ export default function EventsPage() {
             ))}
           </div>
 
-          <div className="space-y-6">
+          <div className="max-h-[calc(100dvh-330px)] space-y-6 overflow-y-auto pr-2">
             <AnimatePresence mode="popLayout">
               {filtered.map((event, index) => (
                 <EventCard key={event.id} event={event} index={index} />
@@ -242,9 +243,11 @@ export default function EventsPage() {
               </div>
             )}
           </div>
+          </div>
         </section>
 
-        <section className="container mx-auto px-6 py-14 md:px-12">
+        <section className="product-slide-section flex min-h-[100dvh] flex-col bg-background">
+          <div className="container mx-auto grid flex-1 items-center px-6 py-28 md:px-12">
           <div className="grid gap-8 border border-border bg-foreground p-8 text-background md:grid-cols-[1fr_auto] md:items-center md:p-10">
             <div>
               <div className="mb-2 text-[11px] font-black uppercase tracking-[0.22em] text-background/50">Host with Science Centre</div>
@@ -255,10 +258,10 @@ export default function EventsPage() {
               <Link href="/#contact">Plan an event <ArrowRight className="ml-2 h-4 w-4" /></Link>
             </Button>
           </div>
+          </div>
+          <SiteFooter />
         </section>
       </main>
-
-      <SiteFooter />
     </div>
   );
 }
