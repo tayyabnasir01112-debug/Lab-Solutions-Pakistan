@@ -17,11 +17,52 @@ import {
   productsByCategory,
   brandById,
   categoryById,
+  type Brand,
   type Product,
 } from "@/lib/catalogue";
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 function img(path: string) { return `${BASE}${path}`; }
+function brandLogoSrc(logo?: string) {
+  if (!logo) return undefined;
+  return logo.startsWith("/") ? img(logo) : logo;
+}
+
+function BrandMark({ brand, active = false, panel = false }: { brand: Brand; active?: boolean; panel?: boolean }) {
+  const [failed, setFailed] = useState(false);
+  const src = !failed ? brandLogoSrc(brand.logo) : undefined;
+  const initials = brand.short
+    .split(/\s+/)
+    .map(part => part[0])
+    .join("")
+    .slice(0, 3)
+    .toUpperCase();
+
+  return (
+    <div
+      className={`relative z-10 flex-shrink-0 flex items-center justify-center overflow-hidden rounded-sm border bg-white shadow-sm ${
+        panel ? "w-36 h-16" : "w-8 h-8"
+      }`}
+      style={{ borderColor: active ? "rgba(255,255,255,0.35)" : brand.accent + "35" }}
+    >
+      {src ? (
+        <img
+          src={src}
+          alt={brand.short}
+          className={`w-full h-full object-contain ${panel ? "p-3" : "p-1.5"}`}
+          onError={() => setFailed(true)}
+        />
+      ) : (
+        <span
+          className={`font-black tracking-tight ${panel ? "text-[22px] px-3" : "text-[10px]"}`}
+          style={{ color: brand.accent }}
+        >
+          {panel ? brand.short : initials}
+        </span>
+      )}
+    </div>
+  );
+}
 
 const NAV_LINKS = [
   { label: "Solutions", anchor: "solutions", isPage: false, hasMega: false },
@@ -146,6 +187,7 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
   const [location]                          = useLocation();
   const megaRef    = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const megaCloseTimer = useRef<number | null>(null);
 
   const isHome     = location === "/";
   const isDarkPage = location === "/about";
@@ -186,7 +228,27 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
     return isHome ? `#${link.anchor}` : `/#${link.anchor}`;
   }
 
-  const closeMega = useCallback(() => setMegaOpen(false), []);
+  const clearMegaCloseTimer = useCallback(() => {
+    if (megaCloseTimer.current) {
+      window.clearTimeout(megaCloseTimer.current);
+      megaCloseTimer.current = null;
+    }
+  }, []);
+
+  const openMega = useCallback(() => {
+    clearMegaCloseTimer();
+    setMegaOpen(true);
+  }, [clearMegaCloseTimer]);
+
+  const closeMega = useCallback(() => {
+    clearMegaCloseTimer();
+    setMegaOpen(false);
+  }, [clearMegaCloseTimer]);
+
+  const scheduleMegaClose = useCallback(() => {
+    clearMegaCloseTimer();
+    megaCloseTimer.current = window.setTimeout(() => setMegaOpen(false), 180);
+  }, [clearMegaCloseTimer]);
 
   // Current active brand
   const currentBrand    = brandById(activeBrand);
@@ -247,8 +309,22 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
             );
             if (link.hasMega) {
               return (
-                <button key={link.label} ref={triggerRef} onClick={() => setMegaOpen(v => !v)}
-                  className="py-2 focus:outline-none" aria-expanded={megaOpen}>{Inner}</button>
+                <button
+                  key={link.label}
+                  ref={triggerRef}
+                  type="button"
+                  onPointerEnter={openMega}
+                  onFocus={openMega}
+                  onMouseLeave={scheduleMegaClose}
+                  onClick={() => {
+                    clearMegaCloseTimer();
+                    setMegaOpen(v => !v);
+                  }}
+                  className="py-2 focus:outline-none"
+                  aria-expanded={megaOpen}
+                >
+                  {Inner}
+                </button>
               );
             }
             return link.isPage
@@ -284,6 +360,8 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
             transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
             className="hidden lg:block absolute left-0 right-0 top-full bg-background border-b border-border shadow-2xl"
             onWheel={e => e.stopPropagation()}
+            onMouseEnter={clearMegaCloseTimer}
+            onMouseLeave={scheduleMegaClose}
           >
             {/* ── Top bar: mode switcher tabs ───────────────────── */}
             <div className="border-b border-border/60">
@@ -389,17 +467,7 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
                                     style={{ background: b.accent }} />
                                 )}
 
-                                <div className="relative z-10 w-7 h-7 flex-shrink-0 flex items-center justify-center overflow-hidden rounded-sm"
-                                  style={{ background: isActive ? "rgba(255,255,255,0.2)" : b.accent + "15", border: `1px solid ${isActive ? "rgba(255,255,255,0.2)" : b.accent + "30"}` }}>
-                                  {b.logo ? (
-                                    <img src={b.logo} alt={b.short} className="w-full h-full object-contain p-1"
-                                      onError={e => { (e.target as HTMLImageElement).style.display = "none"; }} />
-                                  ) : (
-                                    <span className="text-[9px] font-black" style={{ color: isActive ? "#fff" : b.accent }}>
-                                      {b.short.slice(0, 2).toUpperCase()}
-                                    </span>
-                                  )}
-                                </div>
+                                <BrandMark brand={b} active={isActive} />
 
                                 <div className="relative z-10 flex-1 min-w-0">
                                   <div className={`text-[13px] font-semibold leading-tight truncate ${isActive ? "text-white" : "text-foreground"}`}>
@@ -522,7 +590,7 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
                     onMouseEnter={() => setRightHovered(true)}
                     onMouseLeave={() => setRightHovered(false)}
                   >
-                    <AnimatePresence mode="wait">
+                    <AnimatePresence initial={false}>
 
                       {/* ── BRAND DETAIL ── */}
                       {viewMode === "brand" && (
@@ -536,23 +604,7 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
                         >
                           {/* Brand intro */}
                           <div className="flex items-start gap-5 mb-4 pb-4 border-b border-border flex-shrink-0">
-                            <div className="flex-shrink-0 w-36 h-16 flex items-center justify-center rounded-sm border border-border overflow-hidden"
-                              style={{ background: currentBrand.accent + "08" }}>
-                              {currentBrand.logo ? (
-                                <img src={currentBrand.logo} alt={currentBrand.name}
-                                  className="max-w-full max-h-full object-contain p-3"
-                                  onError={e => {
-                                    const el = e.target as HTMLImageElement;
-                                    el.style.display = "none";
-                                    el.parentElement!.innerHTML = `<span style="font-size:22px;font-weight:900;color:${currentBrand.accent};letter-spacing:-1px;padding:12px">${currentBrand.short}</span>`;
-                                  }}
-                                />
-                              ) : (
-                                <span className="text-2xl font-black tracking-tight px-4" style={{ color: currentBrand.accent }}>
-                                  {currentBrand.short}
-                                </span>
-                              )}
-                            </div>
+                            <BrandMark brand={currentBrand} panel />
                             <div className="flex-1 min-w-0">
                               <h3 className="font-[var(--app-font-heading)] font-black text-[15px] text-foreground leading-tight mb-1.5">
                                 {currentBrand.name}
