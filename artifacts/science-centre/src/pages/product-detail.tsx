@@ -33,10 +33,12 @@ function ProductSlideDeck({
   sections,
   names,
   accent = "hsl(var(--primary))",
+  resetKey,
 }: {
   sections: React.ReactNode[];
   names: string[];
   accent?: string;
+  resetKey?: string;
 }) {
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
@@ -51,6 +53,13 @@ function ProductSlideDeck({
       document.body.style.height = "";
     };
   }, []);
+
+  useEffect(() => {
+    cooldown.current = false;
+    setDirection(-1);
+    setCurrent(0);
+    slideRefs.current.forEach(slide => slide?.scrollTo({ top: 0, behavior: "instant" }));
+  }, [resetKey]);
 
   const goTo = (index: number) => {
     if (cooldown.current || index === current || index < 0 || index >= sections.length) return;
@@ -410,7 +419,7 @@ function CytekProductDetail({ product }: { product: Product }) {
   return (
     <div className="h-[100dvh] overflow-hidden bg-white text-[#333]">
       <SiteNavbar forceSolid />
-      <ProductSlideDeck sections={cytekSlides} names={cytekSlideNames} accent="#2c5f5f" />
+      <ProductSlideDeck sections={cytekSlides} names={cytekSlideNames} accent="#2c5f5f" resetKey={product.id} />
     </div>
   );
 
@@ -877,7 +886,7 @@ function NgeneBioProductDetail({ product }: { product: Product }) {
   return (
     <div className="h-[100dvh] overflow-hidden bg-white text-[#111]">
       <SiteNavbar forceSolid />
-      <ProductSlideDeck sections={ngeneSlides} names={["Overview", ...(product.featureCards?.length ? ["Capabilities"] : []), ...(product.specs ? ["Specs"] : []), ...((product.applications?.length || allRelated.length) ? ["Applications"] : [])]} accent="#C8002D" />
+      <ProductSlideDeck sections={ngeneSlides} names={["Overview", ...(product.featureCards?.length ? ["Capabilities"] : []), ...(product.specs ? ["Specs"] : []), ...((product.applications?.length || allRelated.length) ? ["Applications"] : [])]} accent="#C8002D" resetKey={product.id} />
     </div>
   );
 
@@ -1285,7 +1294,7 @@ function SugentechProductDetail({ product }: { product: Product }) {
   return (
     <div className="h-[100dvh] overflow-hidden bg-white text-[#111]">
       <SiteNavbar forceSolid />
-      <ProductSlideDeck sections={sugSlides} names={["Overview", "Features", ...(product.specs ? ["Specs"] : []), ...((product.applications?.length || product.kits?.length) ? ["Clinical"] : []), ...(allRelated.length ? ["Related"] : [])]} accent="#0057A8" />
+      <ProductSlideDeck sections={sugSlides} names={["Overview", "Features", ...(product.specs ? ["Specs"] : []), ...((product.applications?.length || product.kits?.length) ? ["Clinical"] : []), ...(allRelated.length ? ["Related"] : [])]} accent="#0057A8" resetKey={product.id} />
     </div>
   );
 
@@ -1690,7 +1699,7 @@ function RexProductDetail({ product }: { product: Product }) {
   return (
     <div className="h-[100dvh] overflow-hidden bg-white text-[#111]">
       <SiteNavbar forceSolid />
-      <ProductSlideDeck sections={rexSlides} names={["Overview", "Features", ...(product.specs ? ["Specs"] : []), ...((product.applications?.length || allRelated.length) ? ["Applications"] : [])]} accent={BLUE} />
+      <ProductSlideDeck sections={rexSlides} names={["Overview", "Features", ...(product.specs ? ["Specs"] : []), ...((product.applications?.length || allRelated.length) ? ["Applications"] : [])]} accent={BLUE} resetKey={product.id} />
     </div>
   );
 
@@ -2280,7 +2289,7 @@ export default function ProductDetail() {
   return (
     <div className="h-[100dvh] bg-background overflow-hidden">
       <SiteNavbar forceSolid />
-      <ProductSlideDeck sections={productSlides} names={productSlideNames} accent={brandAccent} />
+      <ProductSlideDeck sections={productSlides} names={productSlideNames} accent={brandAccent} resetKey={product.id} />
     </div>
   );
 }
