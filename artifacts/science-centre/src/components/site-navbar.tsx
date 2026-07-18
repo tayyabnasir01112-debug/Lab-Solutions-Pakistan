@@ -8,17 +8,9 @@ import {
   Microscope, TestTube, Cpu, Zap, Scale, Thermometer, Activity,
   ShieldCheck, Droplets, Search,
 } from "lucide-react";
-import {
-  brands,
-  categories,
-  products,
-  productsByBrand,
-  productsByCategory,
-  brandById,
-  categoryById,
-  type Brand,
-  type Product,
-} from "@/lib/catalogue";
+import type { Brand, Category, Product } from "@/lib/catalogue";
+
+type CatalogueModule = typeof import("@/lib/catalogue");
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
 function img(path: string) { return `${BASE}${path}`; }
@@ -178,18 +170,19 @@ function ProductShortcutLink({
 }
 
 // Helper: get unique categories for a brand
-function brandCategories(brandId: string) {
-  const prods = productsByBrand(brandId);
+function brandCategories(brandId: string, catalogue: CatalogueModule | null) {
+  if (!catalogue) return [];
+  const prods = catalogue.productsByBrand(brandId);
   const catCount: Record<string, number> = {};
   prods.forEach(p => { catCount[p.category] = (catCount[p.category] || 0) + 1; });
   return Object.entries(catCount)
     .sort((a, b) => b[1] - a[1])
-    .map(([catId, count]) => ({ cat: categoryById(catId), count, products: prods.filter(p => p.category === catId) }))
+    .map(([catId, count]) => ({ cat: catalogue.categoryById(catId), count, products: prods.filter(p => p.category === catId) }))
     .filter(x => x.cat);
 }
 
 // Helper: products for an application group
-function appGroupProducts(groupId: string) {
+function appGroupProducts(groupId: string, products: Product[]) {
   const group = APPLICATION_GROUPS.find(g => g.id === groupId);
   if (!group) return [];
   return products.filter(p => group.categoryIds.includes(p.category as any));
@@ -204,13 +197,14 @@ export function SiteNavbar({
   forceSolid?: boolean;
   forceTransparent?: boolean;
 }) {
+  const [catalogue, setCatalogue]           = useState<CatalogueModule | null>(null);
   const [scrolled, setScrolled]             = useState(false);
   const [menuOpen, setMenuOpen]             = useState(false);
   const [megaOpen, setMegaOpen]             = useState(false);
   const [viewMode, setViewMode]             = useState<ViewMode>("brand");
-  const [activeBrand, setActiveBrand]       = useState(brands[0]?.id ?? "");
+  const [activeBrand, setActiveBrand]       = useState("");
   const [activeApp, setActiveApp]           = useState(APPLICATION_GROUPS[0].id);
-  const [activeCategory, setActiveCategory] = useState(categories[0]?.id ?? "");
+  const [activeCategory, setActiveCategory] = useState("");
   const [expandedCat, setExpandedCat]       = useState<string | null>(null);
   const [leftHovered, setLeftHovered]       = useState(false);
   const [rightHovered, setRightHovered]     = useState(false);
@@ -222,6 +216,33 @@ export function SiteNavbar({
   const triggerRef = useRef<HTMLButtonElement>(null);
   const megaCloseTimer = useRef<number | null>(null);
   const searchCloseTimer = useRef<number | null>(null);
+  const cataloguePromise = useRef<Promise<CatalogueModule> | null>(null);
+
+  const brands = catalogue?.brands ?? [];
+  const categories = catalogue?.categories ?? [];
+  const products = catalogue?.products ?? [];
+  const productsByBrand = useCallback((id: string) => catalogue?.productsByBrand(id) ?? [], [catalogue]);
+  const productsByCategory = useCallback((id: string) => catalogue?.productsByCategory(id) ?? [], [catalogue]);
+  const brandById = useCallback(
+    (id: string): Brand | undefined => catalogue?.brandById(id) ?? brands.find(brand => brand.id === id),
+    [brands, catalogue]
+  );
+  const categoryById = useCallback(
+    (id: string): Category | undefined => catalogue?.categoryById(id) ?? categories.find(category => category.id === id),
+    [categories, catalogue]
+  );
+
+  const loadCatalogue = useCallback(async () => {
+    if (catalogue) return catalogue;
+    if (!cataloguePromise.current) {
+      cataloguePromise.current = import("@/lib/catalogue");
+    }
+    const loaded = await cataloguePromise.current;
+    setCatalogue(loaded);
+    setActiveBrand(prev => prev || loaded.brands[0]?.id || "");
+    setActiveCategory(prev => prev || loaded.categories[0]?.id || "");
+    return loaded;
+  }, [catalogue]);
 
   const isHome     = location === "/";
   const isDarkPage = location === "/about";
@@ -232,6 +253,11 @@ export function SiteNavbar({
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useEffect(() => {
+    const id = window.setTimeout(() => { void loadCatalogue(); }, 1200);
+    return () => window.clearTimeout(id);
+  }, [loadCatalogue]);
 
   useEffect(() => { setMegaOpen(false); setMenuOpen(false); }, [location]);
 
@@ -295,10 +321,19 @@ export function SiteNavbar({
         ].filter(Boolean).join(" ").toLowerCase().includes(q);
       })
       .slice(0, 7)
-      .map(product => ({ label: product.name, meta: `${brandById(product.brand).short} / ${categoryById(product.category).name}`, href: `/products/${product.id}`, type: "Product" }));
+      .map(product => {
+        const brand = brandById(product.brand);
+        const category = categoryById(product.category);
+        return {
+          label: product.name,
+          meta: `${brand?.short ?? "Catalogue"} / ${category?.name ?? "Product"}`,
+          href: `/products/${product.id}`,
+          type: "Product",
+        };
+      });
 
     return [...pageMatches, ...solutionMatches, ...brandMatches, ...categoryMatches, ...productMatches].slice(0, 10);
-  }, [searchQuery]);
+  }, [brandById, brands, categories, categoryById, products, productsByBrand, searchQuery]);
 
   const clearSearchCloseTimer = useCallback(() => {
     if (searchCloseTimer.current) {
@@ -335,8 +370,9 @@ export function SiteNavbar({
 
   const openMega = useCallback(() => {
     clearMegaCloseTimer();
+    void loadCatalogue();
     setMegaOpen(true);
-  }, [clearMegaCloseTimer]);
+  }, [clearMegaCloseTimer, loadCatalogue]);
 
   const closeMega = useCallback(() => {
     clearMegaCloseTimer();
@@ -350,12 +386,12 @@ export function SiteNavbar({
 
   // Current active brand
   const currentBrand    = brandById(activeBrand);
-  const brandCats       = brandCategories(activeBrand);
+  const brandCats       = brandCategories(activeBrand, catalogue);
   const brandProdCount  = productsByBrand(activeBrand).length;
 
   // Current active app group
   const currentApp      = APPLICATION_GROUPS.find(g => g.id === activeApp)!;
-  const appProds        = appGroupProducts(activeApp);
+  const appProds        = appGroupProducts(activeApp, products);
 
   // Current active category
   const currentCat      = categoryById(activeCategory);
@@ -393,7 +429,15 @@ export function SiteNavbar({
           }}
           className="flex items-center"
         >
-          <img src={img("/images/sc-logo-full.png")} alt="Science Centre Logo" className="h-14 w-auto object-contain" />
+          <img
+            src={img("/images/sc-logo-full-nav.webp")}
+            alt="Science Centre Logo"
+            width={118}
+            height={56}
+            decoding="async"
+            fetchPriority="high"
+            className="h-14 w-auto object-contain"
+          />
         </Link>
 
         {/* Desktop nav */}
@@ -444,14 +488,14 @@ export function SiteNavbar({
         <motion.div initial={{ opacity: 0 }} animate={visible ? { opacity: 1 } : {}} transition={{ delay: 0.5 }} className="flex items-center gap-3">
           <form
             onSubmit={submitSearch}
-            onFocus={() => { clearSearchCloseTimer(); setSearchOpen(true); }}
+            onFocus={() => { clearSearchCloseTimer(); setSearchOpen(true); void loadCatalogue(); }}
             onBlur={scheduleSearchClose}
             className="relative hidden lg:block"
           >
             <Search className={`pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 ${solid ? "text-muted-foreground" : "text-white/70"}`} />
             <input
               value={searchQuery}
-              onChange={(e) => { setSearchQuery(e.target.value); setSearchOpen(true); }}
+              onChange={(e) => { setSearchQuery(e.target.value); setSearchOpen(true); void loadCatalogue(); }}
               placeholder="Search site..."
               aria-label="Search entire site"
               className={`h-11 w-64 rounded-none border pl-10 pr-3 text-sm outline-none transition-colors ${
@@ -595,7 +639,13 @@ export function SiteNavbar({
                     onMouseLeave={() => setLeftHovered(false)}
                   >
                     {/* ── BY BRAND ── */}
-                    {viewMode === "brand" && (
+                    {!catalogue && (
+                      <div className="px-3 py-8 text-[11px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                        Loading catalogue...
+                      </div>
+                    )}
+
+                    {catalogue && viewMode === "brand" && (
                       <>
                         <div className="text-[9px] font-black uppercase tracking-[0.22em] text-muted-foreground px-3 mb-3">Manufacturers</div>
                         <div className="space-y-0.5">
@@ -646,12 +696,12 @@ export function SiteNavbar({
                     )}
 
                     {/* ── BY APPLICATION ── */}
-                    {viewMode === "application" && (
+                    {catalogue && viewMode === "application" && (
                       <>
                         <div className="text-[9px] font-black uppercase tracking-[0.22em] text-muted-foreground px-3 mb-3">Application Areas</div>
                         <div className="space-y-0.5">
                           {APPLICATION_GROUPS.map(app => {
-                            const count = appGroupProducts(app.id).length;
+                            const count = appGroupProducts(app.id, products).length;
                             const isActive = activeApp === app.id;
                             return (
                               <button
@@ -698,7 +748,7 @@ export function SiteNavbar({
                     )}
 
                     {/* ── BY CATEGORY ── */}
-                    {viewMode === "category" && (
+                    {catalogue && viewMode === "category" && (
                       <>
                         <div className="text-[9px] font-black uppercase tracking-[0.22em] text-muted-foreground px-3 mb-3">Product Categories</div>
                         <div className="space-y-0.5">
@@ -750,9 +800,26 @@ export function SiteNavbar({
                     onMouseLeave={() => setRightHovered(false)}
                   >
                     <AnimatePresence initial={false}>
+                      {!catalogue && (
+                        <motion.div
+                          key="catalogue-loading"
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -6 }}
+                          transition={{ duration: 0.18 }}
+                          className="flex h-full flex-col items-center justify-center px-8 text-center"
+                        >
+                          <div className="mb-3 h-1.5 w-28 overflow-hidden bg-muted">
+                            <div className="h-full w-1/2 animate-pulse bg-primary" />
+                          </div>
+                          <div className="text-[11px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+                            Preparing product catalogue
+                          </div>
+                        </motion.div>
+                      )}
 
                       {/* ── BRAND DETAIL ── */}
-                      {viewMode === "brand" && (
+                      {catalogue && viewMode === "brand" && currentBrand && (
                         <motion.div
                           key={`brand-${activeBrand}`}
                           initial={{ opacity: 0, x: 10 }}
@@ -843,7 +910,7 @@ export function SiteNavbar({
                       )}
 
                       {/* ── APPLICATION DETAIL ── */}
-                      {viewMode === "application" && (
+                      {catalogue && viewMode === "application" && (
                         <motion.div
                           key={`app-${activeApp}`}
                           initial={{ opacity: 0, x: 10 }}
@@ -908,7 +975,7 @@ export function SiteNavbar({
                       )}
 
                       {/* ── CATEGORY DETAIL ── */}
-                      {viewMode === "category" && currentCat && (
+                      {catalogue && viewMode === "category" && currentCat && (
                         <motion.div
                           key={`cat-${activeCategory}`}
                           initial={{ opacity: 0, x: 10 }}

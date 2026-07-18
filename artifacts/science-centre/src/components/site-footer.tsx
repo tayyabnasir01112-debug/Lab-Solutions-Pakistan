@@ -16,8 +16,10 @@ export function SiteFooter({ variant = "default" }: { variant?: "default" | "sli
           <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
             <div>
               <img
-                src={img("/images/sc-logo-full.png")}
+                src={img("/images/sc-logo-full-nav.webp")}
                 alt="Science Centre Logo"
+                width={134}
+                height={64}
                 className="mb-8 h-16 w-auto object-contain brightness-0 invert"
               />
               <div className="mb-4 inline-flex border border-white/15 bg-white/10 px-3 py-1.5 text-xs font-black uppercase tracking-[0.18em] text-white/70">

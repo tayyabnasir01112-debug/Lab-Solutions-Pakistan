@@ -103,14 +103,14 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
     const started = performance.now();
     let frame = 0;
     const tick = (now: number) => {
-      const pct = Math.min(100, Math.round(((now - started) / 3300) * 100));
+      const pct = Math.min(100, Math.round(((now - started) / 2200) * 100));
       setProgress(pct);
       if (pct < 100) frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);
-    const t1 = setTimeout(() => setPhase("resolve"), 1250);
-    const t2 = setTimeout(() => setPhase("done"), 3350);
-    const t3 = setTimeout(onDone, 4050);
+    const t1 = setTimeout(() => setPhase("resolve"), 650);
+    const t2 = setTimeout(() => setPhase("done"), 2050);
+    const t3 = setTimeout(onDone, 2500);
     return () => {
       cancelAnimationFrame(frame);
       clearTimeout(t1);
@@ -339,11 +339,11 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
 /* ─── Hero ────────────────────────────────────────────────────── */
 const heroSpecialties = [
   "Transplant diagnostics",
-  "Clinical water systems",
-  "Molecular biology",
-  "Flow cytometry",
-  "Life science reagents",
-  "Rapid diagnostic kits",
+  "Flow cytometry solutions",
+  "Water purification systems",
+  "NGS solutions",
+  "Cell culture solutions",
+  "General lab consumables",
 ];
 
 const heroMetrics = [
@@ -375,7 +375,7 @@ function Hero({ visible }: { visible: boolean }) {
     <section ref={ref} className="relative min-h-[100dvh] overflow-hidden bg-[#06111d] pt-24 text-white">
       <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.img
-          src={img("/images/sc-hero-lab-wow.webp")}
+          src={img("/images/sc-lab-hero-optimized.webp")}
           alt="Modern scientific laboratory with diagnostic analyzers, microscope, pipettes and reagent racks"
           style={{ y: imageY }}
           loading="eager"
@@ -420,7 +420,7 @@ function Hero({ visible }: { visible: boolean }) {
         LAB
       </motion.div>
 
-      <div className="container relative z-20 mx-auto flex min-h-[calc(100dvh-6rem)] flex-col justify-center px-6 pb-20 pt-8 md:px-12">
+      <div className="container relative z-20 mx-auto flex min-h-[calc(100dvh-6rem)] max-w-[1760px] flex-col justify-center px-6 pb-20 pt-8 md:px-12 2xl:px-16">
         <motion.div className="max-w-5xl" style={{ y: headlineY }}>
           <div className="max-w-5xl">
             <motion.div
@@ -432,7 +432,7 @@ function Hero({ visible }: { visible: boolean }) {
             </motion.div>
 
             <motion.h1
-              className="font-[var(--app-font-heading)] text-[4rem] font-black leading-[0.84] text-white sm:text-[5.8rem] lg:text-[7.8rem] xl:text-[9rem]"
+              className="font-[var(--app-font-heading)] text-[4rem] font-black leading-[0.84] text-white sm:text-[5.8rem] lg:text-[7.8rem] xl:text-[9rem] 2xl:text-[10.5rem]"
               variants={fadeUp} custom={0.08} initial="hidden" animate={visible ? "visible" : "hidden"}
             >
               <span className="block">Science</span>
@@ -440,14 +440,14 @@ function Hero({ visible }: { visible: boolean }) {
             </motion.h1>
 
             <motion.p
-              className="mt-5 max-w-4xl font-[var(--app-font-heading)] text-3xl font-black leading-none text-cyan-100 sm:text-4xl lg:text-5xl"
+              className="mt-5 max-w-5xl font-[var(--app-font-heading)] text-3xl font-black leading-none text-cyan-100 sm:text-4xl lg:text-5xl 2xl:text-6xl"
               variants={fadeUp} custom={0.16} initial="hidden" animate={visible ? "visible" : "hidden"}
             >
               for labs that move Pakistan.
             </motion.p>
 
             <motion.div
-              className="mt-7 max-w-3xl border-l-2 border-primary pl-5"
+              className="mt-7 max-w-4xl border-l-2 border-primary pl-5"
               variants={fadeUp} custom={0.24} initial="hidden" animate={visible ? "visible" : "hidden"}
             >
               <AnimatePresence mode="wait">
@@ -462,7 +462,7 @@ function Hero({ visible }: { visible: boolean }) {
                   {heroSpecialties[specIndex]}
                 </motion.div>
               </AnimatePresence>
-              <p className="max-w-2xl text-base leading-relaxed text-slate-100 md:text-lg">
+              <p className="max-w-3xl text-base leading-relaxed text-slate-100 md:text-lg 2xl:text-xl">
                 Advanced laboratory instruments, diagnostics, reagents and scientific systems routed from trusted global portfolios to hospitals, universities and research teams.
               </p>
             </motion.div>
@@ -490,7 +490,7 @@ function Hero({ visible }: { visible: boolean }) {
         </motion.div>
 
         <motion.div
-          className="absolute right-10 top-36 hidden w-72 text-right lg:block"
+          className="absolute right-10 top-36 hidden w-72 text-right lg:block 2xl:right-16 2xl:w-80"
           variants={fadeUp} custom={0.48} initial="hidden" animate={visible ? "visible" : "hidden"}
         >
           {heroMetrics.map((metric, i) => (
@@ -541,7 +541,7 @@ function LegacyHero({ visible }: { visible: boolean }) {
           }}
         />
         <motion.img
-          src={img("/images/sc-hero.png")}
+          src={img("/images/sc-lab-hero-optimized.webp")}
           alt="Science Centre Laboratory"
           style={{ y: imgY }}
           className="w-full h-[115%] object-cover object-right absolute top-0 left-0 opacity-40"
@@ -924,52 +924,52 @@ function Partners() {
 /* ─── Solutions ───────────────────────────────────────────────── */
 const solutions = [
   {
-    icon: <HeartPulse className="h-5 w-5" />,
-    title: "Transplant Diagnostics",
-    short: "Kidney, Liver, Bone-Marrow, Heart, Lungs",
-    desc: "End-to-end HLA typing, antibody screening, and crossmatch workflows for solid organ and stem-cell transplant programs.",
-    image: "/images/sc-diagnostics.png",
-    accent: "#0F4C81",
-  },
-  {
     icon: <Dna className="h-5 w-5" />,
     title: "Life Sciences",
-    short: "Genomics, Proteomics, Cell Analysis",
-    desc: "Research-grade reagents, antibodies and instruments powering tier-1 academic and pharmaceutical discovery labs.",
-    image: "/images/sc-hero.png",
+    short: "Research reagents, assays and instruments",
+    desc: "Core reagents, kits, antibodies and laboratory systems for academic, clinical and industrial research teams.",
+    image: "/images/sc-lab-hero-optimized.webp",
     accent: "#2EA3F2",
   },
   {
-    icon: <Microscope className="h-5 w-5" />,
-    title: "Molecular Biology",
-    short: "DNA / RNA extraction, qPCR, NGS",
-    desc: "Real-time PCR systems, NGS panels, and sample-to-answer molecular workflows for clinical and research applications.",
-    image: "/images/sc-instruments.png",
-    accent: "#5E2A84",
+    icon: <HeartPulse className="h-5 w-5" />,
+    title: "Transplant Diagnostics",
+    short: "HLA typing and antibody screening",
+    desc: "HLA typing, antibody detection, crossmatch and post-transplant monitoring workflows for specialist labs.",
+    image: "/images/sc-lab-hero-optimized.webp",
+    accent: "#E85D4A",
   },
   {
     icon: <Activity className="h-5 w-5" />,
-    title: "Immunology",
-    short: "Immunoassay & Flow Cytometry",
-    desc: "Full-spectrum cytometers, multiplex bead assays, and validated antibody panels for high-parameter immune profiling.",
-    image: "/images/sc-diagnostics.png",
-    accent: "#00A19A",
+    title: "Flow Cytometry Solutions",
+    short: "Cell analysis and immune profiling",
+    desc: "Flow instruments, antibodies, panels and analysis support for high-parameter cell and immune workflows.",
+    image: "/images/sc-lab-hero-optimized.webp",
+    accent: "#06B6D4",
+  },
+  {
+    icon: <Microscope className="h-5 w-5" />,
+    title: "Cell Culture Solutions",
+    short: "Media, reagents and lab support",
+    desc: "Cell culture media, supplements, plastics and lab systems for repeatable cellular workflows.",
+    image: "/images/sc-lab-hero-optimized.webp",
+    accent: "#10B981",
   },
   {
     icon: <TestTube className="h-5 w-5" />,
-    title: "Analytical / Chromatography",
-    short: "Precision separation & analysis",
-    desc: "Chromatography columns, spectrophotometers, and analytical chemistry reagents — sourced from market leaders.",
-    image: "/images/sc-instruments.png",
-    accent: "#D71920",
+    title: "Water Purification Systems",
+    short: "Clinical, RO and ultrapure water",
+    desc: "Water purification systems for analyzer feed, pure water and ultrapure laboratory applications.",
+    image: "/images/sc-lab-hero-optimized.webp",
+    accent: "#2563EB",
   },
   {
     icon: <Syringe className="h-5 w-5" />,
-    title: "Labware & Consumables",
-    short: "Critical-grade equipment",
-    desc: "Centrifuges, incubators, biosafety cabinets, filters and plasticware — engineered for repeatable everyday performance.",
-    image: "/images/sc-hero.png",
-    accent: "#7A8B99",
+    title: "NGS Solutions",
+    short: "Sequencing panels and workflows",
+    desc: "NGS kits, library preparation, analysis tools and adoption support for clinical and research laboratories.",
+    image: "/images/sc-lab-hero-optimized.webp",
+    accent: "#7C3AED",
   },
 ];
 
@@ -981,14 +981,16 @@ function Solutions() {
 
       {/* Full-bleed shared background image */}
       <img
-        src={img("/images/sc-hero.png")}
-        alt="Lab background"
+        src={img("/images/sc-lab-hero-optimized.webp")}
+        alt="Scientific laboratory with diagnostic analyzers, microscope and reagent workbench"
+        loading="lazy"
+        decoding="async"
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute inset-0 bg-black/55" />
 
       {/* Panels — full height */}
-      <div className="relative flex h-full">
+      <div className="relative flex h-full flex-col md:flex-row">
         {solutions.map((s, i) => {
           const isActive = active === i;
           return (
@@ -996,9 +998,12 @@ function Solutions() {
               key={i}
               onMouseEnter={() => setActive(i)}
               onMouseLeave={() => setActive(null)}
+              onClick={() => setActive(active === i ? null : i)}
+              onFocus={() => setActive(i)}
               animate={{ flex: isActive ? 4.5 : 1 }}
               transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
-              className="relative overflow-hidden cursor-pointer"
+              className="relative overflow-hidden cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+              tabIndex={0}
               style={{ minWidth: 0 }}
             >
               {/* Colored overlay on hover */}
@@ -1011,12 +1016,12 @@ function Solutions() {
 
               {/* Vertical divider */}
               {i < solutions.length - 1 && (
-                <div className="absolute right-0 top-0 bottom-0 w-px bg-white/15 z-10" />
+                <div className="absolute bottom-0 left-0 right-0 z-10 h-px bg-white/15 md:bottom-auto md:left-auto md:top-0 md:h-auto md:w-px" />
               )}
 
               {/* Collapsed state — title at bottom only */}
               <motion.div
-                className="absolute inset-0 flex flex-col justify-end p-6 md:p-8"
+                className="absolute inset-0 flex flex-col justify-end p-4 md:p-8"
                 animate={{ opacity: isActive ? 0 : 1 }}
                 transition={{ duration: 0.2 }}
               >
@@ -1028,12 +1033,12 @@ function Solutions() {
 
               {/* Expanded content */}
               <motion.div
-                className="absolute inset-0 flex flex-col justify-between p-10 md:p-14 z-10"
+                className="absolute inset-0 flex flex-col justify-between p-6 md:p-14 z-10"
                 animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 24 }}
                 transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1], delay: isActive ? 0.15 : 0 }}
               >
                 {/* Top: icon only */}
-                <div className="flex justify-end pt-28">
+                <div className="flex justify-end pt-10 md:pt-28">
                   <div className="w-11 h-11 flex items-center justify-center bg-white/15 text-white rounded-sm backdrop-blur-sm">
                     {s.icon}
                   </div>
@@ -1041,10 +1046,10 @@ function Solutions() {
 
                 {/* Bottom: title + desc + cta */}
                 <div>
-                  <h4 className="font-[var(--app-font-heading)] text-3xl md:text-4xl font-black text-white leading-tight tracking-tight mb-5">
+                  <h4 className="font-[var(--app-font-heading)] text-2xl md:text-4xl font-black text-white leading-tight tracking-tight mb-4 md:mb-5">
                     {s.title}
                   </h4>
-                  <p className="text-white/75 text-sm md:text-base font-light leading-relaxed mb-8 max-w-sm">
+                  <p className="text-white/75 text-sm md:text-base font-light leading-relaxed mb-5 md:mb-8 max-w-sm">
                     {s.desc}
                   </p>
                   <div className="flex items-center gap-4">
@@ -1419,7 +1424,7 @@ function Credibility() {
     <section id="about" className="bg-foreground text-background relative overflow-hidden flex items-center justify-center" style={{ height: "100dvh" }}>
       <div className="absolute top-0 right-0 w-1/2 h-full opacity-20 pointer-events-none">
         <img
-          src={img("/images/sc-diagnostics.png")}
+          src={img("/images/sc-diagnostics-optimized.webp")}
           alt="Diagnostics Abstract"
           className="w-full h-full object-cover mix-blend-screen"
         />
@@ -1702,7 +1707,13 @@ const slideVariants = {
 };
 
 export default function Home() {
-  const [splashDone, setSplashDone] = useState(false);
+  const [splashDone, setSplashDone] = useState(() => {
+    try {
+      return window.sessionStorage.getItem("science-centre-intro-seen") === "1";
+    } catch {
+      return false;
+    }
+  });
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const cooldown = useRef(false);
@@ -1779,7 +1790,20 @@ export default function Home() {
 
   return (
     <div className="h-[100dvh] w-full bg-background overflow-hidden selection:bg-primary selection:text-primary-foreground text-foreground">
-      <AnimatePresence>{!splashDone && <IntroSplash onDone={() => setSplashDone(true)} />}</AnimatePresence>
+      <AnimatePresence>
+        {!splashDone && (
+          <IntroSplash
+            onDone={() => {
+              try {
+                window.sessionStorage.setItem("science-centre-intro-seen", "1");
+              } catch {
+                // The intro still completes if browser storage is unavailable.
+              }
+              setSplashDone(true);
+            }}
+          />
+        )}
+      </AnimatePresence>
       {/* 
         Section backgrounds:
         0=Hero(light bg), 1=Partners(dark), 2=Solutions(hidden), 

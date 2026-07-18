@@ -29,7 +29,7 @@ const solutionAreas = [
     label: "Research reagents, assays and instruments",
     icon: <Dna className="h-5 w-5" />,
     accent: "#2EA3F2",
-    image: "/images/sc-hero-lab-wow.webp",
+    image: "/images/sc-lab-hero-optimized.webp",
     points: ["Research reagents and kits", "Antibodies and assay support", "Laboratory systems for academic and industrial teams"],
   },
   {
@@ -37,7 +37,7 @@ const solutionAreas = [
     label: "HLA, antibody and post-transplant monitoring",
     icon: <HeartPulse className="h-5 w-5" />,
     accent: "#e85d4a",
-    image: "/images/sc-diagnostics.png",
+    image: "/images/sc-diagnostics-optimized.webp",
     points: ["HLA antibody screening and identification", "Molecular typing and NGS workflows", "Crossmatch and donor-specific monitoring"],
   },
   {
@@ -45,7 +45,7 @@ const solutionAreas = [
     label: "Cell analysis and immune profiling",
     icon: <Activity className="h-5 w-5" />,
     accent: "#06b6d4",
-    image: "/images/sc-diagnostics.png",
+    image: "/images/sc-diagnostics-optimized.webp",
     points: ["Flow cytometry platforms", "Cell analysis workflow guidance", "Assay and panel support"],
   },
   {
@@ -53,7 +53,7 @@ const solutionAreas = [
     label: "Media, reagents and lab support",
     icon: <Microscope className="h-5 w-5" />,
     accent: "#10b981",
-    image: "/images/sc-hero-lab-wow.webp",
+    image: "/images/sc-lab-hero-optimized.webp",
     points: ["Cell culture media and supplements", "Culture plastics and consumables", "Repeatable cellular workflow support"],
   },
   {
@@ -61,7 +61,7 @@ const solutionAreas = [
     label: "Type 1, Type 2, RO and analyzer feed",
     icon: <Droplets className="h-5 w-5" />,
     accent: "#2563eb",
-    image: "/images/sc-instruments.png",
+    image: "/images/sc-instruments-optimized.webp",
     points: ["System selection by daily water demand", "Clinical laboratory reagent water support", "Consumables planning and service coordination"],
   },
   {
@@ -69,7 +69,7 @@ const solutionAreas = [
     label: "Sequencing panels and workflows",
     icon: <Dna className="h-5 w-5" />,
     accent: "#7c3aed",
-    image: "/images/sc-instruments.png",
+    image: "/images/sc-instruments-optimized.webp",
     points: ["NGS kits and panels", "Library preparation and analysis tools", "Clinical and research adoption support"],
   },
   {
@@ -77,7 +77,7 @@ const solutionAreas = [
     label: "Allergy screening and panels",
     icon: <Activity className="h-5 w-5" />,
     accent: "#f59e0b",
-    image: "/images/sc-diagnostics.png",
+    image: "/images/sc-diagnostics-optimized.webp",
     points: ["Allergen testing workflows", "Screening panels and supporting reagents", "Immunology lab coordination"],
   },
   {
@@ -85,7 +85,7 @@ const solutionAreas = [
     label: "Routine analytical instruments",
     icon: <Beaker className="h-5 w-5" />,
     accent: "#0f766e",
-    image: "/images/sc-instruments.png",
+    image: "/images/sc-instruments-optimized.webp",
     points: ["Biochemistry analyzers and instruments", "Routine measurement systems", "Daily testing workflow support"],
   },
   {
@@ -93,7 +93,7 @@ const solutionAreas = [
     label: "Membranes, filters and manifolds",
     icon: <TestTube className="h-5 w-5" />,
     accent: "#0891b2",
-    image: "/images/sc-hero-lab-wow.webp",
+    image: "/images/sc-lab-hero-optimized.webp",
     points: ["Membrane filtration products", "Water and microbiology testing support", "Sample preparation and manifold systems"],
   },
   {
@@ -101,7 +101,7 @@ const solutionAreas = [
     label: "Antibodies and panel design",
     icon: <TestTube className="h-5 w-5" />,
     accent: "#c026d3",
-    image: "/images/sc-diagnostics.png",
+    image: "/images/sc-diagnostics-optimized.webp",
     points: ["Flow antibodies and reagents", "Panel design support", "Cell analysis and immune monitoring workflows"],
   },
   {
@@ -109,7 +109,7 @@ const solutionAreas = [
     label: "Everyday lab essentials",
     icon: <Wrench className="h-5 w-5" />,
     accent: "#64748b",
-    image: "/images/sc-hero-lab-wow.webp",
+    image: "/images/sc-lab-hero-optimized.webp",
     points: ["Plasticware, glassware and pipettes", "Swabs, test papers and routine supplies", "Consumables planning for lab continuity"],
   },
 ];
@@ -127,7 +127,7 @@ export default function SolutionsPage() {
       <SiteNavbar forceSolid />
       <PageSlideDeck names={["Overview", "Focus Areas", "Process", "Next Step", "Contact"]} accent="#2EA3F2">
         <section className="relative min-h-[100dvh] overflow-hidden pt-28">
-          <img src={img("/images/sc-hero.png")} alt="" className="absolute inset-0 h-full w-full object-cover" />
+          <img src={img("/images/sc-lab-hero-optimized.webp")} alt="" className="absolute inset-0 h-full w-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/55 to-black/20" />
           <div className="container relative z-10 mx-auto grid min-h-[calc(100dvh-7rem)] items-center gap-10 px-6 pb-10 md:px-12 lg:grid-cols-[1fr_0.85fr]">
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65 }}>
