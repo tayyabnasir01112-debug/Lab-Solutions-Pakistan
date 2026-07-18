@@ -246,8 +246,8 @@ export default function EventsPage() {
           </div>
         </section>
 
-        <section className="product-slide-section flex min-h-[100dvh] flex-col bg-background">
-          <div className="container mx-auto grid flex-1 items-center px-6 py-28 md:px-12">
+        <section className="product-slide-section flex min-h-[100dvh] items-center bg-background">
+          <div className="container mx-auto px-6 py-28 md:px-12">
           <div className="grid gap-8 border border-border bg-foreground p-8 text-background md:grid-cols-[1fr_auto] md:items-center md:p-10">
             <div>
               <div className="mb-2 text-[11px] font-black uppercase tracking-[0.22em] text-background/50">Host with Science Centre</div>
@@ -259,6 +259,9 @@ export default function EventsPage() {
             </Button>
           </div>
           </div>
+        </section>
+
+        <section className="product-slide-section">
           <SiteFooter />
         </section>
       </main>

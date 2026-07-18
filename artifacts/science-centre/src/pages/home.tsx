@@ -1728,7 +1728,7 @@ export default function Home() {
     <Partners key="partners" />,
     <Credibility key="credibility" />,
     <Locations key="locations" />,
-    <Contact key="contact" />,
+    <SiteFooter key="contact" />,
   ];
 
   const goTo = (index: number) => {

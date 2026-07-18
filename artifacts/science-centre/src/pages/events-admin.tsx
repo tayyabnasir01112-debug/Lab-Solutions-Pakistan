@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { SiteFooter } from "@/components/site-footer";
 import { SiteNavbar } from "@/components/site-navbar";
 import {
   createBlankEvent,
@@ -89,6 +90,7 @@ function AdminLogin({ onLogin }: { onLogin: () => void }) {
           </p>
         </form>
       </main>
+      <SiteFooter />
     </div>
   );
 }
@@ -209,6 +211,7 @@ export default function EventsAdminPage() {
           <h1 className="font-[var(--app-font-heading)] text-4xl font-black">No events yet</h1>
           <Button onClick={addEvent} className="mt-6 rounded-none bg-foreground text-background">Create first event</Button>
         </main>
+        <SiteFooter />
       </div>
     );
   }
@@ -402,6 +405,7 @@ export default function EventsAdminPage() {
           </aside>
         </section>
       </main>
+      <SiteFooter />
     </div>
   );
 }
