@@ -1113,7 +1113,7 @@ const featuredInstruments: FeaturedInstrument[] = [
     category: "Cell Cycle / Flow Cytometry",
     accent: "#6F6BB7",
     desc: "A full spectrum flow cytometer for high-dimensional cell analysis, supporting deep immunophenotyping, rare cell analysis, small particle detection, and cell-cycle workflow development.",
-    image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Aurora-instrument-with-loader-(angle).png",
+    image: resolveAsset("/images/featured/cytek-aurora.webp"),
     specs: ["Up to 5 lasers", "64 fluorescence channels", "40-color panels demonstrated", "SpectroFlo unmixing software"],
     href: "/products/cytek-aurora",
   },
@@ -1149,22 +1149,9 @@ const featuredInstruments: FeaturedInstrument[] = [
     category: "Portable Meters",
     accent: "#0076C8",
     desc: "Professional smart portable pH meter with IP-rated protection, high-accuracy pH measurement, rechargeable battery, GLP storage, and USB export for demanding field use.",
-    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/cfbd9196-2f58-4676-8391-cac2429ca53e.jpg",
+    image: resolveAsset("/images/featured/rex-ph510t.webp"),
     specs: ["Model PH510T", "pH/Temp and mV/ORP", "Up to 8 calibration points", "1000-group data storage"],
     href: "/products/rex-ph510t",
-  },
-  {
-    id: "biolegend-product-types-clinical-analyte-specific-reagents-asr",
-    name: "BioLegend Clinical Analyte Reagents",
-    fullName: "Clinical | Analyte Specific Reagents (ASR)",
-    brand: "BioLegend",
-    category: "Clinical Reagents",
-    accent: "#008AB8",
-    desc: "Representative BioLegend clinical analyte-specific reagent family for enquiry-led sourcing of relevant antibodies, formats, clones, conjugates, and compatible workflow variants.",
-    image: resolveAsset("/images/biolegend/biolegend-diagnostics.svg"),
-    specs: ["BioLegend product family", "Clinical flow cytometry focus", "Variant-level sourcing", "Official reference page linked"],
-    href: "https://www.biolegend.com/en-us/clinical-flow-cytometry/asr-products",
-    external: true,
   },
 ];
 
@@ -1172,7 +1159,6 @@ function FeaturedProducts() {
   const ref = useRef<HTMLElement>(null);
   const inView = useInView(ref, { once: true, margin: "-80px 0px" });
   const [current, setCurrent] = useState(0);
-  const [hovered, setHovered] = useState<number | null>(null);
   const [progress, setProgress] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -1193,13 +1179,9 @@ function FeaturedProducts() {
   };
 
   useEffect(() => {
-    if (hovered !== null) {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      return;
-    }
     startTimer();
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-  }, [current, hovered]);
+  }, [current]);
 
   const go = (i: number) => { setCurrent(i); };
   const prev = () => go((current - 1 + featuredInstruments.length) % featuredInstruments.length);
@@ -1208,17 +1190,17 @@ function FeaturedProducts() {
   const p = featuredInstruments[current];
 
   return (
-    <section ref={ref} id="products" className="bg-background border-t border-border overflow-hidden flex flex-col justify-center" style={{ height: "100dvh", paddingTop: "108px" }}>
+    <section ref={ref} id="products" className="bg-background border-t border-border overflow-hidden flex flex-col justify-center" style={{ height: "100dvh", paddingTop: "96px" }}>
       <div className="container mx-auto px-6 md:px-12">
 
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
+        <div className="mb-4 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
             <motion.div className="text-xs font-bold tracking-[0.18em] text-primary uppercase mb-2"
               initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }}>
               Featured Instruments
             </motion.div>
-            <motion.h3 className="text-2xl md:text-4xl font-[var(--app-font-heading)] font-bold text-foreground tracking-tight leading-tight"
+            <motion.h3 className="text-2xl md:text-3xl font-[var(--app-font-heading)] font-bold text-foreground tracking-tight leading-tight"
               initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.55, delay: 0.05 }}>
               Institutional Confidence<br className="hidden md:block" /> in Every Instrument.
             </motion.h3>
@@ -1235,7 +1217,9 @@ function FeaturedProducts() {
         </div>
 
         {/* Main Slideshow */}
-        <motion.div className="relative h-[390px] w-full overflow-hidden border border-border bg-background shadow-sm md:h-[430px]"
+        <motion.div
+          className="relative w-full overflow-hidden border border-border bg-background shadow-sm"
+          style={{ height: "min(520px, calc(100dvh - 300px))", minHeight: "360px" }}
           initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.2 }}>
 
           {/* Background layer */}
@@ -1293,22 +1277,22 @@ function FeaturedProducts() {
                   <motion.img
                     src={p.image}
                     alt={p.fullName}
-                    className="absolute bottom-10 right-[16.5rem] hidden max-h-[74%] max-w-[34%] object-contain drop-shadow-[0_26px_34px_rgba(15,23,42,0.22)] lg:block 2xl:right-[19rem]"
+                    className="absolute bottom-10 right-[16.5rem] hidden max-h-[74%] max-w-[34%] object-contain mix-blend-multiply drop-shadow-[0_26px_34px_rgba(15,23,42,0.22)] contrast-[1.04] saturate-110 lg:block 2xl:right-[19rem]"
                     initial={{ opacity: 0, scale: 0.94, x: 34, rotate: 1.5 }}
                     animate={{ opacity: 1, scale: 1, x: 0, rotate: 0 }}
                     exit={{ opacity: 0, scale: 0.96, x: -18 }}
                     transition={{ duration: 0.68, ease: [0.16, 1, 0.3, 1] }}
-                    loading="lazy"
+                    loading="eager"
                   />
                   <motion.img
                     src={p.image}
                     alt={p.fullName}
-                    className="absolute right-3 top-20 h-28 w-36 object-contain opacity-85 drop-shadow-xl md:right-8 md:top-16 md:h-36 md:w-44 lg:hidden"
+                    className="absolute right-3 top-20 h-28 w-36 object-contain opacity-85 mix-blend-multiply drop-shadow-xl contrast-[1.04] saturate-110 md:right-8 md:top-16 md:h-36 md:w-44 lg:hidden"
                     initial={{ opacity: 0, scale: 0.92, y: 10 }}
                     animate={{ opacity: 0.85, scale: 1, y: 0 }}
                     exit={{ opacity: 0, scale: 0.96 }}
                     transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-                    loading="lazy"
+                    loading="eager"
                   />
                 </>
               ) : null}
@@ -1420,107 +1404,6 @@ function FeaturedProducts() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Thumbnail strip with hover popup */}
-        <div className="mt-4 flex gap-2 overflow-x-auto pb-2 lg:grid lg:grid-cols-7 lg:overflow-visible lg:pb-0">
-          {featuredInstruments.map((prod, i) => {
-            const isActive = i === current;
-            const isHov = hovered === i;
-            return (
-              <div key={prod.id} className="relative"
-                onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)}>
-                <motion.button
-                  onClick={() => go(i)}
-                  className="relative w-40 overflow-hidden border p-3 text-left transition-all duration-300 lg:w-full"
-                  style={{
-                    borderColor: isActive ? prod.accent : "color-mix(in srgb, var(--border) 74%, transparent)",
-                    background: isActive
-                      ? `linear-gradient(135deg, ${prod.accent}14, rgba(255,255,255,0.86))`
-                      : "rgba(255,255,255,0.46)",
-                  }}
-                  whileHover={{ y: -2 }}
-                  transition={{ duration: 0.2 }}>
-                  {/* Active indicator */}
-                  {isActive && (
-                    <motion.div layoutId="active-thumb"
-                      className="absolute top-0 left-0 right-0 h-0.5"
-                      style={{ backgroundColor: prod.accent }} />
-                  )}
-                  <div
-                    className="pointer-events-none absolute -right-6 -top-4 h-20 w-24 opacity-20"
-                    style={{ color: prod.accent }}
-                  >
-                    {prod.image ? (
-                      <img src={prod.image} alt="" className="h-full w-full object-contain" loading="lazy" />
-                    ) : null}
-                  </div>
-                  <div className="mb-2 flex h-8 items-center justify-start overflow-hidden">
-                    {prod.image ? (
-                      <img src={prod.image} alt="" className="h-full max-w-20 object-contain drop-shadow-sm" loading="lazy" />
-                    ) : (
-                      <div className="h-2 w-2 rounded-full" style={{ backgroundColor: prod.accent }} />
-                    )}
-                  </div>
-                  <div className="text-[10px] font-bold tracking-wide uppercase mb-1"
-                    style={{ color: isActive ? prod.accent : "var(--muted-foreground)" }}>
-                    {prod.brand}
-                  </div>
-                  <div className="text-xs font-semibold text-foreground leading-tight line-clamp-2">
-                    {prod.name}
-                  </div>
-                </motion.button>
-
-                {/* Hover popup */}
-                <AnimatePresence>
-                  {isHov && (
-                    <motion.div
-                      className="absolute bottom-full left-1/2 mb-3 w-64 z-50 pointer-events-none"
-                      style={{ x: "-50%" }}
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                      transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}>
-                      {/* Arrow */}
-                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full w-3 h-3 rotate-45 border-r border-b border-border"
-                        style={{ backgroundColor: "var(--background)" }} />
-                      {/* Card */}
-                      <div className="bg-background border border-border p-5 shadow-2xl">
-                        {/* Top accent bar */}
-                        <div className="h-0.5 w-full mb-4 rounded-full" style={{ backgroundColor: prod.accent }} />
-                        <div className="mb-4 flex h-24 items-center justify-center overflow-hidden bg-muted/40">
-                          {prod.image ? (
-                            <img src={prod.image} alt={prod.fullName} className="h-full w-full object-contain p-3" loading="lazy" />
-                          ) : (
-                            <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Image coming soon</div>
-                          )}
-                        </div>
-                        <div className="flex items-center justify-between mb-3">
-                          <span className="text-[10px] font-bold tracking-[0.18em] uppercase px-2 py-1 rounded-sm"
-                            style={{ color: prod.accent, background: prod.accent + "18" }}>
-                            {prod.brand}
-                          </span>
-                          <span className="text-[10px] text-muted-foreground font-medium">{prod.category}</span>
-                        </div>
-                        <div className="font-[var(--app-font-heading)] font-bold text-foreground text-sm mb-2 leading-snug">
-                          {prod.name}
-                        </div>
-                        <p className="text-muted-foreground text-xs font-light leading-relaxed mb-4">
-                          {prod.desc}
-                        </p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {prod.specs.slice(0, 3).map((s, si) => (
-                            <span key={si} className="text-[10px] font-medium px-2 py-0.5 border border-border text-muted-foreground">
-                              {s}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
-        </div>
       </div>
     </section>
   );
