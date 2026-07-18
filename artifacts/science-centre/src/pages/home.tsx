@@ -102,20 +102,37 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
   useEffect(() => {
     const started = performance.now();
     let frame = 0;
+    let cancelled = false;
+    const timeouts: number[] = [];
     const tick = (now: number) => {
-      const pct = Math.min(100, Math.round(((now - started) / 1250) * 100));
+      const pct = Math.min(100, Math.round(((now - started) / 2600) * 100));
       setProgress(pct);
       if (pct < 100) frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);
-    const t1 = setTimeout(() => setPhase("resolve"), 350);
-    const t2 = setTimeout(() => setPhase("done"), 1150);
-    const t3 = setTimeout(onDone, 1420);
+    timeouts.push(window.setTimeout(() => setPhase("resolve"), 900));
+
+    const heroReady = new Promise<void>((resolve) => {
+      const hero = new Image();
+      hero.onload = () => resolve();
+      hero.onerror = () => resolve();
+      hero.src = img("/images/sc-lab-hero-optimized.webp");
+      if (hero.complete) resolve();
+    });
+    const minimumIntro = new Promise<void>((resolve) => {
+      timeouts.push(window.setTimeout(resolve, 2750));
+    });
+
+    Promise.all([heroReady, minimumIntro]).then(() => {
+      if (cancelled) return;
+      timeouts.push(window.setTimeout(() => setPhase("done"), 850));
+      timeouts.push(window.setTimeout(onDone, 1450));
+    });
+
     return () => {
+      cancelled = true;
       cancelAnimationFrame(frame);
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
+      timeouts.forEach(clearTimeout);
     };
   }, [onDone]);
 
@@ -189,6 +206,78 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
                 </feMerge>
               </filter>
             </defs>
+
+            <motion.g
+              transform="rotate(-16 210 210)"
+              initial={{ opacity: 0, x: -18, y: 10 }}
+              animate={{ opacity: 0.78, x: 0, y: 0 }}
+              transition={{ duration: 1.1, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              filter="url(#introGlow)"
+            >
+              <motion.path
+                d="M104 188H263L287 218H119Z"
+                fill="rgba(46,163,242,0.12)"
+                stroke="rgba(157,246,255,0.72)"
+                strokeWidth="2"
+                strokeLinejoin="round"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 1.15, delay: 0.3, ease: "easeOut" }}
+              />
+              <motion.circle
+                cx="104"
+                cy="203"
+                r="32"
+                fill="rgba(125,211,252,0.08)"
+                stroke="rgba(157,246,255,0.72)"
+                strokeWidth="2"
+                initial={{ scale: 0.7, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.7, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                style={{ transformOrigin: "104px 203px" }}
+              />
+              <motion.circle
+                cx="104"
+                cy="203"
+                r="20"
+                fill="none"
+                stroke="rgba(255,255,255,0.32)"
+                strokeWidth="1"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: [0.95, 1.08, 0.95], opacity: 1 }}
+                transition={{ duration: 2.4, delay: 0.75, repeat: Infinity, ease: "easeInOut" }}
+                style={{ transformOrigin: "104px 203px" }}
+              />
+              <motion.path
+                d="M286 190H326V218H286Z"
+                fill="rgba(16,185,129,0.12)"
+                stroke="rgba(167,243,208,0.68)"
+                strokeWidth="2"
+                strokeLinejoin="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 0.75, delay: 0.7, ease: "easeOut" }}
+              />
+              <motion.path
+                d="M176 218L146 302M222 218L262 302M199 218V312"
+                fill="none"
+                stroke="rgba(255,255,255,0.28)"
+                strokeWidth="2"
+                strokeLinecap="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: 1, opacity: 1 }}
+                transition={{ duration: 0.9, delay: 0.9, ease: "easeOut" }}
+              />
+              <motion.path
+                d="M80 203H128"
+                stroke="rgba(255,255,255,0.7)"
+                strokeWidth="2"
+                strokeLinecap="round"
+                initial={{ pathLength: 0, opacity: 0 }}
+                animate={{ pathLength: [0, 1, 0], opacity: [0, 1, 0] }}
+                transition={{ duration: 2.2, delay: 1.15, repeat: Infinity, ease: "easeInOut" }}
+              />
+            </motion.g>
 
             <motion.circle
               cx="210"
