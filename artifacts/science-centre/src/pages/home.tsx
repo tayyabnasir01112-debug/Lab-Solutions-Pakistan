@@ -180,22 +180,300 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
 
 /* ─── Hero ────────────────────────────────────────────────────── */
 const heroSpecialties = [
-  "Life Sciences",
-  "Transplant Diagnostics",
-  "Molecular Biology",
-  "Immunology",
-  "Cell Biology",
-  "Pharmaceuticals",
+  "Transplant diagnostics",
+  "Clinical water systems",
+  "Molecular biology",
+  "Flow cytometry",
+  "Life science reagents",
+  "Rapid diagnostic kits",
 ];
+
+const heroMetrics = [
+  { value: "30+", label: "years serving Pakistan" },
+  { value: "9", label: "global brand portfolios" },
+  { value: "500+", label: "lab conversations supported" },
+];
+
+const heroCapabilities = [
+  { label: "HLA and transplant", detail: "One Lambda, Luminex and antibody screening workflows" },
+  { label: "Water purification", detail: "Merck Milli-Q, Elix and analyzer-feed systems" },
+  { label: "Molecular and NGS", detail: "Extraction, amplification, panels and sequencing support" },
+  { label: "Clinical diagnostics", detail: "Kits, instruments and specialist procurement guidance" },
+];
+
+const heroBrandRail = ["Merck", "Luminex", "One Lambda", "Cytek", "HKM", "Sugentech", "BioLegend", "REX"];
 
 const heroStats = [
   { value: "30+", label: "Years of Excellence", sub: "Serving Pakistan since 1985" },
-  { value: "8+", label: "Global Brands", sub: "Luminex, Merck & more" },
-  { value: "500+", label: "Clients Served", sub: "Hospitals, labs & universities" },
+  { value: "8+", label: "Global Brands", sub: "Luminex, Merck and more" },
+  { value: "500+", label: "Clients Served", sub: "Hospitals, labs and universities" },
   { value: "6", label: "Specialisations", sub: "End-to-end lab solutions" },
 ];
 
 function Hero({ visible }: { visible: boolean }) {
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const imageY = useTransform(scrollYProgress, [0, 1], ["0%", "10%"]);
+  const consoleY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
+  const [specIndex, setSpecIndex] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => setSpecIndex(i => (i + 1) % heroSpecialties.length), 2400);
+    return () => clearInterval(t);
+  }, []);
+
+  return (
+    <section ref={ref} className="relative min-h-[100dvh] overflow-hidden bg-[#07111f] pt-24 text-white">
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <motion.img
+          src={img("/images/sc-hero.png")}
+          alt="Science Centre laboratory technology"
+          style={{ y: imageY }}
+          className="absolute inset-0 h-[112%] w-full object-cover object-center opacity-50"
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(7,17,31,0.98) 0%, rgba(7,17,31,0.88) 42%, rgba(7,17,31,0.62) 68%, rgba(7,17,31,0.92) 100%)",
+          }}
+        />
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(80,170,230,0.22) 1px, transparent 1px), linear-gradient(90deg, rgba(80,170,230,0.18) 1px, transparent 1px)",
+            backgroundSize: "88px 88px",
+          }}
+        />
+        <motion.div
+          className="absolute left-0 top-[28%] h-px w-1/2 bg-primary/80"
+          animate={{ x: ["-65%", "240%"], opacity: [0, 1, 0] }}
+          transition={{ repeat: Infinity, duration: 5.4, ease: "easeInOut" }}
+        />
+        <motion.div
+          className="absolute bottom-[16%] right-0 h-px w-2/5 bg-cyan-200/70"
+          animate={{ x: ["70%", "-260%"], opacity: [0, 0.75, 0] }}
+          transition={{ repeat: Infinity, duration: 6.6, ease: "easeInOut", delay: 1.1 }}
+        />
+      </div>
+
+      <div className="container relative z-20 mx-auto flex min-h-[calc(100dvh-6rem)] flex-col justify-center px-6 py-8 md:px-12">
+        <div className="grid items-center gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(520px,0.78fr)] xl:gap-12">
+          <div className="max-w-4xl">
+            <motion.div
+              className="mb-6 inline-flex items-center border border-white/18 bg-white/8 px-4 py-2 text-[11px] font-bold uppercase text-cyan-100"
+              variants={fadeUp} custom={0.0} initial="hidden" animate={visible ? "visible" : "hidden"}
+            >
+              Pakistan's scientific sourcing network
+            </motion.div>
+
+            <motion.h1
+              className="font-[var(--app-font-heading)] text-[3.8rem] font-black leading-[0.9] text-white sm:text-[5.35rem] lg:text-[6.5rem] xl:text-[7.25rem]"
+              variants={fadeUp} custom={0.08} initial="hidden" animate={visible ? "visible" : "hidden"}
+            >
+              <span className="block">Science</span>
+              <span className="block text-cyan-200">Centre</span>
+              <span className="block">Pakistan</span>
+            </motion.h1>
+
+            <motion.div
+              className="mt-6 flex max-w-3xl flex-col gap-4 border-l-2 border-primary pl-5 md:flex-row md:items-end md:justify-between"
+              variants={fadeUp} custom={0.2} initial="hidden" animate={visible ? "visible" : "hidden"}
+            >
+              <p className="max-w-2xl text-base leading-relaxed text-slate-200 md:text-lg">
+                Advanced laboratory instruments, diagnostics, reagents and scientific systems routed from trusted global portfolios to Pakistan's hospitals, universities and research teams.
+              </p>
+              <div className="shrink-0 text-xs font-bold uppercase text-cyan-200">
+                Since 1985
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="mt-8 flex flex-wrap gap-3"
+              variants={fadeUp} custom={0.32} initial="hidden" animate={visible ? "visible" : "hidden"}
+            >
+              <Button asChild size="lg"
+                className="h-14 rounded-none bg-primary px-8 text-sm font-black uppercase text-primary-foreground hover:bg-primary/90">
+                <a href="#solutions">
+                  Explore solutions
+                  <motion.span
+                    className="ml-3 inline-flex"
+                    animate={{ x: [0, 5, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+                  >
+                    <ArrowRight className="h-4 w-4" />
+                  </motion.span>
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="outline"
+                className="h-14 rounded-none border-white/35 bg-white/5 px-8 text-sm font-black uppercase text-white hover:bg-white/12">
+                <a href="#contact">Talk to a specialist</a>
+              </Button>
+            </motion.div>
+
+            <motion.div
+              className="mt-8 grid max-w-3xl grid-cols-3 border border-white/14 bg-[#081625]/80"
+              variants={fadeUp} custom={0.44} initial="hidden" animate={visible ? "visible" : "hidden"}
+            >
+              {heroMetrics.map((metric, i) => (
+                <div key={metric.label} className="border-r border-white/12 p-4 last:border-r-0 sm:p-5">
+                  <div className="font-[var(--app-font-heading)] text-3xl font-black leading-none text-white sm:text-4xl">
+                    {metric.value}
+                  </div>
+                  <div className="mt-2 text-[10px] font-bold uppercase leading-snug text-slate-300 sm:text-xs">
+                    {metric.label}
+                  </div>
+                  <motion.div
+                    className="mt-4 h-px bg-primary"
+                    initial={{ width: 0 }}
+                    animate={visible ? { width: `${64 + i * 12}%` } : { width: 0 }}
+                    transition={{ duration: 0.8, delay: 0.7 + i * 0.12 }}
+                  />
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          <motion.div
+            className="relative hidden min-h-[590px] lg:block"
+            style={{ y: consoleY }}
+            variants={fadeIn} custom={0.18} initial="hidden" animate={visible ? "visible" : "hidden"}
+          >
+            <div className="absolute inset-x-10 top-8 h-[410px] border border-white/16 bg-white/7 shadow-2xl shadow-black/40 backdrop-blur-sm">
+              <motion.div
+                className="absolute inset-x-0 top-0 h-px bg-cyan-200"
+                animate={{ y: [0, 408, 0], opacity: [0.15, 0.9, 0.15] }}
+                transition={{ repeat: Infinity, duration: 7.2, ease: "easeInOut" }}
+              />
+              <div className="absolute left-6 top-6 flex items-center gap-2 text-[10px] font-bold uppercase text-cyan-100">
+                <Activity className="h-3.5 w-3.5" />
+                Live application routing
+              </div>
+              <div className="absolute right-6 top-6 text-[10px] font-bold uppercase text-slate-400">
+                SC-PK / 01
+              </div>
+              <div className="absolute inset-x-6 top-16 overflow-hidden border border-white/12">
+                <motion.img
+                  src={img("/images/sc-hero.png")}
+                  alt="Laboratory sourcing interface"
+                  className="h-56 w-full object-cover opacity-85"
+                  animate={{ scale: [1, 1.035, 1] }}
+                  transition={{ repeat: Infinity, duration: 8, ease: "easeInOut" }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#07111f] via-transparent to-transparent" />
+              </div>
+              <div className="absolute inset-x-6 bottom-6 grid grid-cols-2 gap-3">
+                {heroCapabilities.map((capability, i) => (
+                  <motion.button
+                    key={capability.label}
+                    type="button"
+                    onClick={() => setSpecIndex(i)}
+                    className="group border border-white/12 bg-[#07111f]/80 p-4 text-left transition-colors hover:border-primary/80 hover:bg-primary/12"
+                    whileHover={{ y: -3 }}
+                  >
+                    <span className="block text-[10px] font-bold uppercase text-primary">0{i + 1}</span>
+                    <span className="mt-2 block text-sm font-black text-white">{capability.label}</span>
+                    <span className="mt-1 block text-xs leading-snug text-slate-300">{capability.detail}</span>
+                  </motion.button>
+                ))}
+              </div>
+            </div>
+
+            <motion.div
+              className="absolute left-0 top-40 w-64 border border-cyan-200/30 bg-cyan-200/10 p-4 backdrop-blur-sm"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 5.5, ease: "easeInOut" }}
+            >
+              <div className="text-[10px] font-bold uppercase text-cyan-100">Current request</div>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={specIndex}
+                  className="mt-2 text-xl font-black text-white"
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -16 }}
+                  transition={{ duration: 0.35 }}
+                >
+                  {heroSpecialties[specIndex]}
+                </motion.div>
+              </AnimatePresence>
+              <div className="mt-4 flex items-center gap-2 text-xs font-bold uppercase text-primary">
+                Routed to specialist
+                <ArrowRight className="h-3.5 w-3.5" />
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="absolute bottom-0 right-0 w-72 border border-white/16 bg-white/8 p-5 backdrop-blur-sm"
+              animate={{ y: [0, 12, 0] }}
+              transition={{ repeat: Infinity, duration: 6.2, ease: "easeInOut", delay: 0.5 }}
+            >
+              <div className="flex items-center justify-between text-[10px] font-bold uppercase text-slate-300">
+                <span>Partner signal</span>
+                <span className="text-primary">verified</span>
+              </div>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {heroBrandRail.map((brand, i) => (
+                  <span
+                    key={brand}
+                    className="border border-white/14 bg-[#07111f]/80 px-2.5 py-1.5 text-[11px] font-bold text-slate-100"
+                    style={{ opacity: 1 - i * 0.045 }}
+                  >
+                    {brand}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        <motion.div
+          className="mt-7 flex flex-wrap items-center gap-2 lg:mt-4"
+          variants={fadeUp} custom={0.56} initial="hidden" animate={visible ? "visible" : "hidden"}
+        >
+          {heroSpecialties.map((specialty, i) => (
+            <button
+              type="button"
+              key={specialty}
+              onClick={() => setSpecIndex(i)}
+              className="border px-3 py-2 text-[10px] font-bold uppercase transition-all sm:text-xs"
+              style={{
+                borderColor: i === specIndex ? "hsl(var(--primary))" : "rgba(255,255,255,0.16)",
+                color: i === specIndex ? "white" : "rgb(203 213 225)",
+                background: i === specIndex ? "hsl(var(--primary)/0.32)" : "rgba(255,255,255,0.04)",
+              }}
+            >
+              {specialty}
+            </button>
+          ))}
+        </motion.div>
+      </div>
+
+      <div className="absolute bottom-10 left-0 right-0 z-20 hidden border-y border-white/12 bg-[#07111f]/78 px-6 py-3 backdrop-blur-sm md:block md:px-12">
+        <div className="container mx-auto flex items-center justify-between gap-6 text-[10px] font-bold uppercase text-slate-300">
+          <span className="text-primary">Signal rail</span>
+          <div className="min-w-0 flex-1 items-center overflow-hidden">
+            <motion.div
+              className="flex min-w-max gap-8"
+              animate={{ x: ["0%", "-50%"] }}
+              transition={{ repeat: Infinity, duration: 26, ease: "linear" }}
+            >
+              {[...heroBrandRail, ...heroSpecialties, ...heroBrandRail, ...heroSpecialties].map((item, i) => (
+                <span key={`${item}-${i}`} className="text-slate-400">
+                  {item}
+                </span>
+              ))}
+            </motion.div>
+          </div>
+          <span>Pakistan lab network</span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LegacyHero({ visible }: { visible: boolean }) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
