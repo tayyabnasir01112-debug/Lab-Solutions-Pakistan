@@ -826,78 +826,15 @@ function LegacyHero({ visible }: { visible: boolean }) {
 
 /* ─── Partners ────────────────────────────────────────────────── */
 const partnerBrands = [
-  {
-    name: "Luminex",
-    sub: "Bio-Rad Company",
-    color: "#0077C8",
-    bg: "from-blue-600/10 to-blue-500/5",
-    border: "border-blue-500/20",
-    initial: "LX",
-    weight: "font-black",
-  },
-  {
-    name: "Merck",
-    sub: "Sigma-Aldrich",
-    color: "#E8262A",
-    bg: "from-red-600/10 to-red-500/5",
-    border: "border-red-500/20",
-    initial: "M",
-    weight: "font-black",
-  },
-  {
-    name: "One Lambda",
-    sub: "Thermo Fisher Scientific",
-    color: "#F37021",
-    bg: "from-orange-500/10 to-orange-400/5",
-    border: "border-orange-500/20",
-    initial: "OL",
-    weight: "font-bold",
-  },
-  {
-    name: "cytognos",
-    sub: "Flow Cytometry",
-    color: "#CC0000",
-    bg: "from-red-700/10 to-red-600/5",
-    border: "border-red-600/20",
-    initial: "●",
-    weight: "font-bold",
-  },
-  {
-    name: "DWK Life Sciences",
-    sub: "Lab Glassware",
-    color: "#005BAC",
-    bg: "from-blue-700/10 to-blue-600/5",
-    border: "border-blue-600/20",
-    initial: "DWK",
-    weight: "font-bold",
-  },
-  {
-    name: "KERN",
-    sub: "Precision Instruments",
-    color: "#003087",
-    bg: "from-indigo-700/10 to-indigo-600/5",
-    border: "border-indigo-600/20",
-    initial: "K",
-    weight: "font-black",
-  },
-  {
-    name: "CNW",
-    sub: "Chromatography",
-    color: "#2E7D32",
-    bg: "from-green-700/10 to-green-600/5",
-    border: "border-green-600/20",
-    initial: "CNW",
-    weight: "font-bold",
-  },
-  {
-    name: "Meso Scale",
-    sub: "Diagnostics",
-    color: "#7B2D8B",
-    bg: "from-purple-700/10 to-purple-600/5",
-    border: "border-purple-600/20",
-    initial: "MSD",
-    weight: "font-bold",
-  },
+  { name: "One Lambda", logo: "/images/logos/onelambda-logo.svg", color: "#d71920" },
+  { name: "Merck", logo: "/images/logos/merck-logo-clean.png", color: "#503291" },
+  { name: "Luminex", logo: "/images/logos/luminex-logo-clean.png", color: "#ef1b23" },
+  { name: "Cytek", logo: "/images/logos/cytek-logo.png", color: "#5e2a84" },
+  { name: "NgeneBio", logo: "/images/logos/ngene-logo-clean.svg", color: "#e51b2b" },
+  { name: "REX", logo: "/images/logos/rex-logo-crop.png", color: "#276fb7" },
+  { name: "HKM", logo: "/images/logos/hkm-logo.png", color: "#26715a" },
+  { name: "Sugentech", logo: "/images/logos/sugentech-logo-clean.svg", color: "#ed174f" },
+  { name: "BioLegend", logo: "/images/biolegend/biolegend-logo.svg", color: "#0077a8" },
 ];
 
 function Partners() {
@@ -905,44 +842,33 @@ function Partners() {
   const inView = useInView(ref, { once: true, margin: "-60px 0px" });
   const [paused, setPaused] = useState(false);
 
-  // Two rows — row 2 is a different order for visual variety
   const row1 = partnerBrands;
-  const row2 = [...partnerBrands.slice(4), ...partnerBrands.slice(0, 4)];
+  const row2 = [...partnerBrands.slice(5), ...partnerBrands.slice(0, 5)];
 
-  const BrandPill = ({ brand, dark = false }: { brand: typeof partnerBrands[0], dark?: boolean }) => (
+  const BrandPill = ({ brand }: { brand: typeof partnerBrands[0] }) => (
     <div
-      className="flex-shrink-0 flex items-center gap-3 px-5 py-3 border mx-2 group cursor-default transition-all duration-300 hover:scale-105"
-      style={{
-        borderColor: brand.color + (dark ? "40" : "30"),
-        background: brand.color + (dark ? "15" : "08"),
-      }}
+      className="mx-2 flex h-20 w-48 flex-shrink-0 items-center justify-center border border-white/10 bg-white px-6 shadow-[0_18px_50px_rgba(0,0,0,0.22)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_22px_60px_rgba(46,163,242,0.16)] md:h-24 md:w-60"
+      style={{ borderTopColor: brand.color }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="text-[11px] font-black tracking-[0.14em] px-2 py-0.5"
-        style={{ color: brand.color, background: brand.color + "25" }}>
-        {brand.initial}
-      </div>
-      <div>
-        <div className={`text-sm font-[var(--app-font-heading)] font-bold leading-none mb-0.5 whitespace-nowrap ${dark ? "text-white" : "text-foreground"}`}>
-          {brand.name}
-        </div>
-        <div className={`text-[10px] font-medium tracking-wide whitespace-nowrap ${dark ? "text-white/40" : "text-muted-foreground"}`}>
-          {brand.sub}
-        </div>
-      </div>
+      <img
+        src={img(brand.logo)}
+        alt={brand.name}
+        loading="lazy"
+        decoding="async"
+        className="max-h-12 max-w-full object-contain md:max-h-14"
+      />
     </div>
   );
 
   return (
     <section ref={ref} id="partners" className="flex flex-col justify-center overflow-hidden relative" style={{ height: "100dvh", background: "hsl(var(--foreground))" }}>
-
-      {/* Background dot grid */}
       <div className="absolute inset-0 opacity-[0.04]"
         style={{ backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_15%_25%,rgba(46,163,242,0.16),transparent_26%),radial-gradient(circle_at_82%_70%,rgba(16,185,129,0.13),transparent_28%)]" />
 
-      {/* Big centered headline */}
-      <div className="container mx-auto px-6 md:px-12 mb-12 relative z-10">
+      <div className="container mx-auto px-6 md:px-12 mb-8 md:mb-12 relative z-10">
         <motion.div className="flex items-center gap-3 mb-5"
           initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }}>
           <div className="w-6 h-px bg-primary" />
@@ -952,48 +878,44 @@ function Partners() {
           <motion.h2
             className="text-4xl md:text-6xl font-[var(--app-font-heading)] font-black text-white leading-tight tracking-tight"
             initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay: 0.05 }}>
-            Representing the World's<br className="hidden md:block" />
-            <span className="text-primary">Best Science Brands.</span>
+            Active scientific<br className="hidden md:block" />
+            <span className="text-primary">brand network.</span>
           </motion.h2>
           <motion.p
-            className="text-white/50 text-sm font-light max-w-xs md:text-right leading-relaxed"
+            className="text-white/55 text-sm font-light max-w-sm md:text-right leading-relaxed"
             initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ duration: 0.5, delay: 0.2 }}>
-            Official distributor of 8+ globally recognized scientific brands across Pakistan for 30+ years
+            Science Centre sources, supplies and supports specialist catalogues from the brand families currently available in our product data.
           </motion.p>
         </div>
       </div>
 
-      {/* Marquee rows */}
       <motion.div
         initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ duration: 0.6, delay: 0.3 }}
         className="space-y-3 relative z-10"
       >
-        {/* Row 1 — scrolls left */}
         <div className="relative flex overflow-hidden">
           <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: `linear-gradient(to right, hsl(var(--foreground)), transparent)` }} />
+            style={{ background: "linear-gradient(to right, hsl(var(--foreground)), transparent)" }} />
           <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: `linear-gradient(to left, hsl(var(--foreground)), transparent)` }} />
+            style={{ background: "linear-gradient(to left, hsl(var(--foreground)), transparent)" }} />
           <div className="flex" style={{ animation: paused ? "none" : "marquee-left 28s linear infinite", willChange: "transform" }}>
-            {[...row1, ...row1, ...row1].map((brand, i) => (<BrandPill key={i} brand={brand} dark />))}
+            {[...row1, ...row1, ...row1].map((brand, i) => (<BrandPill key={`${brand.name}-${i}`} brand={brand} />))}
           </div>
         </div>
-        {/* Row 2 — scrolls right */}
         <div className="relative flex overflow-hidden">
           <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: `linear-gradient(to right, hsl(var(--foreground)), transparent)` }} />
+            style={{ background: "linear-gradient(to right, hsl(var(--foreground)), transparent)" }} />
           <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: `linear-gradient(to left, hsl(var(--foreground)), transparent)` }} />
+            style={{ background: "linear-gradient(to left, hsl(var(--foreground)), transparent)" }} />
           <div className="flex" style={{ animation: paused ? "none" : "marquee-right 34s linear infinite", willChange: "transform" }}>
-            {[...row2, ...row2, ...row2].map((brand, i) => (<BrandPill key={i} brand={brand} dark />))}
+            {[...row2, ...row2, ...row2].map((brand, i) => (<BrandPill key={`${brand.name}-alt-${i}`} brand={brand} />))}
           </div>
         </div>
       </motion.div>
 
-      {/* Bottom stat strip */}
       <div className="container mx-auto px-6 md:px-12 mt-12 relative z-10">
-        <div className="flex items-center gap-12 border-t border-white/10 pt-8">
-          {[["8+", "Global Brands"], ["30+", "Years of Partnership"], ["500+", "Clients Served"], ["4", "Cities Nationwide"]].map(([val, label]) => (
+        <div className="grid grid-cols-2 gap-5 border-t border-white/10 pt-7 md:flex md:items-center md:gap-12">
+          {[["9", "Active Brands"], ["30+", "Years in Market"], ["500+", "Lab Conversations"], ["4", "Cities Supported"]].map(([val, label]) => (
             <div key={label} className="flex flex-col">
               <span className="text-2xl font-black font-[var(--app-font-heading)] text-white">{val}</span>
               <span className="text-xs text-white/40 font-medium tracking-wide">{label}</span>
@@ -1009,7 +931,6 @@ function Partners() {
     </section>
   );
 }
-
 /* ─── Solutions ───────────────────────────────────────────────── */
 const solutions = [
   {
@@ -1160,52 +1081,64 @@ function Solutions() {
 /* ─── Products ────────────────────────────────────────────────── */
 const products = [
   {
-    name: "LABScan3D™",
+    name: "LABScan3D",
     brand: "Luminex",
+    logo: "/images/logos/luminex-logo-clean.png",
     category: "Multiplex Analysis",
-    accent: "#0077C8",
-    desc: "The world's most advanced multiplex analyzer with 500 unique bead regions — delivering up to 500 analytes per sample simultaneously.",
-    specs: ["500 bead regions", "High-throughput", "Automated workflow", "FDA-cleared"],
+    accent: "#2EA3F2",
+    desc: "High-throughput xMAP multiplex analysis for transplant, immunology and clinical research laboratories that need broad analyte coverage from limited sample volume.",
+    workflow: "Multiplex immunoassay routing",
+    specs: ["Up to 500 analytes", "Automated plate workflow", "High-throughput reads", "Specialist assay support"],
   },
   {
-    name: "Guava® easyCyte™",
+    name: "Milli-Q IQ 7000",
     brand: "Merck",
+    logo: "/images/logos/merck-logo-clean.png",
+    category: "Water Purification",
+    accent: "#503291",
+    desc: "Ultrapure laboratory water systems for demanding analytical workflows, daily QC routines and sensitive instrument feed requirements.",
+    workflow: "Ultrapure water systems",
+    specs: ["Type 1 ultrapure water", "Compact dispensing", "Low TOC workflows", "Lab-ready installation"],
+  },
+  {
+    name: "Guava easyCyte",
+    brand: "Merck",
+    logo: "/images/logos/merck-logo-clean.png",
     category: "Flow Cytometry",
-    accent: "#E8262A",
-    desc: "Benchtop flow cytometers providing powerful multi-parameter cellular analysis with industry-leading sensitivity and reproducibility.",
-    specs: ["3 lasers / 14 parameters", "Benchtop design", "Capillary-based", "GxP compliant"],
+    accent: "#10B981",
+    desc: "Benchtop cellular analysis for labs that need practical flow cytometry performance without building a large instrument room around it.",
+    workflow: "Cell analysis and counts",
+    specs: ["Benchtop footprint", "Multi-parameter analysis", "Capillary sampling", "Cell health assays"],
   },
   {
-    name: "Guava® Muse®",
-    brand: "Merck",
-    category: "Cell Analysis",
-    accent: "#7B2D8B",
-    desc: "Compact cell analyzer offering highly accurate and precise cell counts and viability using fluorescence-based detection technology.",
-    specs: ["Cell viability", "Rapid results", "Compact footprint", "Pre-optimized kits"],
-  },
-  {
-    name: "Amnis® ImageStream® X Mk II",
-    brand: "Merck",
-    category: "Imaging Flow Cytometry",
-    accent: "#2E7D32",
-    desc: "Combines the statistical power of flow cytometry with the resolution of microscopy — capturing up to 12 images per cell in real time.",
-    specs: ["12-channel imaging", "60× magnification", "IDEAS® software", "10,000 cells/sec"],
-  },
-  {
-    name: "Amnis® CellStream®",
-    brand: "Merck",
-    category: "Flow Cytometry",
-    accent: "#F37021",
-    desc: "A compact flow cytometer with unprecedented sensitivity and dynamic range, ideal for challenging samples and rare cell populations.",
-    specs: ["4 lasers / 16 parameters", "High sensitivity", "Rare cell detection", "Low sample volume"],
-  },
-  {
-    name: "MAGPIX®",
+    name: "MAGPIX",
     brand: "Luminex",
+    logo: "/images/logos/luminex-logo-clean.png",
     category: "Multiplex Immunoassay",
-    accent: "#005BAC",
-    desc: "The most affordable and compact multiplexing platform — delivering lab-quality results for up to 50 analytes from a single sample.",
-    specs: ["50-plex capability", "CLIA-waived", "Compact design", "Cloud connectivity"],
+    accent: "#EF4444",
+    desc: "Compact multiplexing platform for labs moving from single-analyte tests to efficient panel-based immunoassay workflows.",
+    workflow: "Compact multiplex platform",
+    specs: ["Up to 50 analytes", "Low sample demand", "Small footprint", "Panel-based testing"],
+  },
+  {
+    name: "Amnis ImageStream X Mk II",
+    brand: "Merck",
+    logo: "/images/logos/merck-logo-clean.png",
+    category: "Imaging Flow Cytometry",
+    accent: "#F59E0B",
+    desc: "Combines microscopy detail with flow cytometry scale for advanced cell morphology, localization and population analysis.",
+    workflow: "Imaging flow cytometry",
+    specs: ["Image every cell", "High-content analysis", "Rare event workflows", "Morphology plus statistics"],
+  },
+  {
+    name: "FLEXMAP 3D",
+    brand: "Luminex",
+    logo: "/images/logos/luminex-logo-clean.png",
+    category: "Advanced Multiplexing",
+    accent: "#8B5CF6",
+    desc: "A powerful multiplex system for laboratories scaling complex assay panels, research programs and validated high-volume workflows.",
+    workflow: "Advanced assay scale-up",
+    specs: ["500-plex capability", "96/384-well plates", "High dynamic range", "Research scale panels"],
   },
 ];
 
@@ -1217,7 +1150,7 @@ function FeaturedProducts() {
   const [progress, setProgress] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const DURATION = 4000;
+  const DURATION = 4300;
 
   const startTimer = () => {
     setProgress(0);
@@ -1227,10 +1160,8 @@ function FeaturedProducts() {
       const elapsed = Date.now() - start;
       const pct = Math.min((elapsed / DURATION) * 100, 100);
       setProgress(pct);
-      if (elapsed >= DURATION) {
-        setCurrent(c => (c + 1) % products.length);
-      }
-    }, 30);
+      if (elapsed >= DURATION) setCurrent(c => (c + 1) % products.length);
+    }, 40);
   };
 
   useEffect(() => {
@@ -1245,268 +1176,146 @@ function FeaturedProducts() {
   const go = (i: number) => { setCurrent(i); };
   const prev = () => go((current - 1 + products.length) % products.length);
   const next = () => go((current + 1) % products.length);
-
   const p = products[current];
 
   return (
-    <section ref={ref} id="products" className="bg-background border-t border-border overflow-hidden flex flex-col justify-center" style={{ height: "100dvh", paddingTop: "108px" }}>
-      <div className="container mx-auto px-6 md:px-12">
+    <section ref={ref} id="products" className="relative overflow-hidden bg-[#07111f] text-white" style={{ height: "100dvh", paddingTop: "108px" }}>
+      <div className="absolute inset-0 opacity-[0.08]"
+        style={{ backgroundImage: "linear-gradient(rgba(46,163,242,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(46,163,242,0.3) 1px, transparent 1px)", backgroundSize: "70px 70px" }} />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_68%_30%,rgba(46,163,242,0.22),transparent_30%),radial-gradient(circle_at_22%_78%,rgba(16,185,129,0.13),transparent_32%)]" />
+      <motion.div
+        className="absolute right-[9%] top-[18%] h-[32vw] max-h-[520px] min-h-[260px] w-[32vw] min-w-[260px] max-w-[520px] rounded-full border border-cyan-200/10"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 34, repeat: Infinity, ease: "linear" }}
+      />
 
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-6">
-          <div>
-            <motion.div className="text-xs font-bold tracking-[0.18em] text-primary uppercase mb-2"
-              initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.5 }}>
+      <div className="container relative z-10 mx-auto flex h-full flex-col justify-center px-6 pb-8 md:px-12">
+        <div className="grid min-h-0 gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="min-w-0"
+          >
+            <div className="mb-4 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.22em] text-primary">
+              <span className="h-px w-10 bg-primary" />
               Featured Instruments
-            </motion.div>
-            <motion.h3 className="text-2xl md:text-4xl font-[var(--app-font-heading)] font-bold text-foreground tracking-tight leading-tight"
-              initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.55, delay: 0.05 }}>
-              Institutional Confidence<br className="hidden md:block" /> in Every Instrument.
-            </motion.h3>
-          </div>
-          <motion.div className="flex gap-3"
-            initial={{ opacity: 0 }} animate={inView ? { opacity: 1 } : {}} transition={{ duration: 0.5, delay: 0.15 }}>
-            <Button asChild className="rounded-none bg-foreground text-background hover:bg-foreground/90 px-6">
-              <Link href="/products">Browse All <ArrowRight className="ml-2 h-4 w-4" /></Link>
-            </Button>
-            <Button asChild variant="outline" className="rounded-none border-border px-6">
-              <a href="#contact">Request Quote</a>
-            </Button>
+            </div>
+            <h2 className="max-w-3xl font-[var(--app-font-heading)] text-[clamp(2.4rem,6vw,5.7rem)] font-black leading-[0.92] tracking-tight">
+              Instruments that move lab work forward.
+            </h2>
+            <p className="mt-5 max-w-xl text-base leading-relaxed text-white/65 md:text-lg">
+              A tighter showcase of systems Science Centre can route, quote and support across diagnostics, flow, water purification and multiplex workflows.
+            </p>
+
+            <div className="mt-7 grid max-w-xl grid-cols-2 gap-3 sm:grid-cols-3">
+              {products.slice(0, 6).map((item, i) => (
+                <button
+                  key={item.name}
+                  onClick={() => go(i)}
+                  onMouseEnter={() => setHovered(i)}
+                  onMouseLeave={() => setHovered(null)}
+                  className="group min-h-[72px] border px-3 py-3 text-left transition-all duration-300 hover:-translate-y-0.5"
+                  style={{
+                    borderColor: i === current ? item.accent : "rgba(255,255,255,0.12)",
+                    background: i === current ? item.accent + "18" : "rgba(255,255,255,0.035)",
+                  }}
+                >
+                  <span className="block text-[10px] font-bold uppercase tracking-[0.18em] text-white/38">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="mt-2 block text-sm font-bold leading-tight text-white">{item.name}</span>
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-7 flex flex-wrap items-center gap-3">
+              <Button asChild className="rounded-none bg-primary px-7 py-6 text-sm font-bold uppercase tracking-[0.08em] text-primary-foreground hover:bg-primary/90">
+                <Link href="/products">Browse Instruments <ArrowRight className="ml-2 h-4 w-4" /></Link>
+              </Button>
+              <Button asChild variant="outline" className="rounded-none border-white/20 bg-white/5 px-7 py-6 text-sm font-bold uppercase tracking-[0.08em] text-white hover:bg-white/10 hover:text-white">
+                <Link href="/contact">Talk to a Specialist</Link>
+              </Button>
+            </div>
           </motion.div>
-        </div>
 
-        {/* Main Slideshow */}
-        <motion.div className="relative w-full h-[320px] md:h-[380px] overflow-hidden"
-          initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.2 }}>
+          <motion.div
+            initial={{ opacity: 0, x: 28 }}
+            animate={inView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="relative min-h-[430px] lg:min-h-[560px]"
+          >
+            <div className="absolute inset-x-0 top-4 border border-white/12 bg-white/[0.035] p-5 shadow-[0_30px_90px_rgba(0,0,0,0.28)] backdrop-blur md:p-7 lg:inset-6">
+              <div className="mb-5 flex items-start justify-between gap-4 border-b border-white/10 pb-5">
+                <div className="flex items-center gap-4">
+                  <div className="flex h-16 w-40 items-center justify-center bg-white px-5">
+                    <img src={img(p.logo)} alt={p.brand} loading="lazy" decoding="async" className="max-h-10 max-w-full object-contain" />
+                  </div>
+                  <div>
+                    <div className="text-[10px] font-bold uppercase tracking-[0.22em] text-white/40">Active focus</div>
+                    <div className="mt-1 text-sm font-bold text-white">{p.category}</div>
+                  </div>
+                </div>
+                <div className="text-right text-xs font-bold uppercase tracking-[0.18em] text-white/45">
+                  SC-PK / {String(current + 1).padStart(2, "0")}
+                </div>
+              </div>
 
-          {/* Background layer */}
-          <AnimatePresence mode="sync">
-            <motion.div key={"bg-" + current}
-              className="absolute inset-0"
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              transition={{ duration: 0.7 }}
-              style={{ background: `linear-gradient(135deg, ${p.accent}22 0%, ${p.accent}08 50%, transparent 100%)` }}
-            />
-          </AnimatePresence>
-
-          {/* Animated grid pattern */}
-          <div className="absolute inset-0 opacity-[0.035]"
-            style={{ backgroundImage: "linear-gradient(rgba(0,0,0,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.8) 1px, transparent 1px)", backgroundSize: "48px 48px" }} />
-
-          {/* Border */}
-          <div className="absolute inset-0 border border-border" />
-
-          {/* Left: main content */}
-          <div className="absolute inset-0 flex flex-col justify-between p-8 md:p-12">
-            {/* Top row */}
-            <div className="flex items-center justify-between">
               <AnimatePresence mode="wait">
-                <motion.div key={"tag-" + current} className="flex items-center gap-3"
-                  initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 16 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}>
-                  <span className="text-xs font-bold tracking-[0.18em] uppercase px-3 py-1.5 rounded-sm"
-                    style={{ color: p.accent, background: p.accent + "20", border: `1px solid ${p.accent}40` }}>
-                    {p.brand}
-                  </span>
-                  <span className="text-muted-foreground text-xs font-medium tracking-wide hidden md:block">
-                    {p.category}
-                  </span>
+                <motion.div
+                  key={p.name}
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -14 }}
+                  transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <div className="mb-4 inline-flex border px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.2em]" style={{ borderColor: p.accent + "55", color: p.accent }}>
+                    {p.workflow}
+                  </div>
+                  <h3 className="max-w-2xl font-[var(--app-font-heading)] text-[clamp(2rem,4.8vw,5rem)] font-black leading-[0.95] tracking-tight text-white">
+                    {p.name}
+                  </h3>
+                  <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/65 md:text-lg">
+                    {p.desc}
+                  </p>
+
+                  <div className="mt-7 grid gap-3 sm:grid-cols-2">
+                    {p.specs.map((spec, i) => (
+                      <motion.div
+                        key={spec}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: 0.08 * i }}
+                        className="flex min-h-[64px] items-center gap-3 border border-white/10 bg-black/20 px-4"
+                      >
+                        <span className="h-2 w-2 rounded-full" style={{ backgroundColor: p.accent }} />
+                        <span className="text-sm font-semibold text-white/85">{spec}</span>
+                      </motion.div>
+                    ))}
+                  </div>
                 </motion.div>
               </AnimatePresence>
-              {/* Counter */}
-              <div className="text-muted-foreground text-xs font-bold tracking-[0.2em]">
-                <span className="text-foreground">{String(current + 1).padStart(2, "0")}</span>
-                <span className="mx-2">/</span>
-                {String(products.length).padStart(2, "0")}
-              </div>
-            </div>
 
-            {/* Center: big instrument name */}
-            <AnimatePresence mode="wait">
-              <motion.div key={"name-" + current}
-                initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}>
-                <div className="text-muted-foreground text-xs font-bold tracking-[0.25em] uppercase mb-4">
-                  Focus Instrument
+              <div className="mt-8 flex items-center justify-between gap-5 border-t border-white/10 pt-5">
+                <div className="h-px flex-1 overflow-hidden bg-white/12">
+                  <motion.div className="h-full" style={{ width: `${progress}%`, backgroundColor: p.accent }} transition={{ duration: 0 }} />
                 </div>
-                <h2 className="font-[var(--app-font-heading)] font-black text-foreground leading-none tracking-tight"
-                  style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}>
-                  {p.name}
-                </h2>
-                <p className="text-muted-foreground text-base md:text-lg font-light mt-5 max-w-xl leading-relaxed">
-                  {p.desc}
-                </p>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Bottom: progress + nav */}
-            <div className="flex items-center justify-between gap-6">
-              {/* Progress bar */}
-              <div className="flex-1 h-px bg-border relative overflow-hidden max-w-xs">
-                <motion.div className="absolute left-0 top-0 h-full"
-                  style={{ width: `${progress}%`, backgroundColor: p.accent }}
-                  transition={{ duration: 0 }} />
-              </div>
-              {/* Dot nav */}
-              <div className="flex items-center gap-2">
-                {products.map((_, i) => (
-                  <button key={i} onClick={() => go(i)}
-                    className="transition-all duration-300 rounded-full"
-                    style={{
-                      width: i === current ? "24px" : "6px",
-                      height: "6px",
-                      backgroundColor: i === current ? p.accent : "var(--border)",
-                    }} />
-                ))}
-              </div>
-              {/* Arrows */}
-              <div className="flex gap-2">
-                {[{ fn: prev, label: "←" }, { fn: next, label: "→" }].map(({ fn, label }) => (
-                  <button key={label} onClick={fn}
-                    className="w-10 h-10 flex items-center justify-center border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-all duration-200 text-sm font-bold">
-                    {label}
-                  </button>
-                ))}
+                <div className="flex gap-2">
+                  <button onClick={prev} className="flex h-11 w-11 items-center justify-center border border-white/15 text-white/65 transition hover:border-white/40 hover:text-white" aria-label="Previous featured instrument"><ArrowRight className="h-4 w-4 rotate-180" /></button>
+                  <button onClick={next} className="flex h-11 w-11 items-center justify-center border border-white/15 text-white/65 transition hover:border-white/40 hover:text-white" aria-label="Next featured instrument"><ArrowRight className="h-4 w-4" /></button>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Right: specs panel (desktop only) */}
-          <AnimatePresence mode="wait">
-            <motion.div key={"specs-" + current}
-              className="absolute right-0 top-0 bottom-0 w-64 hidden lg:flex flex-col justify-center p-8 border-l border-border"
-              initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}>
-              <div className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground mb-5">
-                Key Specs
-              </div>
-              <div className="space-y-3">
-                {p.specs.map((spec, i) => (
-                  <motion.div key={i} className="flex items-center gap-3"
-                    initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.35, delay: 0.15 + i * 0.07, ease: [0.16, 1, 0.3, 1] }}>
-                    <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ backgroundColor: p.accent }} />
-                    <span className="text-sm text-foreground font-medium">{spec}</span>
-                  </motion.div>
-                ))}
-              </div>
-              <a href="#contact"
-                className="mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] transition-colors"
-                style={{ color: p.accent }}>
-                Request Quote <ArrowRight className="h-3 w-3" />
-              </a>
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Thumbnail strip with hover popup */}
-        <div className="mt-4 grid grid-cols-3 md:grid-cols-6 gap-2">
-          {products.map((prod, i) => {
-            const isActive = i === current;
-            const isHov = hovered === i;
-            return (
-              <div key={i} className="relative"
-                onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)}>
-                <motion.button
-                  onClick={() => go(i)}
-                  className="w-full p-3 md:p-4 text-left border transition-all duration-300 relative overflow-hidden"
-                  style={{
-                    borderColor: isActive ? prod.accent : "var(--border)",
-                    background: isActive ? prod.accent + "12" : "transparent",
-                  }}
-                  whileHover={{ y: -2 }}
-                  transition={{ duration: 0.2 }}>
-                  {/* Active indicator */}
-                  {isActive && (
-                    <motion.div layoutId="active-thumb"
-                      className="absolute top-0 left-0 right-0 h-0.5"
-                      style={{ backgroundColor: prod.accent }} />
-                  )}
-                  <div className="text-[10px] font-bold tracking-wide uppercase mb-1"
-                    style={{ color: isActive ? prod.accent : "var(--muted-foreground)" }}>
-                    {prod.brand}
-                  </div>
-                  <div className="text-xs font-semibold text-foreground leading-tight line-clamp-2">
-                    {prod.name}
-                  </div>
-                </motion.button>
-
-                {/* Hover popup */}
-                <AnimatePresence>
-                  {isHov && (
-                    <motion.div
-                      className="absolute bottom-full left-1/2 mb-3 w-64 z-50 pointer-events-none"
-                      style={{ x: "-50%" }}
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                      transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}>
-                      {/* Arrow */}
-                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-full w-3 h-3 rotate-45 border-r border-b border-border"
-                        style={{ backgroundColor: "var(--background)" }} />
-                      {/* Card */}
-                      <div className="bg-background border border-border p-5 shadow-2xl">
-                        {/* Top accent bar */}
-                        <div className="h-0.5 w-full mb-4 rounded-full" style={{ backgroundColor: prod.accent }} />
-                        <div className="flex items-center justify-between mb-3">
-                          <span className="text-[10px] font-bold tracking-[0.18em] uppercase px-2 py-1 rounded-sm"
-                            style={{ color: prod.accent, background: prod.accent + "18" }}>
-                            {prod.brand}
-                          </span>
-                          <span className="text-[10px] text-muted-foreground font-medium">{prod.category}</span>
-                        </div>
-                        <div className="font-[var(--app-font-heading)] font-bold text-foreground text-sm mb-2 leading-snug">
-                          {prod.name}
-                        </div>
-                        <p className="text-muted-foreground text-xs font-light leading-relaxed mb-4">
-                          {prod.desc}
-                        </p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {prod.specs.slice(0, 3).map((s, si) => (
-                            <span key={si} className="text-[10px] font-medium px-2 py-0.5 border border-border text-muted-foreground">
-                              {s}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            );
-          })}
+            <div className="pointer-events-none absolute bottom-2 right-0 hidden w-56 border border-white/12 bg-white/[0.045] p-4 backdrop-blur md:block">
+              <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-white/35">Instrument routing</div>
+              <div className="mt-3 text-2xl font-black text-white">{products.length}</div>
+              <div className="text-xs font-semibold uppercase tracking-[0.14em] text-white/45">Featured systems</div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
   );
 }
-
-/* ─── Animated stat ───────────────────────────────────────────── */
-function AnimatedStat({ value, label, sub, delay }: { value: string; label: string; sub: string; delay: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 30 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.65, delay, ease: [0.16, 1, 0.3, 1] }}
-    >
-      <motion.div
-        className="text-5xl font-[var(--app-font-heading)] font-bold text-primary mb-2"
-        initial={{ opacity: 0, scale: 0.7 }}
-        animate={inView ? { opacity: 1, scale: 1 } : {}}
-        transition={{ duration: 0.5, delay: delay + 0.1, ease: [0.16, 1, 0.3, 1] }}
-      >
-        {value}
-      </motion.div>
-      <div className="text-lg font-medium mb-1">{label}</div>
-      <p className="text-background/60 text-sm font-light">{sub}</p>
-    </motion.div>
-  );
-}
-
 /* ─── Credibility ─────────────────────────────────────────────── */
 function Credibility() {
   return (
@@ -1544,12 +1353,37 @@ function Credibility() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 border-t border-background/20 pt-12">
             <AnimatedStat value="1985" label="Established" sub="Serving Pakistan's scientific community for decades." delay={0.1} />
-            <AnimatedStat value="Tier-1" label="Official Partners" sub="Representing Luminex and Merck in the region." delay={0.2} />
+            <AnimatedStat value="9" label="Active Brands" sub="Specialist catalogues across diagnostics, research and lab systems." delay={0.2} />
             <AnimatedStat value="Nationwide" label="Distribution" sub="Comprehensive coverage across all major cities." delay={0.3} />
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function AnimatedStat({ value, label, sub, delay }: { value: string; label: string; sub: string; delay: number }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.65, delay, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <motion.div
+        className="text-5xl font-[var(--app-font-heading)] font-bold text-primary mb-2"
+        initial={{ opacity: 0, scale: 0.7 }}
+        animate={inView ? { opacity: 1, scale: 1 } : {}}
+        transition={{ duration: 0.5, delay: delay + 0.1, ease: [0.16, 1, 0.3, 1] }}
+      >
+        {value}
+      </motion.div>
+      <div className="text-lg font-medium mb-1">{label}</div>
+      <p className="text-background/60 text-sm font-light">{sub}</p>
+    </motion.div>
   );
 }
 
@@ -1776,7 +1610,7 @@ function Contact() {
 /* ─── Footer ──────────────────────────────────────────────────── */
 
 /* ─── Root ────────────────────────────────────────────────────── */
-const SECTION_NAMES = ["Home", "Partners", "Solutions", "Instruments", "About", "Locations", "Contact"];
+const SECTION_NAMES = ["Home", "Instruments", "Solutions", "Partners", "About", "Locations", "Contact"];
 
 const slideVariants = {
   enter: (dir: number) => ({
@@ -1821,9 +1655,9 @@ export default function Home() {
 
   const sections = [
     <Hero key="hero" visible={splashDone} />,
-    <Partners key="partners" />,
-    <Solutions key="solutions" />,
     <FeaturedProducts key="products" />,
+    <Solutions key="solutions" />,
+    <Partners key="partners" />,
     <Credibility key="credibility" />,
     <Locations key="locations" />,
     <Contact key="contact" />,
@@ -1897,13 +1731,13 @@ export default function Home() {
       </AnimatePresence>
       {/* 
         Section backgrounds:
-        0=Hero(light bg), 1=Partners(dark), 2=Solutions(hidden), 
-        3=Instruments(light), 4=Credibility(dark), 5=Locations(light), 6=Contact(light)
+        0=Hero(transparent nav), 1=Instruments(dark), 2=Solutions(hidden),
+        3=Partners(dark), 4=Credibility(dark), 5=Locations(light), 6=Contact(light)
         forceSolid=true on light sections so links are dark and visible
       */}
       <SiteNavbar
         visible={splashDone && current !== 2}
-        forceSolid={current === 3 || current === 5 || current === 6}
+        forceSolid={current === 5 || current === 6}
         forceTransparent={current === 0}
       />
 

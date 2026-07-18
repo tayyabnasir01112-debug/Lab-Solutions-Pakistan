@@ -67,7 +67,7 @@ const values = [
 const timeline = [
   { year: "1985", title: "Founded", desc: "Science Centre established in Rawalpindi as a specialist distributor for clinical laboratory equipment." },
   { year: "1995", title: "First Global Deal", desc: "Secured first international partnership, bringing certified diagnostic instruments to Pakistan for the first time." },
-  { year: "2005", title: "Luminex Partnership", desc: "Became official distributor for Luminex — bringing multiplexing technology to Pakistan's leading hospitals." },
+  { year: "2005", title: "Luminex Access", desc: "Expanded sourcing and support for Luminex multiplexing technology across Pakistan's leading hospitals." },
   { year: "2010", title: "Merck Alliance", desc: "Partnered with Merck to distribute the full Guava® and Amnis® flow cytometry portfolio nationwide." },
   { year: "2015", title: "National Expansion", desc: "Opened regional offices in Karachi, Peshawar, and Lahore — covering the full country." },
   { year: "2026", title: "Today", desc: "Serving 500+ clients across hospitals, research institutes, universities and pharmaceutical companies." },
