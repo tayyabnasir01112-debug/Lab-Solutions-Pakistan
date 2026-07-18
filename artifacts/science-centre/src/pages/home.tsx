@@ -26,6 +26,11 @@ function img(path: string) {
   return `${BASE}${path}`;
 }
 
+function resolveAsset(path?: string) {
+  if (!path) return "";
+  return /^https?:\/\//i.test(path) ? path : img(path);
+}
+
 /* ─── Shared animation variants ──────────────────────────────── */
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -1060,54 +1065,105 @@ function Solutions() {
 }
 
 /* ─── Products ────────────────────────────────────────────────── */
-const products = [
+type FeaturedInstrument = {
+  id: string;
+  name: string;
+  fullName: string;
+  brand: string;
+  category: string;
+  accent: string;
+  desc: string;
+  image: string;
+  specs: string[];
+  href: string;
+  external?: boolean;
+};
+
+const featuredInstruments: FeaturedInstrument[] = [
   {
-    name: "LABScan3D™",
-    brand: "Luminex",
-    category: "Multiplex Analysis",
-    accent: "#0077C8",
-    desc: "The world's most advanced multiplex analyzer with 500 unique bead regions — delivering up to 500 analytes per sample simultaneously.",
-    specs: ["500 bead regions", "High-throughput", "Automated workflow", "FDA-cleared"],
+    id: "ol-labscan3d",
+    name: "LABScan3D",
+    fullName: "LABScan3D Multiplex Analyzer",
+    brand: "One Lambda",
+    category: "Readers & Analysers",
+    accent: "#D71920",
+    desc: "Advanced, high-throughput IVD-certified multiplex analyser engineered for transplant diagnostics, HLA typing, and antibody detection using xMAP bead-based suspension technology.",
+    image: resolveAsset("/images/ol-labscan3d.jpg"),
+    specs: ["500 bead regions", "IVD-certified system", "HLA typing and antibody detection", "96-well microplate workflow"],
+    href: "/products/ol-labscan3d",
   },
   {
-    name: "Guava® easyCyte™",
-    brand: "Merck",
+    id: "cytek-nl-clc",
+    name: "Northern Lights CLC",
+    fullName: "Cytek Northern Lights CLC Clinical System",
+    brand: "Cytek",
     category: "Flow Cytometry",
-    accent: "#E8262A",
-    desc: "Benchtop flow cytometers providing powerful multi-parameter cellular analysis with industry-leading sensitivity and reproducibility.",
-    specs: ["3 lasers / 14 parameters", "Benchtop design", "Capillary-based", "GxP compliant"],
+    accent: "#6F6BB7",
+    desc: "Full spectrum flow cytometry for clinical environments, designed for diagnostic laboratories that need sensitive immunophenotyping with efficient daily QC and transferable templates.",
+    image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.prod-nl-clc.png",
+    specs: ["Clinical-use configuration", "Up to 3 laser lines", "38 fluorescence channels", "SpectroFlo clinical workflow"],
+    href: "/products/cytek-nl-clc",
   },
   {
-    name: "Guava® Muse®",
-    brand: "Merck",
-    category: "Cell Analysis",
-    accent: "#7B2D8B",
-    desc: "Compact cell analyzer offering highly accurate and precise cell counts and viability using fluorescence-based detection technology.",
-    specs: ["Cell viability", "Rapid results", "Compact footprint", "Pre-optimized kits"],
+    id: "cytek-aurora",
+    name: "Cytek Aurora Cell Cycle",
+    fullName: "Cytek Aurora Full Spectrum Flow Cytometer",
+    brand: "Cytek",
+    category: "Cell Cycle / Flow Cytometry",
+    accent: "#6F6BB7",
+    desc: "A full spectrum flow cytometer for high-dimensional cell analysis, supporting deep immunophenotyping, rare cell analysis, small particle detection, and cell-cycle workflow development.",
+    image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/Aurora-instrument-with-loader-(angle).png",
+    specs: ["Up to 5 lasers", "64 fluorescence channels", "40-color panels demonstrated", "SpectroFlo unmixing software"],
+    href: "/products/cytek-aurora",
   },
   {
-    name: "Amnis® ImageStream® X Mk II",
-    brand: "Merck",
-    category: "Imaging Flow Cytometry",
-    accent: "#2E7D32",
-    desc: "Combines the statistical power of flow cytometry with the resolution of microscopy — capturing up to 12 images per cell in real time.",
-    specs: ["12-channel imaging", "60× magnification", "IDEAS® software", "10,000 cells/sec"],
+    id: "ngene-brca",
+    name: "NGeneBio BRCAaccuTest",
+    fullName: "BRCAaccuTest / BRCAaccuTest PLUS",
+    brand: "NGeneBio",
+    category: "NGS Precision Diagnostics",
+    accent: "#E91E2F",
+    desc: "NGS-based BRCA1/2 reagent kit for germline and somatic variant detection, with PLUS support for expanded target coverage and CNV analysis.",
+    image: resolveAsset("/images/logos/ngene-logo-clean.svg"),
+    specs: ["BRCA1 and BRCA2 targets", "Germline and FFPE tissue", "Illumina MiSeq/MiniSeq platforms", "CE-IVD and MFDS approved"],
+    href: "/products/ngene-brca",
   },
   {
-    name: "Amnis® CellStream®",
-    brand: "Merck",
-    category: "Flow Cytometry",
-    accent: "#F37021",
-    desc: "A compact flow cytometer with unprecedented sensitivity and dynamic range, ideal for challenging samples and rare cell populations.",
-    specs: ["4 lasers / 16 parameters", "High sensitivity", "Rare cell detection", "Low sample volume"],
+    id: "ol-alltype-fastplex",
+    name: "AllType FASTplex NGS",
+    fullName: "AllType FASTplex NGS",
+    brand: "One Lambda",
+    category: "Next-Generation Sequencing",
+    accent: "#D71920",
+    desc: "Rapid CE-IVD HLA NGS solution with sample-to-sequencing in under 7 hours, less than 90 minutes hands-on time, and reportable results in 1.5 days or less.",
+    image: resolveAsset("/images/ol-alltype-fastplex.jpeg"),
+    specs: ["Under 7-hour workflow", "Less than 90 min hands-on", "Allele-level HLA typing", "TypeStream Visual software"],
+    href: "/products/ol-alltype-fastplex",
   },
   {
-    name: "MAGPIX®",
-    brand: "Luminex",
-    category: "Multiplex Immunoassay",
-    accent: "#005BAC",
-    desc: "The most affordable and compact multiplexing platform — delivering lab-quality results for up to 50 analytes from a single sample.",
-    specs: ["50-plex capability", "CLIA-waived", "Compact design", "Cloud connectivity"],
+    id: "rex-ph510t",
+    name: "REX PH510T",
+    fullName: "REX PH510T Portable pH Meter",
+    brand: "REX",
+    category: "Portable Meters",
+    accent: "#0076C8",
+    desc: "Professional smart portable pH meter with IP-rated protection, high-accuracy pH measurement, rechargeable battery, GLP storage, and USB export for demanding field use.",
+    image: "https://omo-oss-image1.thefastimg.com/portal-saas/pg2024031317245957733/cms/image/cfbd9196-2f58-4676-8391-cac2429ca53e.jpg",
+    specs: ["Model PH510T", "pH/Temp and mV/ORP", "Up to 8 calibration points", "1000-group data storage"],
+    href: "/products/rex-ph510t",
+  },
+  {
+    id: "biolegend-product-types-clinical-analyte-specific-reagents-asr",
+    name: "BioLegend Clinical Analyte Reagents",
+    fullName: "Clinical | Analyte Specific Reagents (ASR)",
+    brand: "BioLegend",
+    category: "Clinical Reagents",
+    accent: "#008AB8",
+    desc: "Representative BioLegend clinical analyte-specific reagent family for enquiry-led sourcing of relevant antibodies, formats, clones, conjugates, and compatible workflow variants.",
+    image: resolveAsset("/images/biolegend/biolegend-diagnostics.svg"),
+    specs: ["BioLegend product family", "Clinical flow cytometry focus", "Variant-level sourcing", "Official reference page linked"],
+    href: "https://www.biolegend.com/en-us/clinical-flow-cytometry/asr-products",
+    external: true,
   },
 ];
 
@@ -1130,7 +1186,7 @@ function FeaturedProducts() {
       const pct = Math.min((elapsed / DURATION) * 100, 100);
       setProgress(pct);
       if (elapsed >= DURATION) {
-        setCurrent(c => (c + 1) % products.length);
+        setCurrent(c => (c + 1) % featuredInstruments.length);
       }
     }, 30);
   };
@@ -1145,10 +1201,10 @@ function FeaturedProducts() {
   }, [current, hovered]);
 
   const go = (i: number) => { setCurrent(i); };
-  const prev = () => go((current - 1 + products.length) % products.length);
-  const next = () => go((current + 1) % products.length);
+  const prev = () => go((current - 1 + featuredInstruments.length) % featuredInstruments.length);
+  const next = () => go((current + 1) % featuredInstruments.length);
 
-  const p = products[current];
+  const p = featuredInstruments[current];
 
   return (
     <section ref={ref} id="products" className="bg-background border-t border-border overflow-hidden flex flex-col justify-center" style={{ height: "100dvh", paddingTop: "108px" }}>
@@ -1172,7 +1228,7 @@ function FeaturedProducts() {
               <Link href="/products">Browse All <ArrowRight className="ml-2 h-4 w-4" /></Link>
             </Button>
             <Button asChild variant="outline" className="rounded-none border-border px-6">
-              <a href="#contact">Request Quote</a>
+              <Link href="/contact">Request Quote</Link>
             </Button>
           </motion.div>
         </div>
@@ -1198,8 +1254,35 @@ function FeaturedProducts() {
           {/* Border */}
           <div className="absolute inset-0 border border-border" />
 
+          {/* Product image */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={"image-" + current}
+              className="pointer-events-none absolute bottom-6 right-64 top-8 hidden w-[34%] items-center justify-center lg:flex"
+              initial={{ opacity: 0, scale: 0.94, x: 20 }}
+              animate={{ opacity: 1, scale: 1, x: 0 }}
+              exit={{ opacity: 0, scale: 0.96, x: -18 }}
+              transition={{ duration: 0.62, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="absolute inset-0 rounded-full blur-3xl" style={{ backgroundColor: `${p.accent}24` }} />
+              <div className="relative flex h-full w-full items-center justify-center overflow-hidden border border-border/80 bg-background/70 shadow-sm backdrop-blur-sm">
+                <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: "radial-gradient(circle, currentColor 1px, transparent 1px)", backgroundSize: "18px 18px", color: p.accent }} />
+                {p.image ? (
+                  <img
+                    src={p.image}
+                    alt={p.fullName}
+                    className="relative max-h-[78%] max-w-[82%] object-contain drop-shadow-2xl"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="relative text-center text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">Image coming soon</div>
+                )}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+
           {/* Left: main content */}
-          <div className="absolute inset-0 flex flex-col justify-between p-8 md:p-12">
+          <div className="absolute inset-0 flex flex-col justify-between p-8 md:p-12 lg:pr-[34rem]">
             {/* Top row */}
             <div className="flex items-center justify-between">
               <AnimatePresence mode="wait">
@@ -1219,7 +1302,7 @@ function FeaturedProducts() {
               <div className="text-muted-foreground text-xs font-bold tracking-[0.2em]">
                 <span className="text-foreground">{String(current + 1).padStart(2, "0")}</span>
                 <span className="mx-2">/</span>
-                {String(products.length).padStart(2, "0")}
+                {String(featuredInstruments.length).padStart(2, "0")}
               </div>
             </div>
 
@@ -1235,7 +1318,7 @@ function FeaturedProducts() {
                   style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}>
                   {p.name}
                 </h2>
-                <p className="text-muted-foreground text-base md:text-lg font-light mt-5 max-w-xl leading-relaxed">
+                <p className="line-clamp-3 text-muted-foreground text-base md:text-lg font-light mt-5 max-w-xl leading-relaxed">
                   {p.desc}
                 </p>
               </motion.div>
@@ -1251,7 +1334,7 @@ function FeaturedProducts() {
               </div>
               {/* Dot nav */}
               <div className="flex items-center gap-2">
-                {products.map((_, i) => (
+                {featuredInstruments.map((_, i) => (
                   <button key={i} onClick={() => go(i)}
                     className="transition-all duration-300 rounded-full"
                     style={{
@@ -1292,26 +1375,28 @@ function FeaturedProducts() {
                   </motion.div>
                 ))}
               </div>
-              <a href="#contact"
+              <a href={p.href}
+                target={p.external ? "_blank" : undefined}
+                rel={p.external ? "noopener noreferrer" : undefined}
                 className="mt-8 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] transition-colors"
                 style={{ color: p.accent }}>
-                Request Quote <ArrowRight className="h-3 w-3" />
+                View Details <ArrowRight className="h-3 w-3" />
               </a>
             </motion.div>
           </AnimatePresence>
         </motion.div>
 
         {/* Thumbnail strip with hover popup */}
-        <div className="mt-4 grid grid-cols-3 md:grid-cols-6 gap-2">
-          {products.map((prod, i) => {
+        <div className="mt-4 flex gap-2 overflow-x-auto pb-2 lg:grid lg:grid-cols-7 lg:overflow-visible lg:pb-0">
+          {featuredInstruments.map((prod, i) => {
             const isActive = i === current;
             const isHov = hovered === i;
             return (
-              <div key={i} className="relative"
+              <div key={prod.id} className="relative"
                 onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)}>
                 <motion.button
                   onClick={() => go(i)}
-                  className="w-full p-3 md:p-4 text-left border transition-all duration-300 relative overflow-hidden"
+                  className="w-40 p-3 text-left border transition-all duration-300 relative overflow-hidden lg:w-full"
                   style={{
                     borderColor: isActive ? prod.accent : "var(--border)",
                     background: isActive ? prod.accent + "12" : "transparent",
@@ -1324,6 +1409,13 @@ function FeaturedProducts() {
                       className="absolute top-0 left-0 right-0 h-0.5"
                       style={{ backgroundColor: prod.accent }} />
                   )}
+                  <div className="mb-2 flex h-10 items-center justify-center overflow-hidden bg-muted/40">
+                    {prod.image ? (
+                      <img src={prod.image} alt="" className="h-full w-full object-contain p-1.5" loading="lazy" />
+                    ) : (
+                      <div className="h-2 w-2 rounded-full" style={{ backgroundColor: prod.accent }} />
+                    )}
+                  </div>
                   <div className="text-[10px] font-bold tracking-wide uppercase mb-1"
                     style={{ color: isActive ? prod.accent : "var(--muted-foreground)" }}>
                     {prod.brand}
@@ -1350,6 +1442,13 @@ function FeaturedProducts() {
                       <div className="bg-background border border-border p-5 shadow-2xl">
                         {/* Top accent bar */}
                         <div className="h-0.5 w-full mb-4 rounded-full" style={{ backgroundColor: prod.accent }} />
+                        <div className="mb-4 flex h-24 items-center justify-center overflow-hidden bg-muted/40">
+                          {prod.image ? (
+                            <img src={prod.image} alt={prod.fullName} className="h-full w-full object-contain p-3" loading="lazy" />
+                          ) : (
+                            <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-muted-foreground">Image coming soon</div>
+                          )}
+                        </div>
                         <div className="flex items-center justify-between mb-3">
                           <span className="text-[10px] font-bold tracking-[0.18em] uppercase px-2 py-1 rounded-sm"
                             style={{ color: prod.accent, background: prod.accent + "18" }}>
