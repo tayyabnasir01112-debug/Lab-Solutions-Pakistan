@@ -194,15 +194,6 @@ const heroMetrics = [
   { value: "500+", label: "lab conversations supported" },
 ];
 
-const heroCapabilities = [
-  { label: "HLA and transplant", detail: "One Lambda, Luminex and antibody screening workflows" },
-  { label: "Water purification", detail: "Merck Milli-Q, Elix and analyzer-feed systems" },
-  { label: "Molecular and NGS", detail: "Extraction, amplification, panels and sequencing support" },
-  { label: "Clinical diagnostics", detail: "Kits, instruments and specialist procurement guidance" },
-];
-
-const heroBrandRail = ["Merck", "Luminex", "One Lambda", "Cytek", "HKM", "Sugentech", "BioLegend", "REX"];
-
 const heroStats = [
   { value: "30+", label: "Years of Excellence", sub: "Serving Pakistan since 1985" },
   { value: "8+", label: "Global Brands", sub: "Luminex, Merck and more" },
@@ -226,16 +217,19 @@ function Hero({ visible }: { visible: boolean }) {
     <section ref={ref} className="relative min-h-[100dvh] overflow-hidden bg-[#06111d] pt-24 text-white">
       <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.img
-          src={img("/images/sc-hero-lab-wow.png")}
+          src={img("/images/sc-hero-lab-wow.webp")}
           alt="Modern scientific laboratory with diagnostic analyzers, microscope, pipettes and reagent racks"
           style={{ y: imageY }}
+          loading="eager"
+          decoding="async"
+          fetchPriority="high"
           className="absolute inset-0 h-[112%] w-full object-cover object-center opacity-95"
         />
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(90deg, rgba(6,17,29,0.98) 0%, rgba(6,17,29,0.92) 36%, rgba(6,17,29,0.46) 66%, rgba(6,17,29,0.20) 100%)",
+              "linear-gradient(90deg, rgba(6,17,29,0.99) 0%, rgba(6,17,29,0.88) 34%, rgba(6,17,29,0.34) 68%, rgba(6,17,29,0.08) 100%)",
           }}
         />
         <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-[#06111d] to-transparent" />
@@ -259,126 +253,106 @@ function Hero({ visible }: { visible: boolean }) {
         />
       </div>
 
+      <motion.div
+        className="pointer-events-none absolute bottom-[14%] right-[3%] z-10 hidden font-[var(--app-font-heading)] text-[12rem] font-black leading-none text-white/5 lg:block xl:text-[15rem]"
+        initial={{ opacity: 0, x: 60 }}
+        animate={visible ? { opacity: 1, x: 0 } : {}}
+        transition={{ duration: 1.2, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+      >
+        LAB
+      </motion.div>
+
       <div className="container relative z-20 mx-auto flex min-h-[calc(100dvh-6rem)] flex-col justify-center px-6 pb-20 pt-8 md:px-12">
         <motion.div className="max-w-5xl" style={{ y: headlineY }}>
-          <div className="max-w-4xl">
+          <div className="max-w-5xl">
             <motion.div
-              className="mb-5 inline-flex items-center border border-cyan-100/25 bg-cyan-100/8 px-4 py-2 text-[11px] font-black uppercase text-cyan-100"
+              className="mb-5 inline-flex items-center gap-3 text-[11px] font-black uppercase text-cyan-100"
               variants={fadeUp} custom={0.0} initial="hidden" animate={visible ? "visible" : "hidden"}
             >
+              <span className="h-px w-10 bg-cyan-100/70" />
               Pakistan's scientific sourcing network
             </motion.div>
 
             <motion.h1
-              className="font-[var(--app-font-heading)] text-[4.35rem] font-black leading-[0.82] text-white sm:text-[6.4rem] lg:text-[8.3rem] xl:text-[9.6rem]"
+              className="font-[var(--app-font-heading)] text-[4rem] font-black leading-[0.84] text-white sm:text-[5.8rem] lg:text-[7.8rem] xl:text-[9rem]"
               variants={fadeUp} custom={0.08} initial="hidden" animate={visible ? "visible" : "hidden"}
             >
               <span className="block">Science</span>
-              <span className="block text-cyan-100">Centre</span>
-              <span className="block">Pakistan.</span>
+              <span className="block">Centre</span>
             </motion.h1>
 
-            <motion.div
-              className="mt-7 grid max-w-4xl gap-6 md:grid-cols-[minmax(0,1fr)_220px]"
-              variants={fadeUp} custom={0.2} initial="hidden" animate={visible ? "visible" : "hidden"}
+            <motion.p
+              className="mt-5 max-w-4xl font-[var(--app-font-heading)] text-3xl font-black leading-none text-cyan-100 sm:text-4xl lg:text-5xl"
+              variants={fadeUp} custom={0.16} initial="hidden" animate={visible ? "visible" : "hidden"}
             >
-              <div className="border-l-2 border-primary pl-5">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={specIndex}
-                    className="mb-3 text-2xl font-black text-cyan-100 md:text-3xl"
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.35 }}
-                  >
-                    {heroSpecialties[specIndex]}
-                  </motion.div>
-                </AnimatePresence>
-                <p className="max-w-2xl text-base leading-relaxed text-slate-100 md:text-lg">
-                  Advanced laboratory instruments, diagnostics, reagents and scientific systems routed from trusted global portfolios to Pakistan's hospitals, universities and research teams.
-                </p>
-              </div>
-              <div className="grid grid-cols-3 border border-white/16 bg-[#06111d]/74 md:grid-cols-1">
-                {heroMetrics.map((metric) => (
-                  <div key={metric.label} className="border-r border-white/12 p-3 last:border-r-0 md:border-b md:border-r-0 md:last:border-b-0">
-                    <div className="font-[var(--app-font-heading)] text-3xl font-black leading-none text-white">
-                      {metric.value}
-                    </div>
-                    <div className="mt-1 text-[10px] font-bold uppercase leading-snug text-slate-300">
-                      {metric.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
+              for labs that move Pakistan.
+            </motion.p>
+
+            <motion.div
+              className="mt-7 max-w-3xl border-l-2 border-primary pl-5"
+              variants={fadeUp} custom={0.24} initial="hidden" animate={visible ? "visible" : "hidden"}
+            >
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={specIndex}
+                  className="mb-3 text-xl font-black text-white md:text-2xl"
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -18 }}
+                  transition={{ duration: 0.35 }}
+                >
+                  {heroSpecialties[specIndex]}
+                </motion.div>
+              </AnimatePresence>
+              <p className="max-w-2xl text-base leading-relaxed text-slate-100 md:text-lg">
+                Advanced laboratory instruments, diagnostics, reagents and scientific systems routed from trusted global portfolios to hospitals, universities and research teams.
+              </p>
             </motion.div>
 
             <motion.div
-              className="mt-8 flex flex-wrap gap-3"
-              variants={fadeUp} custom={0.32} initial="hidden" animate={visible ? "visible" : "hidden"}
+              className="mt-7 flex flex-wrap gap-8 text-xs font-black uppercase text-white"
+              variants={fadeUp} custom={0.34} initial="hidden" animate={visible ? "visible" : "hidden"}
             >
-              <Button asChild size="lg"
-                className="h-14 rounded-none bg-primary px-8 text-sm font-black uppercase text-primary-foreground hover:bg-primary/90">
-                <a href="#solutions">
-                  Explore solutions
-                  <motion.span
-                    className="ml-3 inline-flex"
-                    animate={{ x: [0, 5, 0] }}
-                    transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
-                  >
-                    <ArrowRight className="h-4 w-4" />
-                  </motion.span>
-                </a>
-              </Button>
-              <Button asChild size="lg" variant="outline"
-                className="h-14 rounded-none border-white/35 bg-white/5 px-8 text-sm font-black uppercase text-white hover:bg-white/12">
-                <a href="#contact">Talk to a specialist</a>
-              </Button>
+              <a href="#solutions" className="group inline-flex items-center gap-3 border-t border-white/35 pt-3 hover:text-cyan-100">
+                Explore solutions
+                <motion.span
+                  className="inline-flex"
+                  animate={{ x: [0, 5, 0] }}
+                  transition={{ repeat: Infinity, duration: 1.8, ease: "easeInOut" }}
+                >
+                  <ArrowRight className="h-4 w-4" />
+                </motion.span>
+              </a>
+              <a href="#contact" className="inline-flex items-center gap-3 border-t border-white/35 pt-3 hover:text-cyan-100">
+                Talk to a specialist
+                <ArrowRight className="h-4 w-4" />
+              </a>
             </motion.div>
           </div>
         </motion.div>
 
         <motion.div
-          className="absolute bottom-24 right-6 hidden w-[48vw] max-w-3xl grid-cols-4 border border-white/16 bg-[#06111d]/72 backdrop-blur-sm lg:grid"
+          className="absolute right-10 top-36 hidden w-72 text-right lg:block"
           variants={fadeUp} custom={0.48} initial="hidden" animate={visible ? "visible" : "hidden"}
         >
-          {heroCapabilities.map((capability, i) => (
+          {heroMetrics.map((metric, i) => (
             <button
+              key={metric.label}
               type="button"
-              key={capability.label}
               onClick={() => setSpecIndex(i)}
-              className="group border-r border-white/12 p-4 text-left transition-colors last:border-r-0 hover:bg-primary/16"
-              style={{
-                background: i === specIndex ? "hsl(var(--primary)/0.22)" : "transparent",
-              }}
+              className="block w-full border-t border-white/22 py-4 text-right transition-colors hover:text-cyan-100"
             >
-              <span className="block text-[10px] font-black uppercase text-primary">0{i + 1}</span>
-              <span className="mt-2 block text-sm font-black text-white">{capability.label}</span>
-              <span className="mt-1 block text-xs leading-snug text-slate-300">{capability.detail}</span>
+              <span className="block font-[var(--app-font-heading)] text-5xl font-black leading-none text-white">
+                {metric.value}
+              </span>
+              <span className="mt-1 block text-[11px] font-bold uppercase leading-snug text-slate-300">
+                {metric.label}
+              </span>
             </button>
           ))}
         </motion.div>
       </div>
 
-      <div className="absolute bottom-10 left-0 right-0 z-20 hidden border-y border-white/12 bg-[#07111f]/78 px-6 py-3 backdrop-blur-sm md:block md:px-12">
-        <div className="container mx-auto flex items-center justify-between gap-6 text-[10px] font-bold uppercase text-slate-300">
-          <span className="text-primary">Signal rail</span>
-          <div className="min-w-0 flex-1 items-center overflow-hidden">
-            <motion.div
-              className="flex min-w-max gap-8"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ repeat: Infinity, duration: 26, ease: "linear" }}
-            >
-              {[...heroBrandRail, ...heroSpecialties, ...heroBrandRail, ...heroSpecialties].map((item, i) => (
-                <span key={`${item}-${i}`} className="text-slate-400">
-                  {item}
-                </span>
-              ))}
-            </motion.div>
-          </div>
-          <span>Pakistan lab network</span>
-        </div>
-      </div>
     </section>
   );
 }
@@ -1656,7 +1630,8 @@ export default function Home() {
       */}
       <SiteNavbar
         visible={splashDone && current !== 2}
-        forceSolid={current === 0 || current === 3 || current === 5 || current === 6}
+        forceSolid={current === 3 || current === 5 || current === 6}
+        forceTransparent={current === 0}
       />
 
       {/* Full-screen panel container */}

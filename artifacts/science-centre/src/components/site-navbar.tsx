@@ -172,7 +172,15 @@ function appGroupProducts(groupId: string) {
   return products.filter(p => group.categoryIds.includes(p.category as any));
 }
 
-export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: boolean; forceSolid?: boolean }) {
+export function SiteNavbar({
+  visible = true,
+  forceSolid = false,
+  forceTransparent = false,
+}: {
+  visible?: boolean;
+  forceSolid?: boolean;
+  forceTransparent?: boolean;
+}) {
   const [scrolled, setScrolled]             = useState(false);
   const [menuOpen, setMenuOpen]             = useState(false);
   const [megaOpen, setMegaOpen]             = useState(false);
@@ -191,7 +199,7 @@ export function SiteNavbar({ visible = true, forceSolid = false }: { visible?: b
 
   const isHome     = location === "/";
   const isDarkPage = location === "/about";
-  const solid      = forceSolid || scrolled || !isDarkPage;
+  const solid      = !forceTransparent && (forceSolid || scrolled || !isDarkPage);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
