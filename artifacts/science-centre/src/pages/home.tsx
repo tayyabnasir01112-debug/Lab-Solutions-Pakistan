@@ -209,58 +209,87 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
               d="M128 290C172 206 251 206 292 126"
               fill="none"
               stroke="#7dd3fc"
-              strokeWidth="3"
+              strokeWidth="2.5"
               strokeLinecap="round"
               strokeDasharray="10 16"
               initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 0.85 }}
+              animate={{ pathLength: 1, opacity: 0.55 }}
               transition={{ duration: 1.2, delay: 0.35, ease: "easeOut" }}
             />
             <motion.path
               d="M128 126C172 210 251 210 292 290"
               fill="none"
               stroke="#22c55e"
-              strokeWidth="3"
+              strokeWidth="2.5"
               strokeLinecap="round"
               strokeDasharray="10 16"
               initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 0.85 }}
+              animate={{ pathLength: 1, opacity: 0.55 }}
               transition={{ duration: 1.2, delay: 0.55, ease: "easeOut" }}
             />
             <motion.path
-              d="M258 132C232 111 182 114 164 145C142 183 196 195 224 207C259 222 269 249 247 278C226 306 172 305 146 278"
+              d="M210 145L266 177V243L210 275L154 243V177Z"
               fill="none"
               stroke="white"
-              strokeWidth="11"
+              strokeWidth="6"
               strokeLinecap="round"
               strokeLinejoin="round"
               initial={{ pathLength: 0, opacity: 0 }}
               animate={{ pathLength: 1, opacity: 1 }}
-              transition={{ duration: 1.35, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1.1, delay: 0.9, ease: [0.16, 1, 0.3, 1] }}
               filter="url(#introGlow)"
             />
             <motion.path
-              d="M285 151C268 132 244 122 216 122C167 122 127 161 127 210C127 259 167 298 216 298C244 298 269 287 286 267"
+              d="M178 199L210 178L244 199L232 238L188 238L178 199ZM210 178V222M178 199L210 222L244 199M188 238L210 222L232 238"
               fill="none"
               stroke="#9df6ff"
-              strokeWidth="11"
+              strokeWidth="4"
               strokeLinecap="round"
               strokeLinejoin="round"
               initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 1 }}
-              transition={{ duration: 1.1, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              animate={{ pathLength: 1, opacity: 0.95 }}
+              transition={{ duration: 1.2, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
               filter="url(#introGlow)"
             />
-            {[0, 1, 2, 3, 4].map(i => (
+            <motion.circle
+              cx="210"
+              cy="210"
+              r="86"
+              fill="rgba(46,163,242,0.06)"
+              stroke="rgba(157,246,255,0.42)"
+              strokeWidth="2"
+              initial={{ scale: 0.82, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ delay: 1.05, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              style={{ transformOrigin: "210px 210px" }}
+            />
+            <motion.path
+              d="M146 210H274M210 146V274"
+              stroke="rgba(255,255,255,0.24)"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              transition={{ delay: 1.35, duration: 0.7, ease: "easeOut" }}
+            />
+            {[
+              { cx: 178, cy: 199, fill: "#38bdf8" },
+              { cx: 210, cy: 178, fill: "#ffffff" },
+              { cx: 244, cy: 199, fill: "#22c55e" },
+              { cx: 210, cy: 222, fill: "#7dd3fc" },
+              { cx: 188, cy: 238, fill: "#9df6ff" },
+              { cx: 232, cy: 238, fill: "#ffffff" },
+            ].map((node, i) => (
               <motion.circle
                 key={i}
-                cx={118 + i * 46}
-                cy={324 - Math.abs(2 - i) * 14}
-                r={i === 2 ? 5 : 3.5}
-                fill={i === 2 ? "#22c55e" : "#38bdf8"}
+                cx={node.cx}
+                cy={node.cy}
+                r={i === 3 ? 6 : 5}
+                fill={node.fill}
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ delay: 1.25 + i * 0.09, duration: 0.35 }}
+                transition={{ delay: 1.35 + i * 0.08, duration: 0.35 }}
+                filter="url(#introGlow)"
               />
             ))}
           </svg>
