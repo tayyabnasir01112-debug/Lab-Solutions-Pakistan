@@ -1,9 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 150" role="img" aria-labelledby="title desc">
   <title id="title">BioLegend from Revvity</title>
-  <desc id="desc">BioLegend brand mark with from Revvity lockup styling.</desc>
-  <text x="56" y="93" fill="#0077a8" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="700">BioLegend</text>
-  <text x="415" y="113" fill="#5f6b7a" font-family="Arial, Helvetica, sans-serif" font-size="21" font-weight="600">from Revvity</text>
-  <path d="M68 126c62-33 126-40 195-20 82 24 149 13 220-23 58-30 120-32 181-5" fill="none" stroke="#41b6d6" stroke-width="8" stroke-linecap="round"/>
-  <circle cx="86" cy="118" r="13" fill="#43b986"/>
-  <circle cx="648" cy="79" r="12" fill="#f2b84b"/>
+  <desc id="desc">Clean BioLegend from Revvity wordmark for catalogue display.</desc>
+  <text x="56" y="88" fill="#0077a8" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="700">BioLegend</text>
+  <text x="420" y="110" fill="#5f6b7a" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="600">from Revvity</text>
+  <circle cx="77" cy="114" r="11" fill="#43b986"/>
+  <circle cx="652" cy="81" r="11" fill="#f2b84b"/>
 </svg>
