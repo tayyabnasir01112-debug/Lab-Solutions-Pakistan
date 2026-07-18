@@ -103,14 +103,14 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
     const started = performance.now();
     let frame = 0;
     const tick = (now: number) => {
-      const pct = Math.min(100, Math.round(((now - started) / 2200) * 100));
+      const pct = Math.min(100, Math.round(((now - started) / 1250) * 100));
       setProgress(pct);
       if (pct < 100) frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);
-    const t1 = setTimeout(() => setPhase("resolve"), 650);
-    const t2 = setTimeout(() => setPhase("done"), 2050);
-    const t3 = setTimeout(onDone, 2500);
+    const t1 = setTimeout(() => setPhase("resolve"), 350);
+    const t2 = setTimeout(() => setPhase("done"), 1150);
+    const t3 = setTimeout(onDone, 1420);
     return () => {
       cancelAnimationFrame(frame);
       clearTimeout(t1);
@@ -1709,6 +1709,8 @@ const slideVariants = {
 export default function Home() {
   const [splashDone, setSplashDone] = useState(() => {
     try {
+      const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+      if (nav?.type === "reload") return false;
       return window.sessionStorage.getItem("science-centre-intro-seen") === "1";
     } catch {
       return false;
@@ -1869,7 +1871,7 @@ export default function Home() {
       )}
 
       {/* Section name label — bottom left */}
-      {splashDone && (
+      {splashDone && current !== 0 && (
         <div className="fixed bottom-4 left-6 z-50">
           <AnimatePresence mode="wait">
             <motion.span
