@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { SiteNavbar } from "@/components/site-navbar";
+import { SiteFooter } from "@/components/site-footer";
 import { ArrowRight, Award, Globe, HeartPulse, Microscope, FlaskConical, Dna } from "lucide-react";
 import { Link } from "wouter";
 
@@ -428,7 +429,7 @@ function CTAPanel() {
 }
 
 /* ─── Main About Page ─────────────────────────────────────────── */
-const PANEL_NAMES = ["Who We Are", "Our Journey", "Our Values", "Leadership", "Work With Us"];
+const PANEL_NAMES = ["Who We Are", "Our Journey", "Our Values", "Leadership", "Work With Us", "Contact"];
 
 export default function About() {
   const [current, setCurrent] = useState(0);
@@ -442,6 +443,7 @@ export default function About() {
     <ValuesPanel key="values" />,
     <CEOPanel key="ceo" />,
     <CTAPanel key="cta" />,
+    <SiteFooter key="footer" variant="slide" />,
   ];
 
   const goTo = (index: number) => {
