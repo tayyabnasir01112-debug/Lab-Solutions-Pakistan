@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import {
+  ArrowLeft,
   ArrowRight,
   ChevronRight,
   MapPin,
@@ -1100,7 +1101,7 @@ const featuredInstruments: FeaturedInstrument[] = [
     category: "Flow Cytometry",
     accent: "#6F6BB7",
     desc: "Full spectrum flow cytometry for clinical environments, designed for diagnostic laboratories that need sensitive immunophenotyping with efficient daily QC and transferable templates.",
-    image: "https://cytek-web.s3.amazonaws.com/cytekbio.com/instruments/instr.prod-nl-clc.png",
+    image: resolveAsset("/images/featured/cytek-northern-lights-clc.png"),
     specs: ["Clinical-use configuration", "Up to 3 laser lines", "38 fluorescence channels", "SpectroFlo clinical workflow"],
     href: "/products/cytek-nl-clc",
   },
@@ -1124,7 +1125,7 @@ const featuredInstruments: FeaturedInstrument[] = [
     category: "NGS Precision Diagnostics",
     accent: "#E91E2F",
     desc: "NGS-based BRCA1/2 reagent kit for germline and somatic variant detection, with PLUS support for expanded target coverage and CNV analysis.",
-    image: resolveAsset("/images/logos/ngene-logo-clean.svg"),
+    image: resolveAsset("/images/ngene/precision1Img1_en.png"),
     specs: ["BRCA1 and BRCA2 targets", "Germline and FFPE tissue", "Illumina MiSeq/MiniSeq platforms", "CE-IVD and MFDS approved"],
     href: "/products/ngene-brca",
   },
@@ -1234,7 +1235,7 @@ function FeaturedProducts() {
         </div>
 
         {/* Main Slideshow */}
-        <motion.div className="relative w-full h-[320px] md:h-[380px] overflow-hidden"
+        <motion.div className="relative h-[390px] w-full overflow-hidden border border-border bg-background shadow-sm md:h-[430px]"
           initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay: 0.2 }}>
 
           {/* Background layer */}
@@ -1243,46 +1244,79 @@ function FeaturedProducts() {
               className="absolute inset-0"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               transition={{ duration: 0.7 }}
-              style={{ background: `linear-gradient(135deg, ${p.accent}22 0%, ${p.accent}08 50%, transparent 100%)` }}
+              style={{
+                background: `
+                  radial-gradient(circle at 74% 42%, ${p.accent}22 0%, transparent 34%),
+                  radial-gradient(circle at 18% 10%, ${p.accent}16 0%, transparent 28%),
+                  linear-gradient(135deg, ${p.accent}14 0%, rgba(255,255,255,0.94) 52%, ${p.accent}10 100%)
+                `,
+              }}
             />
           </AnimatePresence>
 
           {/* Animated grid pattern */}
-          <div className="absolute inset-0 opacity-[0.035]"
-            style={{ backgroundImage: "linear-gradient(rgba(0,0,0,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.8) 1px, transparent 1px)", backgroundSize: "48px 48px" }} />
+          <div className="absolute inset-0 opacity-[0.045]"
+            style={{ backgroundImage: "linear-gradient(rgba(0,0,0,0.65) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.65) 1px, transparent 1px)", backgroundSize: "52px 52px" }} />
+          <div className="absolute inset-y-0 right-0 hidden w-1/2 bg-gradient-to-r from-transparent via-white/35 to-white/70 lg:block" />
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-background/85 to-transparent" />
 
-          {/* Border */}
-          <div className="absolute inset-0 border border-border" />
-
-          {/* Product image */}
+          {/* Blended product scene */}
           <AnimatePresence mode="wait">
             <motion.div
-              key={"image-" + current}
-              className="pointer-events-none absolute bottom-6 right-64 top-8 hidden w-[34%] items-center justify-center lg:flex"
-              initial={{ opacity: 0, scale: 0.94, x: 20 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              exit={{ opacity: 0, scale: 0.96, x: -18 }}
+              key={"image-scene-" + current}
+              className="pointer-events-none absolute inset-0 overflow-hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.62, ease: [0.16, 1, 0.3, 1] }}
             >
-              <div className="absolute inset-0 rounded-full blur-3xl" style={{ backgroundColor: `${p.accent}24` }} />
-              <div className="relative flex h-full w-full items-center justify-center overflow-hidden border border-border/80 bg-background/70 shadow-sm backdrop-blur-sm">
-                <div className="absolute inset-0 opacity-[0.08]" style={{ backgroundImage: "radial-gradient(circle, currentColor 1px, transparent 1px)", backgroundSize: "18px 18px", color: p.accent }} />
-                {p.image ? (
+              <div
+                className="absolute right-[-10%] top-1/2 h-[34rem] w-[34rem] -translate-y-1/2 rounded-full blur-3xl md:right-[6%]"
+                style={{ backgroundColor: `${p.accent}22` }}
+              />
+              <div
+                className="absolute bottom-5 right-[13rem] hidden h-48 w-[28rem] rounded-full blur-2xl lg:block"
+                style={{ backgroundColor: `${p.accent}18` }}
+              />
+              {p.image ? (
+                <>
                   <img
                     src={p.image}
-                    alt={p.fullName}
-                    className="relative max-h-[78%] max-w-[82%] object-contain drop-shadow-2xl"
+                    alt=""
+                    className="absolute -right-16 top-1/2 hidden h-[118%] max-w-[64%] -translate-y-1/2 object-contain opacity-[0.09] saturate-125 lg:block"
+                    style={{
+                      WebkitMaskImage: "linear-gradient(90deg, transparent 0%, black 24%, black 72%, transparent 100%)",
+                      maskImage: "linear-gradient(90deg, transparent 0%, black 24%, black 72%, transparent 100%)",
+                    }}
                     loading="lazy"
                   />
-                ) : (
-                  <div className="relative text-center text-xs font-bold uppercase tracking-[0.2em] text-muted-foreground">Image coming soon</div>
-                )}
-              </div>
+                  <motion.img
+                    src={p.image}
+                    alt={p.fullName}
+                    className="absolute bottom-10 right-[16.5rem] hidden max-h-[74%] max-w-[34%] object-contain drop-shadow-[0_26px_34px_rgba(15,23,42,0.22)] lg:block 2xl:right-[19rem]"
+                    initial={{ opacity: 0, scale: 0.94, x: 34, rotate: 1.5 }}
+                    animate={{ opacity: 1, scale: 1, x: 0, rotate: 0 }}
+                    exit={{ opacity: 0, scale: 0.96, x: -18 }}
+                    transition={{ duration: 0.68, ease: [0.16, 1, 0.3, 1] }}
+                    loading="lazy"
+                  />
+                  <motion.img
+                    src={p.image}
+                    alt={p.fullName}
+                    className="absolute right-3 top-20 h-28 w-36 object-contain opacity-85 drop-shadow-xl md:right-8 md:top-16 md:h-36 md:w-44 lg:hidden"
+                    initial={{ opacity: 0, scale: 0.92, y: 10 }}
+                    animate={{ opacity: 0.85, scale: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.96 }}
+                    transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                    loading="lazy"
+                  />
+                </>
+              ) : null}
             </motion.div>
           </AnimatePresence>
 
           {/* Left: main content */}
-          <div className="absolute inset-0 flex flex-col justify-between p-8 md:p-12 lg:pr-[34rem]">
+          <div className="absolute inset-0 flex flex-col justify-between p-6 md:p-9 lg:p-10 lg:pr-[34rem] xl:pr-[37rem]">
             {/* Top row */}
             <div className="flex items-center justify-between">
               <AnimatePresence mode="wait">
@@ -1314,11 +1348,11 @@ function FeaturedProducts() {
                 <div className="text-muted-foreground text-xs font-bold tracking-[0.25em] uppercase mb-4">
                   Focus Instrument
                 </div>
-                <h2 className="font-[var(--app-font-heading)] font-black text-foreground leading-none tracking-tight"
-                  style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)" }}>
+                <h2 className="max-w-[11ch] font-[var(--app-font-heading)] font-black text-foreground leading-none tracking-tight md:max-w-2xl"
+                  style={{ fontSize: "clamp(2.15rem, 5.3vw, 4.8rem)" }}>
                   {p.name}
                 </h2>
-                <p className="line-clamp-3 text-muted-foreground text-base md:text-lg font-light mt-5 max-w-xl leading-relaxed">
+                <p className="mt-5 max-w-xl text-base font-light leading-relaxed text-muted-foreground line-clamp-4 md:text-lg lg:line-clamp-3">
                   {p.desc}
                 </p>
               </motion.div>
@@ -1346,10 +1380,10 @@ function FeaturedProducts() {
               </div>
               {/* Arrows */}
               <div className="flex gap-2">
-                {[{ fn: prev, label: "←" }, { fn: next, label: "→" }].map(({ fn, label }) => (
-                  <button key={label} onClick={fn}
+                {[{ fn: prev, label: "Previous", icon: ArrowLeft }, { fn: next, label: "Next", icon: ArrowRight }].map(({ fn, label, icon: Icon }) => (
+                  <button key={label} onClick={fn} aria-label={label}
                     className="w-10 h-10 flex items-center justify-center border border-border text-muted-foreground hover:text-foreground hover:border-foreground transition-all duration-200 text-sm font-bold">
-                    {label}
+                    <Icon className="h-4 w-4" />
                   </button>
                 ))}
               </div>
@@ -1359,7 +1393,7 @@ function FeaturedProducts() {
           {/* Right: specs panel (desktop only) */}
           <AnimatePresence mode="wait">
             <motion.div key={"specs-" + current}
-              className="absolute right-0 top-0 bottom-0 w-64 hidden lg:flex flex-col justify-center p-8 border-l border-border"
+              className="absolute bottom-7 right-5 top-7 hidden w-64 flex-col justify-center border border-border/75 bg-background/70 p-6 shadow-sm backdrop-blur-md xl:flex"
               initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}>
               <div className="text-xs font-bold tracking-[0.2em] uppercase text-muted-foreground mb-5">
@@ -1396,10 +1430,12 @@ function FeaturedProducts() {
                 onMouseEnter={() => setHovered(i)} onMouseLeave={() => setHovered(null)}>
                 <motion.button
                   onClick={() => go(i)}
-                  className="w-40 p-3 text-left border transition-all duration-300 relative overflow-hidden lg:w-full"
+                  className="relative w-40 overflow-hidden border p-3 text-left transition-all duration-300 lg:w-full"
                   style={{
-                    borderColor: isActive ? prod.accent : "var(--border)",
-                    background: isActive ? prod.accent + "12" : "transparent",
+                    borderColor: isActive ? prod.accent : "color-mix(in srgb, var(--border) 74%, transparent)",
+                    background: isActive
+                      ? `linear-gradient(135deg, ${prod.accent}14, rgba(255,255,255,0.86))`
+                      : "rgba(255,255,255,0.46)",
                   }}
                   whileHover={{ y: -2 }}
                   transition={{ duration: 0.2 }}>
@@ -1409,9 +1445,17 @@ function FeaturedProducts() {
                       className="absolute top-0 left-0 right-0 h-0.5"
                       style={{ backgroundColor: prod.accent }} />
                   )}
-                  <div className="mb-2 flex h-10 items-center justify-center overflow-hidden bg-muted/40">
+                  <div
+                    className="pointer-events-none absolute -right-6 -top-4 h-20 w-24 opacity-20"
+                    style={{ color: prod.accent }}
+                  >
                     {prod.image ? (
-                      <img src={prod.image} alt="" className="h-full w-full object-contain p-1.5" loading="lazy" />
+                      <img src={prod.image} alt="" className="h-full w-full object-contain" loading="lazy" />
+                    ) : null}
+                  </div>
+                  <div className="mb-2 flex h-8 items-center justify-start overflow-hidden">
+                    {prod.image ? (
+                      <img src={prod.image} alt="" className="h-full max-w-20 object-contain drop-shadow-sm" loading="lazy" />
                     ) : (
                       <div className="h-2 w-2 rounded-full" style={{ backgroundColor: prod.accent }} />
                     )}
