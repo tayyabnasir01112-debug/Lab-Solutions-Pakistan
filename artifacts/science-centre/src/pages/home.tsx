@@ -44,6 +44,19 @@ const fadeIn = {
   }),
 };
 
+const introParticles = [
+  { x: "18%", y: "24%", size: 4, delay: 0.45, color: "#7dd3fc" },
+  { x: "25%", y: "72%", size: 3, delay: 0.9, color: "#10b981" },
+  { x: "34%", y: "38%", size: 5, delay: 0.65, color: "#2ea3f2" },
+  { x: "64%", y: "31%", size: 3, delay: 1.1, color: "#a7f3d0" },
+  { x: "72%", y: "67%", size: 5, delay: 0.75, color: "#38bdf8" },
+  { x: "81%", y: "44%", size: 4, delay: 1.3, color: "#22c55e" },
+  { x: "48%", y: "18%", size: 3, delay: 1.0, color: "#93c5fd" },
+  { x: "52%", y: "82%", size: 4, delay: 1.45, color: "#5eead4" },
+];
+
+const introSignals = ["HLA", "NGS", "FLOW", "WATER", "LIFE SCIENCES"];
+
 /* ─── Scroll-reveal wrapper ───────────────────────────────────── */
 function Reveal({
   children,
@@ -83,95 +96,211 @@ function Reveal({
 
 /* ─── Intro Splash ────────────────────────────────────────────── */
 function IntroSplash({ onDone }: { onDone: () => void }) {
-  const [phase, setPhase] = useState<"logo" | "fill" | "done">("logo");
+  const [phase, setPhase] = useState<"calibrate" | "resolve" | "done">("calibrate");
+  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Phase 1: logo appears (grayscale) — 0.9s
-    // Phase 2: color fills in — 1.4s
-    // Phase 3: exit — 0.7s
-    const t1 = setTimeout(() => setPhase("fill"), 900);
-    const t2 = setTimeout(() => setPhase("done"), 2600);
-    const t3 = setTimeout(onDone, 3200);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+    const started = performance.now();
+    let frame = 0;
+    const tick = (now: number) => {
+      const pct = Math.min(100, Math.round(((now - started) / 3300) * 100));
+      setProgress(pct);
+      if (pct < 100) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    const t1 = setTimeout(() => setPhase("resolve"), 1250);
+    const t2 = setTimeout(() => setPhase("done"), 3350);
+    const t3 = setTimeout(onDone, 4050);
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
   }, [onDone]);
 
   return (
     <motion.div
-      className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-background overflow-hidden"
+      className="fixed inset-0 z-[200] overflow-hidden bg-[#020711] text-white"
       initial={{ opacity: 1 }}
+      animate={phase === "done" ? { opacity: 0 } : { opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
+      transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
     >
-      {/* Subtle animated grid */}
-      <div className="absolute inset-0 pointer-events-none"
-        style={{ backgroundImage: "radial-gradient(circle, hsl(var(--border)) 1px, transparent 1px)", backgroundSize: "40px 40px", opacity: 0.4 }} />
+      <div
+        className="absolute inset-0 opacity-[0.16]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(46,163,242,0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(46,163,242,0.16) 1px, transparent 1px)",
+          backgroundSize: "72px 72px",
+        }}
+      />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_48%,rgba(46,163,242,0.28),transparent_34%),radial-gradient(circle_at_50%_100%,rgba(16,185,129,0.18),transparent_42%)]" />
+      <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-cyan-200/35 to-transparent" />
 
-      {/* Center logo container */}
-      <div className="relative flex flex-col items-center gap-8">
-
-        {/* Glow that pulses when color fills */}
-        <motion.div
-          className="absolute inset-0 blur-3xl rounded-full pointer-events-none"
-          style={{ background: "hsl(var(--primary)/0.15)" }}
-          animate={phase === "fill" ? { scale: [1, 1.8, 1.2], opacity: [0, 0.8, 0.3] } : { opacity: 0 }}
-          transition={{ duration: 1.4, ease: "easeOut" }}
+      {introParticles.map((p, index) => (
+        <motion.span
+          key={index}
+          className="absolute rounded-full"
+          style={{ left: p.x, top: p.y, width: p.size, height: p.size, backgroundColor: p.color, boxShadow: `0 0 18px ${p.color}` }}
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: [0, 1, 0.35], scale: [0, 1.25, 1], x: [0, index % 2 ? -14 : 14], y: [0, index % 2 ? 12 : -12] }}
+          transition={{ duration: 2.2, delay: p.delay, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
         />
+      ))}
 
-        {/* Logo — grayscale then color */}
-        <div className="relative w-72 md:w-96">
-          {/* Grayscale base — always visible */}
-          <motion.img
-            src={img("/images/sc-logo-full.png")}
-            alt="Science Centre"
-            className="w-full h-auto object-contain"
-            style={{ filter: "grayscale(1) brightness(0.5)" }}
-            initial={{ opacity: 0, scale: 0.8, y: 16 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          />
-
-          {/* Colored version — revealed left-to-right via clip */}
-          <motion.div
-            className="absolute inset-0 overflow-hidden"
-            initial={{ clipPath: "inset(0 100% 0 0)" }}
-            animate={phase !== "logo" ? { clipPath: "inset(0 0% 0 0)" } : { clipPath: "inset(0 100% 0 0)" }}
-            transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
-          >
-            <img
-              src={img("/images/sc-logo-full.png")}
-              alt="Science Centre"
-              className="w-full h-auto object-contain drop-shadow-xl"
-            />
-          </motion.div>
-
-          {/* Bright sweep line that travels across during fill */}
-          <motion.div
-            className="absolute top-0 bottom-0 w-0.5 pointer-events-none"
-            style={{ background: "linear-gradient(to bottom, transparent, white, transparent)", boxShadow: "0 0 12px 4px rgba(255,255,255,0.8)" }}
-            initial={{ left: "-2px", opacity: 0 }}
-            animate={phase !== "logo" ? { left: ["0%", "100%"], opacity: [0, 1, 0] } : { left: "-2px", opacity: 0 }}
-            transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
-          />
-        </div>
-
-        {/* Tagline fades in after color fills */}
-        <motion.p
-          className="text-xs tracking-[0.4em] text-muted-foreground uppercase font-medium"
-          initial={{ opacity: 0, y: 8 }}
-          animate={phase === "fill" || phase === "done" ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-        >
-          Your Partner in Science
-        </motion.p>
+      <div className="absolute left-6 top-6 hidden text-[10px] font-black uppercase tracking-[0.34em] text-cyan-100/55 md:block">
+        Scientific sourcing network
+      </div>
+      <div className="absolute right-6 top-6 hidden text-[10px] font-black uppercase tracking-[0.34em] text-cyan-100/55 md:block">
+        SC-PK / {String(progress).padStart(3, "0")}
       </div>
 
-      {/* Bottom progress bar */}
-      <motion.div
-        className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-primary via-accent to-primary"
-        initial={{ width: "0%" }}
-        animate={{ width: "100%" }}
-        transition={{ duration: 2.8, delay: 0.2, ease: "linear" }}
-      />
+      <div className="relative z-10 flex h-full flex-col items-center justify-center px-6">
+        <motion.div
+          className="relative h-[300px] w-[300px] md:h-[420px] md:w-[420px]"
+          initial={{ scale: 0.72, opacity: 0 }}
+          animate={{ scale: phase === "resolve" ? 1 : 0.86, opacity: 1 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <motion.div
+            className="absolute inset-0 rounded-full border border-cyan-100/10"
+            animate={{ rotate: 360 }}
+            transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+          />
+          <motion.div
+            className="absolute inset-8 rounded-full border border-emerald-200/15"
+            animate={{ rotate: -360 }}
+            transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
+          />
+
+          <svg viewBox="0 0 420 420" className="absolute inset-0 h-full w-full overflow-visible">
+            <defs>
+              <linearGradient id="introStroke" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#7dd3fc" />
+                <stop offset="48%" stopColor="#2ea3f2" />
+                <stop offset="100%" stopColor="#22c55e" />
+              </linearGradient>
+              <filter id="introGlow" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur stdDeviation="3.5" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            <motion.circle
+              cx="210"
+              cy="210"
+              r="130"
+              fill="none"
+              stroke="url(#introStroke)"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeDasharray="90 38"
+              filter="url(#introGlow)"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.95, rotate: 360 }}
+              transition={{ pathLength: { duration: 1.35, ease: "easeOut" }, rotate: { duration: 16, repeat: Infinity, ease: "linear" } }}
+              style={{ transformOrigin: "210px 210px" }}
+            />
+            <motion.path
+              d="M128 290C172 206 251 206 292 126"
+              fill="none"
+              stroke="#7dd3fc"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeDasharray="10 16"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.85 }}
+              transition={{ duration: 1.2, delay: 0.35, ease: "easeOut" }}
+            />
+            <motion.path
+              d="M128 126C172 210 251 210 292 290"
+              fill="none"
+              stroke="#22c55e"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeDasharray="10 16"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 0.85 }}
+              transition={{ duration: 1.2, delay: 0.55, ease: "easeOut" }}
+            />
+            <motion.path
+              d="M258 132C232 111 182 114 164 145C142 183 196 195 224 207C259 222 269 249 247 278C226 306 172 305 146 278"
+              fill="none"
+              stroke="white"
+              strokeWidth="11"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              transition={{ duration: 1.35, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
+              filter="url(#introGlow)"
+            />
+            <motion.path
+              d="M285 151C268 132 244 122 216 122C167 122 127 161 127 210C127 259 167 298 216 298C244 298 269 287 286 267"
+              fill="none"
+              stroke="#9df6ff"
+              strokeWidth="11"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              transition={{ duration: 1.1, delay: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              filter="url(#introGlow)"
+            />
+            {[0, 1, 2, 3, 4].map(i => (
+              <motion.circle
+                key={i}
+                cx={118 + i * 46}
+                cy={324 - Math.abs(2 - i) * 14}
+                r={i === 2 ? 5 : 3.5}
+                fill={i === 2 ? "#22c55e" : "#38bdf8"}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ delay: 1.25 + i * 0.09, duration: 0.35 }}
+              />
+            ))}
+          </svg>
+
+          <motion.div
+            className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: phase === "calibrate" ? 1 : 0 }}
+            transition={{ duration: 0.35 }}
+          >
+            <div className="font-mono text-xs tracking-[0.36em] text-cyan-100/70">/{String(progress).padStart(3, "0")}</div>
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          className="-mt-8 text-center md:-mt-12"
+          initial={{ opacity: 0, y: 16 }}
+          animate={phase === "resolve" ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="text-[11px] font-black uppercase tracking-[0.55em] text-cyan-100/65">
+            {introSignals[progress % introSignals.length]}
+          </div>
+          <h1 className="mt-4 font-[var(--app-font-heading)] text-4xl font-black uppercase leading-none tracking-[0.08em] md:text-7xl">
+            Science Centre
+          </h1>
+          <div className="mt-3 text-xs font-black uppercase tracking-[0.46em] text-emerald-200/75 md:text-sm">
+            Pakistan
+          </div>
+        </motion.div>
+      </div>
+
+      <div className="absolute bottom-8 left-1/2 h-px w-56 -translate-x-1/2 overflow-hidden bg-white/10">
+        <motion.div
+          className="h-full bg-gradient-to-r from-cyan-300 via-white to-emerald-300"
+          initial={{ width: "0%" }}
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.1, ease: "linear" }}
+        />
+      </div>
     </motion.div>
   );
 }
