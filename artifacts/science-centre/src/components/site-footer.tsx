@@ -160,11 +160,17 @@ export function SiteFooter({ variant = "default" }: { variant?: "default" | "sli
             </h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
               {[
-                "Transplant Diagnostics",
                 "Life Sciences",
-                "Molecular Biology",
-                "Immunology",
-                "Analytical Chemistry",
+                "Transplant Diagnostics",
+                "Flow Cytometry Solutions",
+                "Cell Culture Solutions",
+                "Water Purification Systems",
+                "NGS Solutions",
+                "Allergen Solutions",
+                "Biochemistry Instruments",
+                "Filtration Solutions",
+                "Flow Antibody Solutions",
+                "General Lab Consumables",
               ].map((item) => (
                 <li key={item}>
                   <Link href="/solutions" className="hover:text-primary transition-colors">

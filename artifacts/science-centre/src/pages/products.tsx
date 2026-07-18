@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence, useInView } from "framer-motion";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -554,6 +554,7 @@ type SortKey = "featured" | "name" | "brand";
 
 export default function Products() {
   const [splashDone] = useState(true);
+  const [location] = useLocation();
   const [query, setQuery] = useState("");
   const [activeBrands, setActiveBrands] = useState<string[]>([]);
   const [activeCats, setActiveCats] = useState<string[]>([]);
@@ -561,17 +562,19 @@ export default function Products() {
   const [sort, setSort] = useState<SortKey>("featured");
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
 
-  // Parse ?brand= and ?category= URL params on mount so navbar mega-menu can deep-link
+  // Parse URL params so navbar mega-menu and global search can deep-link
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const brandParam = params.get("brand");
     const catParam = params.get("category");
     const featuredParam = params.get("featured");
-    if (brandParam) setActiveBrands(brandParam.split(",").filter(Boolean));
-    if (catParam) setActiveCats(catParam.split(",").filter(Boolean));
-    if (featuredParam === "1") setFeaturedOnly(true);
+    const queryParam = params.get("q") || params.get("search");
+    setActiveBrands(brandParam ? brandParam.split(",").filter(Boolean) : []);
+    setActiveCats(catParam ? catParam.split(",").filter(Boolean) : []);
+    setFeaturedOnly(featuredParam === "1");
+    setQuery(queryParam || "");
     window.scrollTo(0, 0);
-  }, []);
+  }, [location]);
 
   const toggleBrand = (id: string) =>
     setActiveBrands((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));

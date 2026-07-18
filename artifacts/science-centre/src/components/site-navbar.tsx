@@ -1,13 +1,12 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import {
   ChevronDown, ArrowRight, ChevronRight, X, Globe, Building2,
   LayoutGrid, Tag, Layers,
   HeartPulse, FlaskConical, Dna, Beaker, Gauge, Waves,
   Microscope, TestTube, Cpu, Zap, Scale, Thermometer, Activity,
-  ShieldCheck, Droplets,
+  ShieldCheck, Droplets, Search,
 } from "lucide-react";
 import {
   brands,
@@ -72,6 +71,30 @@ const NAV_LINKS = [
   { label: "About",     anchor: "about",     isPage: true,  href: "/about",    hasMega: false },
   { label: "Contact",   anchor: "contact",   isPage: true, href: "/contact", hasMega: false },
 ] as const;
+
+const SITE_SEARCH_PAGES = [
+  { label: "Home", meta: "Company overview", href: "/" },
+  { label: "Solutions", meta: "Application areas", href: "/solutions" },
+  { label: "Products", meta: "Full catalogue", href: "/products" },
+  { label: "Events", meta: "Upcoming events and gallery", href: "/events" },
+  { label: "Partners", meta: "Brand network", href: "/partners" },
+  { label: "About", meta: "Science Centre profile", href: "/about" },
+  { label: "Contact", meta: "Enquiry and office details", href: "/contact" },
+];
+
+const SOLUTION_SEARCH_LINKS = [
+  "Life Sciences",
+  "Transplant Diagnostics",
+  "Flow Cytometry Solutions",
+  "Cell Culture Solutions",
+  "Water Purification Systems",
+  "NGS Solutions",
+  "Allergen Solutions",
+  "Biochemistry Instruments",
+  "Filtration Solutions",
+  "Flow Antibody Solutions",
+  "General Lab Consumables",
+].map(label => ({ label, meta: "Solution area", href: `/products?q=${encodeURIComponent(label)}` }));
 
 // ─── Application Groups ────────────────────────────────────────────────────
 // Groups several catalogue categories under a higher-level "application" label
@@ -192,10 +215,13 @@ export function SiteNavbar({
   const [leftHovered, setLeftHovered]       = useState(false);
   const [rightHovered, setRightHovered]     = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
-  const [location]                          = useLocation();
+  const [searchQuery, setSearchQuery]       = useState("");
+  const [searchOpen, setSearchOpen]         = useState(false);
+  const [location, navigate]                = useLocation();
   const megaRef    = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const megaCloseTimer = useRef<number | null>(null);
+  const searchCloseTimer = useRef<number | null>(null);
 
   const isHome     = location === "/";
   const isDarkPage = location === "/about";
@@ -230,6 +256,70 @@ export function SiteNavbar({
   }, [megaOpen]);
 
   useEffect(() => { setExpandedCat(null); }, [activeBrand, activeApp, activeCategory, viewMode]);
+
+  const searchResults = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return [];
+
+    const pageMatches = SITE_SEARCH_PAGES
+      .filter(item => `${item.label} ${item.meta}`.toLowerCase().includes(q))
+      .map(item => ({ ...item, type: "Page" }));
+
+    const solutionMatches = SOLUTION_SEARCH_LINKS
+      .filter(item => item.label.toLowerCase().includes(q))
+      .map(item => ({ ...item, type: "Solution" }));
+
+    const brandMatches = brands
+      .filter(brand => `${brand.name} ${brand.short} ${brand.blurb}`.toLowerCase().includes(q))
+      .slice(0, 4)
+      .map(brand => ({ label: brand.short, meta: `${productsByBrand(brand.id).length} catalogue entries`, href: `/products?brand=${brand.id}`, type: "Brand" }));
+
+    const categoryMatches = categories
+      .filter(category => category.name.toLowerCase().includes(q))
+      .slice(0, 4)
+      .map(category => ({ label: category.name, meta: "Product category", href: `/products?category=${category.id}`, type: "Category" }));
+
+    const productMatches = products
+      .filter(product => {
+        const brand = brandById(product.brand);
+        const category = categoryById(product.category);
+        return [
+          product.name,
+          product.description,
+          product.subcategory,
+          product.catalogueNumber,
+          brand?.name,
+          brand?.short,
+          category?.name,
+          ...(product.tags ?? []),
+        ].filter(Boolean).join(" ").toLowerCase().includes(q);
+      })
+      .slice(0, 7)
+      .map(product => ({ label: product.name, meta: `${brandById(product.brand).short} / ${categoryById(product.category).name}`, href: `/products/${product.id}`, type: "Product" }));
+
+    return [...pageMatches, ...solutionMatches, ...brandMatches, ...categoryMatches, ...productMatches].slice(0, 10);
+  }, [searchQuery]);
+
+  const clearSearchCloseTimer = useCallback(() => {
+    if (searchCloseTimer.current) {
+      window.clearTimeout(searchCloseTimer.current);
+      searchCloseTimer.current = null;
+    }
+  }, []);
+
+  const scheduleSearchClose = useCallback(() => {
+    clearSearchCloseTimer();
+    searchCloseTimer.current = window.setTimeout(() => setSearchOpen(false), 140);
+  }, [clearSearchCloseTimer]);
+
+  const submitSearch = useCallback((e: React.FormEvent) => {
+    e.preventDefault();
+    const q = searchQuery.trim();
+    navigate(q ? `/products?q=${encodeURIComponent(q)}` : "/products");
+    setSearchOpen(false);
+    setMenuOpen(false);
+    setMegaOpen(false);
+  }, [navigate, searchQuery]);
 
   function hrefFor(link: typeof NAV_LINKS[number]) {
     if (link.isPage && "href" in link) return link.href;
@@ -350,15 +440,67 @@ export function SiteNavbar({
           })}
         </div>
 
-        {/* CTA + hamburger */}
+        {/* Search + hamburger */}
         <motion.div initial={{ opacity: 0 }} animate={visible ? { opacity: 1 } : {}} transition={{ delay: 0.5 }} className="flex items-center gap-3">
-          <Button asChild className="hidden lg:flex bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-none px-6">
-            <Link href="/contact">Request a Quote</Link>
-          </Button>
+          <form
+            onSubmit={submitSearch}
+            onFocus={() => { clearSearchCloseTimer(); setSearchOpen(true); }}
+            onBlur={scheduleSearchClose}
+            className="relative hidden lg:block"
+          >
+            <Search className={`pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 ${solid ? "text-muted-foreground" : "text-white/70"}`} />
+            <input
+              value={searchQuery}
+              onChange={(e) => { setSearchQuery(e.target.value); setSearchOpen(true); }}
+              placeholder="Search site..."
+              aria-label="Search entire site"
+              className={`h-11 w-64 rounded-none border pl-10 pr-3 text-sm outline-none transition-colors ${
+                solid
+                  ? "border-border bg-background/90 text-foreground placeholder:text-muted-foreground focus:border-primary"
+                  : "border-white/25 bg-white/10 text-white placeholder:text-white/65 focus:border-cyan-100"
+              }`}
+            />
+            <AnimatePresence>
+              {searchOpen && searchQuery.trim() && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 8 }}
+                  transition={{ duration: 0.18 }}
+                  className="absolute right-0 top-[calc(100%+10px)] w-[360px] border border-border bg-background text-foreground shadow-2xl"
+                  onMouseEnter={clearSearchCloseTimer}
+                  onMouseLeave={scheduleSearchClose}
+                >
+                  {searchResults.length ? (
+                    <div className="max-h-[420px] overflow-y-auto p-2">
+                      {searchResults.map(result => (
+                        <Link
+                          key={`${result.type}-${result.href}-${result.label}`}
+                          href={result.href}
+                          onClick={() => { setSearchOpen(false); setSearchQuery(""); }}
+                          className="group grid grid-cols-[1fr_auto] gap-3 border-b border-border/70 px-3 py-3 last:border-b-0 hover:bg-muted/60"
+                        >
+                          <span>
+                            <span className="block text-sm font-bold leading-snug group-hover:text-primary">{result.label}</span>
+                            <span className="mt-0.5 block text-xs text-muted-foreground">{result.meta}</span>
+                          </span>
+                          <span className="self-start text-[10px] font-black uppercase text-primary">{result.type}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  ) : (
+                    <button type="submit" className="block w-full px-4 py-4 text-left text-sm hover:bg-muted">
+                      Search products for <span className="font-bold">"{searchQuery.trim()}"</span>
+                    </button>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </form>
           <button className="lg:hidden p-2" aria-label="Toggle menu" onClick={() => setMenuOpen(!menuOpen)}>
-            <motion.div animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} className="w-5 h-0.5 bg-foreground mb-1.5 origin-center" />
-            <motion.div animate={menuOpen ? { opacity: 0 } : { opacity: 1 }} className="w-5 h-0.5 bg-foreground mb-1.5" />
-            <motion.div animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} className="w-5 h-0.5 bg-foreground origin-center" />
+            <motion.div animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} className={`mb-1.5 h-0.5 w-5 origin-center ${solid ? "bg-foreground" : "bg-white"}`} />
+            <motion.div animate={menuOpen ? { opacity: 0 } : { opacity: 1 }} className={`mb-1.5 h-0.5 w-5 ${solid ? "bg-foreground" : "bg-white"}`} />
+            <motion.div animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} className={`h-0.5 w-5 origin-center ${solid ? "bg-foreground" : "bg-white"}`} />
           </button>
         </motion.div>
       </div>
@@ -904,9 +1046,31 @@ export function SiteNavbar({
                   ? <Link key={link.label} href={href} onClick={onClose} className="block py-3 text-sm font-medium text-foreground hover:text-primary">{link.label}</Link>
                   : <a key={link.label} href={href} onClick={onClose} className="block py-3 text-sm font-medium text-foreground hover:text-primary">{link.label}</a>;
               })}
-              <Button asChild className="w-full rounded-none bg-primary text-primary-foreground mt-4">
-                <Link href="/contact" onClick={() => setMenuOpen(false)}>Request a Quote</Link>
-              </Button>
+              <form onSubmit={submitSearch} className="relative mt-4 border-t border-border pt-5">
+                <Search className="absolute left-3 top-[42px] h-4 w-4 text-muted-foreground" />
+                <input
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search products, brands, solutions..."
+                  aria-label="Search entire site"
+                  className="h-12 w-full rounded-none border border-border bg-background pl-10 pr-3 text-sm outline-none focus:border-primary"
+                />
+                {searchQuery.trim() && searchResults.length > 0 && (
+                  <div className="mt-3 max-h-64 overflow-y-auto border border-border">
+                    {searchResults.slice(0, 5).map(result => (
+                      <Link
+                        key={`mobile-${result.type}-${result.href}-${result.label}`}
+                        href={result.href}
+                        onClick={() => { setMenuOpen(false); setSearchOpen(false); setSearchQuery(""); }}
+                        className="block border-b border-border px-3 py-3 last:border-b-0"
+                      >
+                        <span className="block text-sm font-bold">{result.label}</span>
+                        <span className="mt-0.5 block text-xs text-muted-foreground">{result.type} / {result.meta}</span>
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </form>
             </div>
           </motion.div>
         )}

@@ -815,6 +815,20 @@ const solutions = [
   },
 ];
 
+const solutionLanes = [
+  { icon: <Dna className="h-5 w-5" />, title: "Life Sciences", short: "Research reagents, assays and instruments", desc: "Core reagents, kits, antibodies and laboratory systems for academic, clinical and industrial research teams.", accent: "#2EA3F2" },
+  { icon: <HeartPulse className="h-5 w-5" />, title: "Transplant Diagnostics", short: "HLA typing and antibody screening", desc: "Solutions for HLA typing, antibody detection, crossmatch and post-transplant monitoring workflows.", accent: "#E85D4A" },
+  { icon: <Activity className="h-5 w-5" />, title: "Flow Cytometry Solutions", short: "Cell analysis and cytometry platforms", desc: "Flow instruments, analysis tools and workflow support for high-parameter cell and immune profiling.", accent: "#06B6D4" },
+  { icon: <Microscope className="h-5 w-5" />, title: "Cell Culture Solutions", short: "Media, reagents and lab support", desc: "Cell culture media, supplements, plastics and lab systems for repeatable cellular workflows.", accent: "#10B981" },
+  { icon: <TestTube className="h-5 w-5" />, title: "Water Purification Systems", short: "Clinical, RO and ultrapure water", desc: "Merck water systems for analyzer feed, pure water and ultrapure laboratory applications.", accent: "#2563EB" },
+  { icon: <Dna className="h-5 w-5" />, title: "NGS Solutions", short: "Sequencing panels and workflows", desc: "NGS kits, library preparation, analysis tools and adoption support for clinical and research laboratories.", accent: "#7C3AED" },
+  { icon: <Activity className="h-5 w-5" />, title: "Allergen Solutions", short: "Allergy screening and panels", desc: "Allergen testing workflows, panels and supporting reagents for immunology and diagnostic laboratories.", accent: "#F59E0B" },
+  { icon: <Microscope className="h-5 w-5" />, title: "Biochemistry Instruments", short: "Routine analytical instruments", desc: "Biochemistry analyzers, measurement systems and associated lab instruments for reliable daily testing.", accent: "#0F766E" },
+  { icon: <TestTube className="h-5 w-5" />, title: "Filtration Solutions", short: "Membranes, filters and manifolds", desc: "Filtration products and systems for microbiology, water testing, sample prep and general laboratory workflows.", accent: "#0891B2" },
+  { icon: <Syringe className="h-5 w-5" />, title: "Flow Antibody Solutions", short: "Antibodies and panel design", desc: "Flow antibodies, panels, reagents and selection support for cell analysis and immune monitoring.", accent: "#C026D3" },
+  { icon: <TestTube className="h-5 w-5" />, title: "General Lab Consumables", short: "Everyday lab essentials", desc: "Plasticware, glassware, pipettes, swabs, test papers and routine consumables for lab continuity.", accent: "#64748B" },
+];
+
 function Solutions() {
   const [active, setActive] = useState<number | null>(null);
 
@@ -906,6 +920,48 @@ function Solutions() {
 }
 
 /* ─── Products ────────────────────────────────────────────────── */
+function SolutionsPanel() {
+  return (
+    <section id="solutions" className="relative flex min-h-[100dvh] items-center overflow-hidden bg-[#06111d] pt-24 text-white">
+      <img src={img("/images/sc-hero-lab-wow.webp")} alt="" className="absolute inset-0 h-full w-full object-cover opacity-45" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#06111d] via-[#06111d]/88 to-[#06111d]/55" />
+      <div className="container relative z-10 mx-auto grid gap-10 px-6 pb-10 md:px-12 lg:grid-cols-[0.56fr_1fr] lg:items-center">
+        <div>
+          <div className="mb-4 text-xs font-black uppercase text-primary">Solutions</div>
+          <h2 className="font-[var(--app-font-heading)] text-5xl font-black leading-none md:text-6xl">
+            Built around real lab workflows.
+          </h2>
+          <p className="mt-6 max-w-md text-base leading-relaxed text-white/70">
+            From transplant diagnostics to everyday consumables, Science Centre helps laboratories source systems, kits and support as one practical workflow.
+          </p>
+          <Link href="/solutions" className="mt-8 inline-flex items-center gap-3 border-t border-white/30 pt-3 text-xs font-black uppercase hover:text-cyan-100">
+            See focus areas <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+          {solutionLanes.map((s, i) => (
+            <motion.div
+              key={s.title}
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.035, duration: 0.45 }}
+              className="group border border-white/12 bg-white/7 p-4 backdrop-blur-sm transition-colors hover:border-white/35 hover:bg-white/12"
+            >
+              <div className="mb-4 flex items-center justify-between gap-4">
+                <div className="flex h-9 w-9 items-center justify-center bg-white text-[#06111d]" style={{ color: s.accent }}>{s.icon}</div>
+                <span className="text-[10px] font-black uppercase text-white/35">{String(i + 1).padStart(2, "0")}</span>
+              </div>
+              <h3 className="font-[var(--app-font-heading)] text-xl font-black leading-tight text-white">{s.title}</h3>
+              <p className="mt-2 text-xs font-bold uppercase text-cyan-100">{s.short}</p>
+              <p className="mt-3 text-sm leading-relaxed text-white/62">{s.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 const products = [
   {
     name: "LABScan3D™",
@@ -1562,7 +1618,7 @@ export default function Home() {
   const sections = [
     <Hero key="hero" visible={splashDone} />,
     <Partners key="partners" />,
-    <Solutions key="solutions" />,
+    <SolutionsPanel key="solutions" />,
     <FeaturedProducts key="products" />,
     <Credibility key="credibility" />,
     <Locations key="locations" />,

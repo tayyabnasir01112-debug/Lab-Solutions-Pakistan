@@ -43,7 +43,7 @@ function CountUp({ to, suffix = "" }: { to: number; suffix?: string }) {
 
 /* ─── Data ────────────────────────────────────────────────────── */
 const ceoParagraphs = [
-  "At Science Centre, we are committed to advancing Pakistan's healthcare and life sciences landscape by partnering with globally recognized leaders in Life Sciences, Transplant Diagnostics, Molecular Biology, and Immunology.",
+  "At Science Centre, we are committed to advancing Pakistan's healthcare and life sciences landscape through focused solutions in life sciences, transplant diagnostics, flow cytometry, cell culture, water purification, NGS, allergen testing, biochemistry, filtration, flow antibodies, and general lab consumables.",
   "Our mission is to introduce cutting-edge technologies and international best practices that empower laboratories, clinicians, and researchers to deliver accurate, timely, and impactful outcomes.",
   "Over the years, our dedicated team has played a pivotal role in strengthening key segments of the life sciences industry, contributing to improved diagnostics, innovation, and capacity building across the country.",
   "As we move forward, we remain focused on fostering strong collaborations, driving innovation, and creating sustainable growth opportunities for our partners and stakeholders.",
@@ -74,12 +74,17 @@ const timeline = [
 ];
 
 const focusAreas = [
-  { icon: <HeartPulse className="h-4 w-4" />, label: "Transplant Diagnostics" },
   { icon: <Dna className="h-4 w-4" />, label: "Life Sciences" },
-  { icon: <Microscope className="h-4 w-4" />, label: "Molecular Biology" },
-  { icon: <FlaskConical className="h-4 w-4" />, label: "Immunology" },
-  { icon: <FlaskConical className="h-4 w-4" />, label: "Cell Biology" },
-  { icon: <FlaskConical className="h-4 w-4" />, label: "Pharmaceuticals" },
+  { icon: <HeartPulse className="h-4 w-4" />, label: "Transplant Diagnostics" },
+  { icon: <Microscope className="h-4 w-4" />, label: "Flow Cytometry Solutions" },
+  { icon: <FlaskConical className="h-4 w-4" />, label: "Cell Culture Solutions" },
+  { icon: <FlaskConical className="h-4 w-4" />, label: "Water Purification Systems" },
+  { icon: <Dna className="h-4 w-4" />, label: "NGS Solutions" },
+  { icon: <HeartPulse className="h-4 w-4" />, label: "Allergen Solutions" },
+  { icon: <Microscope className="h-4 w-4" />, label: "Biochemistry Instruments" },
+  { icon: <FlaskConical className="h-4 w-4" />, label: "Filtration Solutions" },
+  { icon: <FlaskConical className="h-4 w-4" />, label: "Flow Antibody Solutions" },
+  { icon: <FlaskConical className="h-4 w-4" />, label: "General Lab Consumables" },
 ];
 
 /* ─── Slide variants ──────────────────────────────────────────── */
