@@ -1,8 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 150" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 190" role="img" aria-labelledby="title desc">
   <title id="title">BioLegend from Revvity</title>
-  <desc id="desc">Clean BioLegend from Revvity wordmark for catalogue display.</desc>
-  <text x="56" y="88" fill="#0077a8" font-family="Arial, Helvetica, sans-serif" font-size="66" font-weight="700">BioLegend</text>
-  <text x="420" y="110" fill="#5f6b7a" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="600">from Revvity</text>
-  <circle cx="77" cy="114" r="11" fill="#43b986"/>
-  <circle cx="652" cy="81" r="11" fill="#f2b84b"/>
+  <desc id="desc">Purple BioLegend wordmark with From Revvity below.</desc>
+  <text x="24" y="96" fill="#7d1fb2" font-family="Arial, Helvetica, sans-serif" font-size="88" font-weight="700" letter-spacing="-4">BioLegend</text>
+  <text x="26" y="158" fill="#111827" font-family="Arial, Helvetica, sans-serif" font-size="45" font-weight="400">From Revvity</text>
 </svg>
