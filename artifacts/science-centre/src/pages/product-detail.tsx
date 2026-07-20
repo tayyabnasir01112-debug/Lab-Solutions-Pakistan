@@ -268,6 +268,16 @@ function FeatureBullets({ items, accent }: { items?: string[]; accent: string })
   );
 }
 
+function chunkArray<T>(items: T[], size: number) {
+  const chunks: T[][] = [];
+  for (let i = 0; i < items.length; i += size) chunks.push(items.slice(i, i + size));
+  return chunks;
+}
+
+function uniqueStrings(items: string[]) {
+  return Array.from(new Set(items.filter(Boolean)));
+}
+
 function RelatedSlideContent({ products, accent }: { products: Product[]; accent: string }) {
   return (
     <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
@@ -1978,6 +1988,314 @@ function RexProductDetail({ product }: { product: Product }) {
   );
 }
 
+function AdaptiveProductDetail({ product }: { product: Product }) {
+  const brand = brandById(product.brand);
+  const category = categoryById(product.category);
+  const brandAccent = brand?.accent || "hsl(var(--primary))";
+  const related = (product.relatedProducts || []).map(rid => productById(rid)).filter(Boolean) as Product[];
+  const moreBrand = productsByBrand(product.brand).filter(p => p.id !== product.id && !product.relatedProducts?.includes(p.id)).slice(0, 4 - related.length);
+  const allRelated = [...related, ...moreBrand].slice(0, 3);
+  const specEntries = product.specs ? Object.entries(product.specs).filter(([, value]) => Boolean(value)) : [];
+  const packageEntries = product.packaging?.map(item => [
+    item.name,
+    [item.catalogueNumber, item.units, item.format].filter(Boolean).join(" / ")
+  ] as [string, string]) || [];
+  const packagingSummary =
+    product.packaging?.length ? uniqueStrings(product.packaging.map(item => item.units)).join(", ") :
+    product.specs?.Packaging ||
+    product.specs?.Quantity ||
+    product.specs?.Specification ||
+    product.specs?.["Pack size"];
+  const preferredQuickSpecKeys =
+    product.brand === "merck" ? ["Output", "Operating parameters", "Resistivity", "Dimensions"] :
+    product.brand === "luminex" ? ["Technology", "Portfolio area", "Catalogue approach", "Throughput"] :
+    product.brand === "onelambda" ? ["HLA loci", "Specificities", "Detection method", "Sample type"] :
+    product.brand === "ngene" ? ["Quantity", "Sample Types", "Regulatory Approvals", "Sequencing Platform", "Analysis Software"] :
+    product.brand === "sugentech" ? ["Sample Type", "Test Time", "Storage Temperature", "Measurement Method"] :
+    product.brand === "rex" ? ["Measurement Range", "Resolution", "Accuracy", "Power Supply"] :
+    product.brand === "hkm" ? ["Code", "Specification", "Official category", "Product family"] :
+    product.brand === "biolegend" ? ["Portfolio group", "Catalogue approach", "Source", "Application"] :
+    ["Output", "Operating parameters", "Technology", "Dimensions"];
+  const quickSpecs = [
+    product.catalogueNumber && ["Catalogue", product.catalogueNumber],
+    packagingSummary && ["Pack / size", packagingSummary],
+    ...preferredQuickSpecKeys.map(key => specEntries.find(([specKey]) => specKey === key)).filter(Boolean),
+    ...specEntries.filter(([key]) => !preferredQuickSpecKeys.includes(key))
+  ].filter(Boolean).slice(0, 4) as [string, string][];
+  const documentUrl = product.brochure || product.specSheet;
+  const hasApplicationDetailSection = product.detailSections?.some(section => section.title.trim().toLowerCase() === "application");
+  const displayedApplications = hasApplicationDetailSection ? [] : (product.applications || []);
+  const detailSections = product.detailSections || [];
+  const longDetailSections = detailSections.filter(section => (section.body?.length || 0) > 760 || (section.items?.length || 0) > 6);
+  const compactDetailSections = detailSections.filter(section => !longDetailSections.includes(section));
+  const specChunks = chunkArray(specEntries, 9);
+  const packageChunks = chunkArray(packageEntries, 8);
+  const featureCardChunks = chunkArray(product.featureCards || [], 6);
+  const featureChunks = chunkArray(uniqueStrings([...(product.highlights || []), ...(product.features || [])]), 8);
+  const applicationChunks = chunkArray(displayedApplications, 6);
+  const productSlides: React.ReactNode[] = [];
+  const productSlideNames: string[] = [];
+  const addSlide = (name: string, node: React.ReactNode) => {
+    productSlideNames.push(name);
+    productSlides.push(node);
+  };
+  const tone =
+    product.brand === "merck" ? { bg: "bg-[#f4f8fb]", media: "bg-white/95 border-[#d7e5f2]", image: "aspect-[5/4]", grid: "lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,0.85fr)]", specLabel: "Water system properties", specTitle: "Purification specifications", detailLabel: "Merck source detail", detailTitle: "Description & applications", featureLabel: "Operational notes", featureTitle: "Features, benefits & uses" } :
+    product.brand === "luminex" ? { bg: "bg-[#f3fbff]", media: "bg-white/95 border-[#cfe6e6]", image: "aspect-[16/10]", grid: "lg:grid-cols-[minmax(0,0.82fr)_minmax(460px,1fr)]", specLabel: "Multiplex platform", specTitle: "Platform profile", detailLabel: "xMAP workflow", detailTitle: "Technology & instrument detail", featureLabel: "Assay development", featureTitle: "Features & applications" } :
+    product.brand === "onelambda" ? { bg: "bg-[#fff8f8]", media: "bg-white border-[#f0d6d8]", image: "aspect-[3/2]", grid: "lg:grid-cols-[minmax(0,1.05fr)_minmax(390px,0.85fr)]", specLabel: "Transplant assay profile", specTitle: "Assay specifications", detailLabel: "Clinical lab use", detailTitle: "Transplant diagnostics detail", featureLabel: "HLA workflow", featureTitle: "Features & clinical applications" } :
+    product.brand === "ngene" ? { bg: "bg-[#fff7f9]", media: "bg-white border-[#f1ccd6]", image: "aspect-[4/3]", grid: "lg:grid-cols-[minmax(0,0.95fr)_minmax(430px,0.88fr)]", specLabel: "Precision diagnostics profile", specTitle: "Panel specifications", detailLabel: "Clinical workflow", detailTitle: "Diagnostic panel detail", featureLabel: "Clinical utility", featureTitle: "Capabilities & applications" } :
+    product.brand === "sugentech" ? { bg: "bg-[#f4f9ff]", media: "bg-white border-[#cfe0f0]", image: "aspect-[4/3]", grid: "lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,0.85fr)]", specLabel: "Rapid diagnostics profile", specTitle: "Device and kit specifications", detailLabel: "Workflow detail", detailTitle: "Clinical use profile", featureLabel: "Assay notes", featureTitle: "Features & applications" } :
+    product.brand === "cytek" ? { bg: "bg-[#eff8f8]", media: "bg-white border-[#cfe6e6]", image: "aspect-[4/3]", grid: "lg:grid-cols-[minmax(0,0.9fr)_minmax(450px,0.95fr)]", specLabel: "Flow cytometry system", specTitle: "Instrument specifications", detailLabel: "Platform detail", detailTitle: "Technology and workflow", featureLabel: "System capabilities", featureTitle: "Features & applications" } :
+    product.brand === "rex" ? { bg: "bg-[#f5f9ff]", media: "bg-white border-[#d7e5f2]", image: "aspect-[4/3]", grid: "lg:grid-cols-[minmax(0,0.95fr)_minmax(420px,0.86fr)]", specLabel: "Laboratory instrument profile", specTitle: "Meter specifications", detailLabel: "Measurement workflow", detailTitle: "Instrument detail", featureLabel: "Measurement notes", featureTitle: "Features & applications" } :
+    product.brand === "hkm" ? { bg: "bg-[#f8fff7]", media: "bg-white border-[#d9ead5]", image: "aspect-square", grid: "lg:grid-cols-[minmax(0,1fr)_minmax(340px,0.72fr)]", specLabel: "Catalogue profile", specTitle: "Media specifications", detailLabel: "Preparation & principle", detailTitle: "Culture media detail", featureLabel: "Lab use", featureTitle: "Features & applications" } :
+    product.brand === "biolegend" ? { bg: "bg-[#fff7fb]", media: "bg-white border-[#f1cfe1]", image: "aspect-[4/3]", grid: "lg:grid-cols-[minmax(0,1.08fr)_minmax(340px,0.72fr)]", specLabel: "Research reagent family", specTitle: "Representative catalogue profile", detailLabel: "Sourcing scope", detailTitle: "Family detail & source reference", featureLabel: "Variant sourcing", featureTitle: "Features & application scope" } :
+    { bg: "bg-gradient-to-b from-muted/40 via-background to-background", media: "bg-background border-border", image: "aspect-[4/3]", grid: "lg:grid-cols-[minmax(0,1.05fr)_minmax(360px,0.95fr)]", specLabel: "Technical profile", specTitle: "Specifications at a glance", detailLabel: "Product detail", detailTitle: "Description & use cases", featureLabel: "Performance notes", featureTitle: "Features & applications" };
+
+  addSlide("Overview",
+    <section key="overview" className={`min-h-[100dvh] border-b border-border ${tone.bg}`}>
+      <div className="container mx-auto px-6 md:px-12 pt-28 pb-16">
+        <nav className="mb-7 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+          <Link href="/" className="hover:text-foreground transition-colors">Home</Link>
+          <ChevronRight className="h-3 w-3 flex-shrink-0" />
+          <Link href="/products" className="hover:text-foreground transition-colors">Products</Link>
+          <ChevronRight className="h-3 w-3 flex-shrink-0" />
+          <span className="max-w-[240px] truncate font-medium text-foreground">{product.name}</span>
+        </nav>
+        <div className={`grid ${tone.grid} items-center gap-10 xl:gap-14`}>
+          <div className="min-w-0">
+            <div className="mb-5 flex flex-wrap gap-2">
+              {brand && <span className="rounded-sm px-3 py-1.5 text-xs font-bold text-white" style={{ background: brand.accent }}>{brand.short}</span>}
+              {category && <span className="flex items-center gap-1.5 rounded-sm border border-border px-3 py-1.5 text-xs text-muted-foreground">{category.icon}{category.name}</span>}
+              {product.featured && <span className="rounded-sm border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-bold text-amber-600">Featured</span>}
+            </div>
+            <h1 className="mb-5 max-w-4xl break-words font-[var(--app-font-heading)] text-3xl font-black leading-[1.02] tracking-tight text-foreground [overflow-wrap:anywhere] sm:text-4xl md:text-[52px]">{product.name}</h1>
+            {product.subtitle && <p className="mb-4 text-base font-bold leading-relaxed md:text-xl" style={{ color: brandAccent }}>{product.subtitle}</p>}
+            <p className="mb-6 max-w-3xl break-words text-base leading-relaxed text-muted-foreground [overflow-wrap:anywhere] md:text-[17px]">{product.description}</p>
+            {quickSpecs.length > 0 && (
+              <div className="mb-7 grid gap-3 sm:grid-cols-2">
+                {quickSpecs.map(([k, v]) => (
+                  <div key={k} className="min-w-0 border border-border bg-background/85 p-4">
+                    <div className="mb-2 text-[11px] font-bold uppercase tracking-wide text-muted-foreground">{k}</div>
+                    <div className="line-clamp-3 break-words text-sm font-semibold leading-snug text-foreground [overflow-wrap:anywhere]">{v}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+            <div className="mt-8 grid gap-3 sm:flex">
+              <Button asChild size="lg" className="w-full rounded-none sm:w-auto"><a href="/#contact">Request a Quote <ArrowRight className="ml-2 h-4 w-4" /></a></Button>
+              <Button asChild variant="outline" size="lg" className="w-full rounded-none sm:w-auto"><Link href="/products"><ArrowLeft className="mr-2 h-4 w-4" /> All Products</Link></Button>
+            </div>
+          </div>
+          <div className={`min-w-0 border p-5 shadow-sm md:p-6 ${tone.media}`}>
+            <div className={`mb-5 flex ${tone.image} items-center justify-center overflow-hidden border border-border/60 bg-gradient-to-br from-background via-muted/20 to-background`}>
+              <ProductMedia product={product} />
+            </div>
+            <div className="grid gap-3 text-sm sm:grid-cols-2">
+              {product.catalogueNumber && (
+                <div className="border border-border p-3">
+                  <div className="mb-1 text-[11px] font-bold uppercase tracking-wide text-muted-foreground">Catalogue</div>
+                  <div className="font-mono text-foreground">{product.catalogueNumber}</div>
+                </div>
+              )}
+              {product.subcategory && (
+                <div className="border border-border p-3">
+                  <div className="mb-1 text-[11px] font-bold uppercase tracking-wide text-muted-foreground">Family</div>
+                  <div className="break-words font-semibold leading-snug text-foreground">{product.subcategory}</div>
+                </div>
+              )}
+              {packagingSummary && (
+                <div className="border border-border p-3 sm:col-span-2">
+                  <div className="mb-1 text-[11px] font-bold uppercase tracking-wide text-muted-foreground">Pack / size</div>
+                  <div className="break-words font-semibold leading-snug text-foreground">{packagingSummary}</div>
+                </div>
+              )}
+            </div>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+              {documentUrl && (
+                <Button asChild className="w-full rounded-none">
+                  <a href={documentUrl} target="_blank" rel="noopener noreferrer"><FileText className="mr-2 h-4 w-4" /> Download Brochure</a>
+                </Button>
+              )}
+              <Button asChild variant="outline" className="w-full rounded-none">
+                <a href="/#contact">Discuss Product <ArrowRight className="ml-2 h-4 w-4" /></a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+
+  specChunks.forEach((chunk, index) => addSlide(index ? `Specs ${index + 1}` : "Specifications",
+    <section key={`specs-${index}`} className="min-h-[100dvh] border-b border-border bg-background">
+      <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+        <div className="mb-7 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <div className="mb-2 text-xs font-bold uppercase tracking-wide" style={{ color: brandAccent }}>{tone.specLabel}</div>
+            <h2 className="font-[var(--app-font-heading)] text-2xl font-black text-foreground md:text-4xl">{index ? `${tone.specTitle} ${index + 1}` : tone.specTitle}</h2>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">Important product properties are split into scan-friendly chapters so pack sizes, output, compatibility and operating details stay readable.</p>
+          </div>
+          {documentUrl && (
+            <Button asChild variant="outline" className="rounded-none">
+              <a href={documentUrl} target="_blank" rel="noopener noreferrer"><FileText className="mr-2 h-4 w-4" /> Download Brochure</a>
+            </Button>
+          )}
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {chunk.map(([k, v]) => (
+            <div key={k} className="min-w-0 border border-border bg-background p-5 transition-all hover:border-primary/40 hover:shadow-sm">
+              <div className="mb-2 text-[11px] font-bold uppercase tracking-wide text-muted-foreground">{k}</div>
+              <div className="break-words text-sm font-semibold leading-relaxed text-foreground [overflow-wrap:anywhere] md:text-[15px]">{v}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ));
+
+  packageChunks.forEach((chunk, index) => addSlide(index ? `Packs ${index + 1}` : "Pack Sizes",
+    <section key={`packaging-${index}`} className="min-h-[100dvh] border-b border-border bg-muted/20">
+      <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+        <div className="mb-8 max-w-3xl">
+          <div className="mb-2 text-xs font-bold uppercase tracking-wide" style={{ color: brandAccent }}>Ordering information</div>
+          <h2 className="font-[var(--app-font-heading)] text-2xl font-black text-foreground md:text-4xl">Available pack sizes and catalogue variants</h2>
+          <p className="mt-3 leading-relaxed text-muted-foreground">Pack information is surfaced separately because it is one of the first things procurement teams need when comparing product options.</p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {chunk.map(([name, value]) => (
+            <div key={name} className="border border-border bg-background p-5">
+              <Package className="mb-5 h-6 w-6" style={{ color: brandAccent }} />
+              <h3 className="font-[var(--app-font-heading)] text-lg font-black text-foreground">{name}</h3>
+              <p className="mt-3 text-sm font-semibold leading-relaxed text-muted-foreground">{value}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ));
+
+  if (compactDetailSections.length) {
+    addSlide("Details",
+      <section key="details" className="min-h-[100dvh] border-b border-border bg-muted/20">
+        <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+          <div className="mb-8">
+            <div className="mb-2 text-xs font-bold uppercase tracking-wide" style={{ color: brandAccent }}>{tone.detailLabel}</div>
+            <h2 className="font-[var(--app-font-heading)] text-2xl font-black text-foreground md:text-4xl">{tone.detailTitle}</h2>
+          </div>
+          <div className="grid gap-5 lg:grid-cols-2">
+            {compactDetailSections.map((section, i) => (
+              <section key={`${section.title}-${i}`} className="min-w-0 border border-border bg-background p-6 md:p-7">
+                <h2 className="mb-4 break-words text-2xl font-bold">{section.title}</h2>
+                {section.body && <p className="break-words text-base leading-relaxed text-muted-foreground">{section.body}</p>}
+                {section.items && section.items.length > 0 && <FeatureBullets items={section.items} accent={brandAccent} />}
+              </section>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  longDetailSections.forEach((section, index) => addSlide(section.title.length > 16 ? `Detail ${index + 1}` : section.title,
+    <section key={`detail-long-${section.title}-${index}`} className="min-h-[100dvh] border-b border-border bg-background">
+      <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+        <div className="grid gap-8 lg:grid-cols-[0.68fr_1fr]">
+          <div>
+            <div className="mb-2 text-xs font-bold uppercase tracking-wide" style={{ color: brandAccent }}>{tone.detailLabel}</div>
+            <h2 className="font-[var(--app-font-heading)] text-3xl font-black leading-tight text-foreground md:text-5xl">{section.title}</h2>
+          </div>
+          <div className="border border-border bg-muted/20 p-6 md:p-8">
+            {section.body && <p className="text-base leading-relaxed text-muted-foreground md:text-lg">{section.body}</p>}
+            {section.items && section.items.length > 0 && <div className="mt-6"><FeatureBullets items={section.items} accent={brandAccent} /></div>}
+          </div>
+        </div>
+      </div>
+    </section>
+  ));
+
+  featureCardChunks.forEach((chunk, index) => addSlide(index ? `Capabilities ${index + 1}` : "Capabilities",
+    <section key={`feature-cards-${index}`} className="min-h-[100dvh] border-b border-border bg-muted/20">
+      <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+        <div className="mb-8 max-w-3xl">
+          <div className="mb-2 text-xs font-bold uppercase tracking-wide" style={{ color: brandAccent }}>{tone.featureLabel}</div>
+          <h2 className="font-[var(--app-font-heading)] text-2xl font-black text-foreground md:text-4xl">Product capabilities</h2>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {chunk.map((card, cardIndex) => (
+            <div key={card.title} className="border border-border bg-background p-5 md:p-6">
+              <div className="mb-4 flex h-9 w-9 items-center justify-center border text-sm font-black" style={{ borderColor: `${brandAccent}55`, color: brandAccent }}>
+                {cardIndex + 1}
+              </div>
+              <h3 className="font-[var(--app-font-heading)] text-xl font-black text-foreground">{card.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{card.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ));
+
+  const maxFeatureApplicationSlides = Math.max(featureChunks.length, applicationChunks.length);
+  for (let i = 0; i < maxFeatureApplicationSlides; i += 1) {
+    addSlide(i ? `Use Cases ${i + 1}` : "Use Cases",
+      <section key={`features-${i}`} className="min-h-[100dvh] border-b border-border bg-background">
+        <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+          <div className="mb-8">
+            <div className="mb-2 text-xs font-bold uppercase tracking-wide" style={{ color: brandAccent }}>{tone.featureLabel}</div>
+            <h2 className="font-[var(--app-font-heading)] text-2xl font-black text-foreground md:text-4xl">{tone.featureTitle}</h2>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            {featureChunks[i]?.length ? (
+              <div className="border border-border bg-muted/20 p-6 md:p-7">
+                <h3 className="mb-5 text-xl font-bold">Features &amp; Benefits</h3>
+                <FeatureBullets items={featureChunks[i]} accent={brandAccent} />
+              </div>
+            ) : <div className="hidden lg:block" />}
+            {applicationChunks[i]?.length ? (
+              <div className="border border-border bg-muted/20 p-6 md:p-7">
+                <h3 className="mb-5 text-xl font-bold">Applications</h3>
+                <FeatureBullets items={applicationChunks[i]} accent={brandAccent} />
+              </div>
+            ) : <div className="hidden lg:block" />}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (allRelated.length) {
+    addSlide("Related",
+      <section key="related" className="min-h-[100dvh] border-b border-border bg-muted/20">
+        <div className="container mx-auto px-6 md:px-12 pt-28 pb-14">
+          <div className="mb-8 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <div className="mb-2 text-xs font-bold uppercase tracking-wide" style={{ color: brandAccent }}>Continue browsing</div>
+              <h3 className="font-[var(--app-font-heading)] text-2xl font-black md:text-4xl">Related products</h3>
+            </div>
+            <Button asChild variant="outline" className="rounded-none"><Link href="/products">All Products <ArrowRight className="ml-2 h-4 w-4" /></Link></Button>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {allRelated.map(p => <RelatedCard key={p.id} product={p} />)}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  addSlide("Contact",
+    <section key="footer" className="min-h-[100dvh] bg-foreground text-background">
+      <SiteFooter />
+    </section>
+  );
+
+  return (
+    <div className="h-[100dvh] bg-background overflow-hidden">
+      <SiteNavbar forceSolid />
+      <ProductSlideDeck sections={productSlides} names={productSlideNames} accent={brandAccent} resetKey={product.id} />
+    </div>
+  );
+}
+
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
 
@@ -2001,6 +2319,8 @@ export default function ProductDetail() {
       </div>
     );
   }
+
+  return <AdaptiveProductDetail product={product} />;
 
   // Route Cytek products to premium dark detail page
   if (product.brand === "cytek") {

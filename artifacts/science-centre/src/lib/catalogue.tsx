@@ -1935,6 +1935,8 @@ export const products: Product[] = [
     category: "molecular",
     featured: true,
     subtitle: "NGS-Based BRCA1/2 Germline & Somatic Variant Detection",
+    image: "/images/ngene/precision1Img1_en.png",
+    specSheet: "https://ngenebio.com/en/sub/business/precision/precision.asp?menu=brca",
     description: "BRCAaccuTest™ is an NGS-based reagent kit for precise detection of BRCA1 and BRCA2 gene variants — the principal hereditary risk factors for breast and ovarian cancer. The PLUS variant extends coverage with expanded target regions and improved data uniformity for CNV detection, supporting both germline screening and somatic companion diagnostics.",
     featureCards: [
       { title: "BRCA1 & BRCA2 Full Coverage", body: "Comprehensive sequencing of the complete coding regions of BRCA1 and BRCA2 genes from genomic DNA — detects SNVs, INDELs, and copy number variants (CNV) with high sensitivity." },
@@ -1963,6 +1965,7 @@ export const products: Product[] = [
       "Clinical laboratory routine diagnostic testing",
     ],
     specs: {
+      "Quantity": "24 tests/kit; PLUS germline up to 24 samples/run, somatic up to 6 samples/run; standard germline up to 24 samples/run",
       "Gene Targets": "BRCA1, BRCA2",
       "PLUS Enhancement": "Expanded target regions, CNV detection support",
       "Sample Types": "Germline (blood gDNA), Somatic (FFPE tissue)",
@@ -1984,6 +1987,8 @@ export const products: Product[] = [
     category: "molecular",
     description: "HEMEaccuTest™ is a CE-IVD certified NGS-based precision diagnostic kit for comprehensive genomic profiling of hematological malignancies. Covering 108 DNA genes and 53 RNA genes, it enables simultaneous detection of mutations, fusions, and expression alterations across AML, ALL, MDS/MPN, multiple myeloma, and lymphoma — empowering personalised treatment decisions for blood cancer patients.",
     subtitle: "Comprehensive NGS Panel for Blood Cancer Genomic Profiling",
+    image: "/images/ngene/precision2Img1.png",
+    specSheet: "https://ngenebio.com/en/sub/business/precision/precision.asp?menu=heme",
     featureCards: [
       { title: "108 DNA Genes + 53 RNA Genes", body: "The most comprehensive hematology NGS panel: 108 clinically curated DNA panel genes for mutation and INDEL detection, plus a 53-gene RNA panel covering gene fusions, alternative splicing, and expression profiling." },
       { title: "5 Blood Cancer Types Covered", body: "Single panel covers Acute Myeloid Leukaemia (AML), Acute Lymphoid Leukaemia (ALL), Myelodysplastic/Myeloproliferative Neoplasms (MDS/MPN), Multiple Myeloma (MM), and Lymphoma — eliminating the need for multiple disease-specific assays." },
@@ -2013,6 +2018,7 @@ export const products: Product[] = [
       "Clinical reporting for haematology oncologists",
     ],
     specs: {
+      "Quantity": "96 tests/kit (8 runs per kit, up to 12 samples per run)",
       "DNA Panel Genes": "108 clinically curated genes",
       "RNA Panel Genes": "53 genes (includes 5 housekeeping genes)",
       "RNA Targets": "Fusion genes, alternative splicing, expression profiling",
@@ -2034,6 +2040,8 @@ export const products: Product[] = [
     category: "ngs",
     featured: true,
     subtitle: "Comprehensive Genomic Profiling Panel — 300+ Genes, 35 Cancer Types",
+    image: "/images/ngene/precision3Img1.png",
+    specSheet: "https://ngenebio.com/en/sub/business/precision/precision.asp?menu=onco",
     description: "ONCOaccuPanel™ is a comprehensive genomic profiling (CGP) panel jointly developed by NGeneBio with Seoul Asan Medical Center and commercialised through technology transfer from Harvard Dana-Farber Research Center. Covering over 300 genes across 35 cancer types, it simultaneously reports tumour mutation burden (TMB), microsatellite instability (MSI), and key companion diagnostic biomarkers — giving oncologists a complete genomic picture from a single test.",
     featureCards: [
       { title: "300+ Genes, 35 Cancer Types", body: "One of the most comprehensive solid tumour NGS panels available in Asia — covering more than 300 genes across 35 cancer types including lung, colorectal, gastric, breast, liver, and bladder cancers." },
@@ -2064,6 +2072,7 @@ export const products: Product[] = [
       "Clinical oncology treatment planning and precision medicine",
     ],
     specs: {
+      "Quantity": "60 tests/kit (4 runs per kit, up to 15 samples per run)",
       "Gene Coverage": "300+ genes",
       "Cancer Types Covered": "35 solid tumour types",
       "Biomarkers Reported": "TMB, MSI, CDx markers (EGFR, BRAF, KRAS, HER2, ROS1)",
@@ -2084,6 +2093,8 @@ export const products: Product[] = [
     category: "molecular",
     description: "SOLIDaccuTest™ is a CE-IVD certified NGS-based precision diagnostic panel for targeted genomic profiling of solid tumours — Korea's first NGS in vitro diagnostic device for solid cancers to receive European certification. The DNA panel covers approximately 100 genes and the RNA panel covers 26 genes, enabling simultaneous detection of mutations, fusions, and rearrangements from both fresh tissue and FFPE specimens.",
     subtitle: "Targeted NGS Panel for Solid Tumour Variant Screening",
+    image: "/images/ngene/precision4Img1.png",
+    specSheet: "https://ngenebio.com/en/sub/business/precision/precision.asp?menu=solid",
     featureCards: [
       { title: "~100 DNA Genes + 26 RNA Genes", body: "DNA panel of approximately 100 clinically selected genes detects SNVs, INDELs and CNVs. The 26-gene RNA panel identifies gene fusions and rearrangements — together providing a comprehensive view of actionable alterations across major solid tumour types." },
       { title: "FFPE Compatible", body: "Validated on both fresh frozen tissue and formalin-fixed, paraffin-embedded (FFPE) biopsy specimens — the standard archival material in hospital pathology departments, enabling routine use without fresh tissue requirements." },
@@ -2111,6 +2122,7 @@ export const products: Product[] = [
       "Routine oncology diagnostics from FFPE tissue",
     ],
     specs: {
+      "Quantity": "96 tests/kit (8 runs per kit, up to 12 samples per run)",
       "DNA Panel": "~100 genes (SNV, INDEL, CNV)",
       "RNA Panel": "26 genes (fusions, rearrangements)",
       "Sample Types": "Fresh frozen tissue, FFPE biopsy",
@@ -2129,6 +2141,8 @@ export const products: Product[] = [
     category: "transplant",
     description: "HLAaccuTest™ is an NGS-based precision diagnostic panel for high-resolution Human Leukocyte Antigen (HLA) typing — essential for matching donors and recipients in bone marrow and solid organ transplantation. The standard version covers 5 HLA loci; the All version simultaneously types all 11 transplant-relevant loci at high resolution, with automated analysis through EasyHLAanalyzer™ software.",
     subtitle: "High-Resolution NGS HLA Typing for Transplantation & Clinical Genomics",
+    image: "/images/ngene/precision5Img1.png",
+    specSheet: "https://ngenebio.com/en/sub/business/precision/precision.asp?menu=hla",
     featureCards: [
       { title: "5 or 11 HLA Loci Simultaneously", body: "HLAaccuTest™ covers 5 key loci (HLA-A, -B, -C, -DRB1, -DQB1). The All version extends to all 11 transplant-relevant loci including DRB3/4/5, DQA1, DPA1, and DPB1 — typed simultaneously in a single reaction." },
       { title: "High-Resolution Allele Typing", body: "Delivers high-resolution HLA allele identification from NGS sequencing, minimising ambiguities and ensuring precise donor–recipient matching for maximum transplant compatibility and reduced rejection risk." },
@@ -2156,6 +2170,7 @@ export const products: Product[] = [
       "Clinical research and population genetics",
     ],
     specs: {
+      "Quantity": "96 tests/kit; HLAaccuTest supports up to 16 samples with MiSeq Reagent Nano Kit v2; HLAaccuTest All supports 6 samples with Nano Kit v2 or 24 samples with Micro Kit",
       "Standard Loci (HLAaccuTest™)": "5 loci: HLA-A, -B, -C, -DRB1, -DQB1",
       "Extended Loci (All version)": "11 loci: adds DRB3/4/5, DQA1, DPA1, DPB1",
       "Typing Resolution": "High-resolution allele level",
@@ -2174,6 +2189,8 @@ export const products: Product[] = [
     brand: "ngene",
     category: "molecular",
     subtitle: "NGS-Based Tuberculosis Detection & Drug Resistance Profiling",
+    image: "/images/ngene/infection1Img1.png",
+    specSheet: "https://ngenebio.com/en/sub/business/infection/infection.asp?menu=mtb",
     description: "MTBaccuPanel™ is Asia's first CE-IVD certified NGS panel for tuberculosis diagnosis and drug resistance profiling. A single test simultaneously identifies Mycobacterium tuberculosis complex, detects 180 types of non-tuberculous mycobacteria (NTM), and reports resistance to 16 anti-TB drugs — including isoniazid, rifampicin, and fluoroquinolones — from a single specimen using targeted deep sequencing of 29 MTB complex genes.",
     featureCards: [
       { title: "Asia's First CE-IVD NGS TB Panel", body: "MTBaccuPanel™ is the first NGS-based tuberculosis diagnostic panel in Asia to receive CE-IVD certification — meeting the clinical and regulatory standards required for routine diagnostic laboratory use in Europe." },
@@ -2202,6 +2219,7 @@ export const products: Product[] = [
       "TB surveillance and epidemiological typing",
     ],
     specs: {
+      "Quantity": "Up to 24 samples with MiSeq Reagent Kit Micro v2 (300 cycles) or up to 24 samples with iSeq 100 i1 Reagent 2 Kits (300 cycles)",
       "Target": "Mycobacterium tuberculosis complex",
       "Genes Sequenced": "29 MTB complex genes",
       "Drug Resistances Detected": "16 anti-TB drugs",
@@ -2220,6 +2238,8 @@ export const products: Product[] = [
     brand: "ngene",
     category: "molecular",
     subtitle: "Multiplex qRT-PCR Kit for SARS-CoV-2, Influenza A & B Detection",
+    image: "/images/ngene/infection2Img1.png",
+    specSheet: "https://ngenebio.com/en/sub/business/infection/infection.asp?menu=plex",
     description: "NGGenePlex™ nCoV/FluA.B Detection Kit is a real-time reverse transcription PCR (RT-PCR) assay for the simultaneous qualitative detection of SARS-CoV-2 (COVID-19) and Influenza A and B virus nucleic acids in a single reaction. Designed for clinical laboratories, the multiplex kit enables rapid differential diagnosis of COVID-19 and influenza from a single patient sample — critical for appropriate patient triage and infection control.",
     featureCards: [
       { title: "Triple Pathogen Multiplex", body: "Simultaneously detects and differentiates SARS-CoV-2 (COVID-19), Influenza A, and Influenza B from a single patient specimen in one RT-PCR reaction — eliminating the need for separate tests." },
@@ -2246,6 +2266,7 @@ export const products: Product[] = [
       "Travel medicine and quarantine facility testing",
     ],
     specs: {
+      "Quantity": "nCoV/FluA.B Detection Kit: 100 tests; nCoV qRT-PCR Kit: 96 tests",
       "Targets Detected": "SARS-CoV-2, Influenza A, Influenza B",
       "Method": "Real-time RT-PCR (qRT-PCR)",
       "Detection Type": "Qualitative nucleic acid detection",
@@ -2263,6 +2284,8 @@ export const products: Product[] = [
     brand: "ngene",
     category: "molecular",
     subtitle: "Cloud-Based NGS Data Analysis & Clinical Reporting Platform",
+    image: "/images/ngene/analysis1Img1.png",
+    specSheet: "https://ngenebio.com/en/sub/business/analysis/analysis.asp",
     description: "NGeneAnalySys® is NgeneBio's proprietary cloud-based bioinformatics platform for automated analysis, interpretation, and clinical reporting of NGS data from all NgeneBio diagnostic panels. It applies optimised bioinformatics pipelines per panel, detects variants against 20+ public databases and a proprietary internal database, and generates ASCO/CAP/AMP-compliant clinical reports — transforming raw sequencing data into actionable precision medicine insights.",
     featureCards: [
       { title: "Automated End-to-End Pipeline", body: "From raw NGS sequencing data to finalised clinical variant report — fully automated. Upload sequencing data, select the panel, and the platform applies the appropriate bioinformatics pipeline automatically." },
