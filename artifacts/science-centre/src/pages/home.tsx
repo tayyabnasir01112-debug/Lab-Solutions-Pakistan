@@ -477,6 +477,154 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
   );
 }
 
+function BrandHubIntro({ onDone }: { onDone: () => void }) {
+  const [phase, setPhase] = useState<"brands" | "hub" | "done">("brands");
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const started = performance.now();
+    let frame = 0;
+    let cancelled = false;
+    const timeouts: number[] = [];
+
+    const tick = (now: number) => {
+      const pct = Math.min(100, Math.round(((now - started) / 3600) * 100));
+      setProgress(pct);
+      if (pct < 100) frame = requestAnimationFrame(tick);
+    };
+
+    frame = requestAnimationFrame(tick);
+    timeouts.push(window.setTimeout(() => setPhase("hub"), 1850));
+
+    const heroReady = new Promise<void>((resolve) => {
+      const hero = new Image();
+      hero.onload = () => resolve();
+      hero.onerror = () => resolve();
+      hero.src = img("/images/sc-lab-hero-optimized.webp");
+      if (hero.complete) resolve();
+    });
+
+    const minimumIntro = new Promise<void>((resolve) => {
+      timeouts.push(window.setTimeout(resolve, 3900));
+    });
+
+    Promise.all([heroReady, minimumIntro]).then(() => {
+      if (cancelled) return;
+      timeouts.push(window.setTimeout(() => setPhase("done"), 900));
+      timeouts.push(window.setTimeout(onDone, 1450));
+    });
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(frame);
+      timeouts.forEach(clearTimeout);
+    };
+  }, [onDone]);
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[200] overflow-hidden bg-[#020711] text-white"
+      initial={{ opacity: 1 }}
+      animate={phase === "done" ? { opacity: 0 } : { opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+    >
+      <div
+        className="absolute inset-0 opacity-[0.14]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(46,163,242,0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(46,163,242,0.18) 1px, transparent 1px)",
+          backgroundSize: "76px 76px",
+        }}
+      />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(46,163,242,0.18),transparent_32%),radial-gradient(circle_at_50%_100%,rgba(16,185,129,0.16),transparent_44%)]" />
+
+      <div className="absolute left-6 top-6 hidden text-[10px] font-black uppercase tracking-[0.34em] text-cyan-100/55 md:block">
+        Scientific sourcing network
+      </div>
+      <div className="absolute right-6 top-6 hidden text-[10px] font-black uppercase tracking-[0.34em] text-cyan-100/55 md:block">
+        SC-PK / {String(progress).padStart(3, "0")}
+      </div>
+
+      <div className="relative z-10 flex h-full items-center justify-center px-6">
+        <motion.div
+          className="absolute w-full max-w-5xl"
+          initial={{ opacity: 0, y: 18 }}
+          animate={phase === "brands" ? { opacity: 1, y: 0 } : { opacity: 0, y: -28, scale: 0.96 }}
+          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="mb-8 text-center">
+            <div className="text-[11px] font-black uppercase tracking-[0.48em] text-cyan-100/60">
+              Global Scientific Portfolios
+            </div>
+            <div className="mt-4 font-[var(--app-font-heading)] text-3xl font-black uppercase tracking-[0.08em] md:text-5xl">
+              Trusted brands, one local partner
+            </div>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3 md:grid-cols-9">
+            {introBrandLogos.map((brand) => (
+              <motion.div
+                key={brand.name}
+                className="flex h-20 items-center justify-center border border-cyan-100/16 bg-white/[0.09] p-3 shadow-[0_18px_44px_rgba(0,0,0,0.24)] backdrop-blur-md"
+                initial={{ opacity: 0, y: 18, scale: 0.92 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.42, delay: brand.delay, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <img src={img(brand.logo)} alt={brand.name} className="max-h-12 max-w-full object-contain" />
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        <motion.div
+          className="absolute flex w-full max-w-3xl flex-col items-center text-center"
+          initial={{ opacity: 0, y: 24, scale: 0.96 }}
+          animate={phase === "hub" || phase === "done" ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.96 }}
+          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <div className="mb-7 flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.34em] text-cyan-100/65">
+            <span className="h-px w-12 bg-cyan-100/30" />
+            Covered under one sourcing hub
+            <span className="h-px w-12 bg-cyan-100/30" />
+          </div>
+          <div className="relative">
+            <div className="absolute inset-x-4 top-8 h-24 rounded-full bg-cyan-300/18 blur-3xl" />
+            <img
+              src={img("/images/sc-logo-full-nav.webp")}
+              alt="Science Centre Pakistan"
+              className="relative h-24 w-auto object-contain drop-shadow-[0_20px_38px_rgba(46,163,242,0.3)] md:h-32"
+            />
+          </div>
+          <div className="mt-7 grid w-full max-w-2xl grid-cols-3 border border-cyan-100/16 bg-white/[0.07] text-[10px] font-black uppercase tracking-[0.18em] text-cyan-100/70 backdrop-blur-md">
+            <div className="flex items-center justify-center gap-2 border-r border-cyan-100/12 px-3 py-4">
+              <Microscope className="h-4 w-4 text-emerald-200" />
+              Instruments
+            </div>
+            <div className="flex items-center justify-center gap-2 border-r border-cyan-100/12 px-3 py-4">
+              <Dna className="h-4 w-4 text-cyan-200" />
+              Diagnostics
+            </div>
+            <div className="flex items-center justify-center gap-2 px-3 py-4">
+              <TestTube className="h-4 w-4 text-sky-200" />
+              Reagents
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      <div className="absolute bottom-8 left-1/2 h-px w-56 -translate-x-1/2 overflow-hidden bg-white/10">
+        <motion.div
+          className="h-full bg-gradient-to-r from-cyan-300 via-white to-emerald-300"
+          initial={{ width: "0%" }}
+          animate={{ width: `${progress}%` }}
+          transition={{ duration: 0.1, ease: "linear" }}
+        />
+      </div>
+    </motion.div>
+  );
+}
+
 /* ─── Navbar ──────────────────────────────────────────────────── */
 
 /* ─── Hero ────────────────────────────────────────────────────── */
@@ -1859,7 +2007,7 @@ export default function Home() {
     <div className="h-[100dvh] w-full bg-background overflow-hidden selection:bg-primary selection:text-primary-foreground text-foreground">
       <AnimatePresence>
         {!splashDone && (
-          <IntroSplash
+          <BrandHubIntro
             onDone={() => {
               try {
                 window.sessionStorage.setItem("science-centre-intro-seen", "1");
