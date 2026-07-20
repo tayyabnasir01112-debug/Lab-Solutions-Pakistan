@@ -212,7 +212,7 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
           {introBrandLogos.map((brand, index) => (
             <motion.div
               key={brand.name}
-              className="absolute z-20 flex h-14 w-20 items-center justify-center border border-cyan-100/15 bg-white/[0.08] px-3 shadow-[0_18px_42px_rgba(0,0,0,0.28)] backdrop-blur-md md:h-16 md:w-24"
+              className="absolute z-20 flex h-14 w-20 items-center justify-center border border-cyan-100/18 bg-white/[0.11] px-3 shadow-[0_18px_42px_rgba(0,0,0,0.3)] backdrop-blur-md md:h-16 md:w-24"
               style={{ left: brand.x, top: brand.y }}
               initial={{ opacity: 0, scale: 0.72, x: 0, y: 18 }}
               animate={
@@ -226,11 +226,17 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
                   : { duration: 0.78, delay: index * 0.035, ease: [0.76, 0, 0.24, 1] }
               }
             >
-              <img src={img(brand.logo)} alt={brand.name} className="max-h-10 max-w-full object-contain md:max-h-11" />
+              <img src={img(brand.logo)} alt={brand.name} className="max-h-10 max-w-full object-contain drop-shadow-[0_6px_14px_rgba(0,0,0,0.2)] md:max-h-11" />
             </motion.div>
           ))}
 
-          <svg viewBox="0 0 420 420" className="absolute inset-0 h-full w-full overflow-visible">
+          <motion.svg
+            viewBox="0 0 420 420"
+            className="absolute inset-0 h-full w-full overflow-visible"
+            initial={{ opacity: 0, scale: 0.88 }}
+            animate={phase === "resolve" ? { opacity: 1, scale: 1 } : { opacity: 0.12, scale: 0.82 }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          >
             <defs>
               <linearGradient id="introStroke" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0%" stopColor="#7dd3fc" />
@@ -420,12 +426,12 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
                 filter="url(#introGlow)"
               />
             ))}
-          </svg>
+          </motion.svg>
 
           <motion.div
-            className="absolute inset-x-0 top-1/2 -translate-y-1/2 text-center"
+            className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 text-center"
             initial={{ opacity: 0 }}
-            animate={{ opacity: phase === "calibrate" ? 1 : 0 }}
+            animate={{ opacity: 0 }}
             transition={{ duration: 0.35 }}
           >
             <div className="font-mono text-xs tracking-[0.36em] text-cyan-100/70">/{String(progress).padStart(3, "0")}</div>
