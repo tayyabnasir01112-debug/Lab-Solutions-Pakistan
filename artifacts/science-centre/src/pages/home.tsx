@@ -63,6 +63,18 @@ const introParticles = [
 
 const introSignals = ["HLA", "NGS", "FLOW", "WATER", "LIFE SCIENCES"];
 
+const introBrandLogos = [
+  { name: "One Lambda", logo: "/images/logos/onelambda-mark.png", x: "6%", y: "18%", delay: 0.1 },
+  { name: "Merck", logo: "/images/logos/merck-logo-clean.png", x: "35%", y: "4%", delay: 0.2 },
+  { name: "Luminex", logo: "/images/logos/luminex-logo-clean.png", x: "68%", y: "15%", delay: 0.3 },
+  { name: "Cytek", logo: "/images/logos/cytek-logo.png", x: "81%", y: "45%", delay: 0.4 },
+  { name: "NGeneBio", logo: "/images/logos/ngene-logo-clean.svg", x: "65%", y: "76%", delay: 0.5 },
+  { name: "REX", logo: "/images/logos/rex-logo-crop.png", x: "34%", y: "82%", delay: 0.6 },
+  { name: "HKM", logo: "/images/logos/hkm-logo.png", x: "8%", y: "66%", delay: 0.7 },
+  { name: "Sugentech", logo: "/images/logos/sugentech-logo-clean.svg", x: "1%", y: "43%", delay: 0.8 },
+  { name: "BioLegend", logo: "/images/biolegend/biolegend-logo.svg", x: "82%", y: "66%", delay: 0.9 },
+];
+
 /* ─── Scroll-reveal wrapper ───────────────────────────────────── */
 function Reveal({
   children,
@@ -111,12 +123,12 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
     let cancelled = false;
     const timeouts: number[] = [];
     const tick = (now: number) => {
-      const pct = Math.min(100, Math.round(((now - started) / 2600) * 100));
+      const pct = Math.min(100, Math.round(((now - started) / 3600) * 100));
       setProgress(pct);
       if (pct < 100) frame = requestAnimationFrame(tick);
     };
     frame = requestAnimationFrame(tick);
-    timeouts.push(window.setTimeout(() => setPhase("resolve"), 900));
+    timeouts.push(window.setTimeout(() => setPhase("resolve"), 1750));
 
     const heroReady = new Promise<void>((resolve) => {
       const hero = new Image();
@@ -126,13 +138,13 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
       if (hero.complete) resolve();
     });
     const minimumIntro = new Promise<void>((resolve) => {
-      timeouts.push(window.setTimeout(resolve, 2750));
+      timeouts.push(window.setTimeout(resolve, 3800));
     });
 
     Promise.all([heroReady, minimumIntro]).then(() => {
       if (cancelled) return;
-      timeouts.push(window.setTimeout(() => setPhase("done"), 850));
-      timeouts.push(window.setTimeout(onDone, 1450));
+      timeouts.push(window.setTimeout(() => setPhase("done"), 950));
+      timeouts.push(window.setTimeout(onDone, 1550));
     });
 
     return () => {
@@ -196,6 +208,27 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
             animate={{ rotate: -360 }}
             transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
           />
+
+          {introBrandLogos.map((brand, index) => (
+            <motion.div
+              key={brand.name}
+              className="absolute z-20 flex h-14 w-20 items-center justify-center border border-cyan-100/15 bg-white/[0.08] px-3 shadow-[0_18px_42px_rgba(0,0,0,0.28)] backdrop-blur-md md:h-16 md:w-24"
+              style={{ left: brand.x, top: brand.y }}
+              initial={{ opacity: 0, scale: 0.72, x: 0, y: 18 }}
+              animate={
+                phase === "calibrate"
+                  ? { opacity: 1, scale: 1, x: [0, index % 2 ? -8 : 8, 0], y: [0, index % 2 ? 8 : -8, 0] }
+                  : { opacity: 0, scale: 0.42, x: "150%", y: "135%" }
+              }
+              transition={
+                phase === "calibrate"
+                  ? { opacity: { duration: 0.45, delay: brand.delay }, scale: { duration: 0.45, delay: brand.delay }, x: { duration: 2.5, repeat: Infinity, ease: "easeInOut" }, y: { duration: 2.5, repeat: Infinity, ease: "easeInOut" } }
+                  : { duration: 0.78, delay: index * 0.035, ease: [0.76, 0, 0.24, 1] }
+              }
+            >
+              <img src={img(brand.logo)} alt={brand.name} className="max-h-10 max-w-full object-contain md:max-h-11" />
+            </motion.div>
+          ))}
 
           <svg viewBox="0 0 420 420" className="absolute inset-0 h-full w-full overflow-visible">
             <defs>
@@ -408,11 +441,20 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
           <div className="text-[11px] font-black uppercase tracking-[0.55em] text-cyan-100/65">
             {introSignals[progress % introSignals.length]}
           </div>
-          <h1 className="mt-4 font-[var(--app-font-heading)] text-4xl font-black uppercase leading-none tracking-[0.08em] md:text-7xl">
-            Science Centre
-          </h1>
+          <div className="relative mt-4 inline-flex flex-col items-center">
+            <div className="absolute inset-x-8 top-6 h-20 rounded-full bg-cyan-300/20 blur-3xl" />
+            <img
+              src={img("/images/sc-logo-full-nav.webp")}
+              alt="Science Centre Pakistan"
+              className="relative h-20 w-auto object-contain drop-shadow-[0_18px_34px_rgba(46,163,242,0.28)] md:h-28"
+            />
+            <div className="mt-4 inline-flex items-center gap-3 border border-cyan-100/20 bg-white/[0.07] px-4 py-2 text-[10px] font-black uppercase tracking-[0.28em] text-cyan-100/75 backdrop-blur-md">
+              <Microscope className="h-4 w-4 text-emerald-200" />
+              Global portfolios covered locally
+            </div>
+          </div>
           <div className="mt-3 text-xs font-black uppercase tracking-[0.46em] text-emerald-200/75 md:text-sm">
-            Pakistan
+            Science Centre Pakistan
           </div>
         </motion.div>
       </div>
