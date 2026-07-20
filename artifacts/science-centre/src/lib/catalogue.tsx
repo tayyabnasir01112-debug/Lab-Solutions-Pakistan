@@ -63,7 +63,7 @@ export const brands: Brand[] = [
     name: "One Lambda (Thermo Fisher Scientific)",
     short: "One Lambda",
     accent: "#D71920",
-    logo: "/images/logos/onelambda-logo.svg",
+    logo: "/images/logos/onelambda-mark.png",
     blurb: "Global leader in transplant diagnostics — HLA typing, antibody detection, and crossmatch solutions trusted worldwide.",
     longBlurb: "One Lambda, a Thermo Fisher Scientific brand, is the global gold standard in transplant diagnostics. For over 40 years, transplant laboratories worldwide have trusted One Lambda for HLA typing, antibody detection (LABScreen™), flow cytometric crossmatch (FlowDSA-XM™), and NGS-based HLA typing. Used in thousands of transplant centres across 100+ countries.",
     founded: "1975",

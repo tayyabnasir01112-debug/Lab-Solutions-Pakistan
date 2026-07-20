@@ -840,7 +840,7 @@ const partnerBrands = [
   { name: "HKM", logo: "/images/logos/hkm-logo.png", color: "#26715a", x: "88%", y: "55%", w: "clamp(150px, 13vw, 240px)", delay: 0.44 },
   { name: "Sugentech", logo: "/images/logos/sugentech-logo-clean.svg", color: "#ed174f", x: "23%", y: "71%", w: "clamp(165px, 15vw, 280px)", delay: 0.52 },
   { name: "BioLegend", logo: "/images/biolegend/biolegend-logo.svg", color: "#7d1fb2", x: "54%", y: "68%", w: "clamp(190px, 18vw, 330px)", delay: 0.6 },
-  { name: "One Lambda", logo: "/images/logos/onelambda-logo.svg", color: "#d71920", x: "82%", y: "70%", w: "clamp(96px, 8vw, 150px)", delay: 0.68 },
+  { name: "One Lambda", logo: "/images/logos/onelambda-mark.png", color: "#d71920", x: "82%", y: "70%", w: "clamp(96px, 8vw, 150px)", delay: 0.68 },
 ];
 
 function Partners() {
