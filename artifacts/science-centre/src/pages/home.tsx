@@ -123,7 +123,7 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
     let cancelled = false;
     const timeouts: number[] = [];
     const tick = (now: number) => {
-      const pct = Math.min(100, Math.round(((now - started) / 3600) * 100));
+      const pct = Math.min(100, Math.round(((now - started) / 4700) * 100));
       setProgress(pct);
       if (pct < 100) frame = requestAnimationFrame(tick);
     };
@@ -494,7 +494,7 @@ function BrandHubIntro({ onDone }: { onDone: () => void }) {
     };
 
     frame = requestAnimationFrame(tick);
-    timeouts.push(window.setTimeout(() => setPhase("hub"), 1850));
+    timeouts.push(window.setTimeout(() => setPhase("hub"), 2850));
 
     const heroReady = new Promise<void>((resolve) => {
       const hero = new Image();
@@ -505,7 +505,7 @@ function BrandHubIntro({ onDone }: { onDone: () => void }) {
     });
 
     const minimumIntro = new Promise<void>((resolve) => {
-      timeouts.push(window.setTimeout(resolve, 3900));
+      timeouts.push(window.setTimeout(resolve, 5000));
     });
 
     Promise.all([heroReady, minimumIntro]).then(() => {
