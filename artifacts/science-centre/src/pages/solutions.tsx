@@ -149,22 +149,28 @@ const solutionAreas: SolutionArea[] = [
 
 const groupedSlides = [
   {
-    eyebrow: "Clinical and research core",
-    title: "From discovery work to transplant and cell analysis.",
-    summary: "The first layer connects high-value diagnostic and research workflows with the instruments, kits, reagents and panel support needed to run them reliably.",
-    areas: solutionAreas.slice(0, 4),
+    eyebrow: "Research and clinical core",
+    title: "Research, transplant and flow workflows.",
+    summary: "Focused support for high-value clinical and research labs where product choice depends on workflow, sample type and reporting needs.",
+    areas: solutionAreas.slice(0, 3),
   },
   {
-    eyebrow: "Systems and molecular infrastructure",
-    title: "The systems layer that keeps specialist labs moving.",
-    summary: "Water, NGS, allergy and routine biochemistry needs are treated as complete workflows, not isolated catalogue picks.",
-    areas: solutionAreas.slice(4, 8),
+    eyebrow: "Controlled lab systems",
+    title: "Culture, water and sequencing infrastructure.",
+    summary: "Core systems are matched around daily use, capacity, purity, repeatability and the consumables needed after installation.",
+    areas: solutionAreas.slice(3, 6),
   },
   {
-    eyebrow: "Consumables and continuity",
-    title: "The supplies that protect daily lab throughput.",
-    summary: "Filtration, antibodies and general consumables are planned around reordering, compatibility and practical lab continuity.",
-    areas: solutionAreas.slice(8),
+    eyebrow: "Diagnostics and analytical testing",
+    title: "Allergy, biochemistry and filtration support.",
+    summary: "Routine testing areas are organised around panels, instruments, sample preparation and daily throughput.",
+    areas: solutionAreas.slice(6, 9),
+  },
+  {
+    eyebrow: "Daily lab continuity",
+    title: "Antibodies and consumables without the clutter.",
+    summary: "Everyday supply lines stay useful when they are easy to reorder, compatible with the workflow and backed by clear guidance.",
+    areas: solutionAreas.slice(9),
   },
 ];
 
@@ -177,44 +183,45 @@ function SlideShell({ children, className }: { children: React.ReactNode; classN
   );
 }
 
-function SolutionMiniCard({ area, index, compact = false }: { area: SolutionArea; index: number; compact?: boolean }) {
+function SolutionMiniCard({ area, index, tone = "light" }: { area: SolutionArea; index: number; tone?: "light" | "dark" }) {
+  const dark = tone === "dark";
+
   return (
     <Link
       href={`/products?q=${encodeURIComponent(area.title)}`}
       className={cn(
-        "group relative flex min-h-0 overflow-hidden border border-border bg-background shadow-sm transition-transform duration-300 hover:-translate-y-1",
-        compact ? "h-full" : "h-full"
+        "group relative flex h-full min-h-0 overflow-hidden border shadow-sm transition-transform duration-300 hover:-translate-y-1",
+        dark ? "border-white/12 bg-white/[0.055] text-white" : "border-border bg-background"
       )}
     >
-      <img src={img(area.image)} alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.14] transition-transform duration-700 group-hover:scale-105" loading="lazy" />
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background/94 to-background/76" />
-      <div className="relative z-10 flex h-full w-full flex-col p-4 md:p-5">
-        <div className="mb-3 flex items-center justify-between gap-3">
-          <span className="flex h-10 w-10 items-center justify-center border bg-background shadow-sm" style={{ color: area.accent, borderColor: `${area.accent}55` }}>
+      <div className="relative hidden w-[34%] overflow-hidden md:block">
+        <img src={img(area.image)} alt="" className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+        <div className="absolute inset-0" style={{ background: `linear-gradient(180deg, transparent, ${area.accent}cc)` }} />
+      </div>
+      <div className={cn("relative z-10 flex h-full min-w-0 flex-1 flex-col p-5", dark && "bg-gradient-to-br from-white/[0.03] to-transparent")}>
+        <div className="mb-4 flex items-center justify-between gap-3">
+          <span className={cn("flex h-10 w-10 items-center justify-center border", dark ? "bg-black/20" : "bg-background shadow-sm")} style={{ color: area.accent, borderColor: `${area.accent}55` }}>
             {area.icon}
           </span>
-          <span className="font-[var(--app-font-heading)] text-xs font-black tracking-[0.22em] text-muted-foreground">
+          <span className={cn("font-[var(--app-font-heading)] text-xs font-black tracking-[0.22em]", dark ? "text-white/32" : "text-muted-foreground")}>
             {String(index + 1).padStart(2, "0")}
           </span>
         </div>
         <div className="text-[10px] font-black uppercase tracking-[0.18em]" style={{ color: area.accent }}>{area.label}</div>
-        <h3 className="mt-2 font-[var(--app-font-heading)] text-[clamp(1.35rem,2.1vw,2rem)] font-black leading-[0.98] text-foreground">
+        <h3 className={cn("mt-2 font-[var(--app-font-heading)] text-[clamp(1.45rem,2.2vw,2.2rem)] font-black leading-[0.98]", dark ? "text-white" : "text-foreground")}>
           {area.title}
         </h3>
-        <div className="mt-3 grid grid-cols-[auto_1fr] gap-3 border-y border-border/80 py-2.5">
-          <div className="font-[var(--app-font-heading)] text-lg font-black" style={{ color: area.accent }}>{area.metric}</div>
-          <div className="text-xs font-semibold leading-snug text-muted-foreground">{area.role}</div>
-        </div>
-        <ul className="mt-3 grid gap-2 text-sm leading-snug text-muted-foreground">
-          {area.points.map(point => (
+        <p className={cn("mt-3 text-sm font-semibold leading-relaxed", dark ? "text-white/58" : "text-muted-foreground")}>{area.role}</p>
+        <ul className={cn("mt-4 grid gap-2.5 text-sm leading-snug", dark ? "text-white/62" : "text-muted-foreground")}>
+          {area.points.slice(0, 2).map(point => (
             <li key={point} className="flex gap-2">
               <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full" style={{ background: area.accent }} />
               <span>{point}</span>
             </li>
           ))}
         </ul>
-        <span className="mt-auto inline-flex items-center gap-2 pt-3 text-xs font-black uppercase tracking-[0.18em] opacity-70 transition-opacity group-hover:opacity-100" style={{ color: area.accent }}>
-          Browse relevant catalogue <ArrowRight className="h-3.5 w-3.5" />
+        <span className="mt-auto inline-flex items-center gap-2 pt-5 text-xs font-black uppercase tracking-[0.16em] opacity-70 transition-opacity group-hover:opacity-100" style={{ color: area.accent }}>
+          View catalogue <ArrowRight className="h-3.5 w-3.5" />
         </span>
       </div>
     </Link>
@@ -223,44 +230,37 @@ function SolutionMiniCard({ area, index, compact = false }: { area: SolutionArea
 
 function SolutionBoardSlide({ group, groupIndex }: { group: typeof groupedSlides[number]; groupIndex: number }) {
   const spotlight = group.areas[0];
-  const isContinuity = group.areas.length === 3;
+  const dark = groupIndex % 2 === 1;
+  const hasCta = group.areas.length === 2;
 
   return (
-    <SlideShell className={groupIndex % 2 === 0 ? "bg-background text-foreground" : "bg-[#07111f] text-white"}>
-      <div className="container relative z-10 mx-auto grid h-[calc(100dvh-6rem)] min-h-0 gap-5 px-6 py-6 md:px-12 lg:grid-cols-[0.62fr_1.38fr]">
+    <SlideShell className={dark ? "bg-[#07111f] text-white" : "bg-background text-foreground"}>
+      <div className="container relative z-10 mx-auto grid h-[calc(100dvh-6rem)] min-h-0 gap-6 px-6 py-8 md:px-12 lg:grid-cols-[0.82fr_1.18fr]">
         <motion.div
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55 }}
           className={cn(
-            "relative flex min-h-0 flex-col overflow-hidden border p-6",
-            groupIndex % 2 === 0 ? "border-border bg-muted/25" : "border-white/12 bg-white/[0.055]"
+            "relative flex min-h-0 flex-col justify-end overflow-hidden border p-7",
+            dark ? "border-white/12 bg-white/[0.055]" : "border-border bg-muted/20"
           )}
         >
-          <img src={img(spotlight.image)} alt="" className="absolute inset-x-0 bottom-0 h-1/2 w-full object-cover opacity-[0.18]" loading="lazy" />
-          <div className={cn("absolute inset-0 bg-gradient-to-b from-transparent via-transparent", groupIndex % 2 === 0 ? "to-background/70" : "to-[#07111f]/80")} />
+          <img src={img(spotlight.image)} alt="" className="absolute inset-0 h-full w-full object-cover opacity-[0.24]" loading="lazy" />
+          <div className={cn("absolute inset-0", dark ? "bg-gradient-to-b from-[#07111f]/42 via-[#07111f]/72 to-[#07111f]" : "bg-gradient-to-b from-background/30 via-background/80 to-background")} />
           <div className="relative z-10">
             <div className="mb-4 inline-flex items-center gap-2 text-xs font-black uppercase tracking-[0.2em]" style={{ color: spotlight.accent }}>
               <ShieldCheck className="h-4 w-4" /> {group.eyebrow}
             </div>
-            <h2 className="font-[var(--app-font-heading)] text-[clamp(2.25rem,4.3vw,5rem)] font-black leading-[0.92]">
+            <h2 className="max-w-xl font-[var(--app-font-heading)] text-[clamp(2.6rem,4.8vw,5.5rem)] font-black leading-[0.9]">
               {group.title}
             </h2>
-            <p className={cn("mt-5 max-w-xl text-sm leading-relaxed md:text-base", groupIndex % 2 === 0 ? "text-muted-foreground" : "text-white/64")}>
+            <p className={cn("mt-5 max-w-lg text-sm leading-relaxed md:text-base", dark ? "text-white/64" : "text-muted-foreground")}>
               {group.summary}
             </p>
           </div>
-          <div className="relative z-10 mt-auto grid grid-cols-2 gap-3">
-            {group.areas.map(area => (
-              <div key={area.title} className={cn("border px-3 py-3", groupIndex % 2 === 0 ? "border-border bg-background/80" : "border-white/12 bg-black/[0.18]")}>
-                <div className="text-[10px] font-black uppercase tracking-[0.18em]" style={{ color: area.accent }}>{area.metric}</div>
-                <div className="mt-1 text-sm font-bold leading-tight">{area.title}</div>
-              </div>
-            ))}
-          </div>
         </motion.div>
 
-        <div className={cn("grid min-h-0 gap-4", isContinuity ? "lg:grid-cols-[1fr_1fr_0.9fr]" : "md:grid-cols-2")}>
+        <div className={cn("grid min-h-0 gap-4", group.areas.length === 3 ? "grid-rows-3" : "grid-rows-3")}>
           {group.areas.map((area, index) => (
             <motion.div
               key={area.title}
@@ -269,27 +269,23 @@ function SolutionBoardSlide({ group, groupIndex }: { group: typeof groupedSlides
               transition={{ delay: 0.08 + index * 0.07 }}
               className="min-h-0"
             >
-              <SolutionMiniCard area={area} index={groupIndex * 4 + index} compact={isContinuity} />
+              <SolutionMiniCard area={area} index={groupIndex * 3 + index} tone={dark ? "dark" : "light"} />
             </motion.div>
           ))}
-          {isContinuity && (
+          {hasCta && (
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.32 }}
-              className="flex min-h-0 flex-col justify-between border border-primary/35 bg-primary p-5 text-primary-foreground"
+              transition={{ delay: 0.24 }}
+              className={cn("flex min-h-0 items-center justify-between gap-6 border p-6", dark ? "border-white/12 bg-white/[0.055]" : "border-border bg-muted/25")}
             >
               <div>
-                <div className="text-xs font-black uppercase tracking-[0.2em] opacity-75">Next step</div>
-                <h3 className="mt-4 font-[var(--app-font-heading)] text-3xl font-black leading-none">
-                  Send the lab goal. We will shape the shortlist.
-                </h3>
-                <p className="mt-4 text-sm leading-relaxed opacity-80">
-                  Share a test menu, sample volume, brand preference or catalogue number and Science Centre will route it to the right workflow family.
-                </p>
+                <div className="text-xs font-black uppercase tracking-[0.2em] text-primary">Need guidance?</div>
+                <h3 className="mt-3 font-[var(--app-font-heading)] text-2xl font-black leading-tight">Send the lab goal, test menu or catalogue number.</h3>
+                <p className={cn("mt-2 text-sm leading-relaxed", dark ? "text-white/58" : "text-muted-foreground")}>We will route it to the right product family without overwhelming the team.</p>
               </div>
-              <Link href="/contact" className="mt-6 inline-flex items-center justify-between border border-white/30 bg-white px-5 py-4 text-sm font-black uppercase tracking-[0.14em] text-foreground">
-                Start a conversation <ArrowRight className="h-4 w-4" />
+              <Link href="/contact" className="shrink-0 border border-primary bg-primary px-5 py-3 text-sm font-black uppercase tracking-[0.12em] text-primary-foreground">
+                Start <ArrowRight className="ml-2 inline h-4 w-4" />
               </Link>
             </motion.div>
           )}
@@ -300,32 +296,31 @@ function SolutionBoardSlide({ group, groupIndex }: { group: typeof groupedSlides
 }
 
 export default function SolutionsPage() {
-  const allLabels = solutionAreas.map(area => area.title);
-
   return (
     <div className="h-[100dvh] overflow-hidden bg-background text-foreground">
       <SiteNavbar forceSolid />
-      <PageSlideDeck names={["Overview", "Clinical Core", "Systems", "Continuity", "Contact"]} accent="#2EA3F2">
+      <PageSlideDeck names={["Overview", "Research", "Systems", "Diagnostics", "Supply", "Contact"]} accent="#2EA3F2">
         <SlideShell className="bg-[#07111f] text-white">
           <img src={img("/images/sc-lab-hero-optimized.webp")} alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />
           <div className="absolute inset-0 bg-[linear-gradient(110deg,rgba(7,17,31,0.96),rgba(7,17,31,0.78)_48%,rgba(7,17,31,0.42))]" />
-          <div className="container relative z-10 mx-auto grid h-[calc(100dvh-6rem)] min-h-0 gap-6 px-6 py-6 md:px-12 lg:grid-cols-[1.06fr_0.94fr] lg:items-center">
+          <div className="container relative z-10 mx-auto grid h-[calc(100dvh-6rem)] min-h-0 gap-8 px-6 py-8 md:px-12 lg:grid-cols-[1.05fr_0.72fr] lg:items-center">
             <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.65 }}>
               <div className="mb-5 inline-flex items-center gap-2 border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-white/80">
                 <ShieldCheck className="h-3.5 w-3.5 text-primary" /> Solution design for modern labs
               </div>
-              <h1 className="max-w-5xl font-[var(--app-font-heading)] text-[clamp(3.1rem,6.5vw,7.4rem)] font-black leading-[0.9] text-white">
+              <h1 className="max-w-5xl font-[var(--app-font-heading)] text-[clamp(3.1rem,6vw,6.5rem)] font-black leading-[0.9] text-white">
                 Practical solution lanes for Pakistan's laboratories.
               </h1>
               <p className="mt-6 max-w-3xl text-base leading-relaxed text-white/70 md:text-lg">
                 Science Centre helps hospitals, research institutes, diagnostic labs and industry teams source the right instruments, kits, reagents and consumables from trusted scientific brands.
               </p>
-              <div className="mt-7 flex flex-wrap gap-2.5">
-                {allLabels.map(label => (
-                  <Link key={label} href={`/products?q=${encodeURIComponent(label)}`} className="border border-white/16 bg-white/[0.08] px-3 py-2 text-xs font-bold text-white/72 transition-colors hover:border-primary hover:text-primary">
-                    {label}
-                  </Link>
-                ))}
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link href="/contact" className="inline-flex items-center bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90">
+                  Discuss a Requirement <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+                <Link href="/products" className="inline-flex items-center border border-white/25 bg-white/5 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white hover:text-foreground">
+                  Browse Products
+                </Link>
               </div>
             </motion.div>
 
@@ -333,44 +328,29 @@ export default function SolutionsPage() {
               initial={{ opacity: 0, x: 28 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.15, duration: 0.65 }}
-              className="grid min-h-0 gap-4"
+              className="min-h-0"
             >
-              <div className="border border-white/14 bg-white/[0.07] p-5 backdrop-blur-md">
-                <div className="mb-4 text-xs font-black uppercase tracking-[0.18em] text-primary">Coverage model</div>
-                <div className="grid grid-cols-3 gap-3">
+              <div className="border border-white/14 bg-white/[0.07] p-7 backdrop-blur-md">
+                <div className="text-xs font-black uppercase tracking-[0.2em] text-primary">Coverage model</div>
+                <div className="mt-8 grid grid-cols-[auto_1fr] gap-5 border-b border-white/12 pb-7">
+                  <div className="font-[var(--app-font-heading)] text-7xl font-black leading-none text-white">11</div>
+                  <div>
+                    <h2 className="font-[var(--app-font-heading)] text-3xl font-black leading-tight text-white">solution lanes, grouped for easier decisions.</h2>
+                    <p className="mt-3 text-sm leading-relaxed text-white/58">Each following slide focuses on a smaller set of workflows so the page is easier to read and easier to act on.</p>
+                  </div>
+                </div>
+                <div className="mt-6 grid gap-3">
                   {[
-                    ["11", "Solution areas"],
-                    ["9", "Brand portfolios"],
-                    ["500+", "Lab conversations"],
-                  ].map(([value, label]) => (
-                    <div key={label} className="border border-white/12 bg-black/[0.18] p-4">
-                      <div className="font-[var(--app-font-heading)] text-3xl font-black text-white">{value}</div>
-                      <div className="mt-1 text-[11px] font-bold uppercase tracking-[0.12em] text-white/[0.48]">{label}</div>
+                    "Start from the test menu, sample volume or application.",
+                    "Match the right brand portfolio without overloading the page.",
+                    "Plan instruments, kits, reagents and repeat consumables together.",
+                  ].map(item => (
+                    <div key={item} className="flex gap-3 text-sm leading-relaxed text-white/68">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                      {item}
                     </div>
                   ))}
                 </div>
-              </div>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {["Requirement routing", "Brand matching", "Consumable planning", "Technical coordination"].map((item, index) => (
-                  <div key={item} className="border border-white/14 bg-white/[0.07] p-5 backdrop-blur-md">
-                    <CheckCircle2 className="mb-4 h-5 w-5 text-primary" />
-                    <div className="font-[var(--app-font-heading)] text-xl font-black text-white">{item}</div>
-                    <p className="mt-2 text-sm leading-relaxed text-white/55">
-                      {index === 0 && "Start from the test menu, application, sample volume or desired outcome."}
-                      {index === 1 && "Compare relevant product families across the active Science Centre catalogue."}
-                      {index === 2 && "Keep reagents, filters, kits and everyday supplies aligned with usage."}
-                      {index === 3 && "Coordinate quotation, guidance and handover with a practical local team."}
-                    </p>
-                  </div>
-                ))}
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <Link href="/contact" className="inline-flex items-center bg-primary px-6 py-3 text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90">
-                  Discuss a Requirement <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-                <Link href="/products" className="inline-flex items-center border border-white/25 bg-white/5 px-6 py-3 text-sm font-bold text-white transition-colors hover:bg-white hover:text-foreground">
-                  Browse Products
-                </Link>
               </div>
             </motion.div>
           </div>
