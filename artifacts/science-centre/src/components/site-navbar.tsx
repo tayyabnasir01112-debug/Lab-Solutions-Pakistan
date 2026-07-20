@@ -469,7 +469,8 @@ export function SiteNavbar({
                   onMouseLeave={scheduleMegaClose}
                   onClick={() => {
                     clearMegaCloseTimer();
-                    setMegaOpen(v => !v);
+                    setMegaOpen(false);
+                    navigate("/products");
                   }}
                   className="py-2 focus:outline-none"
                   aria-expanded={megaOpen}
@@ -861,49 +862,53 @@ export function SiteNavbar({
                           {/* Categories grid */}
                           <div className="flex-1 min-h-0">
                             <div className="text-[9px] font-black uppercase tracking-[0.22em] text-muted-foreground mb-3">Product Categories</div>
-                            <div className="grid grid-cols-2 gap-2">
-                              {brandCats.map(({ cat, count, products: catProds }) => {
-                                if (!cat) return null;
-                                const isExpanded = expandedCat === cat.id;
-                                return (
-                                  <div key={cat.id} className="border border-border overflow-hidden">
-                                    <button
-                                      onClick={() => setExpandedCat(isExpanded ? null : cat.id)}
-                                      className={`w-full text-left flex items-center gap-3 px-4 py-3 transition-all ${
-                                        isExpanded ? "bg-foreground text-background" : "hover:bg-muted/60"
-                                      }`}
-                                    >
-                                      <span className={`text-base transition-colors ${isExpanded ? "text-background/70" : "text-muted-foreground"}`}>{cat.icon}</span>
-                                      <span className={`flex-1 text-[13px] font-semibold text-left ${isExpanded ? "text-background" : "text-foreground"}`}>{cat.name}</span>
-                                      <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full tabular-nums ${isExpanded ? "bg-background/20 text-background" : "bg-muted text-muted-foreground"}`}>{count}</span>
-                                      <ChevronRight className={`h-3.5 w-3.5 flex-shrink-0 transition-transform ${isExpanded ? "rotate-90 text-background/60" : "text-muted-foreground/40"}`} />
-                                    </button>
-                                    <AnimatePresence>
-                                      {isExpanded && (
-                                        <motion.div initial={{ height: 0 }} animate={{ height: "auto" }} exit={{ height: 0 }}
-                                          transition={{ duration: 0.2 }} className="overflow-hidden border-t border-border">
-                                          <div className="divide-y divide-border/50 bg-muted/20">
-                                            {catProds.slice(0, 5).map(p => (
-                                              <ProductShortcutLink key={p.id} product={p} onClick={closeMega}
-                                                className="flex items-center gap-2.5 px-3 py-2 hover:bg-background transition-colors group">
-                                                <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: currentBrand.accent }} />
-                                                <span className="text-[12px] text-foreground/80 group-hover:text-primary transition-colors leading-snug flex-1 line-clamp-1">{p.name}</span>
-                                                <ArrowRight className="h-2.5 w-2.5 text-muted-foreground/30 group-hover:text-primary opacity-0 group-hover:opacity-100 transition-all flex-shrink-0" />
-                                              </ProductShortcutLink>
-                                            ))}
-                                            {catProds.length > 5 && (
-                                              <Link href={`/products?brand=${activeBrand}&category=${cat.id}`} onClick={closeMega}
-                                                className="flex items-center gap-2 px-4 py-2 text-[11px] font-bold text-primary hover:bg-background transition-colors">
-                                                +{catProds.length - 5} more <ArrowRight className="h-3 w-3" />
-                                              </Link>
-                                            )}
-                                          </div>
-                                        </motion.div>
-                                      )}
-                                    </AnimatePresence>
-                                  </div>
-                                );
-                              })}
+                            <div className="grid grid-cols-2 gap-2 items-start">
+                              {[0, 1].map(column => (
+                                <div key={column} className="space-y-2">
+                                  {brandCats.filter((_, index) => index % 2 === column).map(({ cat, count, products: catProds }) => {
+                                    if (!cat) return null;
+                                    const isExpanded = expandedCat === cat.id;
+                                    return (
+                                      <div key={cat.id} className="border border-border overflow-hidden bg-background">
+                                        <button
+                                          onClick={() => setExpandedCat(isExpanded ? null : cat.id)}
+                                          className={`w-full text-left flex items-center gap-3 px-4 py-3 transition-all ${
+                                            isExpanded ? "bg-foreground text-background" : "hover:bg-muted/60"
+                                          }`}
+                                        >
+                                          <span className={`text-base transition-colors ${isExpanded ? "text-background/70" : "text-muted-foreground"}`}>{cat.icon}</span>
+                                          <span className={`flex-1 text-[13px] font-semibold text-left ${isExpanded ? "text-background" : "text-foreground"}`}>{cat.name}</span>
+                                          <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded-full tabular-nums ${isExpanded ? "bg-background/20 text-background" : "bg-muted text-muted-foreground"}`}>{count}</span>
+                                          <ChevronRight className={`h-3.5 w-3.5 flex-shrink-0 transition-transform ${isExpanded ? "rotate-90 text-background/60" : "text-muted-foreground/40"}`} />
+                                        </button>
+                                        <AnimatePresence>
+                                          {isExpanded && (
+                                            <motion.div initial={{ height: 0 }} animate={{ height: "auto" }} exit={{ height: 0 }}
+                                              transition={{ duration: 0.18 }} className="overflow-hidden border-t border-border">
+                                              <div className="divide-y divide-border/50 bg-muted/20">
+                                                {catProds.slice(0, 5).map(p => (
+                                                  <ProductShortcutLink key={p.id} product={p} onClick={closeMega}
+                                                    className="flex items-center gap-2.5 px-3 py-2 hover:bg-background transition-colors group">
+                                                    <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: currentBrand.accent }} />
+                                                    <span className="text-[12px] text-foreground/80 group-hover:text-primary transition-colors leading-snug flex-1 line-clamp-1">{p.name}</span>
+                                                    <ArrowRight className="h-2.5 w-2.5 text-muted-foreground/30 group-hover:text-primary opacity-0 group-hover:opacity-100 transition-all flex-shrink-0" />
+                                                  </ProductShortcutLink>
+                                                ))}
+                                                {catProds.length > 5 && (
+                                                  <Link href={`/products?brand=${activeBrand}&category=${cat.id}`} onClick={closeMega}
+                                                    className="flex items-center gap-2 px-4 py-2 text-[11px] font-bold text-primary hover:bg-background transition-colors">
+                                                    +{catProds.length - 5} more <ArrowRight className="h-3 w-3" />
+                                                  </Link>
+                                                )}
+                                              </div>
+                                            </motion.div>
+                                          )}
+                                        </AnimatePresence>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              ))}
                             </div>
                           </div>
                         </motion.div>

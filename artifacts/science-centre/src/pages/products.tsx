@@ -141,7 +141,7 @@ function CheckRow({
 
 /* ─── Product card (visual, image-forward) ────────────────────── */
 
-function ProductCard({ product, index }: { product: Product; index: number }) {
+function ProductCard({ product }: { product: Product }) {
   const brand = brandById(product.brand);
   const category = categoryById(product.category);
   const isBioLegendExternal = product.brand === "biolegend" && Boolean(product.specSheet);
@@ -159,12 +159,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
     .toUpperCase();
 
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.35, delay: Math.min(index * 0.02, 0.25), ease: [0.16, 1, 0.3, 1] }}
+    <div
       className="group bg-background border border-border hover:border-foreground/30 transition-all duration-300"
       data-testid={`product-card-${product.id}`}
     >
@@ -198,6 +193,8 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             <img
               src={product.image}
               alt={product.name}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.04]"
               style={{
                 filter: "drop-shadow(0 6px 20px rgba(0,0,0,0.13)) drop-shadow(0 1px 4px rgba(0,0,0,0.07))",
@@ -264,13 +261,13 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           {product.description}
         </p>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 /* ─── Cytek Premium Card ──────────────────────────────────────── */
 
-function CytekCard({ product, index }: { product: Product; index: number }) {
+function CytekCard({ product }: { product: Product }) {
   const category = categoryById(product.category);
 
   // Key metric from specs
@@ -285,12 +282,7 @@ function CytekCard({ product, index }: { product: Product; index: number }) {
     : null;
 
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.35, delay: Math.min(index * 0.02, 0.25), ease: [0.16, 1, 0.3, 1] }}
+    <div
       className="group bg-white border border-[#e0e0e0] hover:border-[#508484] hover:shadow-lg transition-all duration-300 overflow-hidden"
       data-testid={`product-card-${product.id}`}
     >
@@ -325,6 +317,8 @@ function CytekCard({ product, index }: { product: Product; index: number }) {
             <img
               src={product.image}
               alt={product.name}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.05]"
               style={{ filter: "drop-shadow(0 6px 20px rgba(0,0,0,0.12))" }}
             />
@@ -365,24 +359,19 @@ function CytekCard({ product, index }: { product: Product; index: number }) {
         </h3>
         <p className="text-[13px] text-[#707070] leading-relaxed line-clamp-2">{product.description}</p>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 /* ─── Sugentech POCT Card ──────────────────────────────────────── */
 
-function SugentechCard({ product, index }: { product: Product; index: number }) {
+function SugentechCard({ product }: { product: Product }) {
   const category = categoryById(product.category);
   const BLUE = "#0057A8";
   const isAnalyzer = product.category === "equipment";
 
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.35, delay: Math.min(index * 0.02, 0.25), ease: [0.16, 1, 0.3, 1] }}
+    <div
       className="group bg-white border border-[#dce8f5] hover:border-[#0057A8]/50 hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col"
     >
       {/* Top blue accent */}
@@ -396,6 +385,8 @@ function SugentechCard({ product, index }: { product: Product; index: number }) 
 
         {product.image ? (
           <img src={product.image} alt={product.name}
+            loading="lazy"
+            decoding="async"
             className="relative z-10 w-full h-full object-contain p-5 transition-transform duration-500 group-hover:scale-[1.04]"
             style={{ filter: "drop-shadow(0 4px 16px rgba(0,87,168,0.15))" }} />
         ) : (
@@ -448,13 +439,13 @@ function SugentechCard({ product, index }: { product: Product; index: number }) 
         )}
         <p className="text-[13px] text-[#666] leading-relaxed line-clamp-2 mt-auto">{product.description}</p>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
 
 
-function NgeneBioCard({ product, index }: { product: Product; index: number }) {
+function NgeneBioCard({ product }: { product: Product }) {
   const category = categoryById(product.category);
   const NGENE_RED = "#C8002D";
 
@@ -467,12 +458,7 @@ function NgeneBioCard({ product, index }: { product: Product; index: number }) {
   const tagBadges = (product.tags || []).slice(0, 3);
 
   return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 14 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.35, delay: Math.min(index * 0.02, 0.25), ease: [0.16, 1, 0.3, 1] }}
+    <div
       className="group bg-white border border-[#e8e8e8] hover:border-[#C8002D]/40 hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col"
     >
       {/* Top accent bar — red */}
@@ -546,7 +532,7 @@ function NgeneBioCard({ product, index }: { product: Product; index: number }) {
           </button>
         </Link>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
@@ -816,7 +802,7 @@ export default function Products() {
       </section>
 
       {/* Sticky toolbar */}
-      <div className="sticky top-24 z-30 bg-background/95 backdrop-blur border-b border-border">
+      <div className="sticky top-24 z-30 bg-background border-b border-border shadow-sm">
         <div className="px-6 md:px-10 lg:px-12 py-3 flex items-center justify-between gap-4">
           <div className="flex items-center gap-4">
             <button
@@ -925,17 +911,15 @@ export default function Products() {
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5">
-                <AnimatePresence mode="popLayout">
-                  {filtered.map((p, i) => (
+                {filtered.map((p) => (
                     p.brand === "cytek"
-                      ? <CytekCard key={p.id} product={p} index={i} />
+                      ? <CytekCard key={p.id} product={p} />
                       : p.brand === "ngene"
-                        ? <NgeneBioCard key={p.id} product={p} index={i} />
+                        ? <NgeneBioCard key={p.id} product={p} />
                         : p.brand === "sugentech"
-                          ? <SugentechCard key={p.id} product={p} index={i} />
-                          : <ProductCard key={p.id} product={p} index={i} />
-                  ))}
-                </AnimatePresence>
+                          ? <SugentechCard key={p.id} product={p} />
+                          : <ProductCard key={p.id} product={p} />
+                ))}
               </div>
             )}
           </div>
