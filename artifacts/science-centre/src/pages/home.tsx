@@ -562,16 +562,25 @@ function BrandHubIntro({ onDone }: { onDone: () => void }) {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-3 md:grid-cols-9">
+          <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-9 gap-y-8 md:gap-x-12">
             {introBrandLogos.map((brand) => (
               <motion.div
                 key={brand.name}
-                className="flex h-20 items-center justify-center border border-cyan-100/16 bg-white/[0.09] p-3 shadow-[0_18px_44px_rgba(0,0,0,0.24)] backdrop-blur-md"
-                initial={{ opacity: 0, y: 18, scale: 0.92 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
+                className="flex h-16 items-center justify-center md:h-20"
+                initial={{ opacity: 0, y: 18, scale: 0.88, filter: "blur(8px)" }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  filter: "blur(0px)",
+                }}
                 transition={{ duration: 0.42, delay: brand.delay, ease: [0.16, 1, 0.3, 1] }}
               >
-                <img src={img(brand.logo)} alt={brand.name} className="max-h-12 max-w-full object-contain" />
+                <img
+                  src={img(brand.logo)}
+                  alt={brand.name}
+                  className="max-h-12 max-w-[112px] object-contain drop-shadow-[0_12px_28px_rgba(0,0,0,0.38)] md:max-h-14 md:max-w-[136px]"
+                />
               </motion.div>
             ))}
           </div>
