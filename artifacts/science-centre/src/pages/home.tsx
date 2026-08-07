@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { type MouseEvent, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { motion, AnimatePresence, useInView, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -1166,7 +1166,7 @@ const solutions = [
     title: "Water Purification Systems",
     short: "Clinical, RO and ultrapure water",
     desc: "Water purification systems for analyzer feed, pure water and ultrapure laboratory applications.",
-    image: "/images/sc-instruments-optimized.webp",
+    image: "/images/solutions/water-purification-lab.webp",
     imagePosition: "center",
     accent: "#2563EB",
   },
@@ -1175,7 +1175,7 @@ const solutions = [
     title: "NGS Solutions",
     short: "Sequencing panels and workflows",
     desc: "NGS kits, library preparation, analysis tools and adoption support for clinical and research laboratories.",
-    image: "/images/ngene/precision1Img1_en.png",
+    image: "/images/solutions/ngs-sequencing-lab.webp",
     imagePosition: "center",
     accent: "#7C3AED",
   },
@@ -1460,13 +1460,15 @@ function ApplicationVisual({ title, accent }: { title: string; accent: string })
 /* ─── Products ────────────────────────────────────────────────── */
 function Solutions() {
   const [active, setActive] = useState(0);
+  const [showRunning, setShowRunning] = useState(false);
+  const showTimerRef = useRef<number | null>(null);
   const panelItems = [
     {
       icon: <Microscope className="h-5 w-5" />,
       title: "Science Centre",
       short: "Scientific sourcing network",
       desc: "One local partner connecting Pakistan's labs with instruments, diagnostics, reagents and workflow support.",
-      image: "/images/sc-lab-hero-optimized.webp",
+      image: "/images/solutions/science-centre-network.webp",
       imagePosition: "center",
       accent: "#2EA3F2",
       href: "/about",
@@ -1476,12 +1478,46 @@ function Solutions() {
   ];
   const activePanel = panelItems[active];
 
+  const clearShowTimer = () => {
+    if (showTimerRef.current) {
+      window.clearTimeout(showTimerRef.current);
+      showTimerRef.current = null;
+    }
+  };
+
+  const activatePanel = (index: number) => {
+    clearShowTimer();
+    setShowRunning(false);
+    setActive(index);
+  };
+
+  const startApplicationShow = (event?: MouseEvent<HTMLButtonElement>) => {
+    event?.preventDefault();
+    event?.stopPropagation();
+    clearShowTimer();
+    setShowRunning(true);
+    setActive(0);
+
+    let nextIndex = 1;
+    const advance = () => {
+      setActive(nextIndex);
+      if (nextIndex < panelItems.length - 1) {
+        nextIndex += 1;
+        showTimerRef.current = window.setTimeout(advance, 2400);
+      } else {
+        showTimerRef.current = window.setTimeout(() => {
+          setShowRunning(false);
+          showTimerRef.current = null;
+        }, 3200);
+      }
+    };
+
+    showTimerRef.current = window.setTimeout(advance, 760);
+  };
+
   useEffect(() => {
-    const timer = window.setInterval(() => {
-      setActive((value) => (value + 1) % panelItems.length);
-    }, 4800);
-    return () => window.clearInterval(timer);
-  }, [panelItems.length]);
+    return () => clearShowTimer();
+  }, []);
 
   return (
     <section id="solutions" className="relative overflow-hidden bg-[#030b13] text-white" style={{ height: "100dvh" }}>
@@ -1505,11 +1541,15 @@ function Solutions() {
           return (
             <motion.div
               key={panel.title}
-              onMouseEnter={() => setActive(index)}
-              onFocus={() => setActive(index)}
-              onClick={() => setActive(index)}
-              animate={{ flex: isActive ? (index === 0 ? 4.45 : 4.35) : 1.08 }}
-              transition={{ duration: 0.82, ease: [0.16, 1, 0.3, 1] }}
+              onMouseEnter={() => {
+                if (!showRunning) setActive(index);
+              }}
+              onFocus={() => {
+                if (!showRunning) setActive(index);
+              }}
+              onClick={() => activatePanel(index)}
+              animate={{ flex: isActive ? (index === 0 ? 4.65 : 4.35) : 1.12 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               className="group relative min-w-0 cursor-pointer overflow-hidden border-r border-white/12 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
               tabIndex={0}
             >
@@ -1533,7 +1573,7 @@ function Solutions() {
                 style={{
                   background: isActive
                     ? "linear-gradient(90deg, rgba(3,11,19,0.94) 0%, rgba(3,11,19,0.7) 42%, rgba(3,11,19,0.16) 100%), linear-gradient(0deg, rgba(3,11,19,0.88) 0%, rgba(3,11,19,0.08) 54%, rgba(3,11,19,0.34) 100%)"
-                    : "linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.78) 100%)",
+                    : "linear-gradient(180deg, rgba(248,250,252,0.82) 0%, rgba(226,232,240,0.72) 100%)",
                 }}
               />
               <div
@@ -1590,7 +1630,7 @@ function Solutions() {
 
                   <div className={`mb-4 h-px ${isActive ? "w-12 bg-white/55" : "w-9 bg-slate-400/80"}`} />
                   <h1
-                    className="font-[var(--app-font-heading)] text-[3.35rem] font-black leading-[0.92] tracking-tight text-white transition-all duration-500 xl:text-[5.1rem]"
+                    className="max-w-[11ch] font-[var(--app-font-heading)] text-[clamp(2.85rem,5.3vw,5rem)] font-black leading-[0.92] tracking-tight text-white transition-all duration-500"
                   >
                     {panel.title}
                   </h1>
@@ -1600,12 +1640,22 @@ function Solutions() {
                     transition={{ duration: 0.32, delay: isActive ? 0.12 : 0 }}
                     className="mt-7"
                   >
-                    <Link
-                      href={panel.href}
-                      className="inline-flex items-center gap-4 border border-white/18 bg-white/[0.08] px-6 py-4 text-sm font-black uppercase tracking-[0.16em] text-white backdrop-blur transition-colors hover:bg-white/[0.14]"
-                    >
-                      Explore this area <ArrowRight className="h-4 w-4" />
-                    </Link>
+                    {index === 0 ? (
+                      <button
+                        type="button"
+                        onClick={startApplicationShow}
+                        className="inline-flex items-center gap-4 rounded-full bg-primary px-8 py-4 text-sm font-black uppercase tracking-[0.16em] text-white shadow-[0_20px_55px_rgba(46,163,242,0.35)] transition-transform hover:-translate-y-0.5"
+                      >
+                        Enter <ArrowRight className="h-4 w-4" />
+                      </button>
+                    ) : (
+                      <Link
+                        href={panel.href}
+                        className="inline-flex items-center gap-4 border border-white/18 bg-white/[0.08] px-6 py-4 text-sm font-black uppercase tracking-[0.16em] text-white backdrop-blur transition-colors hover:bg-white/[0.14]"
+                      >
+                        Explore this area <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    )}
                   </motion.div>
                 </div>
               </motion.div>
@@ -1616,7 +1666,7 @@ function Solutions() {
                 transition={{ duration: 0.34 }}
               >
                 <div className="mb-4 h-px w-9 bg-slate-400/80" />
-                <h2 className="font-[var(--app-font-heading)] text-[clamp(1rem,1.35vw,1.62rem)] font-black uppercase leading-[0.95] tracking-tight text-slate-500">
+                <h2 className="font-[var(--app-font-heading)] text-[clamp(0.9rem,1.08vw,1.34rem)] font-black uppercase leading-[0.98] tracking-tight text-slate-500">
                   {labelWords.map((word) => (
                     <span key={word} className="block">
                       {word}
