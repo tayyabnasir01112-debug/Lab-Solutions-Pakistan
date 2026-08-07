@@ -1162,7 +1162,7 @@ const solutions = [
     title: "Water Purification Systems",
     short: "Clinical, RO and ultrapure water",
     desc: "Water purification systems for analyzer feed, pure water and ultrapure laboratory applications.",
-    image: "/images/events/event-water-workshop.svg",
+    image: "/images/sc-instruments-optimized.webp",
     accent: "#2563EB",
   },
   {
@@ -1326,6 +1326,7 @@ function Solutions() {
     },
     ...solutions.slice(0, 6).map((solution) => ({ ...solution, href: "/solutions", logo: undefined })),
   ];
+  const activePanel = panelItems[active];
 
   useEffect(() => {
     const timer = window.setInterval(() => {
@@ -1335,7 +1336,7 @@ function Solutions() {
   }, [panelItems.length]);
 
   return (
-    <section id="solutions" className="relative overflow-hidden bg-[#05101d] text-white" style={{ height: "100dvh" }}>
+    <section id="solutions" className="relative overflow-hidden bg-[#030b13] text-white" style={{ height: "100dvh" }}>
       <img
         src={img("/images/sc-lab-hero-optimized.webp")}
         alt="Scientific laboratory with diagnostic analyzers, microscope and reagent workbench"
@@ -1348,17 +1349,25 @@ function Solutions() {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(90deg, rgba(5,16,29,0.96) 0%, rgba(5,16,29,0.78) 44%, rgba(5,16,29,0.38) 100%)",
+            "linear-gradient(90deg, rgba(3,11,19,0.96) 0%, rgba(3,11,19,0.8) 48%, rgba(3,11,19,0.66) 100%)",
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#05101d]/90 via-transparent to-[#05101d]/35" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#030b13]/95 via-transparent to-[#030b13]/40" />
       <div
-        className="absolute inset-0 opacity-[0.13]"
+        className="absolute inset-0 opacity-[0.11]"
         style={{
           backgroundImage:
             "linear-gradient(rgba(125,211,252,0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(125,211,252,0.12) 1px, transparent 1px)",
           backgroundSize: "120px 120px",
         }}
+      />
+      <motion.div
+        aria-hidden="true"
+        className="absolute inset-0"
+        animate={{
+          background: `radial-gradient(circle at 68% 42%, ${activePanel.accent}42 0%, transparent 33%), linear-gradient(90deg, rgba(3,11,19,0.96) 0%, rgba(3,11,19,0.58) 100%)`,
+        }}
+        transition={{ duration: 0.7 }}
       />
 
       <div className="relative z-10 hidden h-full lg:flex">
@@ -1370,32 +1379,42 @@ function Solutions() {
               onMouseEnter={() => setActive(index)}
               onFocus={() => setActive(index)}
               onClick={() => setActive(index)}
-              animate={{ flex: isActive ? (index === 0 ? 3.9 : 3.35) : 1 }}
+              animate={{ flex: isActive ? (index === 0 ? 4.15 : 3.65) : 0.82 }}
               transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative min-w-0 cursor-pointer overflow-hidden border-r border-white/14 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+              className="group relative min-w-0 cursor-pointer overflow-hidden border-r border-white/12 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
               tabIndex={0}
             >
               <motion.img
                 src={img(panel.image)}
                 alt={panel.title}
                 className="absolute inset-0 h-full w-full object-cover"
-                animate={{ opacity: isActive ? 0.82 : 0.1, scale: isActive ? 1.02 : 1 }}
-                transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
-              />
-              <motion.div
-                className="absolute inset-0"
                 animate={{
-                  backgroundColor: isActive ? "rgba(5,16,29,0.42)" : "rgba(255,255,255,0.9)",
+                  opacity: isActive ? 0.72 : 0.28,
+                  scale: isActive ? 1.03 : 1,
+                  filter: isActive ? "saturate(1.08) contrast(1.05)" : "saturate(0.65) contrast(1.08)",
                 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
               />
               <div
                 className="absolute inset-0"
                 style={{
-                  background: isActive
-                    ? "linear-gradient(180deg, rgba(5,16,29,0.12) 0%, rgba(5,16,29,0.24) 44%, rgba(5,16,29,0.82) 100%)"
-                    : "transparent",
+                  background: `linear-gradient(180deg, rgba(3,11,19,0.34) 0%, rgba(3,11,19,0.58) 48%, rgba(3,11,19,0.94) 100%), linear-gradient(90deg, ${panel.accent}20 0%, transparent 70%)`,
                 }}
+              />
+              <motion.div
+                className="absolute inset-0"
+                animate={{ opacity: isActive ? 0.14 : 0.62 }}
+                transition={{ duration: 0.45 }}
+                style={{
+                  backgroundColor: "#05101d",
+                  backdropFilter: "blur(1.5px)",
+                }}
+              />
+              <motion.div
+                className="absolute inset-x-0 bottom-0 h-1"
+                animate={{ opacity: isActive ? 1 : 0.22 }}
+                transition={{ duration: 0.35 }}
+                style={{ backgroundColor: panel.accent }}
               />
 
               <div className="relative z-10 flex h-full flex-col justify-between p-7 xl:p-9">
@@ -1413,7 +1432,7 @@ function Solutions() {
                   )}
                 </motion.div>
 
-                <div>
+                <div className="relative">
                   <motion.div
                     animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 16 }}
                     transition={{ duration: 0.42, delay: isActive ? 0.08 : 0 }}
@@ -1430,7 +1449,7 @@ function Solutions() {
                   <div className="mb-4 h-px w-8 bg-current opacity-45" style={{ color: isActive ? "#fff" : "#9ca3af" }} />
                   <h2
                     className={`font-[var(--app-font-heading)] font-black leading-[0.98] tracking-tight transition-colors duration-500 ${
-                      isActive ? "text-5xl text-white xl:text-7xl" : "text-2xl text-slate-400 xl:text-3xl"
+                      isActive ? "max-w-xl text-5xl text-white xl:text-7xl" : "max-w-[9rem] text-[1.06rem] uppercase leading-[1.02] tracking-[0.03em] text-white/64 xl:text-[1.18rem]"
                     }`}
                   >
                     {panel.title}
@@ -1460,21 +1479,21 @@ function Solutions() {
       <div className="relative z-10 flex h-full flex-col justify-end p-6 lg:hidden">
         <AnimatePresence mode="wait">
           <motion.div
-            key={panelItems[active].title}
+            key={activePanel.title}
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -18 }}
             className="border border-white/16 bg-[#06111d]/70 p-5 backdrop-blur-md"
           >
-            <img src={img(panelItems[active].image)} alt={panelItems[active].title} className="mb-5 h-52 w-full object-cover" loading="lazy" decoding="async" />
+            <img src={img(activePanel.image)} alt={activePanel.title} className="mb-5 h-52 w-full object-cover" loading="lazy" decoding="async" />
             <div className="mb-3 h-px w-10 bg-white/45" />
             <h1 className="font-[var(--app-font-heading)] text-4xl font-black leading-none">
-              {panelItems[active].title}
+              {activePanel.title}
             </h1>
-            <p className="mt-4 text-sm leading-relaxed text-white/72">{panelItems[active].desc}</p>
+            <p className="mt-4 text-sm leading-relaxed text-white/72">{activePanel.desc}</p>
           </motion.div>
         </AnimatePresence>
-        <div className="mt-4 grid grid-cols-3 gap-2">
+        <div className="mt-4 grid grid-cols-4 gap-2">
           {panelItems.map((panel, index) => (
             <button
               key={panel.title}
