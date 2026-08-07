@@ -1313,16 +1313,26 @@ function LegacySolutions() {
 /* ─── Products ────────────────────────────────────────────────── */
 function Solutions() {
   const [active, setActive] = useState(0);
+  const panelItems = [
+    {
+      icon: <Microscope className="h-5 w-5" />,
+      title: "Science Centre",
+      short: "Scientific sourcing network",
+      desc: "One local partner connecting Pakistan's labs with instruments, diagnostics, reagents and workflow support.",
+      image: "/images/sc-lab-hero-optimized.webp",
+      accent: "#2EA3F2",
+      href: "/about",
+      logo: "/images/sc-logo-full-nav.webp",
+    },
+    ...solutions.slice(0, 6).map((solution) => ({ ...solution, href: "/solutions", logo: undefined })),
+  ];
 
   useEffect(() => {
     const timer = window.setInterval(() => {
-      setActive((value) => (value + 1) % solutions.length);
-    }, 4200);
+      setActive((value) => (value + 1) % panelItems.length);
+    }, 4800);
     return () => window.clearInterval(timer);
-  }, []);
-
-  const current = solutions[active];
-  const featuredApps = solutions.slice(0, 6);
+  }, [panelItems.length]);
 
   return (
     <section id="solutions" className="relative overflow-hidden bg-[#05101d] text-white" style={{ height: "100dvh" }}>
@@ -1334,17 +1344,16 @@ function Solutions() {
         fetchPriority="high"
         className="absolute inset-0 h-full w-full object-cover"
       />
-      <div className="absolute inset-0 bg-[#05101d]/45" />
       <div
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(90deg, rgba(5,16,29,0.98) 0%, rgba(5,16,29,0.86) 38%, rgba(5,16,29,0.43) 70%, rgba(5,16,29,0.18) 100%)",
+            "linear-gradient(90deg, rgba(5,16,29,0.96) 0%, rgba(5,16,29,0.78) 44%, rgba(5,16,29,0.38) 100%)",
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#05101d] via-transparent to-[#05101d]/35" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#05101d]/90 via-transparent to-[#05101d]/35" />
       <div
-        className="absolute inset-0 opacity-20"
+        className="absolute inset-0 opacity-[0.13]"
         style={{
           backgroundImage:
             "linear-gradient(rgba(125,211,252,0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(125,211,252,0.12) 1px, transparent 1px)",
@@ -1352,137 +1361,128 @@ function Solutions() {
         }}
       />
 
-      <div className="relative z-10 grid h-full grid-rows-[1fr_auto] px-6 pb-7 pt-10 md:px-10 lg:px-14 xl:px-16">
-        <div className="grid min-h-0 items-center gap-7 lg:grid-cols-[0.9fr_1.1fr] xl:grid-cols-[0.82fr_1.18fr]">
-          <motion.div className="max-w-3xl" variants={fadeUp} custom={0} initial="hidden" animate="visible">
-            <div className="mb-6 inline-flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.22em] text-cyan-100">
-              <span className="h-px w-12 bg-cyan-100/70" />
-              Science Centre Pakistan
-            </div>
-            <h1 className="font-[var(--app-font-heading)] text-[2.85rem] font-black leading-[0.92] tracking-tight sm:text-[3.6rem] md:text-[4.6rem] lg:text-[5.8rem] xl:text-[6.9rem]">
-              Scientific solutions for every lab workflow.
-            </h1>
-            <p className="mt-6 max-w-2xl border-l-2 border-primary pl-5 text-base leading-relaxed text-slate-100 md:text-lg xl:text-xl">
-              We help hospitals, universities, research institutes and diagnostic labs source instruments,
-              reagents, kits and consumables from trusted global catalogues with local technical coordination.
-            </p>
-            <div className="mt-8 grid max-w-2xl grid-cols-3 border border-white/15 bg-white/[0.05] backdrop-blur-sm">
-              {[
-                ["30+", "Years in market"],
-                ["9", "Brand portfolios"],
-                ["500+", "Lab conversations"],
-              ].map(([value, label]) => (
-                <div key={label} className="border-r border-white/12 px-4 py-4 last:border-r-0">
-                  <div className="font-[var(--app-font-heading)] text-3xl font-black leading-none">{value}</div>
-                  <div className="mt-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white/55">{label}</div>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-
-          <div className="relative ml-auto hidden h-[min(68vh,660px)] w-full max-w-4xl lg:block">
-            <div className="absolute inset-0 border border-white/15 bg-white/[0.045] shadow-2xl backdrop-blur-md" />
-            <div className="absolute inset-4 overflow-hidden border border-white/10 bg-[#071421]">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={current.title}
-                  src={img(current.image)}
-                  alt={current.title}
-                  className="absolute inset-0 h-full w-full object-cover"
-                  initial={{ opacity: 0, scale: 1.04 }}
-                  animate={{ opacity: 0.6, scale: 1 }}
-                  exit={{ opacity: 0, scale: 1.02 }}
-                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                />
-              </AnimatePresence>
-              <div className="absolute inset-0 bg-gradient-to-r from-[#071421]/95 via-[#071421]/70 to-[#071421]/25" />
-              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#071421] to-transparent" />
-            </div>
-
-            <div className="relative z-10 flex h-full flex-col justify-between p-8 xl:p-10">
-              <div className="flex items-start justify-between gap-5">
-                <div>
-                  <div className="mb-2 text-[11px] font-black uppercase tracking-[0.22em] text-primary">
-                    Application routing
-                  </div>
-                  <div className="max-w-xl text-sm leading-relaxed text-white/65">
-                    Each area is presented as a workflow, then matched to the right brands, variants and local support path.
-                  </div>
-                </div>
-                <div className="text-right text-[11px] font-black tracking-[0.22em] text-white/45">
-                  {String(active + 1).padStart(2, "0")} / {String(solutions.length).padStart(2, "0")}
-                </div>
-              </div>
-
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={current.title + "-copy"}
-                  initial={{ opacity: 0, y: 28 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -18 }}
-                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                  className="max-w-2xl"
-                >
-                  <div className="mb-5 inline-flex h-12 w-12 items-center justify-center border border-white/18 bg-white/10 text-white backdrop-blur">
-                    {current.icon}
-                  </div>
-                  <div className="text-[11px] font-black uppercase tracking-[0.2em]" style={{ color: current.accent }}>
-                    {current.short}
-                  </div>
-                  <h2 className="mt-3 font-[var(--app-font-heading)] text-4xl font-black leading-none xl:text-6xl">
-                    {current.title}
-                  </h2>
-                  <p className="mt-5 max-w-xl text-base leading-relaxed text-white/72 xl:text-lg">
-                    {current.desc}
-                  </p>
-                  <Link href="/solutions" className="mt-8 inline-flex items-center gap-3 border-t border-white/30 pt-3 text-xs font-black uppercase tracking-[0.16em] text-white hover:text-cyan-100">
-                    View solution areas <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </motion.div>
-              </AnimatePresence>
-
-              <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${solutions.length}, minmax(0, 1fr))` }}>
-                {solutions.map((s, i) => (
-                  <button
-                    key={s.title}
-                    type="button"
-                    onClick={() => setActive(i)}
-                    className={`h-1.5 transition-all ${i === active ? "bg-primary" : "bg-white/18 hover:bg-white/35"}`}
-                    aria-label={`Show ${s.title}`}
-                  />
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div className="relative lg:hidden">
-            <AnimatePresence mode="wait">
+      <div className="relative z-10 hidden h-full lg:flex">
+        {panelItems.map((panel, index) => {
+          const isActive = active === index;
+          return (
+            <motion.div
+              key={panel.title}
+              onMouseEnter={() => setActive(index)}
+              onFocus={() => setActive(index)}
+              onClick={() => setActive(index)}
+              animate={{ flex: isActive ? (index === 0 ? 3.9 : 3.35) : 1 }}
+              transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative min-w-0 cursor-pointer overflow-hidden border-r border-white/14 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+              tabIndex={0}
+            >
+              <motion.img
+                src={img(panel.image)}
+                alt={panel.title}
+                className="absolute inset-0 h-full w-full object-cover"
+                animate={{ opacity: isActive ? 0.82 : 0.1, scale: isActive ? 1.02 : 1 }}
+                transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
+              />
               <motion.div
-                key={current.title + "-mobile"}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                className="border border-white/15 bg-white/[0.06] p-5 backdrop-blur-md"
-              >
-                <img src={img(current.image)} alt={current.title} className="mb-5 h-44 w-full object-cover" loading="lazy" decoding="async" />
-                <div className="mb-3 text-[10px] font-black uppercase tracking-[0.18em]" style={{ color: current.accent }}>
-                  {current.short}
-                </div>
-                <h2 className="font-[var(--app-font-heading)] text-3xl font-black">{current.title}</h2>
-                <p className="mt-3 text-sm leading-relaxed text-white/70">{current.desc}</p>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
+                className="absolute inset-0"
+                animate={{
+                  backgroundColor: isActive ? "rgba(5,16,29,0.42)" : "rgba(255,255,255,0.9)",
+                }}
+                transition={{ duration: 0.5 }}
+              />
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: isActive
+                    ? "linear-gradient(180deg, rgba(5,16,29,0.12) 0%, rgba(5,16,29,0.24) 44%, rgba(5,16,29,0.82) 100%)"
+                    : "transparent",
+                }}
+              />
 
-        <div className="mt-6 hidden grid-cols-6 gap-3 lg:grid">
-          {featuredApps.map((s, i) => (
-            <button key={s.title} type="button" onClick={() => setActive(i)} className="group min-h-[74px] border-t border-white/25 pt-3 text-left">
-              <div className={`mb-3 h-px w-7 transition-all ${active === i ? "w-14 bg-primary" : "bg-white/45 group-hover:w-12"}`} />
-              <div className={`font-[var(--app-font-heading)] text-sm font-black leading-tight transition-colors md:text-base ${active === i ? "text-white" : "text-white/72 group-hover:text-white"}`}>
-                {s.title}
+              <div className="relative z-10 flex h-full flex-col justify-between p-7 xl:p-9">
+                <motion.div
+                  animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : -18 }}
+                  transition={{ duration: 0.42 }}
+                  className="min-h-[96px]"
+                >
+                  {panel.logo ? (
+                    <img src={img(panel.logo)} alt="Science Centre Pakistan" className="h-20 w-auto object-contain brightness-0 invert" />
+                  ) : (
+                    <div className="inline-flex h-12 w-12 items-center justify-center border border-white/25 bg-white/12 text-white backdrop-blur">
+                      {panel.icon}
+                    </div>
+                  )}
+                </motion.div>
+
+                <div>
+                  <motion.div
+                    animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 16 }}
+                    transition={{ duration: 0.42, delay: isActive ? 0.08 : 0 }}
+                    className="mb-4 max-w-md"
+                  >
+                    <div className="mb-3 text-[10px] font-black uppercase tracking-[0.22em]" style={{ color: isActive ? panel.accent : "rgba(255,255,255,0.5)" }}>
+                      {panel.short}
+                    </div>
+                    <p className="text-base leading-relaxed text-white/78 xl:text-lg">
+                      {panel.desc}
+                    </p>
+                  </motion.div>
+
+                  <div className="mb-4 h-px w-8 bg-current opacity-45" style={{ color: isActive ? "#fff" : "#9ca3af" }} />
+                  <h2
+                    className={`font-[var(--app-font-heading)] font-black leading-[0.98] tracking-tight transition-colors duration-500 ${
+                      isActive ? "text-5xl text-white xl:text-7xl" : "text-2xl text-slate-400 xl:text-3xl"
+                    }`}
+                  >
+                    {panel.title}
+                  </h2>
+
+                  <motion.div
+                    animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.7 }}
+                    transition={{ duration: 0.35, delay: isActive ? 0.12 : 0 }}
+                    className="mt-8"
+                  >
+                    <Link
+                      href={panel.href}
+                      className="inline-flex h-14 w-14 items-center justify-center rounded-full text-white shadow-[0_16px_36px_rgba(0,0,0,0.24)] transition-transform hover:scale-105"
+                      style={{ backgroundColor: panel.accent }}
+                      aria-label={`Open ${panel.title}`}
+                    >
+                      <ArrowRight className="h-5 w-5" />
+                    </Link>
+                  </motion.div>
+                </div>
               </div>
-            </button>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      <div className="relative z-10 flex h-full flex-col justify-end p-6 lg:hidden">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={panelItems[active].title}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -18 }}
+            className="border border-white/16 bg-[#06111d]/70 p-5 backdrop-blur-md"
+          >
+            <img src={img(panelItems[active].image)} alt={panelItems[active].title} className="mb-5 h-52 w-full object-cover" loading="lazy" decoding="async" />
+            <div className="mb-3 h-px w-10 bg-white/45" />
+            <h1 className="font-[var(--app-font-heading)] text-4xl font-black leading-none">
+              {panelItems[active].title}
+            </h1>
+            <p className="mt-4 text-sm leading-relaxed text-white/72">{panelItems[active].desc}</p>
+          </motion.div>
+        </AnimatePresence>
+        <div className="mt-4 grid grid-cols-3 gap-2">
+          {panelItems.map((panel, index) => (
+            <button
+              key={panel.title}
+              type="button"
+              onClick={() => setActive(index)}
+              className={`h-1.5 ${active === index ? "bg-primary" : "bg-white/25"}`}
+              aria-label={`Show ${panel.title}`}
+            />
           ))}
         </div>
       </div>
