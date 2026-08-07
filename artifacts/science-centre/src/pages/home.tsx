@@ -1130,7 +1130,7 @@ const solutions = [
     title: "Life Sciences",
     short: "Research reagents, assays and instruments",
     desc: "Core reagents, kits, antibodies and laboratory systems for academic, clinical and industrial research teams.",
-    image: "/images/sc-lab-hero-optimized.webp",
+    image: "/images/sc-diagnostics-optimized.webp",
     accent: "#2EA3F2",
   },
   {
@@ -1138,7 +1138,7 @@ const solutions = [
     title: "Transplant Diagnostics",
     short: "HLA typing and antibody screening",
     desc: "HLA typing, antibody detection, crossmatch and post-transplant monitoring workflows for specialist labs.",
-    image: "/images/sc-lab-hero-optimized.webp",
+    image: "/images/ol-labscan3d.jpg",
     accent: "#E85D4A",
   },
   {
@@ -1146,7 +1146,7 @@ const solutions = [
     title: "Flow Cytometry Solutions",
     short: "Cell analysis and immune profiling",
     desc: "Flow instruments, antibodies, panels and analysis support for high-parameter cell and immune workflows.",
-    image: "/images/sc-lab-hero-optimized.webp",
+    image: "/images/featured/cytek-aurora.webp",
     accent: "#06B6D4",
   },
   {
@@ -1154,7 +1154,7 @@ const solutions = [
     title: "Cell Culture Solutions",
     short: "Media, reagents and lab support",
     desc: "Cell culture media, supplements, plastics and lab systems for repeatable cellular workflows.",
-    image: "/images/sc-lab-hero-optimized.webp",
+    image: "/images/hkm/hkm-cell-culture-media-dmem-high-glucose.jpg",
     accent: "#10B981",
   },
   {
@@ -1162,7 +1162,7 @@ const solutions = [
     title: "Water Purification Systems",
     short: "Clinical, RO and ultrapure water",
     desc: "Water purification systems for analyzer feed, pure water and ultrapure laboratory applications.",
-    image: "/images/sc-lab-hero-optimized.webp",
+    image: "/images/events/event-water-workshop.svg",
     accent: "#2563EB",
   },
   {
@@ -1170,12 +1170,52 @@ const solutions = [
     title: "NGS Solutions",
     short: "Sequencing panels and workflows",
     desc: "NGS kits, library preparation, analysis tools and adoption support for clinical and research laboratories.",
-    image: "/images/sc-lab-hero-optimized.webp",
+    image: "/images/ngene/precision1Img1_en.png",
     accent: "#7C3AED",
+  },
+  {
+    icon: <HeartPulse className="h-5 w-5" />,
+    title: "Allergen Solutions",
+    short: "Allergy screening and blot systems",
+    desc: "Allergy screening instruments, panels and diagnostic kits for immunology and clinical testing workflows.",
+    image: "/images/sugentech/sug-sgti-allergy-plus-60.png",
+    accent: "#EF4444",
+  },
+  {
+    icon: <Activity className="h-5 w-5" />,
+    title: "Biochemistry Instruments",
+    short: "Analyzers and routine testing support",
+    desc: "Clinical chemistry instruments, rapid platforms and routine diagnostic support for hospital laboratories.",
+    image: "/images/sugentech/sug-inclix-f-100.png",
+    accent: "#F59E0B",
+  },
+  {
+    icon: <TestTube className="h-5 w-5" />,
+    title: "Filtration Solutions",
+    short: "Membrane, media and sample prep",
+    desc: "Filtration media, membranes, water testing tools and workflow consumables for reliable lab preparation.",
+    image: "/images/hkm/hkm-multi-branch-manifold-membrane-filtration-system.jpg",
+    accent: "#14B8A6",
+  },
+  {
+    icon: <Activity className="h-5 w-5" />,
+    title: "Flow Antibody Solutions",
+    short: "Antibodies, panels and controls",
+    desc: "Flow antibodies, controls and panel-building support for clinical and research immunophenotyping.",
+    image: "/images/biolegend/biolegend-antibodies.svg",
+    accent: "#A855F7",
+  },
+  {
+    icon: <TestTube className="h-5 w-5" />,
+    title: "General Lab Consumables",
+    short: "Daily-use laboratory supplies",
+    desc: "Pipettes, media, plates, bottles and everyday lab consumables sourced across trusted scientific catalogues.",
+    image: "/images/hkm/hkm-disposable-pipette.jpg",
+    accent: "#64748B",
   },
 ];
 
-function Solutions() {
+function LegacySolutions() {
   const [active, setActive] = useState<number | null>(null);
 
   return (
@@ -1271,6 +1311,185 @@ function Solutions() {
 }
 
 /* ─── Products ────────────────────────────────────────────────── */
+function Solutions() {
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setActive((value) => (value + 1) % solutions.length);
+    }, 4200);
+    return () => window.clearInterval(timer);
+  }, []);
+
+  const current = solutions[active];
+  const featuredApps = solutions.slice(0, 6);
+
+  return (
+    <section id="solutions" className="relative overflow-hidden bg-[#05101d] text-white" style={{ height: "100dvh" }}>
+      <img
+        src={img("/images/sc-lab-hero-optimized.webp")}
+        alt="Scientific laboratory with diagnostic analyzers, microscope and reagent workbench"
+        loading="eager"
+        decoding="async"
+        fetchPriority="high"
+        className="absolute inset-0 h-full w-full object-cover"
+      />
+      <div className="absolute inset-0 bg-[#05101d]/45" />
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(5,16,29,0.98) 0%, rgba(5,16,29,0.86) 38%, rgba(5,16,29,0.43) 70%, rgba(5,16,29,0.18) 100%)",
+        }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#05101d] via-transparent to-[#05101d]/35" />
+      <div
+        className="absolute inset-0 opacity-20"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(125,211,252,0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(125,211,252,0.12) 1px, transparent 1px)",
+          backgroundSize: "120px 120px",
+        }}
+      />
+
+      <div className="relative z-10 grid h-full grid-rows-[1fr_auto] px-6 pb-7 pt-10 md:px-10 lg:px-14 xl:px-16">
+        <div className="grid min-h-0 items-center gap-7 lg:grid-cols-[0.9fr_1.1fr] xl:grid-cols-[0.82fr_1.18fr]">
+          <motion.div className="max-w-3xl" variants={fadeUp} custom={0} initial="hidden" animate="visible">
+            <div className="mb-6 inline-flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.22em] text-cyan-100">
+              <span className="h-px w-12 bg-cyan-100/70" />
+              Science Centre Pakistan
+            </div>
+            <h1 className="font-[var(--app-font-heading)] text-[2.85rem] font-black leading-[0.92] tracking-tight sm:text-[3.6rem] md:text-[4.6rem] lg:text-[5.8rem] xl:text-[6.9rem]">
+              Scientific solutions for every lab workflow.
+            </h1>
+            <p className="mt-6 max-w-2xl border-l-2 border-primary pl-5 text-base leading-relaxed text-slate-100 md:text-lg xl:text-xl">
+              We help hospitals, universities, research institutes and diagnostic labs source instruments,
+              reagents, kits and consumables from trusted global catalogues with local technical coordination.
+            </p>
+            <div className="mt-8 grid max-w-2xl grid-cols-3 border border-white/15 bg-white/[0.05] backdrop-blur-sm">
+              {[
+                ["30+", "Years in market"],
+                ["9", "Brand portfolios"],
+                ["500+", "Lab conversations"],
+              ].map(([value, label]) => (
+                <div key={label} className="border-r border-white/12 px-4 py-4 last:border-r-0">
+                  <div className="font-[var(--app-font-heading)] text-3xl font-black leading-none">{value}</div>
+                  <div className="mt-1 text-[10px] font-bold uppercase tracking-[0.14em] text-white/55">{label}</div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+
+          <div className="relative ml-auto hidden h-[min(68vh,660px)] w-full max-w-4xl lg:block">
+            <div className="absolute inset-0 border border-white/15 bg-white/[0.045] shadow-2xl backdrop-blur-md" />
+            <div className="absolute inset-4 overflow-hidden border border-white/10 bg-[#071421]">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={current.title}
+                  src={img(current.image)}
+                  alt={current.title}
+                  className="absolute inset-0 h-full w-full object-cover"
+                  initial={{ opacity: 0, scale: 1.04 }}
+                  animate={{ opacity: 0.6, scale: 1 }}
+                  exit={{ opacity: 0, scale: 1.02 }}
+                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                />
+              </AnimatePresence>
+              <div className="absolute inset-0 bg-gradient-to-r from-[#071421]/95 via-[#071421]/70 to-[#071421]/25" />
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#071421] to-transparent" />
+            </div>
+
+            <div className="relative z-10 flex h-full flex-col justify-between p-8 xl:p-10">
+              <div className="flex items-start justify-between gap-5">
+                <div>
+                  <div className="mb-2 text-[11px] font-black uppercase tracking-[0.22em] text-primary">
+                    Application routing
+                  </div>
+                  <div className="max-w-xl text-sm leading-relaxed text-white/65">
+                    Each area is presented as a workflow, then matched to the right brands, variants and local support path.
+                  </div>
+                </div>
+                <div className="text-right text-[11px] font-black tracking-[0.22em] text-white/45">
+                  {String(active + 1).padStart(2, "0")} / {String(solutions.length).padStart(2, "0")}
+                </div>
+              </div>
+
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={current.title + "-copy"}
+                  initial={{ opacity: 0, y: 28 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -18 }}
+                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                  className="max-w-2xl"
+                >
+                  <div className="mb-5 inline-flex h-12 w-12 items-center justify-center border border-white/18 bg-white/10 text-white backdrop-blur">
+                    {current.icon}
+                  </div>
+                  <div className="text-[11px] font-black uppercase tracking-[0.2em]" style={{ color: current.accent }}>
+                    {current.short}
+                  </div>
+                  <h2 className="mt-3 font-[var(--app-font-heading)] text-4xl font-black leading-none xl:text-6xl">
+                    {current.title}
+                  </h2>
+                  <p className="mt-5 max-w-xl text-base leading-relaxed text-white/72 xl:text-lg">
+                    {current.desc}
+                  </p>
+                  <Link href="/solutions" className="mt-8 inline-flex items-center gap-3 border-t border-white/30 pt-3 text-xs font-black uppercase tracking-[0.16em] text-white hover:text-cyan-100">
+                    View solution areas <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </motion.div>
+              </AnimatePresence>
+
+              <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${solutions.length}, minmax(0, 1fr))` }}>
+                {solutions.map((s, i) => (
+                  <button
+                    key={s.title}
+                    type="button"
+                    onClick={() => setActive(i)}
+                    className={`h-1.5 transition-all ${i === active ? "bg-primary" : "bg-white/18 hover:bg-white/35"}`}
+                    aria-label={`Show ${s.title}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="relative lg:hidden">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={current.title + "-mobile"}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="border border-white/15 bg-white/[0.06] p-5 backdrop-blur-md"
+              >
+                <img src={img(current.image)} alt={current.title} className="mb-5 h-44 w-full object-cover" loading="lazy" decoding="async" />
+                <div className="mb-3 text-[10px] font-black uppercase tracking-[0.18em]" style={{ color: current.accent }}>
+                  {current.short}
+                </div>
+                <h2 className="font-[var(--app-font-heading)] text-3xl font-black">{current.title}</h2>
+                <p className="mt-3 text-sm leading-relaxed text-white/70">{current.desc}</p>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+
+        <div className="mt-6 hidden grid-cols-6 gap-3 lg:grid">
+          {featuredApps.map((s, i) => (
+            <button key={s.title} type="button" onClick={() => setActive(i)} className="group min-h-[74px] border-t border-white/25 pt-3 text-left">
+              <div className={`mb-3 h-px w-7 transition-all ${active === i ? "w-14 bg-primary" : "bg-white/45 group-hover:w-12"}`} />
+              <div className={`font-[var(--app-font-heading)] text-sm font-black leading-tight transition-colors md:text-base ${active === i ? "text-white" : "text-white/72 group-hover:text-white"}`}>
+                {s.title}
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 type FeaturedInstrument = {
   id: string;
   name: string;
@@ -1909,7 +2128,7 @@ function Contact() {
 /* ─── Footer ──────────────────────────────────────────────────── */
 
 /* ─── Root ────────────────────────────────────────────────────── */
-const SECTION_NAMES = ["Home", "Instruments", "Solutions", "Partners", "About", "Locations", "Contact"];
+const SECTION_NAMES = ["Solutions", "Instruments", "Partners", "About", "Locations", "Contact"];
 
 const slideVariants = {
   enter: (dir: number) => ({
@@ -1953,9 +2172,8 @@ export default function Home() {
   }, []);
 
   const sections = [
-    <Hero key="hero" visible={splashDone} />,
-    <FeaturedProducts key="products" />,
     <Solutions key="solutions" />,
+    <FeaturedProducts key="products" />,
     <Partners key="partners" />,
     <Credibility key="credibility" />,
     <Locations key="locations" />,
@@ -2030,14 +2248,14 @@ export default function Home() {
       </AnimatePresence>
       {/* 
         Section backgrounds:
-        0=Hero(transparent nav), 1=Instruments(light), 2=Solutions(hidden),
-        3=Partners(light), 4=Credibility(dark), 5=Locations(light), 6=Contact(light)
+        0=Solutions(hidden nav), 1=Instruments(light), 2=Partners(light),
+        3=Credibility, 4=Locations(light), 5=Contact(light)
         forceSolid=true on light sections so links are dark and visible
       */}
       <SiteNavbar
-        visible={splashDone && current !== 2}
-        forceSolid={current === 1 || current === 3 || current === 5 || current === 6}
-        forceTransparent={current === 0}
+        visible={splashDone && current !== 0}
+        forceSolid={current === 1 || current === 2 || current === 4 || current === 5}
+        forceTransparent={false}
       />
 
       {/* Full-screen panel container */}
