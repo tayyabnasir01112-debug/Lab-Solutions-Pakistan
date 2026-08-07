@@ -1130,7 +1130,8 @@ const solutions = [
     title: "Life Sciences",
     short: "Research reagents, assays and instruments",
     desc: "Core reagents, kits, antibodies and laboratory systems for academic, clinical and industrial research teams.",
-    image: "/images/sc-diagnostics-optimized.webp",
+    image: "/images/solutions/life-sciences-lab.webp",
+    imagePosition: "center",
     accent: "#2EA3F2",
   },
   {
@@ -1138,7 +1139,8 @@ const solutions = [
     title: "Transplant Diagnostics",
     short: "HLA typing and antibody screening",
     desc: "HLA typing, antibody detection, crossmatch and post-transplant monitoring workflows for specialist labs.",
-    image: "/images/ol-labscan3d.jpg",
+    image: "/images/solutions/transplant-diagnostics-lab.webp",
+    imagePosition: "center",
     accent: "#E85D4A",
   },
   {
@@ -1146,7 +1148,8 @@ const solutions = [
     title: "Flow Cytometry Solutions",
     short: "Cell analysis and immune profiling",
     desc: "Flow instruments, antibodies, panels and analysis support for high-parameter cell and immune workflows.",
-    image: "/images/featured/cytek-aurora.webp",
+    image: "/images/solutions/flow-cytometry-lab.webp",
+    imagePosition: "center",
     accent: "#06B6D4",
   },
   {
@@ -1154,7 +1157,8 @@ const solutions = [
     title: "Cell Culture Solutions",
     short: "Media, reagents and lab support",
     desc: "Cell culture media, supplements, plastics and lab systems for repeatable cellular workflows.",
-    image: "/images/hkm/hkm-cell-culture-media-dmem-high-glucose.jpg",
+    image: "/images/solutions/cell-culture-lab.webp",
+    imagePosition: "center",
     accent: "#10B981",
   },
   {
@@ -1163,6 +1167,7 @@ const solutions = [
     short: "Clinical, RO and ultrapure water",
     desc: "Water purification systems for analyzer feed, pure water and ultrapure laboratory applications.",
     image: "/images/sc-instruments-optimized.webp",
+    imagePosition: "center",
     accent: "#2563EB",
   },
   {
@@ -1171,6 +1176,7 @@ const solutions = [
     short: "Sequencing panels and workflows",
     desc: "NGS kits, library preparation, analysis tools and adoption support for clinical and research laboratories.",
     image: "/images/ngene/precision1Img1_en.png",
+    imagePosition: "center",
     accent: "#7C3AED",
   },
   {
@@ -1461,6 +1467,7 @@ function Solutions() {
       short: "Scientific sourcing network",
       desc: "One local partner connecting Pakistan's labs with instruments, diagnostics, reagents and workflow support.",
       image: "/images/sc-lab-hero-optimized.webp",
+      imagePosition: "center",
       accent: "#2EA3F2",
       href: "/about",
       logo: "/images/sc-logo-full-nav.webp",
@@ -1478,22 +1485,7 @@ function Solutions() {
 
   return (
     <section id="solutions" className="relative overflow-hidden bg-[#030b13] text-white" style={{ height: "100dvh" }}>
-      <img
-        src={img("/images/sc-lab-hero-optimized.webp")}
-        alt="Scientific laboratory with diagnostic analyzers, microscope and reagent workbench"
-        loading="eager"
-        decoding="async"
-        fetchPriority="high"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(90deg, rgba(3,11,19,0.96) 0%, rgba(3,11,19,0.8) 48%, rgba(3,11,19,0.66) 100%)",
-        }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#030b13]/95 via-transparent to-[#030b13]/40" />
+      <div className="absolute inset-0 bg-[#030b13]" />
       <div
         className="absolute inset-0 opacity-[0.11]"
         style={{
@@ -1502,23 +1494,13 @@ function Solutions() {
           backgroundSize: "120px 120px",
         }}
       />
-      <motion.div
-        aria-hidden="true"
-        className="absolute inset-0"
-        animate={{
-          background: `radial-gradient(circle at 76% 36%, ${activePanel.accent}45 0%, transparent 30%), linear-gradient(90deg, rgba(3,11,19,0.97) 0%, rgba(3,11,19,0.88) 42%, rgba(3,11,19,0.58) 100%)`,
-        }}
-        transition={{ duration: 0.7 }}
-      />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#030b13]/60 via-transparent to-[#030b13]/30" />
 
       <div className="relative z-10 hidden h-full lg:flex">
         {panelItems.map((panel, index) => {
           const isActive = active === index;
-          const collapsedLabel = panel.title
-            .replace("Transplant Diagnostics", "Transplant")
-            .replace("Flow Cytometry Solutions", "Flow")
-            .replace("Cell Culture Solutions", "Cell Culture")
-            .replace("Water Purification Systems", "Water");
+          const collapsedLabel = panel.title.replace("Flow Cytometry Solutions", "Flow Cytometry").replace("Water Purification Systems", "Water Purification");
+          const labelWords = collapsedLabel.split(" ");
 
           return (
             <motion.div
@@ -1526,47 +1508,55 @@ function Solutions() {
               onMouseEnter={() => setActive(index)}
               onFocus={() => setActive(index)}
               onClick={() => setActive(index)}
-              animate={{ flex: isActive ? (index === 0 ? 4.75 : 4.55) : 1 }}
-              transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
+              animate={{ flex: isActive ? (index === 0 ? 4.45 : 4.35) : 1.08 }}
+              transition={{ duration: 0.82, ease: [0.16, 1, 0.3, 1] }}
               className="group relative min-w-0 cursor-pointer overflow-hidden border-r border-white/12 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
               tabIndex={0}
             >
+              <motion.img
+                src={img(panel.image)}
+                alt=""
+                aria-hidden="true"
+                loading={index <= 2 ? "eager" : "lazy"}
+                decoding="async"
+                fetchPriority={index <= 1 ? "high" : "auto"}
+                className="absolute inset-0 h-full w-full object-cover"
+                style={{ objectPosition: panel.imagePosition || "center" }}
+                animate={{ scale: isActive ? 1.02 : 1.1, opacity: isActive ? 1 : 0.2, filter: isActive ? "saturate(1.02) contrast(1.04)" : "saturate(0.65) contrast(0.9)" }}
+                transition={{ duration: 0.82, ease: [0.16, 1, 0.3, 1] }}
+              />
+
+              <motion.div
+                className="absolute inset-0"
+                animate={{ opacity: isActive ? 1 : 0.96 }}
+                transition={{ duration: 0.45 }}
+                style={{
+                  background: isActive
+                    ? "linear-gradient(90deg, rgba(3,11,19,0.94) 0%, rgba(3,11,19,0.7) 42%, rgba(3,11,19,0.16) 100%), linear-gradient(0deg, rgba(3,11,19,0.88) 0%, rgba(3,11,19,0.08) 54%, rgba(3,11,19,0.34) 100%)"
+                    : "linear-gradient(180deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.78) 100%)",
+                }}
+              />
               <div
-                className="absolute inset-0 opacity-30"
+                className="absolute inset-0 opacity-[0.12]"
                 style={{
                   backgroundImage:
-                    "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px)",
+                    "linear-gradient(rgba(255,255,255,0.16) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.12) 1px, transparent 1px)",
                   backgroundSize: "86px 86px",
                 }}
               />
-              <motion.div
-                className="absolute inset-0"
-                animate={{
-                  background: isActive
-                    ? `radial-gradient(circle at 72% 42%, ${panel.accent}4d 0%, transparent 34%), linear-gradient(180deg, rgba(3,11,19,0.18) 0%, rgba(3,11,19,0.88) 100%)`
-                    : "linear-gradient(180deg, rgba(3,11,19,0.48) 0%, rgba(3,11,19,0.94) 100%)",
-                }}
-                transition={{ duration: 0.55 }}
-              />
-
-              <motion.div
-                className="absolute inset-0"
-                animate={{ opacity: isActive ? 1 : 0 }}
-                transition={{ duration: 0.45 }}
-              >
-                <div className="absolute right-8 top-1/2 h-[min(48vh,500px)] w-[50%] -translate-y-1/2 xl:right-12">
-                  <ApplicationVisual title={panel.title} accent={panel.accent} />
-                </div>
-              </motion.div>
 
               <motion.div
                 className="absolute inset-x-0 bottom-0 h-1"
-                animate={{ opacity: isActive ? 1 : 0.38 }}
+                animate={{ opacity: isActive ? 1 : 0.72 }}
                 transition={{ duration: 0.3 }}
                 style={{ backgroundColor: panel.accent }}
               />
 
-              <div className="relative z-10 flex h-full flex-col justify-between p-8 xl:p-10">
+              <motion.div
+                className="relative z-10 flex h-full flex-col justify-between p-7 xl:p-10"
+                animate={{ opacity: isActive ? 1 : 0 }}
+                transition={{ duration: 0.24 }}
+              >
                 <motion.div
                   animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : -16 }}
                   transition={{ duration: 0.36 }}
@@ -1581,7 +1571,7 @@ function Solutions() {
                   )}
                 </motion.div>
 
-                <div className={`relative ${isActive ? "max-w-[58%]" : "max-w-full"}`}>
+                <div className={`relative ${isActive ? "max-w-[620px]" : "max-w-full"}`}>
                   <motion.div
                     animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 12 }}
                     transition={{ duration: 0.38, delay: isActive ? 0.08 : 0 }}
@@ -1598,13 +1588,11 @@ function Solutions() {
                     </p>
                   </motion.div>
 
-                  <div className="mb-4 h-px w-8 bg-white/45" />
+                  <div className={`mb-4 h-px ${isActive ? "w-12 bg-white/55" : "w-9 bg-slate-400/80"}`} />
                   <h1
-                    className={`font-[var(--app-font-heading)] font-black leading-[0.92] tracking-tight transition-all duration-500 ${
-                      isActive ? "text-[2.8rem] text-white xl:text-[4.25rem]" : "text-[1.05rem] uppercase leading-[1.05] text-white/62 xl:text-[1.25rem]"
-                    }`}
+                    className="font-[var(--app-font-heading)] text-[3.35rem] font-black leading-[0.92] tracking-tight text-white transition-all duration-500 xl:text-[5.1rem]"
                   >
-                    {isActive ? panel.title : collapsedLabel}
+                    {panel.title}
                   </h1>
 
                   <motion.div
@@ -1620,7 +1608,22 @@ function Solutions() {
                     </Link>
                   </motion.div>
                 </div>
-              </div>
+              </motion.div>
+
+              <motion.div
+                className="absolute inset-x-0 bottom-[10vh] z-20 px-5 xl:px-7"
+                animate={{ opacity: isActive ? 0 : 1, y: isActive ? 18 : 0 }}
+                transition={{ duration: 0.34 }}
+              >
+                <div className="mb-4 h-px w-9 bg-slate-400/80" />
+                <h2 className="font-[var(--app-font-heading)] text-[clamp(1rem,1.35vw,1.62rem)] font-black uppercase leading-[0.95] tracking-tight text-slate-500">
+                  {labelWords.map((word) => (
+                    <span key={word} className="block">
+                      {word}
+                    </span>
+                  ))}
+                </h2>
+              </motion.div>
             </motion.div>
           );
         })}
@@ -1633,16 +1636,25 @@ function Solutions() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -18 }}
-            className="border border-white/16 bg-[#06111d]/76 p-5 backdrop-blur-md"
+            className="relative overflow-hidden border border-white/16 bg-[#06111d]/76 p-5 backdrop-blur-md"
           >
-            <div className="mb-5 h-56">
-              <ApplicationVisual title={activePanel.title} accent={activePanel.accent} />
-            </div>
+            <img
+              src={img(activePanel.image)}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover opacity-45"
+              style={{ objectPosition: activePanel.imagePosition || "center" }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#030b13] via-[#030b13]/76 to-[#030b13]/28" />
+            <div className="relative min-h-[320px] pt-36">
             <div className="mb-3 h-px w-10 bg-white/45" />
             <h1 className="font-[var(--app-font-heading)] text-4xl font-black leading-none">
               {activePanel.title}
             </h1>
             <p className="mt-4 text-sm leading-relaxed text-white/72">{activePanel.desc}</p>
+            </div>
           </motion.div>
         </AnimatePresence>
         <div className="mt-4 grid grid-cols-4 gap-2">
