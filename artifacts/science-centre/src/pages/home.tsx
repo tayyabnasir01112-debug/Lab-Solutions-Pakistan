@@ -1511,78 +1511,119 @@ function Solutions() {
         transition={{ duration: 0.7 }}
       />
 
-      <div className="relative z-10 hidden h-full grid-rows-[minmax(0,1fr)_auto] px-10 pb-5 pt-10 lg:grid xl:px-16">
-        <div className="grid min-h-0 items-center gap-10 lg:grid-cols-[0.86fr_1.14fr]">
-          <motion.div
-            key={activePanel.title + "-copy"}
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-3xl"
-          >
-              {activePanel.logo ? (
-                <img src={img(activePanel.logo)} alt="Science Centre Pakistan" className="mb-8 h-24 w-auto object-contain brightness-0 invert" />
-              ) : (
-                <div className="mb-8 inline-flex h-14 w-14 items-center justify-center border border-white/20 bg-white/10 text-white backdrop-blur">
-                  {activePanel.icon}
+      <div className="relative z-10 hidden h-full lg:flex">
+        {panelItems.map((panel, index) => {
+          const isActive = active === index;
+          const collapsedLabel = panel.title
+            .replace("Transplant Diagnostics", "Transplant")
+            .replace("Flow Cytometry Solutions", "Flow")
+            .replace("Cell Culture Solutions", "Cell Culture")
+            .replace("Water Purification Systems", "Water");
+
+          return (
+            <motion.div
+              key={panel.title}
+              onMouseEnter={() => setActive(index)}
+              onFocus={() => setActive(index)}
+              onClick={() => setActive(index)}
+              animate={{ flex: isActive ? (index === 0 ? 4.75 : 4.55) : 1 }}
+              transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative min-w-0 cursor-pointer overflow-hidden border-r border-white/12 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+              tabIndex={0}
+            >
+              <div
+                className="absolute inset-0 opacity-30"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px)",
+                  backgroundSize: "86px 86px",
+                }}
+              />
+              <motion.div
+                className="absolute inset-0"
+                animate={{
+                  background: isActive
+                    ? `radial-gradient(circle at 72% 42%, ${panel.accent}4d 0%, transparent 34%), linear-gradient(180deg, rgba(3,11,19,0.18) 0%, rgba(3,11,19,0.88) 100%)`
+                    : "linear-gradient(180deg, rgba(3,11,19,0.48) 0%, rgba(3,11,19,0.94) 100%)",
+                }}
+                transition={{ duration: 0.55 }}
+              />
+
+              <motion.div
+                className="absolute inset-0"
+                animate={{ opacity: isActive ? 1 : 0 }}
+                transition={{ duration: 0.45 }}
+              >
+                <div className="absolute right-8 top-1/2 h-[min(48vh,500px)] w-[50%] -translate-y-1/2 xl:right-12">
+                  <ApplicationVisual title={panel.title} accent={panel.accent} />
                 </div>
-              )}
-              <div className="mb-5 flex items-center gap-4">
-                <span className="h-px w-16" style={{ backgroundColor: activePanel.accent }} />
-                <span className="text-[11px] font-black uppercase tracking-[0.22em]" style={{ color: activePanel.accent }}>
-                  {activePanel.short}
-                </span>
+              </motion.div>
+
+              <motion.div
+                className="absolute inset-x-0 bottom-0 h-1"
+                animate={{ opacity: isActive ? 1 : 0.38 }}
+                transition={{ duration: 0.3 }}
+                style={{ backgroundColor: panel.accent }}
+              />
+
+              <div className="relative z-10 flex h-full flex-col justify-between p-8 xl:p-10">
+                <motion.div
+                  animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : -16 }}
+                  transition={{ duration: 0.36 }}
+                  className="min-h-[88px]"
+                >
+                  {panel.logo ? (
+                    <img src={img(panel.logo)} alt="Science Centre Pakistan" className="h-20 w-auto object-contain brightness-0 invert" />
+                  ) : (
+                    <div className="inline-flex h-12 w-12 items-center justify-center border border-white/20 bg-white/10 text-white backdrop-blur">
+                      {panel.icon}
+                    </div>
+                  )}
+                </motion.div>
+
+                <div className={`relative ${isActive ? "max-w-[58%]" : "max-w-full"}`}>
+                  <motion.div
+                    animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 12 }}
+                    transition={{ duration: 0.38, delay: isActive ? 0.08 : 0 }}
+                    className="mb-5"
+                  >
+                    <div className="mb-4 flex items-center gap-4">
+                      <span className="h-px w-14" style={{ backgroundColor: panel.accent }} />
+                      <span className="text-[10px] font-black uppercase tracking-[0.22em]" style={{ color: panel.accent }}>
+                        {panel.short}
+                      </span>
+                    </div>
+                    <p className="max-w-lg text-base leading-relaxed text-white/76 xl:text-lg">
+                      {panel.desc}
+                    </p>
+                  </motion.div>
+
+                  <div className="mb-4 h-px w-8 bg-white/45" />
+                  <h1
+                    className={`font-[var(--app-font-heading)] font-black leading-[0.92] tracking-tight transition-all duration-500 ${
+                      isActive ? "text-[2.8rem] text-white xl:text-[4.25rem]" : "text-[1.05rem] uppercase leading-[1.05] text-white/62 xl:text-[1.25rem]"
+                    }`}
+                  >
+                    {isActive ? panel.title : collapsedLabel}
+                  </h1>
+
+                  <motion.div
+                    animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.78 }}
+                    transition={{ duration: 0.32, delay: isActive ? 0.12 : 0 }}
+                    className="mt-7"
+                  >
+                    <Link
+                      href={panel.href}
+                      className="inline-flex items-center gap-4 border border-white/18 bg-white/[0.08] px-6 py-4 text-sm font-black uppercase tracking-[0.16em] text-white backdrop-blur transition-colors hover:bg-white/[0.14]"
+                    >
+                      Explore this area <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </motion.div>
+                </div>
               </div>
-              <h1 className="font-[var(--app-font-heading)] text-[3.75rem] font-black leading-[0.9] tracking-tight xl:text-[5.45rem]">
-                {activePanel.title}
-              </h1>
-              <p className="mt-5 max-w-2xl border-l-2 pl-6 text-base leading-relaxed text-white/78 xl:text-lg" style={{ borderColor: activePanel.accent }}>
-                {activePanel.desc}
-              </p>
-              <Link
-                href={activePanel.href}
-                className="mt-6 inline-flex items-center gap-4 border border-white/18 bg-white/[0.08] px-6 py-4 text-sm font-black uppercase tracking-[0.16em] text-white backdrop-blur transition-colors hover:bg-white/[0.14]"
-              >
-                Explore this area <ArrowRight className="h-4 w-4" />
-              </Link>
-          </motion.div>
-
-          <motion.div
-            key={activePanel.title + "-visual"}
-            initial={{ opacity: 0, x: 24 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.52, ease: [0.16, 1, 0.3, 1] }}
-            className="h-[min(50vh,540px)]"
-          >
-            <ApplicationVisual title={activePanel.title} accent={activePanel.accent} />
-          </motion.div>
-        </div>
-
-        <div className="mt-4 grid grid-cols-7 gap-3">
-          {panelItems.map((panel, index) => {
-            const isActive = active === index;
-            return (
-              <button
-                key={panel.title}
-                type="button"
-                onMouseEnter={() => setActive(index)}
-                onFocus={() => setActive(index)}
-                onClick={() => setActive(index)}
-                className={`group min-h-[74px] border px-3 py-3 text-left transition-all ${
-                  isActive ? "border-white/26 bg-white/[0.12]" : "border-white/10 bg-white/[0.045] hover:border-white/22 hover:bg-white/[0.075]"
-                }`}
-              >
-                <div className="mb-3 flex items-center justify-between gap-3">
-                  <span className="h-px w-8 transition-all group-hover:w-12" style={{ backgroundColor: panel.accent }} />
-                  <span className="text-[10px] font-black text-white/34">{String(index + 1).padStart(2, "0")}</span>
-                </div>
-                <span className={`block font-[var(--app-font-heading)] text-xs font-black uppercase leading-tight tracking-[0.02em] xl:text-sm ${isActive ? "text-white" : "text-white/58"}`}>
-                  {panel.title}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+            </motion.div>
+          );
+        })}
       </div>
 
       <div className="relative z-10 flex h-full flex-col justify-end p-6 lg:hidden">
