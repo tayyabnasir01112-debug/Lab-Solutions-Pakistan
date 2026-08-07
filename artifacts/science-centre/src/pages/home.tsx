@@ -1310,6 +1310,147 @@ function LegacySolutions() {
   );
 }
 
+function ApplicationVisual({ title, accent }: { title: string; accent: string }) {
+  const isBrand = title === "Science Centre";
+  const isLife = title === "Life Sciences";
+  const isTransplant = title === "Transplant Diagnostics";
+  const isFlow = title === "Flow Cytometry Solutions";
+  const isCulture = title === "Cell Culture Solutions";
+  const isWater = title === "Water Purification Systems";
+  const isNgs = title === "NGS Solutions";
+
+  return (
+    <div className="relative h-full overflow-hidden border border-white/12 bg-[#071421]/76 shadow-[0_32px_90px_rgba(0,0,0,0.28)] backdrop-blur-md">
+      <div
+        className="absolute inset-0 opacity-35"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.07) 1px, transparent 1px)",
+          backgroundSize: "58px 58px",
+        }}
+      />
+      <div
+        className="absolute inset-0"
+        style={{
+          background: `radial-gradient(circle at 60% 40%, ${accent}50 0%, transparent 34%), linear-gradient(135deg, rgba(255,255,255,0.1), transparent 46%)`,
+        }}
+      />
+      <motion.div
+        key={title}
+        initial={{ opacity: 0, scale: 0.96, y: 18 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        exit={{ opacity: 0, scale: 0.98, y: -14 }}
+        transition={{ duration: 0.62, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute inset-0"
+      >
+        <svg viewBox="0 0 760 520" className="h-full w-full" role="img" aria-label={`${title} visual`}>
+          <defs>
+            <linearGradient id={`g-${title}`} x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0%" stopColor={accent} stopOpacity="0.95" />
+              <stop offset="100%" stopColor="#7dd3fc" stopOpacity="0.72" />
+            </linearGradient>
+            <filter id={`glow-${title}`} x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="7" result="blur" />
+              <feMerge>
+                <feMergeNode in="blur" />
+                <feMergeNode in="SourceGraphic" />
+              </feMerge>
+            </filter>
+          </defs>
+
+          <circle cx="382" cy="258" r="184" fill="none" stroke={accent} strokeOpacity="0.18" strokeWidth="2" />
+          <circle cx="382" cy="258" r="126" fill="none" stroke="#ffffff" strokeOpacity="0.1" strokeWidth="2" />
+          <line x1="80" y1="430" x2="680" y2="430" stroke="#fff" strokeOpacity="0.13" />
+
+          {isBrand && (
+            <g filter={`url(#glow-${title})`}>
+              <path d="M245 338 C310 242 454 244 514 338" fill="none" stroke={`url(#g-${title})`} strokeWidth="20" strokeLinecap="round" />
+              <path d="M292 330 L382 174 L472 330" fill="none" stroke="#fff" strokeOpacity="0.82" strokeWidth="16" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M382 188 L382 414" stroke={accent} strokeWidth="5" strokeOpacity="0.88" />
+              <circle cx="382" cy="260" r="68" fill="none" stroke="#fff" strokeOpacity="0.72" strokeWidth="5" />
+              <circle cx="382" cy="260" r="14" fill={accent} />
+            </g>
+          )}
+
+          {isLife && (
+            <g filter={`url(#glow-${title})`}>
+              {[0, 1, 2, 3, 4, 5].map((i) => (
+                <g key={i} transform={`translate(${210 + i * 56} ${120 + (i % 2) * 18}) rotate(${i % 2 ? -16 : 16})`}>
+                  <line x1="0" y1="0" x2="60" y2="260" stroke="#fff" strokeOpacity="0.78" strokeWidth="6" strokeLinecap="round" />
+                  <line x1="80" y1="0" x2="20" y2="260" stroke={accent} strokeOpacity="0.9" strokeWidth="6" strokeLinecap="round" />
+                  {[35, 88, 142, 196].map((y) => (
+                    <line key={y} x1="18" y1={y} x2="62" y2={y} stroke="#7dd3fc" strokeOpacity="0.5" strokeWidth="4" />
+                  ))}
+                </g>
+              ))}
+            </g>
+          )}
+
+          {isTransplant && (
+            <g filter={`url(#glow-${title})`}>
+              <rect x="236" y="154" width="288" height="212" rx="24" fill="#fff" fillOpacity="0.08" stroke="#fff" strokeOpacity="0.22" />
+              {[0, 1, 2, 3].map((r) =>
+                [0, 1, 2, 3, 4].map((c) => (
+                  <circle key={`${r}-${c}`} cx={286 + c * 48} cy={204 + r * 42} r="13" fill={c % 2 ? accent : "#7dd3fc"} fillOpacity="0.88" />
+                )),
+              )}
+              <path d="M250 396 C315 342 432 342 508 396" fill="none" stroke="#fff" strokeOpacity="0.68" strokeWidth="9" strokeLinecap="round" />
+              <text x="318" y="416" fill="#fff" fillOpacity="0.76" fontSize="30" fontWeight="800">HLA</text>
+            </g>
+          )}
+
+          {isFlow && (
+            <g filter={`url(#glow-${title})`}>
+              <path d="M112 266 H628" stroke={accent} strokeWidth="8" strokeLinecap="round" />
+              <path d="M188 160 L570 378" stroke="#7dd3fc" strokeOpacity="0.76" strokeWidth="5" strokeLinecap="round" />
+              <path d="M190 380 L568 156" stroke="#fff" strokeOpacity="0.48" strokeWidth="4" strokeLinecap="round" />
+              {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+                <circle key={i} cx={230 + i * 50} cy={220 + Math.sin(i) * 70} r={18 + (i % 3) * 5} fill={i % 2 ? accent : "#fff"} fillOpacity={i % 2 ? 0.85 : 0.72} />
+              ))}
+              <rect x="520" y="222" width="88" height="88" rx="10" fill="#fff" fillOpacity="0.1" stroke="#fff" strokeOpacity="0.32" />
+            </g>
+          )}
+
+          {isCulture && (
+            <g filter={`url(#glow-${title})`}>
+              <path d="M292 132 H468 L448 392 Q380 434 312 392 Z" fill="#fff" fillOpacity="0.1" stroke="#fff" strokeOpacity="0.36" strokeWidth="5" />
+              <path d="M314 304 Q382 266 448 304 L438 386 Q380 420 322 386 Z" fill={accent} fillOpacity="0.7" />
+              <rect x="338" y="104" width="84" height="34" rx="7" fill="#fff" fillOpacity="0.78" />
+              <circle cx="534" cy="346" r="50" fill="none" stroke="#7dd3fc" strokeOpacity="0.68" strokeWidth="6" />
+              <circle cx="546" cy="334" r="9" fill="#fff" fillOpacity="0.85" />
+              <circle cx="514" cy="360" r="7" fill={accent} />
+            </g>
+          )}
+
+          {isWater && (
+            <g filter={`url(#glow-${title})`}>
+              <rect x="218" y="156" width="324" height="230" rx="22" fill="#fff" fillOpacity="0.08" stroke="#fff" strokeOpacity="0.28" strokeWidth="5" />
+              {[0, 1, 2].map((i) => (
+                <rect key={i} x={268 + i * 82} y="198" width="42" height="142" rx="20" fill={i === 1 ? accent : "#7dd3fc"} fillOpacity="0.72" />
+              ))}
+              <path d="M206 404 H556" stroke="#fff" strokeOpacity="0.56" strokeWidth="8" strokeLinecap="round" />
+              <path d="M580 222 C608 260 622 284 622 310 C622 342 600 364 570 364 C540 364 518 342 518 310 C518 284 552 246 580 222Z" fill={accent} fillOpacity="0.76" />
+            </g>
+          )}
+
+          {isNgs && (
+            <g filter={`url(#glow-${title})`}>
+              <rect x="252" y="142" width="256" height="256" rx="30" fill="#fff" fillOpacity="0.08" stroke="#fff" strokeOpacity="0.32" strokeWidth="5" />
+              {[0, 1, 2, 3].map((r) =>
+                [0, 1, 2, 3].map((c) => (
+                  <rect key={`${r}-${c}`} x={292 + c * 44} y={182 + r * 44} width="24" height="24" rx="6" fill={c === r ? accent : "#7dd3fc"} fillOpacity="0.78" />
+                )),
+              )}
+              <path d="M182 284 C246 202 304 346 380 262 C454 180 514 328 584 246" fill="none" stroke="#fff" strokeOpacity="0.72" strokeWidth="8" strokeLinecap="round" />
+              <text x="280" y="438" fill="#fff" fillOpacity="0.72" fontSize="24" fontWeight="800">A  C  G  T</text>
+            </g>
+          )}
+        </svg>
+      </motion.div>
+    </div>
+  );
+}
+
 /* ─── Products ────────────────────────────────────────────────── */
 function Solutions() {
   const [active, setActive] = useState(0);
@@ -1365,115 +1506,83 @@ function Solutions() {
         aria-hidden="true"
         className="absolute inset-0"
         animate={{
-          background: `radial-gradient(circle at 68% 42%, ${activePanel.accent}42 0%, transparent 33%), linear-gradient(90deg, rgba(3,11,19,0.96) 0%, rgba(3,11,19,0.58) 100%)`,
+          background: `radial-gradient(circle at 76% 36%, ${activePanel.accent}45 0%, transparent 30%), linear-gradient(90deg, rgba(3,11,19,0.97) 0%, rgba(3,11,19,0.88) 42%, rgba(3,11,19,0.58) 100%)`,
         }}
         transition={{ duration: 0.7 }}
       />
 
-      <div className="relative z-10 hidden h-full lg:flex">
-        {panelItems.map((panel, index) => {
-          const isActive = active === index;
-          return (
-            <motion.div
-              key={panel.title}
-              onMouseEnter={() => setActive(index)}
-              onFocus={() => setActive(index)}
-              onClick={() => setActive(index)}
-              animate={{ flex: isActive ? (index === 0 ? 4.15 : 3.65) : 0.82 }}
-              transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative min-w-0 cursor-pointer overflow-hidden border-r border-white/12 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-              tabIndex={0}
-            >
-              <motion.img
-                src={img(panel.image)}
-                alt={panel.title}
-                className="absolute inset-0 h-full w-full object-cover"
-                animate={{
-                  opacity: isActive ? 0.72 : 0.28,
-                  scale: isActive ? 1.03 : 1,
-                  filter: isActive ? "saturate(1.08) contrast(1.05)" : "saturate(0.65) contrast(1.08)",
-                }}
-                transition={{ duration: 0.72, ease: [0.16, 1, 0.3, 1] }}
-              />
-              <div
-                className="absolute inset-0"
-                style={{
-                  background: `linear-gradient(180deg, rgba(3,11,19,0.34) 0%, rgba(3,11,19,0.58) 48%, rgba(3,11,19,0.94) 100%), linear-gradient(90deg, ${panel.accent}20 0%, transparent 70%)`,
-                }}
-              />
-              <motion.div
-                className="absolute inset-0"
-                animate={{ opacity: isActive ? 0.14 : 0.62 }}
-                transition={{ duration: 0.45 }}
-                style={{
-                  backgroundColor: "#05101d",
-                  backdropFilter: "blur(1.5px)",
-                }}
-              />
-              <motion.div
-                className="absolute inset-x-0 bottom-0 h-1"
-                animate={{ opacity: isActive ? 1 : 0.22 }}
-                transition={{ duration: 0.35 }}
-                style={{ backgroundColor: panel.accent }}
-              />
-
-              <div className="relative z-10 flex h-full flex-col justify-between p-7 xl:p-9">
-                <motion.div
-                  animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : -18 }}
-                  transition={{ duration: 0.42 }}
-                  className="min-h-[96px]"
-                >
-                  {panel.logo ? (
-                    <img src={img(panel.logo)} alt="Science Centre Pakistan" className="h-20 w-auto object-contain brightness-0 invert" />
-                  ) : (
-                    <div className="inline-flex h-12 w-12 items-center justify-center border border-white/25 bg-white/12 text-white backdrop-blur">
-                      {panel.icon}
-                    </div>
-                  )}
-                </motion.div>
-
-                <div className="relative">
-                  <motion.div
-                    animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 16 }}
-                    transition={{ duration: 0.42, delay: isActive ? 0.08 : 0 }}
-                    className="mb-4 max-w-md"
-                  >
-                    <div className="mb-3 text-[10px] font-black uppercase tracking-[0.22em]" style={{ color: isActive ? panel.accent : "rgba(255,255,255,0.5)" }}>
-                      {panel.short}
-                    </div>
-                    <p className="text-base leading-relaxed text-white/78 xl:text-lg">
-                      {panel.desc}
-                    </p>
-                  </motion.div>
-
-                  <div className="mb-4 h-px w-8 bg-current opacity-45" style={{ color: isActive ? "#fff" : "#9ca3af" }} />
-                  <h2
-                    className={`font-[var(--app-font-heading)] font-black leading-[0.98] tracking-tight transition-colors duration-500 ${
-                      isActive ? "max-w-xl text-5xl text-white xl:text-7xl" : "max-w-[9rem] text-[1.06rem] uppercase leading-[1.02] tracking-[0.03em] text-white/64 xl:text-[1.18rem]"
-                    }`}
-                  >
-                    {panel.title}
-                  </h2>
-
-                  <motion.div
-                    animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.7 }}
-                    transition={{ duration: 0.35, delay: isActive ? 0.12 : 0 }}
-                    className="mt-8"
-                  >
-                    <Link
-                      href={panel.href}
-                      className="inline-flex h-14 w-14 items-center justify-center rounded-full text-white shadow-[0_16px_36px_rgba(0,0,0,0.24)] transition-transform hover:scale-105"
-                      style={{ backgroundColor: panel.accent }}
-                      aria-label={`Open ${panel.title}`}
-                    >
-                      <ArrowRight className="h-5 w-5" />
-                    </Link>
-                  </motion.div>
+      <div className="relative z-10 hidden h-full grid-rows-[minmax(0,1fr)_auto] px-10 pb-5 pt-10 lg:grid xl:px-16">
+        <div className="grid min-h-0 items-center gap-10 lg:grid-cols-[0.86fr_1.14fr]">
+          <motion.div
+            key={activePanel.title + "-copy"}
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-3xl"
+          >
+              {activePanel.logo ? (
+                <img src={img(activePanel.logo)} alt="Science Centre Pakistan" className="mb-8 h-24 w-auto object-contain brightness-0 invert" />
+              ) : (
+                <div className="mb-8 inline-flex h-14 w-14 items-center justify-center border border-white/20 bg-white/10 text-white backdrop-blur">
+                  {activePanel.icon}
                 </div>
+              )}
+              <div className="mb-5 flex items-center gap-4">
+                <span className="h-px w-16" style={{ backgroundColor: activePanel.accent }} />
+                <span className="text-[11px] font-black uppercase tracking-[0.22em]" style={{ color: activePanel.accent }}>
+                  {activePanel.short}
+                </span>
               </div>
-            </motion.div>
-          );
-        })}
+              <h1 className="font-[var(--app-font-heading)] text-[3.75rem] font-black leading-[0.9] tracking-tight xl:text-[5.45rem]">
+                {activePanel.title}
+              </h1>
+              <p className="mt-5 max-w-2xl border-l-2 pl-6 text-base leading-relaxed text-white/78 xl:text-lg" style={{ borderColor: activePanel.accent }}>
+                {activePanel.desc}
+              </p>
+              <Link
+                href={activePanel.href}
+                className="mt-6 inline-flex items-center gap-4 border border-white/18 bg-white/[0.08] px-6 py-4 text-sm font-black uppercase tracking-[0.16em] text-white backdrop-blur transition-colors hover:bg-white/[0.14]"
+              >
+                Explore this area <ArrowRight className="h-4 w-4" />
+              </Link>
+          </motion.div>
+
+          <motion.div
+            key={activePanel.title + "-visual"}
+            initial={{ opacity: 0, x: 24 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.52, ease: [0.16, 1, 0.3, 1] }}
+            className="h-[min(50vh,540px)]"
+          >
+            <ApplicationVisual title={activePanel.title} accent={activePanel.accent} />
+          </motion.div>
+        </div>
+
+        <div className="mt-4 grid grid-cols-7 gap-3">
+          {panelItems.map((panel, index) => {
+            const isActive = active === index;
+            return (
+              <button
+                key={panel.title}
+                type="button"
+                onMouseEnter={() => setActive(index)}
+                onFocus={() => setActive(index)}
+                onClick={() => setActive(index)}
+                className={`group min-h-[74px] border px-3 py-3 text-left transition-all ${
+                  isActive ? "border-white/26 bg-white/[0.12]" : "border-white/10 bg-white/[0.045] hover:border-white/22 hover:bg-white/[0.075]"
+                }`}
+              >
+                <div className="mb-3 flex items-center justify-between gap-3">
+                  <span className="h-px w-8 transition-all group-hover:w-12" style={{ backgroundColor: panel.accent }} />
+                  <span className="text-[10px] font-black text-white/34">{String(index + 1).padStart(2, "0")}</span>
+                </div>
+                <span className={`block font-[var(--app-font-heading)] text-xs font-black uppercase leading-tight tracking-[0.02em] xl:text-sm ${isActive ? "text-white" : "text-white/58"}`}>
+                  {panel.title}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       <div className="relative z-10 flex h-full flex-col justify-end p-6 lg:hidden">
@@ -1483,9 +1592,11 @@ function Solutions() {
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -18 }}
-            className="border border-white/16 bg-[#06111d]/70 p-5 backdrop-blur-md"
+            className="border border-white/16 bg-[#06111d]/76 p-5 backdrop-blur-md"
           >
-            <img src={img(activePanel.image)} alt={activePanel.title} className="mb-5 h-52 w-full object-cover" loading="lazy" decoding="async" />
+            <div className="mb-5 h-56">
+              <ApplicationVisual title={activePanel.title} accent={activePanel.accent} />
+            </div>
             <div className="mb-3 h-px w-10 bg-white/45" />
             <h1 className="font-[var(--app-font-heading)] text-4xl font-black leading-none">
               {activePanel.title}
