@@ -1562,7 +1562,11 @@ function Solutions() {
                 fetchPriority={index <= 1 ? "high" : "auto"}
                 className="absolute inset-0 h-full w-full object-cover"
                 style={{ objectPosition: panel.imagePosition || "center" }}
-                animate={{ scale: isActive ? 1.02 : 1.1, opacity: isActive ? 1 : 0.2, filter: isActive ? "saturate(1.02) contrast(1.04)" : "saturate(0.65) contrast(0.9)" }}
+                animate={{
+                  scale: isActive ? 1.02 : 1.08,
+                  opacity: isActive ? 1 : 0.42,
+                  filter: isActive ? "saturate(1.02) contrast(1.04)" : "saturate(0.86) contrast(0.96) brightness(1.08)",
+                }}
                 transition={{ duration: 0.82, ease: [0.16, 1, 0.3, 1] }}
               />
 
@@ -1573,7 +1577,7 @@ function Solutions() {
                 style={{
                   background: isActive
                     ? "linear-gradient(90deg, rgba(3,11,19,0.94) 0%, rgba(3,11,19,0.7) 42%, rgba(3,11,19,0.16) 100%), linear-gradient(0deg, rgba(3,11,19,0.88) 0%, rgba(3,11,19,0.08) 54%, rgba(3,11,19,0.34) 100%)"
-                    : "linear-gradient(180deg, rgba(248,250,252,0.82) 0%, rgba(226,232,240,0.72) 100%)",
+                    : `linear-gradient(180deg, rgba(248,250,252,0.64) 0%, rgba(226,232,240,0.42) 100%), radial-gradient(circle at 50% 24%, ${panel.accent}28 0%, transparent 44%)`,
                 }}
               />
               <div
@@ -1591,6 +1595,15 @@ function Solutions() {
                 transition={{ duration: 0.3 }}
                 style={{ backgroundColor: panel.accent }}
               />
+
+              <motion.div
+                className="absolute right-6 top-7 z-20 hidden items-center gap-3 border border-white/14 bg-white/[0.08] px-4 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-white/76 backdrop-blur-md xl:flex"
+                animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : -10 }}
+                transition={{ duration: 0.32 }}
+              >
+                <span>{showRunning ? "Now Playing" : index === 0 ? "Trailer Ready" : "Scene"}</span>
+                <span className="text-white">{String(index + 1).padStart(2, "0")} / {String(panelItems.length).padStart(2, "0")}</span>
+              </motion.div>
 
               <motion.div
                 className="relative z-10 flex h-full flex-col justify-between p-7 xl:p-10"
@@ -1646,7 +1659,7 @@ function Solutions() {
                         onClick={startApplicationShow}
                         className="inline-flex items-center gap-4 rounded-full bg-primary px-8 py-4 text-sm font-black uppercase tracking-[0.16em] text-white shadow-[0_20px_55px_rgba(46,163,242,0.35)] transition-transform hover:-translate-y-0.5"
                       >
-                        Enter <ArrowRight className="h-4 w-4" />
+                        Play Trailer <ArrowRight className="h-4 w-4" />
                       </button>
                     ) : (
                       <Link
@@ -1661,18 +1674,27 @@ function Solutions() {
               </motion.div>
 
               <motion.div
-                className="absolute inset-x-0 bottom-[10vh] z-20 px-5 xl:px-7"
+                className="absolute inset-x-0 top-1/2 z-20 -translate-y-1/2 px-5 xl:px-7"
                 animate={{ opacity: isActive ? 0 : 1, y: isActive ? 18 : 0 }}
                 transition={{ duration: 0.34 }}
               >
-                <div className="mb-4 h-px w-9 bg-slate-400/80" />
-                <h2 className="font-[var(--app-font-heading)] text-[clamp(0.9rem,1.08vw,1.34rem)] font-black uppercase leading-[0.98] tracking-tight text-slate-500">
+                <div className="mb-5 flex items-center justify-between gap-3">
+                  <span className="h-px w-10" style={{ backgroundColor: panel.accent }} />
+                  <span className="text-[10px] font-black tracking-[0.18em] text-slate-500/80">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                </div>
+                <h2 className="font-[var(--app-font-heading)] text-[clamp(0.95rem,1.08vw,1.36rem)] font-black uppercase leading-[0.96] tracking-tight text-slate-700 drop-shadow-[0_1px_0_rgba(255,255,255,0.45)]">
                   {labelWords.map((word) => (
                     <span key={word} className="block">
                       {word}
                     </span>
                   ))}
                 </h2>
+                <div className="mt-6 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-slate-500/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                  <span>Preview</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </div>
               </motion.div>
             </motion.div>
           );
