@@ -97,6 +97,11 @@ type ApplicationGroup = {
   description: string;
   categoryIds: string[];
   brandIds?: string[];
+  tree?: {
+    title: string;
+    eyebrow?: string;
+    items: string[];
+  }[];
 };
 
 // Groups catalogue categories under the client-confirmed application language.
@@ -109,6 +114,37 @@ const APPLICATION_GROUPS: readonly ApplicationGroup[] = [
     description: "HLA typing, antibody detection, crossmatch, post-transplant monitoring & HLA analysis",
     categoryIds: ["transplant", "molecular", "ngs", "serological", "posttransplant", "multiplex", "equipment"],
     brandIds: ["onelambda"],
+    tree: [
+      {
+        eyebrow: "Pre-transplant workup",
+        title: "HLA Typing",
+        items: ["RTPCR", "SSO", "SSP", "Sanger based HLA typing", "NGS / NGS + ONT"],
+      },
+      {
+        eyebrow: "Pre-transplant workup",
+        title: "Antibody Detection",
+        items: ["LABScreen screening (LSM12)", "SAB identification (LS1A04, LS2A01)", "Auto-antibodies", "C1q screening"],
+      },
+      {
+        eyebrow: "Pre-transplant workup",
+        title: "HLA Crossmatch",
+        items: ["Flow DSA XM", "CDC reagents", "3 color HLA FlowCrossmatch"],
+      },
+      {
+        eyebrow: "Pre-transplant workup",
+        title: "Instruments & Analysis",
+        items: ["LABScan3D multiplex analyser", "Luminex 200 multiplex analyser", "One Lambda HLA PRO automated pipettor", "HLA Fusion", "SureTyper", "TypeStream Visual"],
+      },
+      {
+        eyebrow: "Post-transplant monitoring",
+        title: "Monitoring",
+        items: ["Post-transplant antibody monitoring", "DD-cfDNA for solid organ transplant", "Donor chimerism for bone marrow transplant"],
+      },
+      {
+        title: "HLA Disease Association",
+        items: ["HLA B27", "Celiac disease"],
+      },
+    ],
   },
   {
     id: "flow-cytometry",
@@ -118,6 +154,28 @@ const APPLICATION_GROUPS: readonly ApplicationGroup[] = [
     description: "Micro-capillary, spectral, imaging flow cytometry and cell-sorting platforms",
     categoryIds: ["flow"],
     brandIds: ["cytek"],
+    tree: [
+      {
+        title: "Micro-capillary Flow Cytometer",
+        items: ["Guava easyCyte", "Muse"],
+      },
+      {
+        title: "Spectral Flow Cytometers",
+        items: ["Aurora", "Northern Lights", "Borealis"],
+      },
+      {
+        title: "Automation",
+        items: ["Automated cocktail preparation instrument"],
+      },
+      {
+        title: "Cell Sorter System",
+        items: ["Spectral cell sorter system"],
+      },
+      {
+        title: "Imaging Flow Cytometer",
+        items: ["Imaging flow cytometry platform"],
+      },
+    ],
   },
   {
     id: "flow-antibodies",
@@ -455,6 +513,8 @@ export function SiteNavbar({
   // Current active app group
   const currentApp      = APPLICATION_GROUPS.find(g => g.id === activeApp)!;
   const appProds        = appGroupProducts(activeApp, products);
+  const appBrands       = currentApp.brandIds?.map(id => brandById(id)).filter(Boolean) as Brand[] | undefined;
+  const appHighlights   = (appProds.filter(p => p.featured).length ? appProds.filter(p => p.featured) : appProds).slice(0, 4);
 
   // Current active category
   const currentCat      = categoryById(activeCategory);
@@ -1007,36 +1067,109 @@ export function SiteNavbar({
                             </div>
                           </div>
 
-                          {/* Featured products grid */}
-                          <div className="flex-1 min-h-0">
-                            <div className="text-[9px] font-black uppercase tracking-[0.22em] text-muted-foreground mb-3">Featured Products</div>
-                            <div className="grid grid-cols-3 gap-2">
-                              {appProds.filter(p => p.featured).slice(0, 6).map(p => {
-                                const brand = brandById(p.brand);
-                                return (
-                                  <ProductShortcutLink key={p.id} product={p} onClick={closeMega}
-                                    className="group flex flex-col gap-2 p-3 border border-border hover:border-border/80 hover:bg-muted/40 transition-all">
-                                    <div className="flex items-center gap-2">
-                                      <div className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: currentApp.color }} />
-                                      <span className="text-[9px] font-black uppercase tracking-[0.15em]" style={{ color: brand?.accent }}>
-                                        {brand?.short}
+                          <div className="grid grid-cols-[1.45fr_0.85fr] gap-4 flex-1 min-h-0">
+                            <div className="min-h-0">
+                              <div className="flex items-center justify-between mb-3">
+                                <div className="text-[9px] font-black uppercase tracking-[0.22em] text-muted-foreground">Brand Application Tree</div>
+                                {appBrands?.length ? (
+                                  <div className="flex items-center gap-1.5">
+                                    {appBrands.map(brand => (
+                                      <span
+                                        key={brand.id}
+                                        className="px-2 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-white"
+                                        style={{ background: brand.accent }}
+                                      >
+                                        {brand.short}
                                       </span>
+                                    ))}
+                                  </div>
+                                ) : null}
+                              </div>
+
+                              {currentApp.tree?.length ? (
+                                <div className="grid grid-cols-2 gap-2 pr-1 max-h-[270px] overflow-y-auto" style={{ overscrollBehavior: "contain" }}>
+                                  {currentApp.tree.map(section => (
+                                    <div key={`${currentApp.id}-${section.title}`} className="border border-border bg-background p-3">
+                                      <div className="flex items-start gap-2">
+                                        <div className="mt-1 h-8 w-0.5 flex-shrink-0" style={{ background: currentApp.color }} />
+                                        <div className="min-w-0">
+                                          {section.eyebrow && (
+                                            <div className="mb-1 text-[8px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+                                              {section.eyebrow}
+                                            </div>
+                                          )}
+                                          <h4 className="text-[12px] font-black text-foreground leading-tight">{section.title}</h4>
+                                        </div>
+                                      </div>
+                                      <div className="mt-2 flex flex-wrap gap-1.5">
+                                        {section.items.map(item => (
+                                          <span
+                                            key={`${section.title}-${item}`}
+                                            className="border border-border bg-muted/40 px-2 py-1 text-[10px] font-medium leading-tight text-foreground/80"
+                                          >
+                                            {item}
+                                          </span>
+                                        ))}
+                                      </div>
                                     </div>
-                                    <span className="text-[12px] font-medium text-foreground group-hover:text-primary transition-colors leading-snug line-clamp-2">
-                                      {p.name}
-                                    </span>
-                                    <ArrowRight className="h-3 w-3 text-muted-foreground/40 group-hover:text-primary transition-colors mt-auto" />
-                                  </ProductShortcutLink>
-                                );
-                              })}
+                                  ))}
+                                </div>
+                              ) : (
+                                <div className="grid grid-cols-2 gap-2">
+                                  {currentApp.categoryIds.slice(0, 8).map(categoryId => {
+                                    const category = categoryById(categoryId);
+                                    const count = appProds.filter(product => product.category === categoryId).length;
+                                    if (!category || count === 0) return null;
+                                    return (
+                                      <Link
+                                        key={categoryId}
+                                        href={`/products?category=${categoryId}`}
+                                        onClick={closeMega}
+                                        className="group border border-border bg-background p-3 hover:bg-muted/50 transition-colors"
+                                      >
+                                        <div className="flex items-center gap-2">
+                                          <span style={{ color: currentApp.color }}>{category.icon}</span>
+                                          <span className="text-[12px] font-black text-foreground group-hover:text-primary">{category.name}</span>
+                                        </div>
+                                        <div className="mt-2 text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
+                                          {count} catalogue entries
+                                        </div>
+                                      </Link>
+                                    );
+                                  })}
+                                </div>
+                              )}
                             </div>
-                            {/* Show more */}
-                            {appProds.length > 6 && (
+
+                            <div className="min-h-0 border-l border-border pl-4">
+                              <div className="text-[9px] font-black uppercase tracking-[0.22em] text-muted-foreground mb-3">Catalogue Highlights</div>
+                              <div className="space-y-2">
+                                {appHighlights.map(p => {
+                                  const brand = brandById(p.brand);
+                                  const category = categoryById(p.category);
+                                  return (
+                                    <ProductShortcutLink
+                                      key={p.id}
+                                      product={p}
+                                      onClick={closeMega}
+                                      className="group block border border-border bg-background p-3 hover:bg-muted/50 transition-colors"
+                                    >
+                                      <div className="flex items-center gap-2 mb-1.5">
+                                        <span className="h-1.5 w-1.5 rounded-full" style={{ background: brand?.accent ?? currentApp.color }} />
+                                        <span className="text-[8px] font-black uppercase tracking-[0.16em] text-muted-foreground">
+                                          {brand?.short} / {category?.name}
+                                        </span>
+                                      </div>
+                                      <div className="text-[12px] font-semibold leading-snug text-foreground group-hover:text-primary line-clamp-2">{p.name}</div>
+                                    </ProductShortcutLink>
+                                  );
+                                })}
+                              </div>
                               <Link href={`/products?q=${encodeURIComponent(currentApp.label)}`} onClick={closeMega}
-                                className="mt-3 flex items-center gap-1.5 text-[11px] font-bold text-primary hover:text-primary/80 transition-colors">
-                                +{appProds.length - 6} more products in this application <ArrowRight className="h-3 w-3" />
+                                className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-bold text-primary hover:text-primary/80 transition-colors">
+                                Browse this application <ArrowRight className="h-3 w-3" />
                               </Link>
-                            )}
+                            </div>
                           </div>
                         </motion.div>
                       )}
