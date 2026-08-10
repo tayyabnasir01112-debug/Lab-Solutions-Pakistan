@@ -478,7 +478,7 @@ function IntroSplash({ onDone }: { onDone: () => void }) {
 }
 
 function BrandHubIntro({ onDone }: { onDone: () => void }) {
-  const [phase, setPhase] = useState<"brands" | "hub" | "done">("brands");
+  const [phase, setPhase] = useState<"fill" | "hold" | "done">("fill");
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -488,13 +488,13 @@ function BrandHubIntro({ onDone }: { onDone: () => void }) {
     const timeouts: number[] = [];
 
     const tick = (now: number) => {
-      const pct = Math.min(100, Math.round(((now - started) / 3600) * 100));
+      const pct = Math.min(100, Math.round(((now - started) / 3900) * 100));
       setProgress(pct);
       if (pct < 100) frame = requestAnimationFrame(tick);
     };
 
     frame = requestAnimationFrame(tick);
-    timeouts.push(window.setTimeout(() => setPhase("hub"), 2850));
+    timeouts.push(window.setTimeout(() => setPhase("hold"), 3650));
 
     const heroReady = new Promise<void>((resolve) => {
       const hero = new Image();
@@ -505,13 +505,13 @@ function BrandHubIntro({ onDone }: { onDone: () => void }) {
     });
 
     const minimumIntro = new Promise<void>((resolve) => {
-      timeouts.push(window.setTimeout(resolve, 5000));
+      timeouts.push(window.setTimeout(resolve, 4700));
     });
 
     Promise.all([heroReady, minimumIntro]).then(() => {
       if (cancelled) return;
-      timeouts.push(window.setTimeout(() => setPhase("done"), 900));
-      timeouts.push(window.setTimeout(onDone, 1450));
+      timeouts.push(window.setTimeout(() => setPhase("done"), 650));
+      timeouts.push(window.setTimeout(onDone, 1220));
     });
 
     return () => {
@@ -538,97 +538,91 @@ function BrandHubIntro({ onDone }: { onDone: () => void }) {
         }}
       />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(46,163,242,0.18),transparent_32%),radial-gradient(circle_at_50%_100%,rgba(16,185,129,0.16),transparent_44%)]" />
-
-      <div className="absolute left-6 top-6 hidden text-[10px] font-black uppercase tracking-[0.34em] text-cyan-100/55 md:block">
-        Scientific sourcing network
-      </div>
-      <div className="absolute right-6 top-6 hidden text-[10px] font-black uppercase tracking-[0.34em] text-cyan-100/55 md:block">
-        SC-PK / {String(progress).padStart(3, "0")}
-      </div>
+      <motion.div
+        className="absolute inset-0 bg-[conic-gradient(from_140deg_at_50%_50%,transparent,rgba(46,163,242,0.18),rgba(34,197,94,0.14),transparent)]"
+        animate={{ rotate: 360 }}
+        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
+      />
+      <div className="absolute inset-x-0 top-1/2 h-px bg-gradient-to-r from-transparent via-cyan-200/40 to-transparent" />
 
       <div className="relative z-10 flex h-full items-center justify-center px-6">
         <motion.div
-          className="absolute w-full max-w-5xl"
-          initial={{ opacity: 0, y: 18 }}
-          animate={phase === "brands" ? { opacity: 1, y: 0 } : { opacity: 0, y: -28, scale: 0.96 }}
-          transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+          className="relative flex w-full max-w-4xl flex-col items-center text-center"
+          initial={{ opacity: 0, y: 20, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: phase === "hold" ? 1.035 : 1 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="mb-8 text-center">
-            <div className="text-[11px] font-black uppercase tracking-[0.48em] text-cyan-100/60">
-              Global Scientific Portfolios
-            </div>
-            <div className="mt-4 font-[var(--app-font-heading)] text-3xl font-black uppercase tracking-[0.08em] md:text-5xl">
-              Trusted brands, one local partner
-            </div>
+          <div className="mb-8 flex items-center gap-4 text-[10px] font-black uppercase tracking-[0.42em] text-cyan-100/55">
+            <span className="h-px w-14 bg-cyan-100/30" />
+            Science Centre Pakistan
+            <span className="h-px w-14 bg-cyan-100/30" />
           </div>
-
-          <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-9 gap-y-8 md:gap-x-12">
-            {introBrandLogos.map((brand) => (
-              <motion.div
-                key={brand.name}
-                className="flex h-16 items-center justify-center md:h-20"
-                initial={{ opacity: 0, y: 18, scale: 0.88, filter: "blur(8px)" }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  scale: 1,
-                  filter: "blur(0px)",
-                }}
-                transition={{ duration: 0.42, delay: brand.delay, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <img
-                  src={img(brand.logo)}
-                  alt={brand.name}
-                  className="max-h-12 max-w-[112px] object-contain drop-shadow-[0_12px_28px_rgba(0,0,0,0.38)] md:max-h-14 md:max-w-[136px]"
-                />
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-
-        <motion.div
-          className="absolute flex w-full max-w-3xl flex-col items-center text-center"
-          initial={{ opacity: 0, y: 24, scale: 0.96 }}
-          animate={phase === "hub" || phase === "done" ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 24, scale: 0.96 }}
-          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <div className="mb-7 flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.34em] text-cyan-100/65">
-            <span className="h-px w-12 bg-cyan-100/30" />
-            Covered under one sourcing hub
-            <span className="h-px w-12 bg-cyan-100/30" />
-          </div>
-          <div className="relative">
-            <div className="absolute inset-x-4 top-8 h-24 rounded-full bg-cyan-300/18 blur-3xl" />
+          <div className="relative w-[min(760px,86vw)]">
+            <motion.div
+              className="absolute -inset-x-10 -inset-y-12 rounded-full bg-cyan-300/18 blur-3xl"
+              animate={{ opacity: phase === "hold" ? 0.95 : 0.38, scale: phase === "hold" ? 1.12 : 0.9 }}
+              transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+            />
+            <motion.div
+              className="absolute -inset-x-8 -inset-y-8 rounded-full bg-emerald-300/12 blur-2xl"
+              animate={{ opacity: [0.18, 0.44, 0.18], scale: [0.94, 1.05, 0.94] }}
+              transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
+            />
             <img
-              src={img("/images/sc-logo-full-nav.webp")}
+              src={img("/images/sc-logo-full.png")}
               alt="Science Centre Pakistan"
-              className="relative h-24 w-auto object-contain drop-shadow-[0_20px_38px_rgba(46,163,242,0.3)] md:h-32"
+              className="relative w-full object-contain opacity-20 brightness-0 invert"
+            />
+            <motion.div
+              className="absolute inset-0 overflow-hidden"
+              initial={{ width: "0%" }}
+              animate={{ width: "100%" }}
+              transition={{ duration: 3.45, ease: [0.65, 0, 0.35, 1] }}
+            >
+              <img
+                src={img("/images/sc-logo-full.png")}
+                alt=""
+                aria-hidden="true"
+                className="h-full w-[min(760px,86vw)] max-w-none object-contain drop-shadow-[0_0_26px_rgba(46,163,242,0.48)]"
+              />
+              <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-r from-transparent via-cyan-100/55 to-transparent blur-sm" />
+            </motion.div>
+            <motion.div
+              className="pointer-events-none absolute inset-0 rounded-[48%] border border-cyan-100/10"
+              animate={{ opacity: phase === "hold" ? 0.75 : 0.28, scale: phase === "hold" ? 1.04 : 0.98 }}
+              transition={{ duration: 0.75 }}
             />
           </div>
-          <div className="mt-7 grid w-full max-w-2xl grid-cols-3 border border-cyan-100/16 bg-white/[0.07] text-[10px] font-black uppercase tracking-[0.18em] text-cyan-100/70 backdrop-blur-md">
-            <div className="flex items-center justify-center gap-2 border-r border-cyan-100/12 px-3 py-4">
-              <Microscope className="h-4 w-4 text-emerald-200" />
-              Instruments
-            </div>
-            <div className="flex items-center justify-center gap-2 border-r border-cyan-100/12 px-3 py-4">
-              <Dna className="h-4 w-4 text-cyan-200" />
-              Diagnostics
-            </div>
-            <div className="flex items-center justify-center gap-2 px-3 py-4">
-              <TestTube className="h-4 w-4 text-sky-200" />
-              Reagents
-            </div>
+          <motion.div
+            className="mt-8 flex items-center gap-3 text-[10px] font-black uppercase tracking-[0.32em] text-cyan-100/60"
+            animate={{ opacity: phase === "hold" ? 1 : 0.55 }}
+            transition={{ duration: 0.55 }}
+          >
+            <span className="h-px w-20 bg-gradient-to-r from-transparent to-cyan-200/60" />
+            <span>{phase === "hold" ? "Ready" : "Loading"}</span>
+            <span className="h-px w-20 bg-gradient-to-l from-transparent to-emerald-200/60" />
+          </motion.div>
+          <div className="mt-5 h-px w-[min(360px,60vw)] overflow-hidden bg-white/10">
+            <motion.div
+              className="h-full bg-gradient-to-r from-cyan-300 via-white to-emerald-300"
+              initial={{ width: "0%" }}
+              animate={{ width: `${progress}%` }}
+              transition={{ duration: 0.1, ease: "linear" }}
+            />
           </div>
         </motion.div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 h-px w-56 -translate-x-1/2 overflow-hidden bg-white/10">
-        <motion.div
-          className="h-full bg-gradient-to-r from-cyan-300 via-white to-emerald-300"
-          initial={{ width: "0%" }}
-          animate={{ width: `${progress}%` }}
-          transition={{ duration: 0.1, ease: "linear" }}
-        />
+      <div className="pointer-events-none absolute inset-0">
+        {[...Array(5)].map((_, index) => (
+          <motion.span
+            key={index}
+            className="absolute h-1.5 w-1.5 rounded-full bg-cyan-200"
+            style={{ left: `${18 + index * 16}%`, top: `${24 + (index % 2) * 46}%`, boxShadow: "0 0 18px rgba(125,211,252,0.9)" }}
+            animate={{ opacity: [0.15, 0.85, 0.15], scale: [0.8, 1.25, 0.8] }}
+            transition={{ duration: 2.4 + index * 0.25, repeat: Infinity, ease: "easeInOut", delay: index * 0.18 }}
+          />
+        ))}
       </div>
     </motion.div>
   );
