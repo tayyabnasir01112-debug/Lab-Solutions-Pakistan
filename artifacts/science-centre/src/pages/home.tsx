@@ -1616,9 +1616,11 @@ function Solutions() {
                   className="min-h-[88px]"
                 >
                   {index === 0 ? (
-                    <div className="inline-flex h-20 w-20 items-center justify-center rounded-full border border-white/18 bg-white/[0.07] font-[var(--app-font-heading)] text-3xl font-black tracking-[-0.04em] text-white shadow-[0_0_45px_rgba(46,163,242,0.22)] backdrop-blur-md">
-                      SC
-                    </div>
+                    <img
+                      src={img("/images/sc-logo-mark-only.png")}
+                      alt="Science Centre SC mark"
+                      className="h-24 w-auto object-contain brightness-0 invert drop-shadow-[0_0_28px_rgba(46,163,242,0.22)]"
+                    />
                   ) : panel.logo ? (
                     <img src={img(panel.logo)} alt="Science Centre Pakistan" className="h-20 w-auto object-contain brightness-0 invert" />
                   ) : (
@@ -1646,11 +1648,19 @@ function Solutions() {
                   </motion.div>
 
                   <div className={`mb-4 h-px ${isActive ? "w-12 bg-white/55" : "w-9 bg-slate-400/80"}`} />
-                  <h1
-                    className="max-w-[11ch] font-[var(--app-font-heading)] text-[clamp(2.85rem,5.3vw,5rem)] font-black leading-[0.92] tracking-tight text-white transition-all duration-500"
-                  >
-                    {panel.title}
-                  </h1>
+                  {index === 0 ? (
+                    <img
+                      src={img("/images/sc-logo-wordmark-only.png")}
+                      alt="Science Centre"
+                      className="w-[min(520px,82vw)] max-w-full object-contain brightness-0 invert drop-shadow-[0_12px_35px_rgba(0,0,0,0.36)]"
+                    />
+                  ) : (
+                    <h1
+                      className="max-w-[11ch] font-[var(--app-font-heading)] text-[clamp(2.85rem,5.3vw,5rem)] font-black leading-[0.92] tracking-tight text-white transition-all duration-500"
+                    >
+                      {panel.title}
+                    </h1>
+                  )}
 
                   <motion.div
                     animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.78 }}
@@ -1726,9 +1736,17 @@ function Solutions() {
             <div className="absolute inset-0 bg-gradient-to-t from-[#030b13] via-[#030b13]/76 to-[#030b13]/28" />
             <div className="relative min-h-[320px] pt-36">
             <div className="mb-3 h-px w-10 bg-white/45" />
-            <h1 className="font-[var(--app-font-heading)] text-4xl font-black leading-none">
-              {activePanel.title}
-            </h1>
+            {activePanel.title === "Science Centre" ? (
+              <img
+                src={img("/images/sc-logo-wordmark-only.png")}
+                alt="Science Centre"
+                className="w-[min(330px,78vw)] max-w-full object-contain brightness-0 invert"
+              />
+            ) : (
+              <h1 className="font-[var(--app-font-heading)] text-4xl font-black leading-none">
+                {activePanel.title}
+              </h1>
+            )}
             <p className="mt-4 text-sm leading-relaxed text-white/72">{activePanel.desc}</p>
             </div>
           </motion.div>
