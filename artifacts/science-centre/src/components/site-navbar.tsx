@@ -3,7 +3,7 @@ import { Link, useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronDown, ArrowRight, ChevronRight, X, Globe, Building2,
-  LayoutGrid, Tag, Layers,
+  Tag, Layers,
   HeartPulse, FlaskConical, Dna, Beaker, Gauge, Waves,
   Microscope, TestTube, Cpu, Zap, Scale, Thermometer, Activity,
   ShieldCheck, Droplets, Search,
@@ -89,55 +89,118 @@ const SOLUTION_SEARCH_LINKS = [
 ].map(label => ({ label, meta: "Solution area", href: `/products?q=${encodeURIComponent(label)}` }));
 
 // ─── Application Groups ────────────────────────────────────────────────────
-// Groups several catalogue categories under a higher-level "application" label
-const APPLICATION_GROUPS = [
+type ApplicationGroup = {
+  id: string;
+  label: string;
+  icon: React.ReactNode;
+  color: string;
+  description: string;
+  categoryIds: string[];
+  brandIds?: string[];
+};
+
+// Groups catalogue categories under the client-confirmed application language.
+const APPLICATION_GROUPS: readonly ApplicationGroup[] = [
   {
     id: "transplant-dx",
     label: "Transplant Diagnostics",
     icon: <HeartPulse className="h-4 w-4" />,
     color: "#e85d4a",
-    description: "HLA antibody detection, typing & post-transplant monitoring",
-    categoryIds: ["transplant", "molecular", "ngs", "serological", "posttransplant", "immuno"],
-  },
-  {
-    id: "electrochemistry",
-    label: "Electrochemistry Instruments",
-    icon: <Gauge className="h-4 w-4" />,
-    color: "#f59e0b",
-    description: "pH, conductivity, DO, turbidity, titration & moisture analysis",
-    categoryIds: ["benchtop-meters", "portable-meters", "titrators", "kf-titrators", "turbidity", "cod-meters", "electrodes", "moisture", "rex-accessories"],
-  },
-  {
-    id: "molecular-bio",
-    label: "Molecular Biology",
-    icon: <Dna className="h-4 w-4" />,
-    color: "#8b5cf6",
-    description: "PCR, sequencing, genotyping & molecular typing solutions",
-    categoryIds: ["molecular", "ngs"],
+    description: "HLA typing, antibody detection, crossmatch, post-transplant monitoring & HLA analysis",
+    categoryIds: ["transplant", "molecular", "ngs", "serological", "posttransplant", "multiplex", "equipment"],
+    brandIds: ["onelambda"],
   },
   {
     id: "flow-cytometry",
-    label: "Flow Cytometry",
+    label: "Flow Cytometry Solutions",
     icon: <Microscope className="h-4 w-4" />,
     color: "#06b6d4",
-    description: "Flow-based HLA antibody identification & cell sorting",
-    categoryIds: ["flow", "multiplex"],
+    description: "Micro-capillary, spectral, imaging flow cytometry and cell-sorting platforms",
+    categoryIds: ["flow"],
+    brandIds: ["cytek"],
   },
   {
-    id: "immunoassay",
-    label: "Immunoassays & Reagents",
+    id: "flow-antibodies",
+    label: "Flow Antibody Solutions",
     icon: <TestTube className="h-4 w-4" />,
-    color: "#10b981",
-    description: "ELISA, multiplex, antibodies & ancillary reagents",
-    categoryIds: ["immuno", "antibodies", "equipment"],
+    color: "#a855f7",
+    description: "Flow antibodies, immunology reagents and assay support for cell analysis workflows",
+    categoryIds: ["antibodies", "biolegend-product-types", "biolegend-applications", "biolegend-research-areas"],
+    brandIds: ["biolegend"],
   },
   {
-    id: "water-quality",
-    label: "Water Quality Analysis",
+    id: "life-sciences",
+    label: "Life Sciences",
+    icon: <Dna className="h-4 w-4" />,
+    color: "#2fa4ff",
+    description: "Research reagents, assays, instruments and molecular biology support",
+    categoryIds: [
+      "merck-analytical-chemistry",
+      "merck-cell-culture-and-analysis",
+      "merck-chemistry-and-biochemicals",
+      "merck-clinical-diagnostics",
+      "merck-industrial-microbiology",
+      "merck-labware",
+      "merck-materials-science",
+      "merck-molecular-biology-and-functional-genomics",
+      "molecular",
+      "immuno",
+      "antibodies",
+      "equipment",
+    ],
+  },
+  {
+    id: "culture-media",
+    label: "Culture Media Solutions",
+    icon: <Beaker className="h-4 w-4" />,
+    color: "#10b981",
+    description: "Culture media, supplements, raw materials and lab consumables for repeatable workflows",
+    categoryIds: ["hkm-culture-media", "hkm-raw-materials", "hkm-consumables", "merck-cell-culture-and-analysis"],
+    brandIds: ["hkm"],
+  },
+  {
+    id: "ngs-solutions",
+    label: "Next Generation Sequencing Solutions",
+    icon: <Dna className="h-4 w-4" />,
+    color: "#4f7cff",
+    description: "NGS typing, sequencing panels, molecular diagnostics and analysis workflows",
+    categoryIds: ["ngs", "molecular"],
+    brandIds: ["ngene"],
+  },
+  {
+    id: "allergen-screening",
+    label: "Allergen Screening Solutions",
+    icon: <ShieldCheck className="h-4 w-4" />,
+    color: "#f43f5e",
+    description: "Allergy and immunoblot screening platforms, tests and interpretation support",
+    categoryIds: ["sug-immunoblot-systems", "sug-immunoblot-tests", "sug-poct-tests"],
+    brandIds: ["sugentech"],
+  },
+  {
+    id: "microbead-multiplexing",
+    label: "Microbead Based Multiplexing Solutions",
+    icon: <Cpu className="h-4 w-4" />,
+    color: "#0ea5e9",
+    description: "xMAP-style multiplex analyzers, microspheres and bead-based assay development",
+    categoryIds: ["multiplex", "luminex-instruments", "luminex-microspheres", "luminex-assay-development", "luminex-applications"],
+    brandIds: ["luminex"],
+  },
+  {
+    id: "biochemistry-instruments",
+    label: "Bio-Chemistry Instruments",
+    icon: <Gauge className="h-4 w-4" />,
+    color: "#f59e0b",
+    description: "pH, conductivity, DO, turbidity, titration, COD and moisture analysis instruments",
+    categoryIds: ["benchtop-meters", "portable-meters", "titrators", "kf-titrators", "turbidity", "cod-meters", "electrodes", "moisture", "rex-accessories"],
+    brandIds: ["rex"],
+  },
+  {
+    id: "water-purification",
+    label: "Water Purification Systems",
     icon: <Droplets className="h-4 w-4" />,
     color: "#3b82f6",
-    description: "COD, turbidity, dissolved oxygen & conductivity measurement",
-    categoryIds: ["cod-meters", "turbidity", "portable-meters"],
+    description: "Merck Milli-Q, Elix, AFS and analyzer-feed water purification systems",
+    categoryIds: ["wp-systems"],
   },
 ] as const;
 
@@ -185,7 +248,7 @@ function brandCategories(brandId: string, catalogue: CatalogueModule | null) {
 function appGroupProducts(groupId: string, products: Product[]) {
   const group = APPLICATION_GROUPS.find(g => g.id === groupId);
   if (!group) return [];
-  return products.filter(p => group.categoryIds.includes(p.category as any));
+  return products.filter(p => group.categoryIds.includes(p.category) || group.brandIds?.includes(p.brand));
 }
 
 export function SiteNavbar({
@@ -201,7 +264,7 @@ export function SiteNavbar({
   const [scrolled, setScrolled]             = useState(false);
   const [menuOpen, setMenuOpen]             = useState(false);
   const [megaOpen, setMegaOpen]             = useState(false);
-  const [viewMode, setViewMode]             = useState<ViewMode>("brand");
+  const [viewMode, setViewMode]             = useState<ViewMode>("application");
   const [activeBrand, setActiveBrand]       = useState("");
   const [activeApp, setActiveApp]           = useState(APPLICATION_GROUPS[0].id);
   const [activeCategory, setActiveCategory] = useState("");
@@ -399,9 +462,8 @@ export function SiteNavbar({
 
   // Mode tabs config
   const MODE_TABS: { id: ViewMode; label: string; icon: React.ReactNode }[] = [
-    { id: "brand",       label: "By Brand",       icon: <Tag className="h-3.5 w-3.5" /> },
     { id: "application", label: "By Application", icon: <Layers className="h-3.5 w-3.5" /> },
-    { id: "category",    label: "By Category",    icon: <LayoutGrid className="h-3.5 w-3.5" /> },
+    { id: "brand",       label: "By Brand",       icon: <Tag className="h-3.5 w-3.5" /> },
   ];
 
   // Panel bg tints for hover effect
@@ -938,7 +1000,7 @@ export function SiteNavbar({
                               <span className="text-[11px] font-bold px-2.5 py-1.5 text-white rounded-sm" style={{ background: currentApp.color }}>
                                 {appProds.length} products
                               </span>
-                              <Link href={`/products?application=${activeApp}`} onClick={closeMega}
+                              <Link href={`/products?q=${encodeURIComponent(currentApp.label)}`} onClick={closeMega}
                                 className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.1em] px-2.5 py-1.5 border border-border hover:bg-muted transition-colors text-foreground">
                                 Browse All <ArrowRight className="h-3 w-3" />
                               </Link>
@@ -970,7 +1032,7 @@ export function SiteNavbar({
                             </div>
                             {/* Show more */}
                             {appProds.length > 6 && (
-                              <Link href={`/products`} onClick={closeMega}
+                              <Link href={`/products?q=${encodeURIComponent(currentApp.label)}`} onClick={closeMega}
                                 className="mt-3 flex items-center gap-1.5 text-[11px] font-bold text-primary hover:text-primary/80 transition-colors">
                                 +{appProds.length - 6} more products in this application <ArrowRight className="h-3 w-3" />
                               </Link>
@@ -1073,23 +1135,10 @@ export function SiteNavbar({
                               Browse All Products →
                             </Link>
                             <div>
-                              <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-2">By Brand</div>
-                              <div className="space-y-0.5">
-                                {brands.map(b => (
-                                  <Link key={b.id} href={`/products?brand=${b.id}`} onClick={onClose}
-                                    className="flex items-center gap-2.5 text-[13px] text-foreground/80 hover:text-primary py-1.5 px-2 hover:bg-muted/50 transition-colors rounded-sm">
-                                    <span className="w-2 h-2 flex-shrink-0 rounded-full" style={{ background: b.accent }} />
-                                    <span className="font-medium flex-1">{b.short}</span>
-                                    <span className="text-[11px] text-muted-foreground">{productsByBrand(b.id).length}</span>
-                                  </Link>
-                                ))}
-                              </div>
-                            </div>
-                            <div>
                               <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-2">By Application</div>
                               <div className="space-y-0.5">
                                 {APPLICATION_GROUPS.map(app => (
-                                  <Link key={app.id} href={`/products`} onClick={onClose}
+                                  <Link key={app.id} href={`/products?q=${encodeURIComponent(app.label)}`} onClick={onClose}
                                     className="flex items-center gap-2 text-[12px] text-foreground/80 hover:text-primary py-1.5 rounded-sm">
                                     <span style={{ color: app.color }}>{app.icon}</span>
                                     <span>{app.label}</span>
@@ -1098,12 +1147,14 @@ export function SiteNavbar({
                               </div>
                             </div>
                             <div>
-                              <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-2">By Category</div>
-                              <div className="grid grid-cols-2 gap-x-3">
-                                {categories.map(c => (
-                                  <Link key={c.id} href={`/products?category=${c.id}`} onClick={onClose}
-                                    className="flex items-center gap-2 text-[12px] text-foreground/80 hover:text-primary py-1.5 rounded-sm">
-                                    {c.icon} <span>{c.name}</span>
+                              <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-2">By Brand</div>
+                              <div className="space-y-0.5">
+                                {brands.map(b => (
+                                  <Link key={b.id} href={`/products?brand=${b.id}`} onClick={onClose}
+                                    className="flex items-center gap-2.5 text-[13px] text-foreground/80 hover:text-primary py-1.5 px-2 hover:bg-muted/50 transition-colors rounded-sm">
+                                    <span className="w-2 h-2 flex-shrink-0 rounded-full" style={{ background: b.accent }} />
+                                    <span className="font-medium flex-1">{b.short}</span>
+                                    <span className="text-[11px] text-muted-foreground">{productsByBrand(b.id).length}</span>
                                   </Link>
                                 ))}
                               </div>
