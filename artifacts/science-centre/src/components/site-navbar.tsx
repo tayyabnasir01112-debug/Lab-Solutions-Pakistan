@@ -100,9 +100,19 @@ type ApplicationGroup = {
   tree?: {
     title: string;
     eyebrow?: string;
-    items: string[];
+    items: ApplicationTreeItem[];
   }[];
 };
+
+type ApplicationTreeItem =
+  | string
+  | {
+      label: string;
+      productId?: string;
+      categoryId?: string;
+      query?: string;
+      href?: string;
+    };
 
 // Groups catalogue categories under the client-confirmed application language.
 const APPLICATION_GROUPS: readonly ApplicationGroup[] = [
@@ -118,31 +128,67 @@ const APPLICATION_GROUPS: readonly ApplicationGroup[] = [
       {
         eyebrow: "Pre-transplant workup",
         title: "HLA Typing",
-        items: ["RTPCR", "SSO", "SSP", "Sanger based HLA typing", "NGS / NGS + ONT"],
+        items: [
+          { label: "RTPCR", productId: "ol-linkseq-hla-kir" },
+          { label: "SSO", productId: "ol-labtype-sso" },
+          { label: "SSP", productId: "ol-microssp-generic" },
+          { label: "Sanger based HLA typing", productId: "ol-secore-sbt" },
+          { label: "NGS / NGS + ONT", productId: "ol-alltype-ngs" },
+        ],
       },
       {
         eyebrow: "Pre-transplant workup",
         title: "Antibody Detection",
-        items: ["LABScreen screening (LSM12)", "SAB identification (LS1A04, LS2A01)", "Auto-antibodies", "C1q screening"],
+        items: [
+          { label: "LABScreen screening (LSM12)", productId: "ol-labscreen-mica" },
+          { label: "SAB identification - Class I", productId: "ol-labscreen-sa1" },
+          { label: "SAB identification - Class II", productId: "ol-labscreen-sa2" },
+          { label: "Auto-antibodies", categoryId: "transplant" },
+          { label: "C1q screening", productId: "ol-c1qscreen" },
+        ],
       },
       {
         eyebrow: "Pre-transplant workup",
         title: "HLA Crossmatch",
-        items: ["Flow DSA XM", "CDC reagents", "3 color HLA FlowCrossmatch"],
+        items: [
+          { label: "Flow DSA XM", productId: "ol-flowdsa-xm" },
+          { label: "CDC reagents", productId: "ol-terasaki-trays" },
+          { label: "3 color HLA FlowCrossmatch", productId: "ol-flowdsa-xm" },
+        ],
       },
       {
         eyebrow: "Pre-transplant workup",
-        title: "Instruments & Analysis",
-        items: ["LABScan3D multiplex analyser", "Luminex 200 multiplex analyser", "One Lambda HLA PRO automated pipettor", "HLA Fusion", "SureTyper", "TypeStream Visual"],
+        title: "Instruments",
+        items: [
+          { label: "LABScan3D multiplex analyser", productId: "ol-labscan3d" },
+          { label: "Luminex 200 multiplex analyser", productId: "ol-labscan100" },
+          { label: "One Lambda HLA PRO automated pipettor", productId: "ol-hla-pro" },
+        ],
+      },
+      {
+        eyebrow: "Pre-transplant workup",
+        title: "Analysis",
+        items: [
+          { label: "HLA Fusion", productId: "ol-fusion" },
+          { label: "SureTyper", categoryId: "molecular" },
+          { label: "TypeStream Visual", productId: "ol-typestream" },
+        ],
       },
       {
         eyebrow: "Post-transplant monitoring",
         title: "Monitoring",
-        items: ["Post-transplant antibody monitoring", "DD-cfDNA for solid organ transplant", "Donor chimerism for bone marrow transplant"],
+        items: [
+          { label: "Post-transplant antibody monitoring", productId: "ol-labscreen-mixed" },
+          { label: "DD-cfDNA for solid organ transplant", productId: "ol-accept-cfdna" },
+          { label: "Donor chimerism for bone marrow transplant", productId: "ol-chimerism-ngs" },
+        ],
       },
       {
         title: "HLA Disease Association",
-        items: ["HLA B27", "Celiac disease"],
+        items: [
+          { label: "HLA B27", categoryId: "serological" },
+          { label: "Celiac disease", categoryId: "molecular" },
+        ],
       },
     ],
   },
@@ -157,23 +203,30 @@ const APPLICATION_GROUPS: readonly ApplicationGroup[] = [
     tree: [
       {
         title: "Micro-capillary Flow Cytometer",
-        items: ["Guava easyCyte", "Muse"],
+        items: [
+          { label: "Guava easyCyte", productId: "cytek-guava" },
+          { label: "Muse", productId: "cytek-muse-micro" },
+        ],
       },
       {
         title: "Spectral Flow Cytometers",
-        items: ["Aurora", "Northern Lights", "Borealis"],
+        items: [
+          { label: "Aurora", productId: "cytek-aurora" },
+          { label: "Northern Lights", productId: "cytek-northernlights" },
+          { label: "Borealis", categoryId: "flow" },
+        ],
       },
       {
         title: "Automation",
-        items: ["Automated cocktail preparation instrument"],
+        items: [{ label: "Automated cocktail preparation instrument", productId: "cytek-orion" }],
       },
       {
         title: "Cell Sorter System",
-        items: ["Spectral cell sorter system"],
+        items: [{ label: "Spectral cell sorter system", productId: "cytek-aurora-cs" }],
       },
       {
         title: "Imaging Flow Cytometer",
-        items: ["Imaging flow cytometry platform"],
+        items: [{ label: "Imaging flow cytometry platform", productId: "cytek-imagestream" }],
       },
     ],
   },
@@ -309,6 +362,18 @@ function appGroupProducts(groupId: string, products: Product[]) {
   return products.filter(p => group.categoryIds.includes(p.category) || group.brandIds?.includes(p.brand));
 }
 
+function appTreeItemLabel(item: ApplicationTreeItem) {
+  return typeof item === "string" ? item : item.label;
+}
+
+function appTreeItemHref(item: ApplicationTreeItem) {
+  if (typeof item === "string") return `/products?q=${encodeURIComponent(item)}`;
+  if (item.href) return item.href;
+  if (item.productId) return `/products/${item.productId}`;
+  if (item.categoryId) return `/products?category=${item.categoryId}`;
+  return `/products?q=${encodeURIComponent(item.query ?? item.label)}`;
+}
+
 export function SiteNavbar({
   visible = true,
   forceSolid = false,
@@ -406,14 +471,11 @@ export function SiteNavbar({
   useEffect(() => { setExpandedCat(null); }, [activeBrand, activeApp, activeCategory, viewMode]);
 
   useEffect(() => {
-    const nextApp = APPLICATION_GROUPS.find(app => app.id === activeApp);
-    setExpandedAppSections(nextApp?.tree?.[0] ? [`${nextApp.id}:${nextApp.tree[0].title}`] : []);
-  }, [activeApp]);
+    setExpandedAppSections([]);
+  }, [activeApp, viewMode]);
 
   const toggleAppSection = useCallback((key: string) => {
-    setExpandedAppSections(prev =>
-      prev.includes(key) ? prev.filter(item => item !== key) : [...prev, key]
-    );
+    setExpandedAppSections(prev => (prev.includes(key) ? [] : [key]));
   }, []);
 
   const searchResults = useMemo(() => {
@@ -1099,7 +1161,7 @@ export function SiteNavbar({
                               </div>
 
                               {currentApp.tree?.length ? (
-                                <div className="grid grid-cols-2 gap-2 pr-1 max-h-[270px] overflow-y-auto" style={{ overscrollBehavior: "contain" }}>
+                                <div className="space-y-2 pr-1 max-h-[270px] overflow-y-auto" style={{ overscrollBehavior: "contain" }}>
                                   {currentApp.tree.map(section => {
                                     const sectionKey = `${currentApp.id}:${section.title}`;
                                     const isExpanded = expandedAppSections.includes(sectionKey);
@@ -1138,17 +1200,20 @@ export function SiteNavbar({
                                               className="overflow-hidden border-t border-border bg-muted/20"
                                             >
                                               <div className="flex flex-wrap gap-1.5 p-3">
-                                                {section.items.map(item => (
-                                                  <Link
-                                                    key={`${section.title}-${item}`}
-                                                    href={`/products?q=${encodeURIComponent(item)}`}
-                                                    onClick={closeMega}
-                                                    className="group/item inline-flex items-center gap-1 border border-border bg-background px-2 py-1 text-[10px] font-medium leading-tight text-foreground/80 transition-colors hover:border-primary/40 hover:text-primary"
-                                                  >
-                                                    {item}
-                                                    <ArrowRight className="h-2.5 w-2.5 opacity-0 transition-opacity group-hover/item:opacity-100" />
-                                                  </Link>
-                                                ))}
+                                                {section.items.map(item => {
+                                                  const itemLabel = appTreeItemLabel(item);
+                                                  return (
+                                                    <Link
+                                                      key={`${section.title}-${itemLabel}`}
+                                                      href={appTreeItemHref(item)}
+                                                      onClick={closeMega}
+                                                      className="group/item inline-flex items-center gap-1 border border-border bg-background px-2 py-1 text-[10px] font-medium leading-tight text-foreground/80 transition-colors hover:border-primary/40 hover:text-primary"
+                                                    >
+                                                      {itemLabel}
+                                                      <ArrowRight className="h-2.5 w-2.5 opacity-0 transition-opacity group-hover/item:opacity-100" />
+                                                    </Link>
+                                                  );
+                                                })}
                                               </div>
                                             </motion.div>
                                           )}
@@ -1158,7 +1223,7 @@ export function SiteNavbar({
                                   })}
                                 </div>
                               ) : (
-                                <div className="grid grid-cols-2 gap-2">
+                                <div className="space-y-2 pr-1 max-h-[270px] overflow-y-auto" style={{ overscrollBehavior: "contain" }}>
                                   {currentApp.categoryIds.slice(0, 8).map(categoryId => {
                                     const category = categoryById(categoryId);
                                     const categoryProducts = appProds.filter(product => product.category === categoryId);
