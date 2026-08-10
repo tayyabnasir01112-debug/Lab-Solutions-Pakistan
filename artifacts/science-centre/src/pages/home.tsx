@@ -488,13 +488,13 @@ function BrandHubIntro({ onDone }: { onDone: () => void }) {
     const timeouts: number[] = [];
 
     const tick = (now: number) => {
-      const pct = Math.min(100, Math.round(((now - started) / 3900) * 100));
+      const pct = Math.min(100, Math.round(((now - started) / 3800) * 100));
       setProgress(pct);
       if (pct < 100) frame = requestAnimationFrame(tick);
     };
 
     frame = requestAnimationFrame(tick);
-    timeouts.push(window.setTimeout(() => setPhase("hold"), 3650));
+    timeouts.push(window.setTimeout(() => setPhase("hold"), 3800));
 
     const heroReady = new Promise<void>((resolve) => {
       const hero = new Image();
@@ -505,13 +505,13 @@ function BrandHubIntro({ onDone }: { onDone: () => void }) {
     });
 
     const minimumIntro = new Promise<void>((resolve) => {
-      timeouts.push(window.setTimeout(resolve, 4700));
+      timeouts.push(window.setTimeout(resolve, 6400));
     });
 
     Promise.all([heroReady, minimumIntro]).then(() => {
       if (cancelled) return;
-      timeouts.push(window.setTimeout(() => setPhase("done"), 650));
-      timeouts.push(window.setTimeout(onDone, 1220));
+      timeouts.push(window.setTimeout(() => setPhase("done"), 0));
+      timeouts.push(window.setTimeout(onDone, 720));
     });
 
     return () => {
@@ -571,21 +571,21 @@ function BrandHubIntro({ onDone }: { onDone: () => void }) {
             <img
               src={img("/images/sc-logo-full.png")}
               alt="Science Centre Pakistan"
-              className="relative w-full object-contain opacity-20 brightness-0 invert"
+              className="relative w-full object-contain opacity-34 grayscale saturate-0 brightness-[1.85] contrast-125"
             />
             <motion.div
-              className="absolute inset-0 overflow-hidden"
-              initial={{ width: "0%" }}
-              animate={{ width: "100%" }}
-              transition={{ duration: 3.45, ease: [0.65, 0, 0.35, 1] }}
+              className="absolute inset-x-0 top-0 overflow-hidden"
+              initial={{ height: "0%" }}
+              animate={{ height: "100%" }}
+              transition={{ duration: 3.8, ease: [0.65, 0, 0.35, 1] }}
             >
               <img
                 src={img("/images/sc-logo-full.png")}
                 alt=""
                 aria-hidden="true"
-                className="h-full w-[min(760px,86vw)] max-w-none object-contain drop-shadow-[0_0_26px_rgba(46,163,242,0.48)]"
+                className="h-auto w-[min(760px,86vw)] max-w-none object-contain drop-shadow-[0_0_26px_rgba(46,163,242,0.48)]"
               />
-              <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-r from-transparent via-cyan-100/55 to-transparent blur-sm" />
+              <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-b from-transparent via-cyan-100/55 to-transparent blur-sm" />
             </motion.div>
             <motion.div
               className="pointer-events-none absolute inset-0 rounded-[48%] border border-cyan-100/10"
