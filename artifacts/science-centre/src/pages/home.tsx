@@ -1472,7 +1472,7 @@ function Solutions() {
       imagePosition: "center",
       accent: "#2EA3F2",
       href: "/about",
-      logo: "/images/sc-logo-full-nav.webp",
+      logo: undefined,
     },
     ...solutions.slice(0, 6).map((solution) => ({ ...solution, href: "/solutions", logo: undefined })),
   ];
@@ -1615,7 +1615,11 @@ function Solutions() {
                   transition={{ duration: 0.36 }}
                   className="min-h-[88px]"
                 >
-                  {panel.logo ? (
+                  {index === 0 ? (
+                    <div className="inline-flex h-20 w-20 items-center justify-center rounded-full border border-white/18 bg-white/[0.07] font-[var(--app-font-heading)] text-3xl font-black tracking-[-0.04em] text-white shadow-[0_0_45px_rgba(46,163,242,0.22)] backdrop-blur-md">
+                      SC
+                    </div>
+                  ) : panel.logo ? (
                     <img src={img(panel.logo)} alt="Science Centre Pakistan" className="h-20 w-auto object-contain brightness-0 invert" />
                   ) : (
                     <div className="inline-flex h-12 w-12 items-center justify-center border border-white/20 bg-white/10 text-white backdrop-blur">
