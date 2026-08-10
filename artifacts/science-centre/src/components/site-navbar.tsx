@@ -327,6 +327,7 @@ export function SiteNavbar({
   const [activeApp, setActiveApp]           = useState(APPLICATION_GROUPS[0].id);
   const [activeCategory, setActiveCategory] = useState("");
   const [expandedCat, setExpandedCat]       = useState<string | null>(null);
+  const [expandedAppSections, setExpandedAppSections] = useState<string[]>([]);
   const [leftHovered, setLeftHovered]       = useState(false);
   const [rightHovered, setRightHovered]     = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
@@ -403,6 +404,17 @@ export function SiteNavbar({
   }, [megaOpen]);
 
   useEffect(() => { setExpandedCat(null); }, [activeBrand, activeApp, activeCategory, viewMode]);
+
+  useEffect(() => {
+    const nextApp = APPLICATION_GROUPS.find(app => app.id === activeApp);
+    setExpandedAppSections(nextApp?.tree?.[0] ? [`${nextApp.id}:${nextApp.tree[0].title}`] : []);
+  }, [activeApp]);
+
+  const toggleAppSection = useCallback((key: string) => {
+    setExpandedAppSections(prev =>
+      prev.includes(key) ? prev.filter(item => item !== key) : [...prev, key]
+    );
+  }, []);
 
   const searchResults = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -1088,53 +1100,134 @@ export function SiteNavbar({
 
                               {currentApp.tree?.length ? (
                                 <div className="grid grid-cols-2 gap-2 pr-1 max-h-[270px] overflow-y-auto" style={{ overscrollBehavior: "contain" }}>
-                                  {currentApp.tree.map(section => (
-                                    <div key={`${currentApp.id}-${section.title}`} className="border border-border bg-background p-3">
-                                      <div className="flex items-start gap-2">
-                                        <div className="mt-1 h-8 w-0.5 flex-shrink-0" style={{ background: currentApp.color }} />
-                                        <div className="min-w-0">
-                                          {section.eyebrow && (
-                                            <div className="mb-1 text-[8px] font-black uppercase tracking-[0.18em] text-muted-foreground">
-                                              {section.eyebrow}
-                                            </div>
+                                  {currentApp.tree.map(section => {
+                                    const sectionKey = `${currentApp.id}:${section.title}`;
+                                    const isExpanded = expandedAppSections.includes(sectionKey);
+                                    return (
+                                      <div key={sectionKey} className="border border-border bg-background overflow-hidden">
+                                        <button
+                                          type="button"
+                                          onClick={() => toggleAppSection(sectionKey)}
+                                          className={`group flex w-full items-start gap-2 p-3 text-left transition-colors ${
+                                            isExpanded ? "bg-muted/60" : "hover:bg-muted/40"
+                                          }`}
+                                          aria-expanded={isExpanded}
+                                        >
+                                          <div className="mt-1 h-8 w-0.5 flex-shrink-0" style={{ background: currentApp.color }} />
+                                          <div className="min-w-0 flex-1">
+                                            {section.eyebrow && (
+                                              <div className="mb-1 text-[8px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+                                                {section.eyebrow}
+                                              </div>
+                                            )}
+                                            <h4 className="text-[12px] font-black text-foreground leading-tight group-hover:text-primary">{section.title}</h4>
+                                          </div>
+                                          <ChevronDown
+                                            className={`mt-1 h-3.5 w-3.5 flex-shrink-0 text-muted-foreground transition-transform ${
+                                              isExpanded ? "rotate-180" : ""
+                                            }`}
+                                          />
+                                        </button>
+                                        <AnimatePresence initial={false}>
+                                          {isExpanded && (
+                                            <motion.div
+                                              initial={{ height: 0, opacity: 0 }}
+                                              animate={{ height: "auto", opacity: 1 }}
+                                              exit={{ height: 0, opacity: 0 }}
+                                              transition={{ duration: 0.18 }}
+                                              className="overflow-hidden border-t border-border bg-muted/20"
+                                            >
+                                              <div className="flex flex-wrap gap-1.5 p-3">
+                                                {section.items.map(item => (
+                                                  <Link
+                                                    key={`${section.title}-${item}`}
+                                                    href={`/products?q=${encodeURIComponent(item)}`}
+                                                    onClick={closeMega}
+                                                    className="group/item inline-flex items-center gap-1 border border-border bg-background px-2 py-1 text-[10px] font-medium leading-tight text-foreground/80 transition-colors hover:border-primary/40 hover:text-primary"
+                                                  >
+                                                    {item}
+                                                    <ArrowRight className="h-2.5 w-2.5 opacity-0 transition-opacity group-hover/item:opacity-100" />
+                                                  </Link>
+                                                ))}
+                                              </div>
+                                            </motion.div>
                                           )}
-                                          <h4 className="text-[12px] font-black text-foreground leading-tight">{section.title}</h4>
-                                        </div>
+                                        </AnimatePresence>
                                       </div>
-                                      <div className="mt-2 flex flex-wrap gap-1.5">
-                                        {section.items.map(item => (
-                                          <span
-                                            key={`${section.title}-${item}`}
-                                            className="border border-border bg-muted/40 px-2 py-1 text-[10px] font-medium leading-tight text-foreground/80"
-                                          >
-                                            {item}
-                                          </span>
-                                        ))}
-                                      </div>
-                                    </div>
-                                  ))}
+                                    );
+                                  })}
                                 </div>
                               ) : (
                                 <div className="grid grid-cols-2 gap-2">
                                   {currentApp.categoryIds.slice(0, 8).map(categoryId => {
                                     const category = categoryById(categoryId);
-                                    const count = appProds.filter(product => product.category === categoryId).length;
+                                    const categoryProducts = appProds.filter(product => product.category === categoryId);
+                                    const count = categoryProducts.length;
                                     if (!category || count === 0) return null;
+                                    const sectionKey = `${currentApp.id}:category:${categoryId}`;
+                                    const isExpanded = expandedAppSections.includes(sectionKey);
+                                    const subcategories = Array.from(new Set(categoryProducts.map(product => product.subcategory).filter(Boolean))).slice(0, 6);
                                     return (
-                                      <Link
+                                      <div
                                         key={categoryId}
-                                        href={`/products?category=${categoryId}`}
-                                        onClick={closeMega}
-                                        className="group border border-border bg-background p-3 hover:bg-muted/50 transition-colors"
+                                        className="border border-border bg-background overflow-hidden"
                                       >
-                                        <div className="flex items-center gap-2">
-                                          <span style={{ color: currentApp.color }}>{category.icon}</span>
-                                          <span className="text-[12px] font-black text-foreground group-hover:text-primary">{category.name}</span>
-                                        </div>
-                                        <div className="mt-2 text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
-                                          {count} catalogue entries
-                                        </div>
-                                      </Link>
+                                        <button
+                                          type="button"
+                                          onClick={() => toggleAppSection(sectionKey)}
+                                          className={`group flex w-full items-start gap-2 p-3 text-left transition-colors ${
+                                            isExpanded ? "bg-muted/60" : "hover:bg-muted/40"
+                                          }`}
+                                          aria-expanded={isExpanded}
+                                        >
+                                          <span className="mt-0.5 flex-shrink-0" style={{ color: currentApp.color }}>{category.icon}</span>
+                                          <span className="min-w-0 flex-1">
+                                            <span className="block text-[12px] font-black text-foreground group-hover:text-primary">{category.name}</span>
+                                            <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
+                                              {count} catalogue entries
+                                            </span>
+                                          </span>
+                                          <ChevronDown
+                                            className={`mt-1 h-3.5 w-3.5 flex-shrink-0 text-muted-foreground transition-transform ${
+                                              isExpanded ? "rotate-180" : ""
+                                            }`}
+                                          />
+                                        </button>
+                                        <AnimatePresence initial={false}>
+                                          {isExpanded && (
+                                            <motion.div
+                                              initial={{ height: 0, opacity: 0 }}
+                                              animate={{ height: "auto", opacity: 1 }}
+                                              exit={{ height: 0, opacity: 0 }}
+                                              transition={{ duration: 0.18 }}
+                                              className="overflow-hidden border-t border-border bg-muted/20"
+                                            >
+                                              <div className="flex flex-wrap gap-1.5 p-3">
+                                                {subcategories.length ? subcategories.map(subcategory => (
+                                                  <Link
+                                                    key={`${categoryId}-${subcategory}`}
+                                                    href={`/products?q=${encodeURIComponent(subcategory)}`}
+                                                    onClick={closeMega}
+                                                    className="group/item inline-flex items-center gap-1 border border-border bg-background px-2 py-1 text-[10px] font-medium leading-tight text-foreground/80 transition-colors hover:border-primary/40 hover:text-primary"
+                                                  >
+                                                    {subcategory}
+                                                    <ArrowRight className="h-2.5 w-2.5 opacity-0 transition-opacity group-hover/item:opacity-100" />
+                                                  </Link>
+                                                )) : (
+                                                  <span className="text-[10px] text-muted-foreground">No subcategory labels in catalogue yet.</span>
+                                                )}
+                                                <Link
+                                                  href={`/products?category=${categoryId}`}
+                                                  onClick={closeMega}
+                                                  className="inline-flex items-center gap-1 border border-primary/30 bg-primary/5 px-2 py-1 text-[10px] font-bold leading-tight text-primary transition-colors hover:bg-primary/10"
+                                                >
+                                                  Browse category <ArrowRight className="h-2.5 w-2.5" />
+                                                </Link>
+                                              </div>
+                                            </motion.div>
+                                          )}
+                                        </AnimatePresence>
+                                      </div>
                                     );
                                   })}
                                 </div>
