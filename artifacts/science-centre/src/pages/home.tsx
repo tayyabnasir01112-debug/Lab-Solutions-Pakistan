@@ -2067,6 +2067,8 @@ const slideVariants = {
 };
 
 function LogoHandoffIntro({ onDone }: { onDone: () => void }) {
+  const logoSrc = img("/images/sc-logo-full-intro.webp");
+
   useEffect(() => {
     const timeout = window.setTimeout(onDone, 2200);
     return () => window.clearTimeout(timeout);
@@ -2100,14 +2102,14 @@ function LogoHandoffIntro({ onDone }: { onDone: () => void }) {
           transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
         >
           <img
-            src={img("/images/sc-logo-full-nav.webp")}
+            src={logoSrc}
             alt=""
             aria-hidden="true"
             className="w-full object-contain opacity-45"
             style={{ filter: "grayscale(1) brightness(1.75)" }}
           />
           <motion.img
-            src={img("/images/sc-logo-full-nav.webp")}
+            src={logoSrc}
             alt="Science Centre"
             className="absolute inset-0 w-full object-contain drop-shadow-[0_0_24px_rgba(56,189,248,0.48)]"
             initial={{ clipPath: "inset(100% 0 0 0)", opacity: 0 }}
