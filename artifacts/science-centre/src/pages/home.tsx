@@ -1631,15 +1631,6 @@ function Solutions({ onEnterWebsite }: { onEnterWebsite?: () => void }) {
               />
 
               <motion.div
-                className="absolute right-6 top-7 z-20 hidden items-center gap-3 border border-white/14 bg-white/[0.08] px-4 py-2 text-[10px] font-black uppercase tracking-[0.18em] text-white/76 backdrop-blur-md xl:flex"
-                animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : -10 }}
-                transition={{ duration: 0.32 }}
-              >
-                <span>{index === 0 ? "Website Entry" : "Scene"}</span>
-                <span className="text-white">{String(index + 1).padStart(2, "0")} / {String(panelItems.length).padStart(2, "0")}</span>
-              </motion.div>
-
-              <motion.div
                 className="relative z-10 flex h-full flex-col justify-between p-7 xl:p-10"
                 animate={{ opacity: isActive ? 1 : 0 }}
                 transition={{ duration: 0.24 }}
@@ -1722,7 +1713,7 @@ function Solutions({ onEnterWebsite }: { onEnterWebsite?: () => void }) {
               </motion.div>
 
               <motion.div
-                className="absolute inset-x-0 bottom-0 z-20 px-4 pb-[6.2vh] pt-28 xl:px-5"
+                className="pointer-events-none absolute inset-x-0 bottom-0 z-20 px-4 pb-[6.2vh] pt-28 xl:px-5"
                 animate={{ opacity: isActive ? 0 : 1, y: isActive ? 18 : 0 }}
                 transition={{ duration: 0.34 }}
               >
@@ -2517,8 +2508,14 @@ export default function Home() {
     setTimeout(() => { cooldown.current = false; }, 850);
   };
 
+  const enterWebsite = () => {
+    cooldown.current = false;
+    setDirection(1);
+    setCurrent(1);
+  };
+
   const sections = [
-    <Solutions key="solutions" onEnterWebsite={() => goTo(1)} />,
+    <Solutions key="solutions" onEnterWebsite={enterWebsite} />,
     <FeaturedProducts key="products" />,
     <Partners key="partners" />,
     <Credibility key="credibility" />,
