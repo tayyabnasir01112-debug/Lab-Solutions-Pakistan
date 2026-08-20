@@ -14,24 +14,42 @@
     <meta name="twitter:description" content="Pakistan's premier distributor of advanced laboratory equipment and analytical instruments." />
     <link rel="icon" href="https://sciencecentre.com.pk/wp-content/uploads/2021/09/Asset-25-150x150.png" />
     <style>
-      html, body, #root { background: #01040a; }
+      html, body, #root { margin: 0; background: #01040a; }
       #root:empty::before {
         content: "";
         position: fixed;
         inset: 0;
         background:
-          radial-gradient(ellipse at 50% 45%, rgba(56, 189, 248, 0.18), transparent 52%),
-          linear-gradient(115deg, #01040a 0%, #061322 52%, #01040a 100%);
+          linear-gradient(90deg, rgba(1, 4, 10, 0.96) 0%, rgba(1, 4, 10, 0.74) 48%, rgba(1, 4, 10, 0.5) 100%),
+          url("/images/sc-lab-hero-optimized.webp") center / cover no-repeat,
+          #01040a;
       }
       #root:empty::after {
         content: "";
         position: fixed;
         left: 50%;
-        bottom: 10vh;
-        width: min(420px, 54vw);
-        height: 1px;
-        transform: translateX(-50%);
-        background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.7), rgba(45, 212, 191, 0.7), transparent);
+        top: 50%;
+        width: min(300px, 48vw);
+        height: min(120px, 18vw);
+        transform: translate(-50%, -50%);
+        background: url("/images/sc-logo-full-nav.webp") center / contain no-repeat;
+        animation: scBootLogo 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+        filter: drop-shadow(0 0 22px rgba(56, 189, 248, 0.35));
+      }
+      @keyframes scBootLogo {
+        0% {
+          opacity: 0;
+          clip-path: inset(100% 0 0 0);
+          filter: grayscale(1) brightness(1.45) drop-shadow(0 0 8px rgba(56, 189, 248, 0.2));
+        }
+        45% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 1;
+          clip-path: inset(0 0 0 0);
+          filter: grayscale(0) brightness(1) drop-shadow(0 0 22px rgba(56, 189, 248, 0.35));
+        }
       }
     </style>
     <link rel="preload" as="image" href="/images/sc-logo-full-nav.webp" type="image/webp" />
