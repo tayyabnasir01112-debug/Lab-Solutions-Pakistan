@@ -168,6 +168,14 @@
 }
 
 @layer utilities {
+  .sc-cinema-aurora {
+    background:
+      linear-gradient(128deg, transparent 0%, rgba(56, 189, 248, 0.12) 26%, transparent 44%),
+      linear-gradient(52deg, transparent 8%, rgba(16, 185, 129, 0.11) 48%, transparent 72%),
+      radial-gradient(ellipse at 50% 48%, rgba(14, 165, 233, 0.16), transparent 54%);
+    filter: saturate(1.18);
+  }
+
   .product-scroll-snap {
     height: 100dvh;
     overflow-y: auto;

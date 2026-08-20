@@ -13,7 +13,31 @@
     <meta name="twitter:title" content="Science Centre Pakistan" />
     <meta name="twitter:description" content="Pakistan's premier distributor of advanced laboratory equipment and analytical instruments." />
     <link rel="icon" href="https://sciencecentre.com.pk/wp-content/uploads/2021/09/Asset-25-150x150.png" />
+    <style>
+      html, body, #root { background: #01040a; }
+      #root:empty::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background:
+          url("/images/sc-logo-mark-transparent.png") center / min(230px, 32vw) no-repeat,
+          radial-gradient(ellipse at 50% 45%, rgba(56, 189, 248, 0.18), transparent 52%),
+          linear-gradient(115deg, #01040a 0%, #061322 52%, #01040a 100%);
+      }
+      #root:empty::after {
+        content: "";
+        position: fixed;
+        left: 50%;
+        bottom: 10vh;
+        width: min(420px, 54vw);
+        height: 1px;
+        transform: translateX(-50%);
+        background: linear-gradient(90deg, transparent, rgba(125, 211, 252, 0.7), rgba(45, 212, 191, 0.7), transparent);
+      }
+    </style>
     <link rel="preload" as="image" href="/images/sc-logo-full-nav.webp" type="image/webp" />
+    <link rel="preload" as="image" href="/images/sc-logo-mark-transparent.png" type="image/png" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/sc-logo-wordmark-only.png" type="image/png" fetchpriority="high" />
     <link rel="preload" as="image" href="/images/sc-lab-hero-optimized.webp" type="image/webp" fetchpriority="high" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
