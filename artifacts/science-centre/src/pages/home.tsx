@@ -2066,8 +2066,62 @@ const slideVariants = {
   }),
 };
 
+function LogoHandoffIntro({ onDone }: { onDone: () => void }) {
+  useEffect(() => {
+    const timeout = window.setTimeout(onDone, 2200);
+    return () => window.clearTimeout(timeout);
+  }, [onDone]);
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[200] overflow-hidden bg-[#01040a]"
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.48, ease: [0.76, 0, 0.24, 1] }}
+    >
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(90deg, rgba(1,4,10,0.96) 0%, rgba(1,4,10,0.76) 48%, rgba(1,4,10,0.52) 100%), url('/images/sc-lab-hero-optimized.webp') center / cover no-repeat",
+        }}
+      />
+      <motion.div
+        className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(56,189,248,0.28),rgba(20,184,166,0.12)_32%,transparent_62%)]"
+        initial={{ opacity: 0, scale: 0.82 }}
+        animate={{ opacity: [0, 0.88, 0.7], scale: [0.82, 1, 1.04] }}
+        transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+      />
+      <div className="relative z-10 flex h-full items-center justify-center px-6">
+        <motion.div
+          className="relative w-[min(440px,62vw)]"
+          initial={{ opacity: 0, y: 16, scale: 0.96 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <img
+            src={img("/images/sc-logo-full-nav.webp")}
+            alt=""
+            aria-hidden="true"
+            className="w-full object-contain opacity-45"
+            style={{ filter: "grayscale(1) brightness(1.75)" }}
+          />
+          <motion.img
+            src={img("/images/sc-logo-full-nav.webp")}
+            alt="Science Centre"
+            className="absolute inset-0 w-full object-contain drop-shadow-[0_0_24px_rgba(56,189,248,0.48)]"
+            initial={{ clipPath: "inset(100% 0 0 0)", opacity: 0 }}
+            animate={{ clipPath: "inset(0% 0 0 0)", opacity: 1 }}
+            transition={{ duration: 1.35, ease: [0.16, 1, 0.3, 1], delay: 0.18 }}
+          />
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+}
+
 export default function Home() {
-  const [splashDone, setSplashDone] = useState(true);
+  const [splashDone, setSplashDone] = useState(false);
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const cooldown = useRef(false);
@@ -2151,16 +2205,7 @@ export default function Home() {
     <div className="h-[100dvh] w-full bg-background overflow-hidden selection:bg-primary selection:text-primary-foreground text-foreground">
       <AnimatePresence>
         {!splashDone && (
-          <BrandHubIntro
-            onDone={() => {
-              try {
-                window.sessionStorage.setItem("science-centre-intro-seen", "1");
-              } catch {
-                // The intro still completes if browser storage is unavailable.
-              }
-              setSplashDone(true);
-            }}
-          />
+          <LogoHandoffIntro onDone={() => setSplashDone(true)} />
         )}
       </AnimatePresence>
       {/* 
