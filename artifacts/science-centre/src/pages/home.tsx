@@ -1525,10 +1525,8 @@ function ApplicationVisual({ title, accent }: { title: string; accent: string })
 }
 
 /* ─── Products ────────────────────────────────────────────────── */
-function Solutions() {
+function Solutions({ onEnterWebsite }: { onEnterWebsite?: () => void }) {
   const [active, setActive] = useState(0);
-  const [showRunning, setShowRunning] = useState(false);
-  const showTimerRef = useRef<number | null>(null);
   const panelItems = [
     {
       icon: <Microscope className="h-5 w-5" />,
@@ -1545,46 +1543,15 @@ function Solutions() {
   ];
   const activePanel = panelItems[active];
 
-  const clearShowTimer = () => {
-    if (showTimerRef.current) {
-      window.clearTimeout(showTimerRef.current);
-      showTimerRef.current = null;
-    }
-  };
-
   const activatePanel = (index: number) => {
-    clearShowTimer();
-    setShowRunning(false);
     setActive(index);
   };
 
-  const startApplicationShow = (event?: MouseEvent<HTMLButtonElement>) => {
-    event?.preventDefault();
-    event?.stopPropagation();
-    clearShowTimer();
-    setShowRunning(true);
-    setActive(0);
-
-    let nextIndex = 1;
-    const advance = () => {
-      setActive(nextIndex);
-      if (nextIndex < panelItems.length - 1) {
-        nextIndex += 1;
-        showTimerRef.current = window.setTimeout(advance, 2400);
-      } else {
-        showTimerRef.current = window.setTimeout(() => {
-          setShowRunning(false);
-          showTimerRef.current = null;
-        }, 3200);
-      }
-    };
-
-    showTimerRef.current = window.setTimeout(advance, 760);
+  const handleEnterWebsite = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    onEnterWebsite?.();
   };
-
-  useEffect(() => {
-    return () => clearShowTimer();
-  }, []);
 
   return (
     <section id="solutions" className="relative overflow-hidden bg-[#030b13] text-white" style={{ height: "100dvh" }}>
@@ -1609,10 +1576,10 @@ function Solutions() {
             <motion.div
               key={panel.title}
               onMouseEnter={() => {
-                if (!showRunning) setActive(index);
+                setActive(index);
               }}
               onFocus={() => {
-                if (!showRunning) setActive(index);
+                setActive(index);
               }}
               onClick={() => activatePanel(index)}
               animate={{ flex: isActive ? (index === 0 ? 4.65 : 4.35) : 1.12 }}
@@ -1668,7 +1635,7 @@ function Solutions() {
                 animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : -10 }}
                 transition={{ duration: 0.32 }}
               >
-                <span>{showRunning ? "Now Playing" : index === 0 ? "Trailer Ready" : "Scene"}</span>
+                <span>{index === 0 ? "Website Entry" : "Scene"}</span>
                 <span className="text-white">{String(index + 1).padStart(2, "0")} / {String(panelItems.length).padStart(2, "0")}</span>
               </motion.div>
 
@@ -1737,10 +1704,10 @@ function Solutions() {
                     {index === 0 ? (
                       <button
                         type="button"
-                        onClick={startApplicationShow}
+                        onClick={handleEnterWebsite}
                         className="inline-flex items-center gap-4 rounded-full bg-primary px-8 py-4 text-sm font-black uppercase tracking-[0.16em] text-white shadow-[0_20px_55px_rgba(46,163,242,0.35)] transition-transform hover:-translate-y-0.5"
                       >
-                        Play Trailer <ArrowRight className="h-4 w-4" />
+                        Enter Website <ArrowRight className="h-4 w-4" />
                       </button>
                     ) : (
                       <Link
@@ -2542,15 +2509,6 @@ export default function Home() {
     };
   }, []);
 
-  const sections = [
-    <Solutions key="solutions" />,
-    <FeaturedProducts key="products" />,
-    <Partners key="partners" />,
-    <Credibility key="credibility" />,
-    <Locations key="locations" />,
-    <SiteFooter key="contact" />,
-  ];
-
   const goTo = (index: number) => {
     if (cooldown.current || index === current) return;
     cooldown.current = true;
@@ -2558,6 +2516,15 @@ export default function Home() {
     setCurrent(index);
     setTimeout(() => { cooldown.current = false; }, 850);
   };
+
+  const sections = [
+    <Solutions key="solutions" onEnterWebsite={() => goTo(1)} />,
+    <FeaturedProducts key="products" />,
+    <Partners key="partners" />,
+    <Credibility key="credibility" />,
+    <Locations key="locations" />,
+    <SiteFooter key="contact" />,
+  ];
 
   useEffect(() => {
     const onHomeTop = () => {
