@@ -1755,26 +1755,53 @@ function Solutions() {
               </motion.div>
 
               <motion.div
-                className="absolute inset-x-0 top-1/2 z-20 -translate-y-1/2 px-5 xl:px-7"
+                className="absolute inset-x-0 bottom-0 z-20 px-4 pb-[6.2vh] pt-28 xl:px-5"
                 animate={{ opacity: isActive ? 0 : 1, y: isActive ? 18 : 0 }}
                 transition={{ duration: 0.34 }}
               >
-                <div className="mb-5 flex items-center justify-between gap-3">
-                  <span className="h-px w-10" style={{ backgroundColor: panel.accent }} />
-                  <span className="text-[10px] font-black tracking-[0.18em] text-slate-500/80">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                </div>
-                <h2 className="font-[var(--app-font-heading)] text-[clamp(0.95rem,1.08vw,1.36rem)] font-black uppercase leading-[0.96] tracking-tight text-slate-700 drop-shadow-[0_1px_0_rgba(255,255,255,0.45)]">
-                  {labelWords.map((word) => (
-                    <span key={word} className="block">
-                      {word}
+                <div
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-[43vh] transition-opacity duration-300 group-hover:opacity-95"
+                  style={{
+                    background: `linear-gradient(0deg, rgba(3,11,19,0.88) 0%, rgba(3,11,19,0.62) 40%, ${panel.accent}18 72%, transparent 100%)`,
+                  }}
+                />
+                <div
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-[30vh] border-t border-white/14 backdrop-blur-[3px] transition-transform duration-500 group-hover:-translate-y-2"
+                  style={{
+                    background: `linear-gradient(180deg, ${panel.accent}22 0%, rgba(3,11,19,0.54) 54%, rgba(3,11,19,0.84) 100%)`,
+                    clipPath: "polygon(0 14%, 100% 0, 100% 100%, 0 100%)",
+                  }}
+                />
+                <div
+                  className="pointer-events-none absolute inset-x-0 bottom-0 h-[3px]"
+                  style={{ background: `linear-gradient(90deg, transparent 0%, ${panel.accent} 46%, transparent 100%)` }}
+                />
+                <div className="relative transition-transform duration-300 group-hover:-translate-y-2">
+                  <div className="mb-3 flex items-center justify-between gap-3">
+                    <div
+                      className="h-px w-12 shadow-[0_0_16px_currentColor]"
+                      style={{ backgroundColor: panel.accent, color: panel.accent }}
+                    />
+                    <span className="font-[var(--app-font-heading)] text-[11px] font-black leading-none text-white/42">
+                      {String(index + 1).padStart(2, "0")}
                     </span>
-                  ))}
-                </h2>
-                <div className="mt-6 flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.18em] text-slate-500/80 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <span>Preview</span>
-                  <ArrowRight className="h-3.5 w-3.5" />
+                  </div>
+                  <h2 className="max-w-full font-[var(--app-font-heading)] text-[clamp(0.9rem,1.02vw,1.28rem)] font-black uppercase leading-[0.94] tracking-normal text-white drop-shadow-[0_10px_26px_rgba(0,0,0,0.42)]">
+                    {labelWords.map((word) => (
+                      <span key={word} className="block">
+                        {word}
+                      </span>
+                    ))}
+                  </h2>
+                  <div className="mt-5 flex items-center justify-between gap-3 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                    <span className="text-[9px] font-black uppercase tracking-[0.2em] text-white/54">Preview</span>
+                    <span
+                      className="grid h-8 w-8 place-items-center rounded-full text-white shadow-[0_10px_28px_rgba(3,11,19,0.32)]"
+                      style={{ backgroundColor: panel.accent }}
+                    >
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </span>
+                  </div>
                 </div>
               </motion.div>
             </motion.div>
