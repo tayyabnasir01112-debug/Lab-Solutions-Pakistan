@@ -2067,15 +2067,7 @@ const slideVariants = {
 };
 
 export default function Home() {
-  const [splashDone, setSplashDone] = useState(() => {
-    try {
-      const nav = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
-      if (nav?.type === "reload") return false;
-      return window.sessionStorage.getItem("science-centre-intro-seen") === "1";
-    } catch {
-      return false;
-    }
-  });
+  const [splashDone, setSplashDone] = useState(true);
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(1);
   const cooldown = useRef(false);
