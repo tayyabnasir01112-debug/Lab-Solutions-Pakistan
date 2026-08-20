@@ -24,33 +24,6 @@
           url("/images/sc-lab-hero-optimized.webp") center / cover no-repeat,
           #01040a;
       }
-      #root:empty::after {
-        content: "";
-        position: fixed;
-        left: 50%;
-        top: 50%;
-        width: min(300px, 48vw);
-        height: min(120px, 18vw);
-        transform: translate(-50%, -50%);
-        background: url("/images/sc-logo-full-nav.webp") center / contain no-repeat;
-        animation: scBootLogo 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
-        filter: drop-shadow(0 0 22px rgba(56, 189, 248, 0.35));
-      }
-      @keyframes scBootLogo {
-        0% {
-          opacity: 0;
-          clip-path: inset(100% 0 0 0);
-          filter: grayscale(1) brightness(1.45) drop-shadow(0 0 8px rgba(56, 189, 248, 0.2));
-        }
-        45% {
-          opacity: 1;
-        }
-        100% {
-          opacity: 1;
-          clip-path: inset(0 0 0 0);
-          filter: grayscale(0) brightness(1) drop-shadow(0 0 22px rgba(56, 189, 248, 0.35));
-        }
-      }
     </style>
     <link rel="preload" as="image" href="/images/sc-logo-full-nav.webp" type="image/webp" />
     <link rel="preload" as="image" href="/images/sc-logo-wordmark-only.png" type="image/png" fetchpriority="high" />
