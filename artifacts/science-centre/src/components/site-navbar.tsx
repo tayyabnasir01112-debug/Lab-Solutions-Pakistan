@@ -378,10 +378,12 @@ export function SiteNavbar({
   visible = true,
   forceSolid = false,
   forceTransparent = false,
+  tone = "auto",
 }: {
   visible?: boolean;
   forceSolid?: boolean;
   forceTransparent?: boolean;
+  tone?: "auto" | "dark" | "light";
 }) {
   const [catalogue, setCatalogue]           = useState<CatalogueModule | null>(null);
   const [scrolled, setScrolled]             = useState(false);
@@ -436,7 +438,8 @@ export function SiteNavbar({
   const isHome     = location === "/";
   const isDarkPage = location === "/about";
   const solid      = !forceTransparent && (forceSolid || scrolled || !isDarkPage);
-  const navOnDark  = forceTransparent || location.startsWith("/partners") || (!forceSolid && !solid);
+  const autoDark   = forceTransparent || (!forceSolid && !solid);
+  const navOnDark  = tone === "dark" ? true : tone === "light" ? false : autoDark;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);

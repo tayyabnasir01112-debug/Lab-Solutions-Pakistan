@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import {
@@ -65,13 +66,15 @@ function SlideShell({ children, className }: { children: React.ReactNode; classN
 }
 
 export default function PartnersPage() {
+  const [currentSlide, setCurrentSlide] = useState(0);
   const activeBrands = brands;
   const totalEntries = activeBrands.reduce((sum, brand) => sum + productsByBrand(brand.id).length, 0);
+  const navTone = currentSlide === 0 || currentSlide === 3 ? "dark" : "light";
 
   return (
     <div className="h-[100dvh] overflow-hidden bg-background text-foreground">
-      <SiteNavbar forceSolid />
-      <PageSlideDeck names={["Network", "Role", "Ecosystem", "Contact"]} accent="#2EA3F2">
+      <SiteNavbar forceSolid tone={navTone} />
+      <PageSlideDeck names={["Network", "Role", "Ecosystem", "Contact"]} accent="#2EA3F2" onCurrentChange={setCurrentSlide}>
         <SlideShell className="bg-[#07111f] text-white">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_72%_42%,rgba(46,163,242,0.18),transparent_34%),linear-gradient(115deg,#07111f_0%,#0b1727_52%,#07111f_100%)]" />
           <div className="container relative z-10 mx-auto grid h-[calc(100dvh-6rem)] min-h-0 gap-8 px-6 py-8 md:px-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">

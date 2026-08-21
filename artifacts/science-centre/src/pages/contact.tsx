@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import {
@@ -52,10 +53,12 @@ const responseSteps = [
 ];
 
 export default function ContactPage() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
   return (
     <div className="h-[100dvh] overflow-hidden bg-background text-foreground">
-      <SiteNavbar forceSolid />
-      <PageSlideDeck names={["Enquiry", "Reach Us", "Response Flow", "Catalogue", "Footer"]} accent="#2EA3F2">
+      <SiteNavbar forceSolid tone={currentSlide === 4 ? "dark" : "light"} />
+      <PageSlideDeck names={["Enquiry", "Reach Us", "Response Flow", "Catalogue", "Footer"]} accent="#2EA3F2" onCurrentChange={setCurrentSlide}>
         <section className="relative min-h-[100dvh] overflow-hidden pt-28">
           <div className="absolute inset-0 bg-[linear-gradient(120deg,#eef8ff_0%,#ffffff_45%,#f7fff8_100%)]" />
           <div className="container relative mx-auto grid min-h-[calc(100dvh-7rem)] items-center gap-8 px-6 pb-8 md:px-12 lg:grid-cols-[0.86fr_1.14fr]">

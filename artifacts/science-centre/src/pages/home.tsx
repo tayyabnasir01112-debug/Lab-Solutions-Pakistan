@@ -2220,6 +2220,7 @@ export default function Home() {
         visible={splashDone && current !== 0}
         forceSolid={current === 1 || current === 2 || current === 4 || current === 5}
         forceTransparent={false}
+        tone={current === 3 ? "dark" : "light"}
       />
 
       {/* Full-screen panel container */}

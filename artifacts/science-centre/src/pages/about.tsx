@@ -512,7 +512,11 @@ export default function About() {
   return (
     <div className="h-[100dvh] w-full overflow-hidden bg-background">
       {/* Light panels (0=Mission, 2=Values) need solid dark navbar; dark panels get transparent */}
-      <SiteNavbar visible={navVisible} forceSolid={current === 0 || current === 2} />
+      <SiteNavbar
+        visible={navVisible}
+        forceSolid={current === 0 || current === 2}
+        tone={current === 0 || current === 2 ? "light" : "dark"}
+      />
 
       {/* Panels */}
       <div className="relative w-full overflow-hidden" style={{ height: "100dvh" }}>

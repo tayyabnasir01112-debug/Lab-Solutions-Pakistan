@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import {
@@ -296,10 +297,14 @@ function SolutionBoardSlide({ group, groupIndex }: { group: typeof groupedSlides
 }
 
 export default function SolutionsPage() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const isDarkBoardSlide = currentSlide > 0 && currentSlide <= groupedSlides.length && (currentSlide - 1) % 2 === 1;
+  const navTone = currentSlide === 0 || currentSlide === groupedSlides.length + 1 || isDarkBoardSlide ? "dark" : "light";
+
   return (
     <div className="h-[100dvh] overflow-hidden bg-background text-foreground">
-      <SiteNavbar forceSolid />
-      <PageSlideDeck names={["Overview", "Research", "Systems", "Diagnostics", "Supply", "Contact"]} accent="#2EA3F2">
+      <SiteNavbar forceSolid tone={navTone} />
+      <PageSlideDeck names={["Overview", "Research", "Systems", "Diagnostics", "Supply", "Contact"]} accent="#2EA3F2" onCurrentChange={setCurrentSlide}>
         <SlideShell className="bg-[#07111f] text-white">
           <img src={img("/images/sc-lab-hero-optimized.webp")} alt="" className="absolute inset-0 h-full w-full object-cover opacity-40" />
           <div className="absolute inset-0 bg-[linear-gradient(110deg,rgba(7,17,31,0.96),rgba(7,17,31,0.78)_48%,rgba(7,17,31,0.42))]" />

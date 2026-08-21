@@ -20,11 +20,13 @@ export function PageSlideDeck({
   children,
   names,
   accent = "hsl(var(--primary))",
+  onCurrentChange,
 }: {
   sections?: React.ReactNode[];
   children?: React.ReactNode;
   names: string[];
   accent?: string;
+  onCurrentChange?: (current: number) => void;
 }) {
   const slideItems = sections ?? React.Children.toArray(children);
   const [current, setCurrent] = useState(0);
@@ -53,7 +55,8 @@ export function PageSlideDeck({
 
   useEffect(() => {
     slideRefs.current[current]?.scrollTo({ top: 0, behavior: "instant" });
-  }, [current]);
+    onCurrentChange?.(current);
+  }, [current, onCurrentChange]);
 
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
