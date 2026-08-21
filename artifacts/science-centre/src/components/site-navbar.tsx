@@ -444,38 +444,38 @@ function AppTreeNode({
       <Link
         href={appTreeItemHref(item)}
         onClick={closeMega}
-        className="group/item inline-flex min-h-8 items-center justify-between gap-2 border border-border bg-background px-2.5 py-1.5 text-[11px] font-semibold leading-tight text-foreground/80 transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+        className="group/item inline-flex min-h-7 max-w-full items-center justify-between gap-1.5 border border-border/80 bg-white px-2.5 py-1.5 text-[10.5px] font-semibold leading-tight text-foreground/80 transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
       >
-        <span>{label}</span>
-        <ArrowRight className="h-3 w-3 shrink-0 opacity-0 transition-opacity group-hover/item:opacity-100" />
+        <span className="truncate">{label}</span>
+        <ArrowRight className="h-2.5 w-2.5 shrink-0 opacity-0 transition-opacity group-hover/item:opacity-100" />
       </Link>
     );
   }
 
   return (
-    <div className={`${depth > 0 ? "ml-3 border-l border-border pl-3" : ""}`}>
+    <div className={depth > 0 ? "ml-2 border-l border-border/70 pl-2" : ""}>
       <button
         type="button"
         onClick={() => toggle(nodeKey)}
-        className={`group flex w-full items-start gap-2 border border-border bg-background p-3 text-left transition-colors ${
-          isExpanded ? "border-primary/30 bg-primary/[0.04]" : "hover:bg-muted/40"
+        className={`group flex w-full items-center gap-2 border border-border/80 bg-white px-2.5 py-2 text-left transition-colors ${
+          isExpanded ? "border-primary/30 bg-primary/[0.05]" : "hover:bg-muted/35"
         }`}
         aria-expanded={isExpanded}
       >
-        <span className="mt-1 h-7 w-0.5 flex-shrink-0" style={{ background: color }} />
+        <span className="h-6 w-0.5 flex-shrink-0" style={{ background: color }} />
         <span className="min-w-0 flex-1">
           {isObject && item.eyebrow && (
-            <span className="mb-1 block text-[8px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+            <span className="mb-0.5 block text-[7.5px] font-black uppercase tracking-[0.16em] text-muted-foreground">
               {item.eyebrow}
             </span>
           )}
-          <span className="block text-[12px] font-black text-foreground group-hover:text-primary">{label}</span>
-          <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
+          <span className="block text-[11.5px] font-black leading-tight text-foreground group-hover:text-primary">{label}</span>
+          <span className="mt-0.5 block text-[8.5px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
             {children.length} linked {children.length === 1 ? "item" : "items"}
           </span>
         </span>
         <ChevronDown
-          className={`mt-1 h-3.5 w-3.5 flex-shrink-0 text-muted-foreground transition-transform ${
+          className={`h-3.5 w-3.5 flex-shrink-0 text-muted-foreground transition-transform ${
             isExpanded ? "rotate-180" : ""
           }`}
         />
@@ -489,7 +489,7 @@ function AppTreeNode({
             transition={{ duration: 0.18 }}
             className="overflow-hidden"
           >
-            <div className="grid gap-2 bg-muted/20 p-3 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="flex flex-wrap gap-1.5 bg-slate-50/80 px-2 py-2">
               {children.map((child, index) => (
                 <AppTreeNode
                   key={`${nodeKey}:${appTreeItemLabel(child)}:${index}`}
@@ -1340,10 +1340,10 @@ export function SiteNavbar({
                           </div>
 
                           <div className="flex-1 min-h-0">
-                            <div className="flex items-center justify-between mb-3">
+                            <div className="mb-2 flex items-center justify-between">
                               <div>
                                 <div className="text-[9px] font-black uppercase tracking-[0.22em] text-muted-foreground">Application hierarchy</div>
-                                <div className="mt-1 text-[11px] text-muted-foreground">Expand category, then subcategory, then open the mapped catalogue item.</div>
+                                <div className="mt-0.5 text-[10px] text-muted-foreground">Categories stay visible. Expand only the exact group you need.</div>
                               </div>
                               {appBrands?.length ? (
                                 <div className="flex items-center gap-1.5">
@@ -1361,63 +1361,38 @@ export function SiteNavbar({
                             </div>
 
                             {currentApp.tree?.length ? (
-                              <div className="grid max-h-[360px] items-start gap-3 overflow-y-auto pr-1 md:grid-cols-2 xl:grid-cols-3" style={{ overscrollBehavior: "contain" }}>
+                              <div className="grid max-h-[380px] items-start gap-2 overflow-y-auto pr-1 lg:grid-cols-3" style={{ overscrollBehavior: "contain" }}>
                                 {currentApp.tree.map(section => {
                                   const sectionKey = `${currentApp.id}:${section.title}`;
-                                  const isExpanded = expandedAppSections.includes(sectionKey);
                                   return (
-                                    <div key={sectionKey} className="border border-border bg-background">
-                                      <button
-                                        type="button"
-                                        onClick={() => toggleAppSection(sectionKey)}
-                                        className={`group flex w-full items-start gap-3 p-3 text-left transition-colors ${
-                                          isExpanded ? "border-primary/30 bg-primary/[0.05]" : "hover:bg-muted/40"
-                                        }`}
-                                        aria-expanded={isExpanded}
-                                      >
-                                        <div className="mt-1 h-9 w-0.5 flex-shrink-0" style={{ background: currentApp.color }} />
+                                    <div key={sectionKey} className="min-w-0 border border-border bg-white">
+                                      <div className="flex items-start gap-2 border-b border-border bg-slate-50 px-3 py-2.5">
+                                        <div className="mt-0.5 h-8 w-0.5 flex-shrink-0" style={{ background: currentApp.color }} />
                                         <div className="min-w-0 flex-1">
+                                          <div className="flex items-center justify-between gap-2">
+                                            <h4 className="truncate text-[12px] font-black leading-tight text-foreground">{section.title}</h4>
+                                            <span className="shrink-0 text-[9px] font-black tabular-nums text-muted-foreground">{section.items.length}</span>
+                                          </div>
                                           {section.eyebrow && (
-                                            <div className="mb-1 text-[8px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+                                            <div className="mt-0.5 truncate text-[7.5px] font-black uppercase tracking-[0.17em] text-muted-foreground">
                                               {section.eyebrow}
                                             </div>
                                           )}
-                                          <h4 className="text-[13px] font-black text-foreground leading-tight group-hover:text-primary">{section.title}</h4>
-                                          <div className="mt-1 text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
-                                            {section.items.length} groups
-                                          </div>
                                         </div>
-                                        <ChevronDown
-                                          className={`mt-1 h-3.5 w-3.5 flex-shrink-0 text-muted-foreground transition-transform ${
-                                            isExpanded ? "rotate-180" : ""
-                                          }`}
-                                        />
-                                      </button>
-                                      <AnimatePresence initial={false}>
-                                        {isExpanded && (
-                                          <motion.div
-                                            initial={{ height: 0, opacity: 0 }}
-                                            animate={{ height: "auto", opacity: 1 }}
-                                            exit={{ height: 0, opacity: 0 }}
-                                            transition={{ duration: 0.18 }}
-                                            className="overflow-hidden border-t border-border bg-muted/20"
-                                          >
-                                            <div className="grid gap-2 p-3">
-                                              {section.items.map((item, index) => (
-                                                <AppTreeNode
-                                                  key={`${sectionKey}:${appTreeItemLabel(item)}:${index}`}
-                                                  item={item}
-                                                  nodeKey={`${sectionKey}:${appTreeItemLabel(item)}:${index}`}
-                                                  color={currentApp.color}
-                                                  expanded={expandedAppSections}
-                                                  toggle={toggleAppSection}
-                                                  closeMega={closeMega}
-                                                />
-                                              ))}
-                                            </div>
-                                          </motion.div>
-                                        )}
-                                      </AnimatePresence>
+                                      </div>
+                                      <div className="grid gap-1.5 p-2">
+                                        {section.items.map((item, index) => (
+                                          <AppTreeNode
+                                            key={`${sectionKey}:${appTreeItemLabel(item)}:${index}`}
+                                            item={item}
+                                            nodeKey={`${sectionKey}:${appTreeItemLabel(item)}:${index}`}
+                                            color={currentApp.color}
+                                            expanded={expandedAppSections}
+                                            toggle={toggleAppSection}
+                                            closeMega={closeMega}
+                                          />
+                                        ))}
+                                      </div>
                                     </div>
                                   );
                                 })}
