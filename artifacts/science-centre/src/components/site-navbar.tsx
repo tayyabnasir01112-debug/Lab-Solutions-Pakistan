@@ -1531,7 +1531,7 @@ export function SiteNavbar({
                               <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground mb-2">By Application</div>
                               <div className="space-y-0.5">
                                 {APPLICATION_GROUPS.map(app => (
-                                  <Link key={app.id} href={`/products?q=${encodeURIComponent(app.label)}`} onClick={onClose}
+                                  <Link key={app.id} href={`/products?application=${app.id}`} onClick={onClose}
                                     className="flex items-center gap-2 text-[12px] text-foreground/80 hover:text-primary py-1.5 rounded-sm">
                                     <span style={{ color: app.color }}>{app.icon}</span>
                                     <span>{app.label}</span>
