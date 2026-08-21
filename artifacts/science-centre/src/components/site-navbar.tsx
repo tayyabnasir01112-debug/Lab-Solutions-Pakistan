@@ -436,6 +436,7 @@ export function SiteNavbar({
   const isHome     = location === "/";
   const isDarkPage = location === "/about";
   const solid      = !forceTransparent && (forceSolid || scrolled || !isDarkPage);
+  const navOnDark  = forceTransparent || location.startsWith("/partners") || (!forceSolid && !solid);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -617,7 +618,7 @@ export function SiteNavbar({
       animate={visible ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="mx-auto flex h-[92px] w-full max-w-[1920px] items-center px-6 sm:px-8 lg:px-10 xl:px-12">
+      <div className="relative mx-auto flex h-[92px] w-full max-w-[1920px] items-center px-6 sm:px-8 lg:px-10 xl:px-12">
         {/* Logo */}
         <Link
           href="/"
@@ -641,7 +642,7 @@ export function SiteNavbar({
         </Link>
 
         {/* Desktop nav */}
-        <div className={`ml-auto hidden items-center gap-1 font-[var(--app-font-heading)] text-[15px] font-medium tracking-normal lg:flex ${!solid ? "text-white" : "text-slate-950"}`}>
+        <div className={`pointer-events-auto absolute left-1/2 hidden -translate-x-1/2 items-center justify-center gap-1 font-[var(--app-font-heading)] text-[15px] font-medium tracking-normal lg:flex ${navOnDark ? "text-white" : "text-slate-950"}`}>
           {NAV_LINKS.map((link, i) => {
             const href = hrefFor(link);
             const isActive =
@@ -652,15 +653,25 @@ export function SiteNavbar({
             const Inner = (
               <motion.span
                 className={`group relative inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1.5 leading-none transition-all duration-300 ${
-                  !solid
-                    ? `drop-shadow-[0_1px_12px_rgba(0,0,0,0.24)] ${isActive ? "border-white/[0.45] bg-white/[0.12]" : "border-transparent hover:border-white/40 hover:bg-white/10"}`
-                    : `${isActive ? "border-slate-950/[0.22] bg-white/[0.55]" : "border-transparent hover:border-slate-950/20 hover:bg-white/60"}`
+                  navOnDark
+                    ? `drop-shadow-[0_1px_12px_rgba(0,0,0,0.24)] ${isActive ? "border-white/[0.45] bg-white/15" : "border-transparent hover:border-white/[0.45] hover:bg-white/[0.12]"}`
+                    : `${isActive ? "border-slate-950/20 bg-slate-950/[0.06]" : "border-transparent hover:border-slate-950/20 hover:bg-slate-950/[0.05]"}`
                 }`}
                 initial={{ opacity: 0, y: -8 }}
                 animate={visible ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.1 + i * 0.07, duration: 0.4 }}
               >
-                {link.label}
+                <span className="relative block h-[18px] overflow-hidden leading-[18px]">
+                  <span className="block transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-[18px]">
+                    {link.label}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="absolute left-0 top-[18px] block transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-[18px]"
+                  >
+                    {link.label}
+                  </span>
+                </span>
                 {link.hasMega && (
                   <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${megaOpen ? "rotate-180" : ""}`} />
                 )}
@@ -694,7 +705,7 @@ export function SiteNavbar({
         </div>
 
         {/* Search + hamburger */}
-        <motion.div initial={{ opacity: 0 }} animate={visible ? { opacity: 1 } : {}} transition={{ delay: 0.5 }} className="ml-6 flex items-center gap-4">
+        <motion.div initial={{ opacity: 0 }} animate={visible ? { opacity: 1 } : {}} transition={{ delay: 0.5 }} className="ml-auto flex items-center gap-4">
           <div
             onMouseEnter={clearSearchCloseTimer}
             onMouseLeave={scheduleSearchClose}
@@ -711,9 +722,9 @@ export function SiteNavbar({
                 window.setTimeout(() => searchInputRef.current?.focus(), 0);
               }}
               className={`flex h-11 w-11 items-center justify-center rounded-full transition-transform duration-300 hover:scale-105 ${
-                solid
-                  ? "bg-slate-950 text-white shadow-[0_14px_35px_rgba(15,23,42,0.16)]"
-                  : "bg-white text-slate-950 shadow-[0_16px_40px_rgba(0,0,0,0.24)]"
+                navOnDark
+                  ? "bg-white text-slate-950 shadow-[0_16px_40px_rgba(0,0,0,0.24)]"
+                  : "bg-slate-950 text-white shadow-[0_14px_35px_rgba(15,23,42,0.16)]"
               }`}
             >
               <Search className="h-[18px] w-[18px]" />
@@ -780,9 +791,9 @@ export function SiteNavbar({
             </AnimatePresence>
           </div>
           <button className="lg:hidden p-2" aria-label="Toggle menu" onClick={() => setMenuOpen(!menuOpen)}>
-            <motion.div animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} className={`mb-1.5 h-0.5 w-5 origin-center ${solid ? "bg-foreground" : "bg-white"}`} />
-            <motion.div animate={menuOpen ? { opacity: 0 } : { opacity: 1 }} className={`mb-1.5 h-0.5 w-5 ${solid ? "bg-foreground" : "bg-white"}`} />
-            <motion.div animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} className={`h-0.5 w-5 origin-center ${solid ? "bg-foreground" : "bg-white"}`} />
+            <motion.div animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} className={`mb-1.5 h-0.5 w-5 origin-center ${navOnDark ? "bg-white" : "bg-foreground"}`} />
+            <motion.div animate={menuOpen ? { opacity: 0 } : { opacity: 1 }} className={`mb-1.5 h-0.5 w-5 ${navOnDark ? "bg-white" : "bg-foreground"}`} />
+            <motion.div animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }} className={`h-0.5 w-5 origin-center ${navOnDark ? "bg-white" : "bg-foreground"}`} />
           </button>
         </motion.div>
       </div>
