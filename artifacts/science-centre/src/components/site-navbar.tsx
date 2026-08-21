@@ -606,14 +606,16 @@ export function SiteNavbar({
 
   return (
     <motion.nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
-        solid ? "bg-background/95 backdrop-blur-lg border-border shadow-sm" : "bg-transparent border-transparent"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        solid
+          ? "bg-white/[0.92] backdrop-blur-2xl shadow-[0_1px_0_rgba(15,23,42,0.08)]"
+          : "bg-transparent"
       }`}
       initial={{ y: -100, opacity: 0 }}
       animate={visible ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="container mx-auto px-6 md:px-12 h-24 flex items-center justify-between">
+      <div className="mx-auto flex h-20 w-full max-w-[1840px] items-center justify-between px-6 sm:px-8 lg:px-12 xl:px-14">
         {/* Logo */}
         <Link
           href="/"
@@ -632,17 +634,19 @@ export function SiteNavbar({
             height={56}
             decoding="async"
             fetchPriority="high"
-            className="h-14 w-auto object-contain"
+            className="h-[52px] w-auto object-contain"
           />
         </Link>
 
         {/* Desktop nav */}
-        <div className={`hidden lg:flex items-center gap-8 text-sm font-medium ${!solid ? "text-white" : "text-foreground"}`}>
+        <div className={`hidden lg:flex items-center gap-9 font-[var(--app-font-heading)] text-[15px] font-semibold tracking-normal ${!solid ? "text-white" : "text-slate-950"}`}>
           {NAV_LINKS.map((link, i) => {
             const href = hrefFor(link);
             const Inner = (
               <motion.span
-                className="relative hover:text-primary transition-colors group cursor-pointer inline-flex items-center gap-1.5"
+                className={`group relative inline-flex cursor-pointer items-center gap-1.5 py-1 transition-colors ${
+                  !solid ? "hover:text-cyan-100" : "hover:text-primary"
+                }`}
                 initial={{ opacity: 0, y: -8 }}
                 animate={visible ? { opacity: 1, y: 0 } : {}}
                 transition={{ delay: 0.1 + i * 0.07, duration: 0.4 }}
@@ -651,7 +655,9 @@ export function SiteNavbar({
                 {link.hasMega && (
                   <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${megaOpen ? "rotate-180" : ""}`} />
                 )}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-primary group-hover:w-full transition-all duration-300" />
+                <span className={`absolute -bottom-1 left-0 h-px w-0 transition-all duration-300 group-hover:w-full ${
+                  !solid ? "bg-cyan-100" : "bg-primary"
+                }`} />
               </motion.span>
             );
             if (link.hasMega) {
@@ -668,7 +674,7 @@ export function SiteNavbar({
                     setMegaOpen(false);
                     navigate("/products");
                   }}
-                  className="py-2 focus:outline-none"
+                  className="py-2 focus:outline-none focus-visible:text-primary"
                   aria-expanded={megaOpen}
                 >
                   {Inner}
@@ -682,23 +688,23 @@ export function SiteNavbar({
         </div>
 
         {/* Search + hamburger */}
-        <motion.div initial={{ opacity: 0 }} animate={visible ? { opacity: 1 } : {}} transition={{ delay: 0.5 }} className="flex items-center gap-3">
+        <motion.div initial={{ opacity: 0 }} animate={visible ? { opacity: 1 } : {}} transition={{ delay: 0.5 }} className="flex items-center gap-4">
           <form
             onSubmit={submitSearch}
             onFocus={() => { clearSearchCloseTimer(); setSearchOpen(true); void loadCatalogue(); }}
             onBlur={scheduleSearchClose}
             className="relative hidden lg:block"
           >
-            <Search className={`pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 ${solid ? "text-muted-foreground" : "text-white/70"}`} />
+            <Search className={`pointer-events-none absolute left-0 top-1/2 h-[18px] w-[18px] -translate-y-1/2 ${solid ? "text-slate-400" : "text-white/70"}`} />
             <input
               value={searchQuery}
               onChange={(e) => { setSearchQuery(e.target.value); setSearchOpen(true); void loadCatalogue(); }}
-              placeholder="Search site..."
+              placeholder="Search site"
               aria-label="Search entire site"
-              className={`h-11 w-64 rounded-none border pl-10 pr-3 text-sm outline-none transition-colors ${
+              className={`h-10 w-[270px] rounded-none border-0 border-b bg-transparent pl-8 pr-1 font-[var(--app-font-heading)] text-[15px] font-medium tracking-normal outline-none transition-colors ${
                 solid
-                  ? "border-border bg-background/90 text-foreground placeholder:text-muted-foreground focus:border-primary"
-                  : "border-white/25 bg-white/10 text-white placeholder:text-white/65 focus:border-cyan-100"
+                  ? "border-slate-200 text-slate-950 placeholder:text-slate-500 focus:border-primary"
+                  : "border-white/30 text-white placeholder:text-white/70 focus:border-cyan-100"
               }`}
             />
             <AnimatePresence>
