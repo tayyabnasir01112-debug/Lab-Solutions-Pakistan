@@ -108,10 +108,12 @@ type ApplicationTreeItem =
   | string
   | {
       label: string;
+      eyebrow?: string;
       productId?: string;
       categoryId?: string;
       query?: string;
       href?: string;
+      children?: ApplicationTreeItem[];
     };
 
 // Groups catalogue categories under the client-confirmed application language.
@@ -126,68 +128,86 @@ const APPLICATION_GROUPS: readonly ApplicationGroup[] = [
     brandIds: ["onelambda"],
     tree: [
       {
-        eyebrow: "Pre-transplant workup",
-        title: "HLA Typing",
+        title: "Pre-transplant workup",
+        eyebrow: "Category 1",
         items: [
-          { label: "RTPCR", productId: "ol-linkseq-hla-kir" },
-          { label: "SSO", productId: "ol-labtype-sso" },
-          { label: "SSP", productId: "ol-microssp-generic" },
-          { label: "Sanger based HLA typing", productId: "ol-secore-sbt" },
-          { label: "NGS / NGS + ONT", productId: "ol-alltype-ngs" },
+          {
+            label: "1A. HLA Typing",
+            children: [
+              { label: "RTPCR", productId: "ol-linkseq-hla-kir" },
+              { label: "SSO", productId: "ol-labtype-sso" },
+              { label: "SSP", productId: "ol-microssp-generic" },
+              { label: "Sanger based HLA typing", productId: "ol-secore-sbt" },
+              { label: "NGS / NGS + ONT", productId: "ol-alltype-ngs" },
+            ],
+          },
+          {
+            label: "1B. Antibody Detection",
+            children: [
+              { label: "HLA antibodies screening - LABScreen (LSM12)", productId: "ol-labscreen-mixed" },
+              { label: "HLA antibodies identification - SAB Class I", productId: "ol-labscreen-sa1" },
+              { label: "HLA antibodies identification - SAB Class II", productId: "ol-labscreen-sa2" },
+              { label: "Auto-antibodies", href: "/products?brand=onelambda&category=transplant&q=antibodies" },
+              { label: "C1q screening", productId: "ol-c1qscreen" },
+            ],
+          },
+          {
+            label: "1C. HLA Crossmatch",
+            children: [
+              { label: "Flow DSA XM", productId: "ol-flowdsa-xm" },
+              { label: "CDC reagents", productId: "ol-terasaki-trays" },
+              { label: "3 color HLA FlowCrossmatch", productId: "ol-flowdsa-xm" },
+            ],
+          },
+          {
+            label: "1D. Instruments",
+            children: [
+              { label: "LABScan3D multiplex analyser", productId: "ol-labscan3d" },
+              { label: "Luminex 200 multiplex analyser", productId: "ol-labscan100" },
+              { label: "One Lambda HLA PRO automated pipettor", productId: "ol-hla-pro" },
+            ],
+          },
+          {
+            label: "1E. Analysis",
+            children: [
+              { label: "HLA Fusion", productId: "ol-fusion" },
+              { label: "SureTyper", href: "/products?brand=onelambda&q=SureTyper" },
+              { label: "TypeStream Visual", productId: "ol-typestream" },
+            ],
+          },
         ],
       },
       {
-        eyebrow: "Pre-transplant workup",
-        title: "Antibody Detection",
+        title: "Post-transplant monitoring",
+        eyebrow: "Category 2",
         items: [
-          { label: "LABScreen screening (LSM12)", productId: "ol-labscreen-mica" },
-          { label: "SAB identification - Class I", productId: "ol-labscreen-sa1" },
-          { label: "SAB identification - Class II", productId: "ol-labscreen-sa2" },
-          { label: "Auto-antibodies", categoryId: "transplant" },
-          { label: "C1q screening", productId: "ol-c1qscreen" },
+          {
+            label: "1A. Post-transplant antibody monitoring",
+            children: [
+              { label: "HLA antibodies screening - LABScreen (LSM12)", productId: "ol-labscreen-mixed" },
+              { label: "HLA antibodies identification - SAB Class I", productId: "ol-labscreen-sa1" },
+              { label: "HLA antibodies identification - SAB Class II", productId: "ol-labscreen-sa2" },
+            ],
+          },
+          {
+            label: "1B. Molecular monitoring for solid organ transplant",
+            children: [{ label: "DD-cfDNA", productId: "ol-accept-cfdna" }],
+          },
+          {
+            label: "1C. Molecular monitoring for bone marrow transplant",
+            children: [
+              { label: "Donor chimerism - NGS", productId: "ol-chimerism-ngs" },
+              { label: "Donor chimerism - STR", productId: "ol-chimerism" },
+            ],
+          },
         ],
       },
       {
-        eyebrow: "Pre-transplant workup",
-        title: "HLA Crossmatch",
+        title: "HLA disease association",
+        eyebrow: "Category 3",
         items: [
-          { label: "Flow DSA XM", productId: "ol-flowdsa-xm" },
-          { label: "CDC reagents", productId: "ol-terasaki-trays" },
-          { label: "3 color HLA FlowCrossmatch", productId: "ol-flowdsa-xm" },
-        ],
-      },
-      {
-        eyebrow: "Pre-transplant workup",
-        title: "Instruments",
-        items: [
-          { label: "LABScan3D multiplex analyser", productId: "ol-labscan3d" },
-          { label: "Luminex 200 multiplex analyser", productId: "ol-labscan100" },
-          { label: "One Lambda HLA PRO automated pipettor", productId: "ol-hla-pro" },
-        ],
-      },
-      {
-        eyebrow: "Pre-transplant workup",
-        title: "Analysis",
-        items: [
-          { label: "HLA Fusion", productId: "ol-fusion" },
-          { label: "SureTyper", categoryId: "molecular" },
-          { label: "TypeStream Visual", productId: "ol-typestream" },
-        ],
-      },
-      {
-        eyebrow: "Post-transplant monitoring",
-        title: "Monitoring",
-        items: [
-          { label: "Post-transplant antibody monitoring", productId: "ol-labscreen-mixed" },
-          { label: "DD-cfDNA for solid organ transplant", productId: "ol-accept-cfdna" },
-          { label: "Donor chimerism for bone marrow transplant", productId: "ol-chimerism-ngs" },
-        ],
-      },
-      {
-        title: "HLA Disease Association",
-        items: [
-          { label: "HLA B27", categoryId: "serological" },
-          { label: "Celiac disease", categoryId: "molecular" },
+          { label: "HLA B27", href: "/products?brand=onelambda&q=HLA%20B27" },
+          { label: "Celiac disease", href: "/products?brand=onelambda&q=Celiac%20disease" },
         ],
       },
     ],
@@ -374,6 +394,99 @@ function appTreeItemHref(item: ApplicationTreeItem) {
   return `/products?q=${encodeURIComponent(item.query ?? item.label)}`;
 }
 
+function AppTreeNode({
+  item,
+  nodeKey,
+  color,
+  depth = 0,
+  expanded,
+  toggle,
+  closeMega,
+}: {
+  item: ApplicationTreeItem;
+  nodeKey: string;
+  color: string;
+  depth?: number;
+  expanded: string[];
+  toggle: (key: string) => void;
+  closeMega: () => void;
+}) {
+  const label = appTreeItemLabel(item);
+  const isObject = typeof item !== "string";
+  const children = isObject ? item.children : undefined;
+  const isExpanded = expanded.includes(nodeKey);
+
+  if (!children?.length) {
+    return (
+      <Link
+        href={appTreeItemHref(item)}
+        onClick={closeMega}
+        className="group/item inline-flex min-h-8 items-center justify-between gap-2 border border-border bg-background px-2.5 py-1.5 text-[11px] font-semibold leading-tight text-foreground/80 transition-colors hover:border-primary/40 hover:bg-primary/5 hover:text-primary"
+      >
+        <span>{label}</span>
+        <ArrowRight className="h-3 w-3 shrink-0 opacity-0 transition-opacity group-hover/item:opacity-100" />
+      </Link>
+    );
+  }
+
+  return (
+    <div className={`${depth > 0 ? "ml-3 border-l border-border pl-3" : ""}`}>
+      <button
+        type="button"
+        onClick={() => toggle(nodeKey)}
+        className={`group flex w-full items-start gap-2 border border-border bg-background p-3 text-left transition-colors ${
+          isExpanded ? "border-primary/30 bg-primary/[0.04]" : "hover:bg-muted/40"
+        }`}
+        aria-expanded={isExpanded}
+      >
+        <span className="mt-1 h-7 w-0.5 flex-shrink-0" style={{ background: color }} />
+        <span className="min-w-0 flex-1">
+          {isObject && item.eyebrow && (
+            <span className="mb-1 block text-[8px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+              {item.eyebrow}
+            </span>
+          )}
+          <span className="block text-[12px] font-black text-foreground group-hover:text-primary">{label}</span>
+          <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
+            {children.length} linked {children.length === 1 ? "item" : "items"}
+          </span>
+        </span>
+        <ChevronDown
+          className={`mt-1 h-3.5 w-3.5 flex-shrink-0 text-muted-foreground transition-transform ${
+            isExpanded ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+      <AnimatePresence initial={false}>
+        {isExpanded && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            className="overflow-hidden"
+          >
+            <div className="grid gap-2 bg-muted/20 p-3 sm:grid-cols-2 lg:grid-cols-3">
+              {children.map((child, index) => (
+                <AppTreeNode
+                  key={`${nodeKey}:${appTreeItemLabel(child)}:${index}`}
+                  item={child}
+                  nodeKey={`${nodeKey}:${appTreeItemLabel(child)}:${index}`}
+                  color={color}
+                  depth={depth + 1}
+                  expanded={expanded}
+                  toggle={toggle}
+                  closeMega={closeMega}
+                />
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
 export function SiteNavbar({
   visible = true,
   forceSolid = false,
@@ -481,7 +594,9 @@ export function SiteNavbar({
   }, [activeApp, viewMode]);
 
   const toggleAppSection = useCallback((key: string) => {
-    setExpandedAppSections(prev => (prev.includes(key) ? [] : [key]));
+    setExpandedAppSections(prev => (
+      prev.includes(key) ? prev.filter(item => item !== key) : [...prev, key]
+    ));
   }, []);
 
   const searchResults = useMemo(() => {
@@ -598,7 +713,6 @@ export function SiteNavbar({
   const currentApp      = APPLICATION_GROUPS.find(g => g.id === activeApp)!;
   const appProds        = appGroupProducts(activeApp, products);
   const appBrands       = currentApp.brandIds?.map(id => brandById(id)).filter(Boolean) as Brand[] | undefined;
-  const appHighlights   = (appProds.filter(p => p.featured).length ? appProds.filter(p => p.featured) : appProds).slice(0, 4);
 
   // Current active category
   const currentCat      = categoryById(activeCategory);
@@ -1196,193 +1310,122 @@ export function SiteNavbar({
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-[1.45fr_0.85fr] gap-4 flex-1 min-h-0">
-                            <div className="min-h-0">
-                              <div className="flex items-center justify-between mb-3">
-                                <div className="text-[9px] font-black uppercase tracking-[0.22em] text-muted-foreground">Brand Application Tree</div>
-                                {appBrands?.length ? (
-                                  <div className="flex items-center gap-1.5">
-                                    {appBrands.map(brand => (
-                                      <span
-                                        key={brand.id}
-                                        className="px-2 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-white"
-                                        style={{ background: brand.accent }}
-                                      >
-                                        {brand.short}
-                                      </span>
-                                    ))}
-                                  </div>
-                                ) : null}
+                          <div className="flex-1 min-h-0">
+                            <div className="flex items-center justify-between mb-3">
+                              <div>
+                                <div className="text-[9px] font-black uppercase tracking-[0.22em] text-muted-foreground">Application hierarchy</div>
+                                <div className="mt-1 text-[11px] text-muted-foreground">Expand category, then subcategory, then open the mapped catalogue item.</div>
                               </div>
-
-                              {currentApp.tree?.length ? (
-                                <div className="space-y-2 pr-1 max-h-[270px] overflow-y-auto" style={{ overscrollBehavior: "contain" }}>
-                                  {currentApp.tree.map(section => {
-                                    const sectionKey = `${currentApp.id}:${section.title}`;
-                                    const isExpanded = expandedAppSections.includes(sectionKey);
-                                    return (
-                                      <div key={sectionKey} className="border border-border bg-background overflow-hidden">
-                                        <button
-                                          type="button"
-                                          onClick={() => toggleAppSection(sectionKey)}
-                                          className={`group flex w-full items-start gap-2 p-3 text-left transition-colors ${
-                                            isExpanded ? "bg-muted/60" : "hover:bg-muted/40"
-                                          }`}
-                                          aria-expanded={isExpanded}
-                                        >
-                                          <div className="mt-1 h-8 w-0.5 flex-shrink-0" style={{ background: currentApp.color }} />
-                                          <div className="min-w-0 flex-1">
-                                            {section.eyebrow && (
-                                              <div className="mb-1 text-[8px] font-black uppercase tracking-[0.18em] text-muted-foreground">
-                                                {section.eyebrow}
-                                              </div>
-                                            )}
-                                            <h4 className="text-[12px] font-black text-foreground leading-tight group-hover:text-primary">{section.title}</h4>
-                                          </div>
-                                          <ChevronDown
-                                            className={`mt-1 h-3.5 w-3.5 flex-shrink-0 text-muted-foreground transition-transform ${
-                                              isExpanded ? "rotate-180" : ""
-                                            }`}
-                                          />
-                                        </button>
-                                        <AnimatePresence initial={false}>
-                                          {isExpanded && (
-                                            <motion.div
-                                              initial={{ height: 0, opacity: 0 }}
-                                              animate={{ height: "auto", opacity: 1 }}
-                                              exit={{ height: 0, opacity: 0 }}
-                                              transition={{ duration: 0.18 }}
-                                              className="overflow-hidden border-t border-border bg-muted/20"
-                                            >
-                                              <div className="flex flex-wrap gap-1.5 p-3">
-                                                {section.items.map(item => {
-                                                  const itemLabel = appTreeItemLabel(item);
-                                                  return (
-                                                    <Link
-                                                      key={`${section.title}-${itemLabel}`}
-                                                      href={appTreeItemHref(item)}
-                                                      onClick={closeMega}
-                                                      className="group/item inline-flex items-center gap-1 border border-border bg-background px-2 py-1 text-[10px] font-medium leading-tight text-foreground/80 transition-colors hover:border-primary/40 hover:text-primary"
-                                                    >
-                                                      {itemLabel}
-                                                      <ArrowRight className="h-2.5 w-2.5 opacity-0 transition-opacity group-hover/item:opacity-100" />
-                                                    </Link>
-                                                  );
-                                                })}
-                                              </div>
-                                            </motion.div>
-                                          )}
-                                        </AnimatePresence>
-                                      </div>
-                                    );
-                                  })}
+                              {appBrands?.length ? (
+                                <div className="flex items-center gap-1.5">
+                                  {appBrands.map(brand => (
+                                    <span
+                                      key={brand.id}
+                                      className="px-2 py-1 text-[9px] font-black uppercase tracking-[0.14em] text-white"
+                                      style={{ background: brand.accent }}
+                                    >
+                                      {brand.short}
+                                    </span>
+                                  ))}
                                 </div>
-                              ) : (
-                                <div className="space-y-2 pr-1 max-h-[270px] overflow-y-auto" style={{ overscrollBehavior: "contain" }}>
-                                  {currentApp.categoryIds.slice(0, 8).map(categoryId => {
-                                    const category = categoryById(categoryId);
-                                    const categoryProducts = appProds.filter(product => product.category === categoryId);
-                                    const count = categoryProducts.length;
-                                    if (!category || count === 0) return null;
-                                    const sectionKey = `${currentApp.id}:category:${categoryId}`;
-                                    const isExpanded = expandedAppSections.includes(sectionKey);
-                                    const subcategories = Array.from(new Set(categoryProducts.map(product => product.subcategory).filter(Boolean))).slice(0, 6);
-                                    return (
-                                      <div
-                                        key={categoryId}
-                                        className="border border-border bg-background overflow-hidden"
-                                      >
-                                        <button
-                                          type="button"
-                                          onClick={() => toggleAppSection(sectionKey)}
-                                          className={`group flex w-full items-start gap-2 p-3 text-left transition-colors ${
-                                            isExpanded ? "bg-muted/60" : "hover:bg-muted/40"
-                                          }`}
-                                          aria-expanded={isExpanded}
-                                        >
-                                          <span className="mt-0.5 flex-shrink-0" style={{ color: currentApp.color }}>{category.icon}</span>
-                                          <span className="min-w-0 flex-1">
-                                            <span className="block text-[12px] font-black text-foreground group-hover:text-primary">{category.name}</span>
-                                            <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
-                                              {count} catalogue entries
-                                            </span>
-                                          </span>
-                                          <ChevronDown
-                                            className={`mt-1 h-3.5 w-3.5 flex-shrink-0 text-muted-foreground transition-transform ${
-                                              isExpanded ? "rotate-180" : ""
-                                            }`}
-                                          />
-                                        </button>
-                                        <AnimatePresence initial={false}>
-                                          {isExpanded && (
-                                            <motion.div
-                                              initial={{ height: 0, opacity: 0 }}
-                                              animate={{ height: "auto", opacity: 1 }}
-                                              exit={{ height: 0, opacity: 0 }}
-                                              transition={{ duration: 0.18 }}
-                                              className="overflow-hidden border-t border-border bg-muted/20"
-                                            >
-                                              <div className="flex flex-wrap gap-1.5 p-3">
-                                                {subcategories.length ? subcategories.map(subcategory => (
-                                                  <Link
-                                                    key={`${categoryId}-${subcategory}`}
-                                                    href={`/products?q=${encodeURIComponent(subcategory)}`}
-                                                    onClick={closeMega}
-                                                    className="group/item inline-flex items-center gap-1 border border-border bg-background px-2 py-1 text-[10px] font-medium leading-tight text-foreground/80 transition-colors hover:border-primary/40 hover:text-primary"
-                                                  >
-                                                    {subcategory}
-                                                    <ArrowRight className="h-2.5 w-2.5 opacity-0 transition-opacity group-hover/item:opacity-100" />
-                                                  </Link>
-                                                )) : (
-                                                  <span className="text-[10px] text-muted-foreground">No subcategory labels in catalogue yet.</span>
-                                                )}
-                                                <Link
-                                                  href={`/products?category=${categoryId}`}
-                                                  onClick={closeMega}
-                                                  className="inline-flex items-center gap-1 border border-primary/30 bg-primary/5 px-2 py-1 text-[10px] font-bold leading-tight text-primary transition-colors hover:bg-primary/10"
-                                                >
-                                                  Browse category <ArrowRight className="h-2.5 w-2.5" />
-                                                </Link>
-                                              </div>
-                                            </motion.div>
-                                          )}
-                                        </AnimatePresence>
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                              )}
+                              ) : null}
                             </div>
 
-                            <div className="min-h-0 border-l border-border pl-4">
-                              <div className="text-[9px] font-black uppercase tracking-[0.22em] text-muted-foreground mb-3">Catalogue Highlights</div>
-                              <div className="space-y-2">
-                                {appHighlights.map(p => {
-                                  const brand = brandById(p.brand);
-                                  const category = categoryById(p.category);
+                            {currentApp.tree?.length ? (
+                              <div className="grid max-h-[330px] items-start gap-2 overflow-y-auto pr-1 lg:grid-cols-3" style={{ overscrollBehavior: "contain" }}>
+                                {currentApp.tree.map(section => {
+                                  const sectionKey = `${currentApp.id}:${section.title}`;
+                                  const isExpanded = expandedAppSections.includes(sectionKey);
                                   return (
-                                    <ProductShortcutLink
-                                      key={p.id}
-                                      product={p}
-                                      onClick={closeMega}
-                                      className="group block border border-border bg-background p-3 hover:bg-muted/50 transition-colors"
-                                    >
-                                      <div className="flex items-center gap-2 mb-1.5">
-                                        <span className="h-1.5 w-1.5 rounded-full" style={{ background: brand?.accent ?? currentApp.color }} />
-                                        <span className="text-[8px] font-black uppercase tracking-[0.16em] text-muted-foreground">
-                                          {brand?.short} / {category?.name}
-                                        </span>
-                                      </div>
-                                      <div className="text-[12px] font-semibold leading-snug text-foreground group-hover:text-primary line-clamp-2">{p.name}</div>
-                                    </ProductShortcutLink>
+                                    <div key={sectionKey} className="border border-border bg-background">
+                                      <button
+                                        type="button"
+                                        onClick={() => toggleAppSection(sectionKey)}
+                                        className={`group flex w-full items-start gap-3 p-3 text-left transition-colors ${
+                                          isExpanded ? "border-primary/30 bg-primary/[0.05]" : "hover:bg-muted/40"
+                                        }`}
+                                        aria-expanded={isExpanded}
+                                      >
+                                        <div className="mt-1 h-9 w-0.5 flex-shrink-0" style={{ background: currentApp.color }} />
+                                        <div className="min-w-0 flex-1">
+                                          {section.eyebrow && (
+                                            <div className="mb-1 text-[8px] font-black uppercase tracking-[0.18em] text-muted-foreground">
+                                              {section.eyebrow}
+                                            </div>
+                                          )}
+                                          <h4 className="text-[13px] font-black text-foreground leading-tight group-hover:text-primary">{section.title}</h4>
+                                          <div className="mt-1 text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
+                                            {section.items.length} subcategories
+                                          </div>
+                                        </div>
+                                        <ChevronDown
+                                          className={`mt-1 h-3.5 w-3.5 flex-shrink-0 text-muted-foreground transition-transform ${
+                                            isExpanded ? "rotate-180" : ""
+                                          }`}
+                                        />
+                                      </button>
+                                      <AnimatePresence initial={false}>
+                                        {isExpanded && (
+                                          <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: "auto", opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            transition={{ duration: 0.18 }}
+                                            className="overflow-hidden border-t border-border bg-muted/20"
+                                          >
+                                            <div className="grid gap-2 p-3">
+                                              {section.items.map((item, index) => (
+                                                <AppTreeNode
+                                                  key={`${sectionKey}:${appTreeItemLabel(item)}:${index}`}
+                                                  item={item}
+                                                  nodeKey={`${sectionKey}:${appTreeItemLabel(item)}:${index}`}
+                                                  color={currentApp.color}
+                                                  expanded={expandedAppSections}
+                                                  toggle={toggleAppSection}
+                                                  closeMega={closeMega}
+                                                />
+                                              ))}
+                                            </div>
+                                          </motion.div>
+                                        )}
+                                      </AnimatePresence>
+                                    </div>
                                   );
                                 })}
                               </div>
-                              <Link href={`/products?q=${encodeURIComponent(currentApp.label)}`} onClick={closeMega}
-                                className="mt-3 inline-flex items-center gap-1.5 text-[11px] font-bold text-primary hover:text-primary/80 transition-colors">
-                                Browse this application <ArrowRight className="h-3 w-3" />
-                              </Link>
-                            </div>
+                            ) : (
+                              <div className="grid max-h-[330px] items-start gap-2 overflow-y-auto pr-1 lg:grid-cols-3" style={{ overscrollBehavior: "contain" }}>
+                                {currentApp.categoryIds.slice(0, 9).map(categoryId => {
+                                  const category = categoryById(categoryId);
+                                  const categoryProducts = appProds.filter(product => product.category === categoryId);
+                                  const count = categoryProducts.length;
+                                  if (!category || count === 0) return null;
+                                  const sectionKey = `${currentApp.id}:category:${categoryId}`;
+                                  const subcategories = Array.from(new Set(categoryProducts.map(product => product.subcategory).filter(Boolean))).slice(0, 8);
+                                  return (
+                                    <AppTreeNode
+                                      key={categoryId}
+                                      item={{
+                                        label: category.name,
+                                        eyebrow: `${count} catalogue entries`,
+                                        children: [
+                                          ...subcategories.map(subcategory => ({
+                                            label: subcategory,
+                                            href: `/products?category=${categoryId}&q=${encodeURIComponent(subcategory)}`,
+                                          })),
+                                          { label: "Browse full category", categoryId },
+                                        ],
+                                      }}
+                                      nodeKey={sectionKey}
+                                      color={currentApp.color}
+                                      expanded={expandedAppSections}
+                                      toggle={toggleAppSection}
+                                      closeMega={closeMega}
+                                    />
+                                  );
+                                })}
+                              </div>
+                            )}
                           </div>
                         </motion.div>
                       )}
