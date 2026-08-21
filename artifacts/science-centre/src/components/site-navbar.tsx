@@ -573,9 +573,11 @@ export function SiteNavbar({
 
   const isHome     = location === "/";
   const isDarkPage = location === "/about";
-  const solid      = !forceTransparent && (forceSolid || scrolled || !isDarkPage);
+  const isProductSurface = location.startsWith("/products");
+  const defaultSolid = !isHome && !isDarkPage;
+  const solid      = !forceTransparent && (forceSolid || scrolled || defaultSolid || isProductSurface);
   const autoDark   = forceTransparent || (!forceSolid && !solid);
-  const navOnDark  = tone === "dark" ? true : tone === "light" ? false : autoDark;
+  const navOnDark  = solid ? false : tone === "dark" ? true : tone === "light" ? false : autoDark;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -753,7 +755,11 @@ export function SiteNavbar({
 
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 z-50 bg-transparent transition-all duration-300"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        solid
+          ? "border-b border-slate-200/70 bg-white/95 shadow-[0_10px_35px_rgba(15,23,42,0.08)] backdrop-blur-xl"
+          : "bg-transparent"
+      }`}
       initial={{ y: -100, opacity: 0 }}
       animate={visible ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -1326,7 +1332,7 @@ export function SiteNavbar({
                               <span className="text-[11px] font-bold px-2.5 py-1.5 text-white rounded-sm" style={{ background: currentApp.color }}>
                                 {appProds.length} products
                               </span>
-                              <Link href={`/products?q=${encodeURIComponent(currentApp.label)}`} onClick={closeMega}
+                              <Link href={`/products?application=${currentApp.id}`} onClick={closeMega}
                                 className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.1em] px-2.5 py-1.5 border border-border hover:bg-muted transition-colors text-foreground">
                                 Browse All <ArrowRight className="h-3 w-3" />
                               </Link>
@@ -1355,7 +1361,7 @@ export function SiteNavbar({
                             </div>
 
                             {currentApp.tree?.length ? (
-                              <div className="grid max-h-[330px] items-start gap-2 overflow-y-auto pr-1" style={{ overscrollBehavior: "contain" }}>
+                              <div className="grid max-h-[360px] items-start gap-3 overflow-y-auto pr-1 md:grid-cols-2 xl:grid-cols-3" style={{ overscrollBehavior: "contain" }}>
                                 {currentApp.tree.map(section => {
                                   const sectionKey = `${currentApp.id}:${section.title}`;
                                   const isExpanded = expandedAppSections.includes(sectionKey);

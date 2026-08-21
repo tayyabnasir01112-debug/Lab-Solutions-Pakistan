@@ -23,6 +23,103 @@ import {
   type Product,
 } from "@/lib/catalogue";
 
+type ApplicationFilter = {
+  id: string;
+  label: string;
+  color: string;
+  primaryCategory: string;
+  categoryIds: string[];
+  brandIds?: string[];
+};
+
+const applicationFilters: ApplicationFilter[] = [
+  {
+    id: "transplant-dx",
+    label: "Transplant Diagnostics",
+    color: "#e85d4a",
+    primaryCategory: "transplant",
+    categoryIds: ["transplant", "molecular", "ngs", "serological", "posttransplant", "multiplex", "equipment"],
+    brandIds: ["onelambda"],
+  },
+  {
+    id: "flow-cytometry",
+    label: "Flow Cytometry Solutions",
+    color: "#16a8c7",
+    primaryCategory: "flow",
+    categoryIds: ["flow", "luminex-instruments", "luminex-microspheres", "luminex-assay-development", "luminex-applications"],
+    brandIds: ["cytek", "luminex"],
+  },
+  {
+    id: "flow-antibodies",
+    label: "Flow Antibody Solutions",
+    color: "#c65cff",
+    primaryCategory: "antibodies",
+    categoryIds: ["antibodies", "biolegend-product-types", "biolegend-applications"],
+    brandIds: ["biolegend"],
+  },
+  {
+    id: "life-sciences",
+    label: "Life Sciences",
+    color: "#2ea3f2",
+    primaryCategory: "merck-cell-culture-and-analysis",
+    categoryIds: [
+      "merck-analytical-chemistry",
+      "merck-cell-culture-and-analysis",
+      "merck-chemistry-and-biochemicals",
+      "merck-clinical-diagnostics",
+      "merck-industrial-microbiology",
+      "merck-molecular-biology-and-functional-genomics",
+      "antibodies",
+      "biolegend-research-areas",
+    ],
+    brandIds: ["merck", "biolegend"],
+  },
+  {
+    id: "culture-media",
+    label: "Culture Media Solutions",
+    color: "#12b886",
+    primaryCategory: "hkm-culture-media",
+    categoryIds: ["hkm-culture-media", "hkm-raw-materials", "hkm-detection-kits", "hkm-count-cards", "hkm-consumables"],
+    brandIds: ["hkm"],
+  },
+  {
+    id: "ngs",
+    label: "Next Generation Sequencing Solutions",
+    color: "#5b7cff",
+    primaryCategory: "ngs",
+    categoryIds: ["ngs", "molecular"],
+    brandIds: ["ngene", "onelambda"],
+  },
+  {
+    id: "allergen",
+    label: "Allergen Screening Solutions",
+    color: "#ff6b8b",
+    primaryCategory: "sug-immunoblot-tests",
+    categoryIds: ["sug-immunoblot-tests", "sug-immunoblot-systems"],
+    brandIds: ["sugentech"],
+  },
+  {
+    id: "biochemistry-instruments",
+    label: "Bio-Chemistry Instruments",
+    color: "#f59e0b",
+    primaryCategory: "benchtop-meters",
+    categoryIds: ["benchtop-meters", "portable-meters", "titrators", "kf-titrators", "turbidity", "cod-meters", "electrodes", "moisture", "rex-accessories"],
+    brandIds: ["rex"],
+  },
+  {
+    id: "water-purification",
+    label: "Water Purification Systems",
+    color: "#3b82f6",
+    primaryCategory: "wp-systems",
+    categoryIds: ["wp-systems"],
+    brandIds: ["merck"],
+  },
+];
+
+function matchesApplication(product: Product, application: ApplicationFilter) {
+  return application.categoryIds.includes(product.category) || Boolean(application.brandIds?.includes(product.brand));
+}
+
 /* ─── Filter sidebar section ──────────────────────────────────── */
 
 function FilterSection({
@@ -189,7 +286,7 @@ function ProductCard({ product }: { product: Product }) {
         )}
         {/* actual product image */}
         {product.image && (
-          <div className="absolute inset-0 flex items-center justify-center p-5 pt-6">
+          <div className="absolute inset-0 flex items-center justify-center p-5 pt-6 pb-16">
             <img
               src={product.image}
               alt={product.name}
@@ -223,7 +320,7 @@ function ProductCard({ product }: { product: Product }) {
           )}
         </div>
         {/* hover overlay with view + inquire */}
-        <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-2">
+        <div className="absolute inset-x-0 bottom-0 p-3 opacity-100 transition-opacity duration-300 flex gap-2">
           {isBioLegendExternal ? (
             <a {...productLinkProps} className="flex-1">
               <Button variant="outline" className="rounded-none w-full text-xs uppercase tracking-[0.14em] font-semibold h-10 bg-background/90 backdrop-blur-sm">
@@ -313,7 +410,7 @@ function CytekCard({ product }: { product: Product }) {
 
         {/* Product image */}
         {product.image ? (
-          <div className="absolute inset-0 flex items-center justify-center p-6 pt-8">
+          <div className="absolute inset-0 flex items-center justify-center p-6 pt-8 pb-16">
             <img
               src={product.image}
               alt={product.name}
@@ -334,7 +431,7 @@ function CytekCard({ product }: { product: Product }) {
 
         {/* Hover CTA overlay */}
         <div className="absolute inset-0 bg-[#508484]/0 group-hover:bg-[#508484]/5 transition-colors duration-300" />
-        <div className="absolute inset-x-0 bottom-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex gap-2">
+        <div className="absolute inset-x-0 bottom-0 p-3 translate-y-0 transition-transform duration-300 flex gap-2">
           <Link href={`/products/${product.id}`} className="flex-1">
             <Button className="rounded-none w-full text-[11px] uppercase tracking-[0.14em] font-bold h-10 bg-[#508484] text-white hover:bg-[#3d6e6e]">
               View Details
@@ -387,7 +484,7 @@ function SugentechCard({ product }: { product: Product }) {
           <img src={product.image} alt={product.name}
             loading="lazy"
             decoding="async"
-            className="relative z-10 w-full h-full object-contain p-5 transition-transform duration-500 group-hover:scale-[1.04]"
+            className="relative z-10 w-full h-full object-contain p-5 pb-14 transition-transform duration-500 group-hover:scale-[1.04]"
             style={{ filter: "drop-shadow(0 4px 16px rgba(0,87,168,0.15))" }} />
         ) : (
           <div className="relative z-10 flex flex-col items-center gap-3 py-4">
@@ -411,7 +508,7 @@ function SugentechCard({ product }: { product: Product }) {
         </div>
 
         {/* Hover CTAs */}
-        <div className="absolute inset-x-0 bottom-0 p-3 translate-y-full group-hover:translate-y-0 transition-transform duration-300 flex gap-2">
+        <div className="absolute inset-x-0 bottom-0 p-3 translate-y-0 transition-transform duration-300 flex gap-2">
           <Link href={`/products/${product.id}`} className="flex-1">
             <Button className="rounded-none w-full text-[11px] uppercase tracking-[0.12em] font-bold h-9 bg-[#0057A8] text-white hover:bg-[#004080]">
               View Details
@@ -542,6 +639,7 @@ export default function Products() {
   const [splashDone] = useState(true);
   const [location] = useLocation();
   const [query, setQuery] = useState("");
+  const [activeApps, setActiveApps] = useState<string[]>([]);
   const [activeBrands, setActiveBrands] = useState<string[]>([]);
   const [activeCats, setActiveCats] = useState<string[]>([]);
   const [featuredOnly, setFeaturedOnly] = useState(false);
@@ -551,10 +649,12 @@ export default function Products() {
   // Parse URL params so navbar mega-menu and global search can deep-link
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
+    const appParam = params.get("application");
     const brandParam = params.get("brand");
     const catParam = params.get("category");
     const featuredParam = params.get("featured");
     const queryParam = params.get("q") || params.get("search");
+    setActiveApps(appParam ? appParam.split(",").filter(Boolean) : []);
     setActiveBrands(brandParam ? brandParam.split(",").filter(Boolean) : []);
     setActiveCats(catParam ? catParam.split(",").filter(Boolean) : []);
     setFeaturedOnly(featuredParam === "1");
@@ -566,8 +666,11 @@ export default function Products() {
     setActiveBrands((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
   const toggleCat = (id: string) =>
     setActiveCats((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
+  const toggleApp = (id: string) =>
+    setActiveApps((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
 
   const clearAll = () => {
+    setActiveApps([]);
     setActiveBrands([]);
     setActiveCats([]);
     setFeaturedOnly(false);
@@ -605,8 +708,20 @@ export default function Products() {
     return m;
   }, [baseFiltered]);
 
+  const appCounts = useMemo(() => {
+    const m = new Map<string, number>();
+    applicationFilters.forEach((application) => {
+      m.set(application.id, baseFiltered.filter((p) => matchesApplication(p, application)).length);
+    });
+    return m;
+  }, [baseFiltered]);
+
   const filtered = useMemo(() => {
     let list = baseFiltered;
+    if (activeApps.length) {
+      const activeApplicationFilters = applicationFilters.filter((application) => activeApps.includes(application.id));
+      list = list.filter((p) => activeApplicationFilters.some((application) => matchesApplication(p, application)));
+    }
     if (activeBrands.length) list = list.filter((p) => activeBrands.includes(p.brand));
     if (activeCats.length) list = list.filter((p) => activeCats.includes(p.category));
     if (featuredOnly) list = list.filter((p) => p.featured);
@@ -621,10 +736,10 @@ export default function Products() {
         return a.name.localeCompare(b.name);
       });
     return sorted;
-  }, [baseFiltered, activeBrands, activeCats, featuredOnly, sort]);
+  }, [baseFiltered, activeApps, activeBrands, activeCats, featuredOnly, sort]);
 
   const activeFilterCount =
-    activeBrands.length + activeCats.length + (featuredOnly ? 1 : 0) + (query ? 1 : 0);
+    activeApps.length + activeBrands.length + activeCats.length + (featuredOnly ? 1 : 0) + (query ? 1 : 0);
 
   /* ─── Sidebar (shared between desktop sticky + mobile drawer) ── */
   const Sidebar = (
@@ -727,32 +842,38 @@ export default function Products() {
             </div>
           </div>
 
-          {/* Quick-access category pills — always visible at top */}
+          {/* Quick-access application pills — always visible at top */}
           <div className="mt-7 -mx-1">
             <div className="flex items-center gap-2 mb-2 px-1">
               <span className="text-[10px] font-bold uppercase tracking-[0.16em] text-muted-foreground">
-                Shop by Category
+                Shop by Application
               </span>
               <span className="h-px flex-1 bg-border" />
             </div>
-            <div className="flex gap-2 overflow-x-auto pb-2 px-1 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-              {categories.map((c) => {
-                const active = activeCats.includes(c.id);
-                const count = products.filter((p) => p.category === c.id).length;
+            <div className="grid grid-cols-1 gap-2 px-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
+              {applicationFilters.map((application) => {
+                const active = activeApps.includes(application.id);
+                const primaryCategory = categoryById(application.primaryCategory);
+                const count = appCounts.get(application.id) || 0;
                 return (
                   <button
-                    key={c.id}
-                    onClick={() => toggleCat(c.id)}
-                    className={`flex-shrink-0 inline-flex items-center gap-2 px-4 h-10 border text-sm font-medium transition-all ${
+                    key={application.id}
+                    onClick={() => toggleApp(application.id)}
+                    className={`inline-flex min-w-0 items-center justify-between gap-3 border px-4 py-3 text-left text-sm font-medium transition-all ${
                       active
-                        ? "bg-foreground text-background border-foreground"
+                        ? "text-white border-transparent shadow-sm"
                         : "bg-background text-foreground border-border hover:border-foreground"
                     }`}
-                    data-testid={`quick-cat-${c.id}`}
+                    style={active ? { background: application.color } : undefined}
+                    data-testid={`quick-app-${application.id}`}
                   >
-                    {c.icon}
-                    <span className="whitespace-nowrap">{c.name}</span>
-                    <span className={`text-[11px] tabular-nums ${active ? "text-background/70" : "text-muted-foreground"}`}>
+                    <span className="flex min-w-0 items-center gap-2">
+                      <span className={active ? "text-white/85" : "text-muted-foreground"}>
+                        {primaryCategory?.icon}
+                      </span>
+                      <span className="truncate">{application.label}</span>
+                    </span>
+                    <span className={`shrink-0 text-[11px] tabular-nums ${active ? "text-white/75" : "text-muted-foreground"}`}>
                       {count}
                     </span>
                   </button>
@@ -861,6 +982,17 @@ export default function Products() {
                 onRemove={() => toggleBrand(id)}
               />
             ))}
+            {activeApps.map((id) => {
+              const application = applicationFilters.find((item) => item.id === id);
+              if (!application) return null;
+              return (
+                <FilterChip
+                  key={id}
+                  label={application.label}
+                  onRemove={() => toggleApp(id)}
+                />
+              );
+            })}
             {activeCats.map((id) => (
               <FilterChip
                 key={id}
