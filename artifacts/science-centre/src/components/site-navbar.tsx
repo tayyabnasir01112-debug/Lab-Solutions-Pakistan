@@ -398,9 +398,11 @@ export function SiteNavbar({
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const [searchQuery, setSearchQuery]       = useState("");
   const [searchOpen, setSearchOpen]         = useState(false);
+  const [searchDockOpen, setSearchDockOpen] = useState(false);
   const [location, navigate]                = useLocation();
   const megaRef    = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const megaCloseTimer = useRef<number | null>(null);
   const searchCloseTimer = useRef<number | null>(null);
   const cataloguePromise = useRef<Promise<CatalogueModule> | null>(null);
@@ -539,7 +541,10 @@ export function SiteNavbar({
 
   const scheduleSearchClose = useCallback(() => {
     clearSearchCloseTimer();
-    searchCloseTimer.current = window.setTimeout(() => setSearchOpen(false), 140);
+    searchCloseTimer.current = window.setTimeout(() => {
+      setSearchOpen(false);
+      setSearchDockOpen(false);
+    }, 160);
   }, [clearSearchCloseTimer]);
 
   const submitSearch = useCallback((e: React.FormEvent) => {
@@ -547,6 +552,7 @@ export function SiteNavbar({
     const q = searchQuery.trim();
     navigate(q ? `/products?q=${encodeURIComponent(q)}` : "/products");
     setSearchOpen(false);
+    setSearchDockOpen(false);
     setMenuOpen(false);
     setMegaOpen(false);
   }, [navigate, searchQuery]);
@@ -606,16 +612,12 @@ export function SiteNavbar({
 
   return (
     <motion.nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        solid
-          ? "bg-white/[0.92] backdrop-blur-2xl shadow-[0_1px_0_rgba(15,23,42,0.08)]"
-          : "bg-transparent"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 bg-transparent transition-all duration-300"
       initial={{ y: -100, opacity: 0 }}
       animate={visible ? { y: 0, opacity: 1 } : { y: -100, opacity: 0 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
-      <div className="mx-auto flex h-20 w-full max-w-[1840px] items-center justify-between px-6 sm:px-8 lg:px-12 xl:px-14">
+      <div className="mx-auto flex h-[92px] w-full max-w-[1920px] items-center px-6 sm:px-8 lg:px-10 xl:px-12">
         {/* Logo */}
         <Link
           href="/"
@@ -625,7 +627,7 @@ export function SiteNavbar({
               window.scrollTo({ top: 0, behavior: "smooth" });
             }
           }}
-          className="flex items-center"
+          className="flex items-center drop-shadow-[0_8px_24px_rgba(2,8,23,0.18)]"
         >
           <img
             src={img("/images/sc-logo-full-nav.webp")}
@@ -639,13 +641,20 @@ export function SiteNavbar({
         </Link>
 
         {/* Desktop nav */}
-        <div className={`hidden lg:flex items-center gap-9 font-[var(--app-font-heading)] text-[15px] font-semibold tracking-normal ${!solid ? "text-white" : "text-slate-950"}`}>
+        <div className={`ml-auto hidden items-center gap-1 font-[var(--app-font-heading)] text-[15px] font-medium tracking-normal lg:flex ${!solid ? "text-white" : "text-slate-950"}`}>
           {NAV_LINKS.map((link, i) => {
             const href = hrefFor(link);
+            const isActive =
+              link.isPage &&
+              "href" in link &&
+              link.href !== "/" &&
+              location.startsWith(link.href);
             const Inner = (
               <motion.span
-                className={`group relative inline-flex cursor-pointer items-center gap-1.5 py-1 transition-colors ${
-                  !solid ? "hover:text-cyan-100" : "hover:text-primary"
+                className={`group relative inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1.5 leading-none transition-all duration-300 ${
+                  !solid
+                    ? `drop-shadow-[0_1px_12px_rgba(0,0,0,0.24)] ${isActive ? "border-white/[0.45] bg-white/[0.12]" : "border-transparent hover:border-white/40 hover:bg-white/10"}`
+                    : `${isActive ? "border-slate-950/[0.22] bg-white/[0.55]" : "border-transparent hover:border-slate-950/20 hover:bg-white/60"}`
                 }`}
                 initial={{ opacity: 0, y: -8 }}
                 animate={visible ? { opacity: 1, y: 0 } : {}}
@@ -655,9 +664,6 @@ export function SiteNavbar({
                 {link.hasMega && (
                   <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-300 ${megaOpen ? "rotate-180" : ""}`} />
                 )}
-                <span className={`absolute -bottom-1 left-0 h-px w-0 transition-all duration-300 group-hover:w-full ${
-                  !solid ? "bg-cyan-100" : "bg-primary"
-                }`} />
               </motion.span>
             );
             if (link.hasMega) {
@@ -688,62 +694,91 @@ export function SiteNavbar({
         </div>
 
         {/* Search + hamburger */}
-        <motion.div initial={{ opacity: 0 }} animate={visible ? { opacity: 1 } : {}} transition={{ delay: 0.5 }} className="flex items-center gap-4">
-          <form
-            onSubmit={submitSearch}
-            onFocus={() => { clearSearchCloseTimer(); setSearchOpen(true); void loadCatalogue(); }}
-            onBlur={scheduleSearchClose}
+        <motion.div initial={{ opacity: 0 }} animate={visible ? { opacity: 1 } : {}} transition={{ delay: 0.5 }} className="ml-6 flex items-center gap-4">
+          <div
+            onMouseEnter={clearSearchCloseTimer}
+            onMouseLeave={scheduleSearchClose}
             className="relative hidden lg:block"
           >
-            <Search className={`pointer-events-none absolute left-0 top-1/2 h-[18px] w-[18px] -translate-y-1/2 ${solid ? "text-slate-400" : "text-white/70"}`} />
-            <input
-              value={searchQuery}
-              onChange={(e) => { setSearchQuery(e.target.value); setSearchOpen(true); void loadCatalogue(); }}
-              placeholder="Search site"
+            <button
+              type="button"
               aria-label="Search entire site"
-              className={`h-10 w-[270px] rounded-none border-0 border-b bg-transparent pl-8 pr-1 font-[var(--app-font-heading)] text-[15px] font-medium tracking-normal outline-none transition-colors ${
+              onClick={() => {
+                clearSearchCloseTimer();
+                setSearchDockOpen(true);
+                setSearchOpen(true);
+                void loadCatalogue();
+                window.setTimeout(() => searchInputRef.current?.focus(), 0);
+              }}
+              className={`flex h-11 w-11 items-center justify-center rounded-full transition-transform duration-300 hover:scale-105 ${
                 solid
-                  ? "border-slate-200 text-slate-950 placeholder:text-slate-500 focus:border-primary"
-                  : "border-white/30 text-white placeholder:text-white/70 focus:border-cyan-100"
+                  ? "bg-slate-950 text-white shadow-[0_14px_35px_rgba(15,23,42,0.16)]"
+                  : "bg-white text-slate-950 shadow-[0_16px_40px_rgba(0,0,0,0.24)]"
               }`}
-            />
+            >
+              <Search className="h-[18px] w-[18px]" />
+            </button>
             <AnimatePresence>
-              {searchOpen && searchQuery.trim() && (
+              {searchDockOpen && (
                 <motion.div
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
                   transition={{ duration: 0.18 }}
-                  className="absolute right-0 top-[calc(100%+10px)] w-[360px] border border-border bg-background text-foreground shadow-2xl"
+                  className="absolute right-0 top-[calc(100%+12px)] w-[390px] rounded-[2px] bg-white/95 p-4 text-slate-950 shadow-[0_28px_70px_rgba(15,23,42,0.22)] backdrop-blur-2xl"
                   onMouseEnter={clearSearchCloseTimer}
                   onMouseLeave={scheduleSearchClose}
                 >
-                  {searchResults.length ? (
-                    <div className="max-h-[420px] overflow-y-auto p-2">
-                      {searchResults.map(result => (
-                        <Link
-                          key={`${result.type}-${result.href}-${result.label}`}
-                          href={result.href}
-                          onClick={() => { setSearchOpen(false); setSearchQuery(""); }}
-                          className="group grid grid-cols-[1fr_auto] gap-3 border-b border-border/70 px-3 py-3 last:border-b-0 hover:bg-muted/60"
-                        >
-                          <span>
-                            <span className="block text-sm font-bold leading-snug group-hover:text-primary">{result.label}</span>
-                            <span className="mt-0.5 block text-xs text-muted-foreground">{result.meta}</span>
-                          </span>
-                          <span className="self-start text-[10px] font-black uppercase text-primary">{result.type}</span>
-                        </Link>
-                      ))}
+                  <form onSubmit={submitSearch} onFocus={() => setSearchOpen(true)} onBlur={scheduleSearchClose}>
+                    <div className="flex items-center gap-3 border-b border-slate-200 pb-3">
+                      <Search className="h-4 w-4 text-slate-400" />
+                      <input
+                        ref={searchInputRef}
+                        value={searchQuery}
+                        onChange={(e) => { setSearchQuery(e.target.value); setSearchOpen(true); void loadCatalogue(); }}
+                        placeholder="Search products, brands, solutions"
+                        aria-label="Search entire site"
+                        className="h-9 flex-1 border-0 bg-transparent font-[var(--app-font-heading)] text-[15px] font-medium outline-none placeholder:text-slate-400"
+                      />
+                      <button
+                        type="button"
+                        aria-label="Close search"
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => { setSearchDockOpen(false); setSearchOpen(false); setSearchQuery(""); }}
+                        className="text-slate-400 transition-colors hover:text-slate-950"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
                     </div>
-                  ) : (
-                    <button type="submit" className="block w-full px-4 py-4 text-left text-sm hover:bg-muted">
-                      Search products for <span className="font-bold">"{searchQuery.trim()}"</span>
-                    </button>
-                  )}
+                    {searchOpen && searchQuery.trim() && (
+                      searchResults.length ? (
+                        <div className="mt-2 max-h-[420px] overflow-y-auto">
+                          {searchResults.map(result => (
+                            <Link
+                              key={`${result.type}-${result.href}-${result.label}`}
+                              href={result.href}
+                              onClick={() => { setSearchOpen(false); setSearchDockOpen(false); setSearchQuery(""); }}
+                              className="group grid grid-cols-[1fr_auto] gap-3 border-b border-slate-100 px-1 py-3 last:border-b-0"
+                            >
+                              <span>
+                                <span className="block text-sm font-bold leading-snug transition-opacity group-hover:opacity-60">{result.label}</span>
+                                <span className="mt-0.5 block text-xs text-slate-500">{result.meta}</span>
+                              </span>
+                              <span className="self-start text-[10px] font-black uppercase text-primary">{result.type}</span>
+                            </Link>
+                          ))}
+                        </div>
+                      ) : (
+                        <button type="submit" className="mt-2 block w-full px-1 py-4 text-left text-sm hover:text-primary">
+                          Search products for <span className="font-bold">"{searchQuery.trim()}"</span>
+                        </button>
+                      )
+                    )}
+                  </form>
                 </motion.div>
               )}
             </AnimatePresence>
-          </form>
+          </div>
           <button className="lg:hidden p-2" aria-label="Toggle menu" onClick={() => setMenuOpen(!menuOpen)}>
             <motion.div animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }} className={`mb-1.5 h-0.5 w-5 origin-center ${solid ? "bg-foreground" : "bg-white"}`} />
             <motion.div animate={menuOpen ? { opacity: 0 } : { opacity: 1 }} className={`mb-1.5 h-0.5 w-5 ${solid ? "bg-foreground" : "bg-white"}`} />
