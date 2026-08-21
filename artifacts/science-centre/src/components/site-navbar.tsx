@@ -138,16 +138,30 @@ const APPLICATION_GROUPS: readonly ApplicationGroup[] = [
               { label: "SSO", productId: "ol-labtype-sso" },
               { label: "SSP", productId: "ol-microssp-generic" },
               { label: "Sanger based HLA typing", productId: "ol-secore-sbt" },
-              { label: "NGS / NGS + ONT", productId: "ol-alltype-ngs" },
+              {
+                label: "NGS / NGS + ONT",
+                children: [
+                  { label: "AllType NGS HLA Typing Kit", productId: "ol-alltype-ngs" },
+                  { label: "AllType FASTplex NGS", productId: "ol-alltype-fastplex" },
+                  { label: "AllType Rapid 11 Loci", productId: "ol-alltype-rapid" },
+                  { label: "HybriType NGS Hybrid Capture", productId: "ol-hybritype" },
+                ],
+              },
             ],
           },
           {
             label: "1B. Antibody Detection",
             children: [
               { label: "HLA antibodies screening - LABScreen (LSM12)", productId: "ol-labscreen-mixed" },
-              { label: "HLA antibodies identification - SAB Class I", productId: "ol-labscreen-sa1" },
-              { label: "HLA antibodies identification - SAB Class II", productId: "ol-labscreen-sa2" },
-              { label: "Auto-antibodies", href: "/products?brand=onelambda&category=transplant&q=antibodies" },
+              {
+                label: "HLA antibodies identification - SAB",
+                children: [
+                  { label: "Single Antigen HLA Class I", productId: "ol-labscreen-sa1" },
+                  { label: "Single Antigen HLA Class II", productId: "ol-labscreen-sa2" },
+                  { label: "Single Antigen ExPlex", productId: "ol-labscreen-explex" },
+                ],
+              },
+              { label: "Auto-antibodies", productId: "ol-labscreen-autoantibody" },
               { label: "C1q screening", productId: "ol-c1qscreen" },
             ],
           },
@@ -155,8 +169,15 @@ const APPLICATION_GROUPS: readonly ApplicationGroup[] = [
             label: "1C. HLA Crossmatch",
             children: [
               { label: "Flow DSA XM", productId: "ol-flowdsa-xm" },
-              { label: "CDC reagents", productId: "ol-terasaki-trays" },
-              { label: "3 color HLA FlowCrossmatch", productId: "ol-flowdsa-xm" },
+              {
+                label: "CDC reagents",
+                children: [
+                  { label: "Terasaki trays", productId: "ol-terasaki-trays" },
+                  { label: "Dynabeads cell isolation reagents", productId: "ol-dynabeads" },
+                  { label: "FluoroQuench reagent", productId: "ol-fluoroquench" },
+                ],
+              },
+              { label: "3 color HLA FlowCrossmatch", productId: "ol-flow-crossmatch-3-color" },
             ],
           },
           {
@@ -171,7 +192,7 @@ const APPLICATION_GROUPS: readonly ApplicationGroup[] = [
             label: "1E. Analysis",
             children: [
               { label: "HLA Fusion", productId: "ol-fusion" },
-              { label: "SureTyper", href: "/products?brand=onelambda&q=SureTyper" },
+              { label: "SureTyper", productId: "ol-suretyper" },
               { label: "TypeStream Visual", productId: "ol-typestream" },
             ],
           },
@@ -206,8 +227,8 @@ const APPLICATION_GROUPS: readonly ApplicationGroup[] = [
         title: "HLA disease association",
         eyebrow: "Category 3",
         items: [
-          { label: "HLA B27", href: "/products?brand=onelambda&q=HLA%20B27" },
-          { label: "Celiac disease", href: "/products?brand=onelambda&q=Celiac%20disease" },
+          { label: "HLA B27", productId: "ol-b27-antibody" },
+          { label: "Celiac disease", productId: "ol-celiac-disease" },
         ],
       },
     ],
@@ -232,8 +253,10 @@ const APPLICATION_GROUPS: readonly ApplicationGroup[] = [
         title: "Spectral Flow Cytometers",
         items: [
           { label: "Aurora", productId: "cytek-aurora" },
+          { label: "Aurora Evo", productId: "cytek-aurora-evo" },
           { label: "Northern Lights", productId: "cytek-northernlights" },
-          { label: "Borealis", categoryId: "flow" },
+          { label: "Northern Lights CLC", productId: "cytek-nl-clc" },
+          { label: "Borealis", productId: "cytek-borealis" },
         ],
       },
       {
@@ -1332,7 +1355,7 @@ export function SiteNavbar({
                             </div>
 
                             {currentApp.tree?.length ? (
-                              <div className="grid max-h-[330px] items-start gap-2 overflow-y-auto pr-1 lg:grid-cols-3" style={{ overscrollBehavior: "contain" }}>
+                              <div className="grid max-h-[330px] items-start gap-2 overflow-y-auto pr-1" style={{ overscrollBehavior: "contain" }}>
                                 {currentApp.tree.map(section => {
                                   const sectionKey = `${currentApp.id}:${section.title}`;
                                   const isExpanded = expandedAppSections.includes(sectionKey);
@@ -1355,7 +1378,7 @@ export function SiteNavbar({
                                           )}
                                           <h4 className="text-[13px] font-black text-foreground leading-tight group-hover:text-primary">{section.title}</h4>
                                           <div className="mt-1 text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
-                                            {section.items.length} subcategories
+                                            {section.items.length} groups
                                           </div>
                                         </div>
                                         <ChevronDown
